@@ -1,0 +1,10 @@
+# Temporary office lock and swap files
+~$*
+*.tmp
+*.bak
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
