@@ -79,3 +79,7 @@ Lovable editor preview, localhost, published deployment, backend, and Android ar
 ## Acceptance standard
 
 Close a batch only when the exact source revision and changed files are identified; required automated checks pass; browser/runtime behavior is independently reproduced for relevant roles; negative access tests pass; persisted state and cross-links survive refresh; and evidence is recorded in the sync ledger. Keep unresolved risks and failed checks visible. Do not mark a simulated flow as complete operational functionality.
+
+## 27 October sample-data consolidation
+
+[Sample Data and Test Plan](Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md) is the single canonical reusable fixture specification. It now includes six lifecycle outcome cases, all six user-confirmed development/deployment tracks, actual register/document placement, and portable pack/version/ID mapping. Preserve the legacy fixture examples as a selectable version; do not force their nine stages onto every track or duplicate existing data. The current hierarchy is track → phases → stages → tasks, with applicable default stages/tasks and authorized project-specific additions. This documentation refinement does not deploy a loader, provision users, import fixtures or modify operational data.
