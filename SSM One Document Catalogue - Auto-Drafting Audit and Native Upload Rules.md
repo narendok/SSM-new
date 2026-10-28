@@ -1,12 +1,15 @@
+<a id="source-31"></a>
+<a id="source-31-ssm-one-document-catalogue--auto-drafting-audit-and-native-upload-rules"></a>
 # SSM One Document Catalogue — Auto-Drafting, Audit, and Native Upload Rules
 
 Refined: 19 October 2026. **Cross-platform document-control reference; not another implementation plan.**
 
 The original 89 annexure item/note blocks are organized into **38 document/record families** with **90 family-to-source links** because source block B0545 maps to two families; D02 and D04 are clarification-only. A family is a logical group, not one mandatory file. These are coverage counts, not mandatory file counts. Unique subtypes and confidential scopes stay separate; no source requirement is discarded.
 
-Use [the web implementation plan](Current%20Plans/Web%20Implementation%20Plan.md) for web delivery order. The full source-block mapping is in [the catalogue JSON](SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.json). The original source inventory is not included in this planning library.
+Use [the web implementation plan](Implementation%20Plan.md#source-16) for web delivery order. The full source-block mapping is in [the catalogue JSON](SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.json). The original source inventory is not included in this planning library.
 
-## Confirmed master-plan alignment — 18–19 October 2026
+<a id="source-31-confirmed-master-plan-alignment--1819-october-2026"></a>
+#### Confirmed master-plan alignment — 18–19 October 2026
 
 This section aligns the existing 38-family reference with the confirmed master-plan decisions. It does not create 38 mandatory files, certify implementation, or add another delivery roadmap. The original 89-block coverage and stable family IDs are unchanged. New UI/workflow capabilities are mapped as overlays; not every feature becomes a DOCX template. Document families attach to lifecycle stages through the master plan's versioned responsibility matrix; this catalogue does not define or replace the stage model. Reusable-asset master, project configuration/reuse assessment, component/project certification evidence, and as-built genealogy are structured subrecords within existing families (D08, D10, D11, D13, D14, D23 and D31), not new family IDs or additional mandatory files. JSON records the same mapping under confirmed_master_plan_alignment and each affected family.
 
@@ -35,11 +38,12 @@ Project-specific evidence remains with its internal or client project, even when
 
 **Selected scope exclusions:** Google Drive/Docs/Sheets API/provider integration remains outside the selected implementation decision. No automatic email sending or mailbox-draft integration; MOM subject/content is copied for manual sending. No automatic publication, test pass, client acceptance, spend decision or project start. New client layout approval is a design baseline only. Reference template folders are still pending actual user-supplied access.
 
-**Verification boundary:** this catalogue describes target behavior. Existing record APIs, template editors, private file persistence, source-calculation authority, ordinary employee/client/lead permissions, reminders, report generation and device flows require their own accepted contracts/evidence. The [web implementation plan](Current%20Plans/Web%20Implementation%20Plan.md) governs web sequencing; the separate Android build plan and planned handoff govern mobile implementation.
+**Verification boundary:** this catalogue describes target behavior. Existing record APIs, template editors, private file persistence, source-calculation authority, ordinary employee/client/lead permissions, reminders, report generation and device flows require their own accepted contracts/evidence. The [web implementation plan](Implementation%20Plan.md#source-16) governs web sequencing; the separate Android build plan and planned handoff govern mobile implementation.
 
 **Generation boundary and editing experience:** portal templates may prefill structured drafts, indexes and reports from authorized, source-linked project records. Users edit structured portal entries and can preview the populated template and download a DOCX or PDF rendition where listed; a full rich-text/in-app DOCX editor is not required. The downloaded file is a rendition, not a released source of truth; changes that need to be authoritative return through controlled revision and review. The tentative BOM is created in the portal from the controlled parts/inventory catalogue; it does not reserve or move stock. Native schematics, PCB/Gerber packages, firmware/software source and build artifacts, mechanical STEP/CAD/drawing files, actual lab/test reports and certificates are authored or issued by their specialist tools/providers and uploaded or linked as controlled files. The portal can generate their metadata index/cover/checklist, not the files themselves. This catalogue is the sole document-family, format, and generation-boundary reference; web and Android delivery steps remain in their existing platform plans.
 
-## Current usable flow — prioritize these independently
+<a id="source-31-current-usable-flow--prioritize-these-independently"></a>
+#### Current usable flow — prioritize these independently
 
 | Family | Needed behavior | Format |
 |---|---|---|
@@ -51,7 +55,8 @@ Project-specific evidence remains with its internal or client project, even when
 
 NDA is required only when the configured customer/program calls for it. Quotation, sourcing, development, testing and production documents follow their applicable stage. Missing private DOCX/XLSX contracts block those saves; they do not make the entire catalogue a prerequisite for unrelated working features.
 
-## Common pack and the four document groups
+<a id="source-31-common-pack-and-the-four-document-groups"></a>
+#### Common pack and the four document groups
 
 Each of the **12 departments in the initial registry** maintains its applicable SOPs, authority/roles matrix, KPI definitions and blank templates/work instructions under Common & Standards. Reuse controlled revisions; do not generate a new common pack for every project. The registry remains extensible as the organization changes. Engineering disciplines remain workstreams. The shared common area also supports department-wide audit/QMS indexing and evidence, organized by department and audit scope.
 
@@ -61,17 +66,20 @@ Each of the **12 departments in the initial registry** maintains its applicable 
 
 Periodic reviews are record types, not another top-level folder. PPAP is a conditional type; Starred is a shortcut. Existing protected folder mapping is preserved until a reviewed change; this catalogue defines target placement and does not itself move files.
 
-## Department catalogue
+<a id="source-31-department-catalogue"></a>
+#### Department catalogue
 
 All entries below are target/reference families. Actual readiness comes from saved records, file bytes and accepted contracts. Review frequency, owner assignments and requiredness are configured; source headings do not enforce them.
 
-### Each department
+<a id="source-31-each-department"></a>
+##### Each department
 
 | Document / record family | Format | Use / applicability |
 |---|---|---|
 | Common operating pack: SOPs, authority matrix and work instructions | DOCX / approved references | Maintain one controlled pack per department/workstream; reuse its revision across projects. Includes engineering/SDLC/CI standards, FIFO and nonconformance procedures. |
 
-### Sales
+<a id="source-31-sales"></a>
+##### Sales
 
 | Document / record family | Format | Use / applicability |
 |---|---|---|
@@ -81,7 +89,8 @@ All entries below are target/reference families. Actual readiness comes from sav
 | Feasibility / contract review | Assigned review records + DOCX | Selected departments record scope, owner, due date, evidence, decision and conditions; one consolidated review links the contributions. |
 | Quotation / commercial proposal | DOCX / commercial records | When an opportunity requires a commercial offer; scoped Finance input, explicit issuance and version history. |
 
-### Hardware / R&D
+<a id="source-31-hardware--rd"></a>
+##### Hardware / R&D
 
 The following reusable-asset records are overlays within the existing catalogue families, not additional template families or required standalone files:
 
@@ -100,16 +109,18 @@ The following reusable-asset records are overlays within the existing catalogue 
 | Software quality / security / performance review | Review records | Only firmware/software/cloud scopes that need these reviews; frequency is configured, not imposed on every project. |
 | DRC / component-library review | Review records | When hardware/library review is due or change-triggered; reference actual rules and evidence. |
 
-**Inventory record boundary:** inventory balances and movements remain operational software records, not duplicate documents. Stock-controlled items include electronics components/accepted outsourced PCB assemblies, mechanical raw materials and purchased parts, configured WIP/subassemblies, consumables/MRO, and packaging. Physical production machinery, test equipment, fixtures, tooling, calibration instruments, and facility equipment use the fixed-asset register. Revisioned PCB/case/harness designs and similar reusable modules are engineering assets, not on-hand quantities; their BOMs link to exact stock item IDs and approved sourcing. The [Web Implementation Plan](Current%20Plans/Web%20Implementation%20Plan.md) defines inventory/asset handling; receipts, inspections, issues, returns, adjustments, and maintenance keep their own authorized records and audit history.
+**Inventory record boundary:** inventory balances and movements remain operational software records, not duplicate documents. Stock-controlled items include electronics components/accepted outsourced PCB assemblies, mechanical raw materials and purchased parts, configured WIP/subassemblies, consumables/MRO, and packaging. Physical production machinery, test equipment, fixtures, tooling, calibration instruments, and facility equipment use the fixed-asset register. Revisioned PCB/case/harness designs and similar reusable modules are engineering assets, not on-hand quantities; their BOMs link to exact stock item IDs and approved sourcing. The [Web Implementation Plan](Implementation%20Plan.md#source-16) defines inventory/asset handling; receipts, inspections, issues, returns, adjustments, and maintenance keep their own authorized records and audit history.
 
-### Procurement
+<a id="source-31-procurement"></a>
+##### Procurement
 
 | Document / record family | Format | Use / applicability |
 |---|---|---|
 | Supplier qualification / ASL / ACML / performance and capacity | Supplier registers + review evidence | One supplier history with evaluation, on-site/system reviews, approved lists, scorecards/capacity/lead-time observations. No duplicate workbook per review title. |
 | Supplier PPAP / submission warrant | Checklist + supplier evidence | Only applicable customer/product/supplier programs; a document-type/project category, never a fifth department Drive group. |
 
-### Production
+<a id="source-31-production"></a>
+##### Production
 
 Apply these families to the master plan's two manufacturing departments: **EMF** owns accepted outsourced PCBA receiving/traceability, line assembly/box-build, controlled firmware loading and production functional checks; **MMF** owns mechanical fabrication, finishing, subassembly and inspection. QA retains independent quality criteria and disposition. TST/EOL is not a separate current department; tests are assigned to the relevant process and authority. In-house bare-board fabrication and PCBA assembly remain out of scope.
 
@@ -123,7 +134,8 @@ Apply these families to the master plan's two manufacturing departments: **EMF**
 | 5S / OEE / yield / scrap / defects / KPI reviews | Operational registers + calculated views | When production observations/reviews exist; use defined formulas/time windows. Standards/templates are Common & Standards; completed non-project reviews are Department Operations & References, while project-specific evidence stays with its project and is linked from audit views. |
 | Process-equipment PM / downtime / OEE | Maintenance and performance records | For applicable production equipment and actual maintenance/observations; Facility supports infrastructure separately. |
 
-### Operations
+<a id="source-31-operations"></a>
+##### Operations
 
 | Document / record family | Format | Use / applicability |
 |---|---|---|
@@ -134,19 +146,22 @@ Apply these families to the master plan's two manufacturing departments: **EMF**
 | DMAIC / improvement charter and tollgate evidence | Improvement project records | Only approved improvement work; real sign-offs/evidence, not a compulsory document for every client project. |
 | Cross-department KPI definitions / dashboard | Definitions + authorized aggregate views | Reuse measured records and the reviewed formula from each department, not a second manually copied enterprise tracker. |
 
-### Operations / Legal
+<a id="source-31-operations--legal"></a>
+##### Operations / Legal
 
 | Document / record family | Format | Use / applicability |
 |---|---|---|
 | NDA and confidential agreement | DOCX + actual agreement evidence | Only when required by the customer/program. Template belongs to Legal/Common; executed agreement is scoped to its case/project. Sales initiates/links, without Legal access. |
 
-### Finance
+<a id="source-31-finance"></a>
+##### Finance
 
 | Document / record family | Format | Use / applicability |
 |---|---|---|
 | Receivables / MIS / financial KPI / closing / billing | Financial records + XLSX/DOCX renditions | Use Finance-owned records; Sales sees permitted commercial context. Tax invoice is a separate authorized rendition. IT tickets from the combined source note stay outside Finance records. |
 
-### HR
+<a id="source-31-hr"></a>
+##### HR
 
 | Document / record family | Format | Use / applicability |
 |---|---|---|
@@ -154,7 +169,8 @@ Apply these families to the master plan's two manufacturing departments: **EMF**
 | Onboarding / BGV | Restricted policy and case records | When an authorized onboarding/verification case exists; policy is Common, personnel evidence remains restricted. |
 | Grievance / employee query | Restricted case register | Only actual authorized employee cases; not a generally shared project document. |
 
-### Facility / Maintenance
+<a id="source-31-facility--maintenance"></a>
+##### Facility / Maintenance
 
 | Document / record family | Format | Use / applicability |
 |---|---|---|
@@ -162,7 +178,8 @@ Apply these families to the master plan's two manufacturing departments: **EMF**
 | IT backup / security review / project IT tickets | Authorized IT records | Infrastructure work only; privileged configuration remains administrator-controlled. Split project IT tickets from financial billing in the source note. |
 | Facility/security service / waste disposal / pest control | Contracts, service and disposal evidence | Applicable services/assets/schedules; actual agreements/qualified disposal evidence and private commercial terms. Short reminders are work tasks, not templates. |
 
-## Avoid duplicate documents and unnecessary work
+<a id="source-31-avoid-duplicate-documents-and-unnecessary-work"></a>
+#### Avoid duplicate documents and unnecessary work
 
 Software registers, reviews, tasks, notifications, PR/RFQ/PO/GRN, work orders, releases and change cases remain authoritative software records. Create a file only for a useful controlled output or export. A reminder, dashboard, source note or certification reference is not automatically a new DOCX template.
 
@@ -173,4 +190,3 @@ Legacy HLPL/SSM codes are source aliases, not instructions to renumber records. 
 The web master plan already defines pilot sourcing, release/production/dispatch, change loops, audit and backend handoff. This catalogue does not repeat delivery packs or create another approval checklist. Evidence belongs in `docs/evidence`; technical contracts remain separate. Android builds are governed by their own plan.
 
 Source coverage checked: **89 of 89 unique annexure blocks mapped across 90 family-source links**. D02 and D04 reflect later clarifications and are not additional mandatory files. The source-block IDs and family mapping are retained in the JSON; the separate original source inventory is not included in this library. No live records, grants, policies, templates or application storage paths changed by this planning update.
-
