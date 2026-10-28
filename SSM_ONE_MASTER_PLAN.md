@@ -2,6 +2,8 @@
 
 Updated 28 October 2026. This is the cross-platform planning authority. The sample catalogue below is the single reusable fixture definition. This documentation consolidation does not implement code, seed data, or change permissions.
 
+New laptop: follow [the verified migration and continuation checkpoint](Implementation%20Plan.md#laptop-migration-2026-10-28). Git, local-only files, private configuration/signing material and remaining work have distinct transfer/acceptance requirements.
+
 ## Read this compact planning set
 
 | File | Purpose |
