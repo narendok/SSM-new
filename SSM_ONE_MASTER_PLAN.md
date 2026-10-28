@@ -857,3 +857,6 @@ Fifteen loose dated plans/reports from `C:/Users/Test/Documents/SSM-new` are ret
 ## Android repair execution — 28 October 2026
 
 Use the [UI-preserving Android repair sequence](Implementation%20Plan.md#android-ui-preserving-repair-2026-10-28) in the existing implementation plan. Preserve original Compose layouts and connect authenticated shared data through those screens; no generic raw TEST replacement. A0–A4 cover baseline, presentation and existing operational flows; A5–A6 consume verified seven-track lifecycle and connected sample contracts after their shared implementation. The current inspected app source is ad2a208, not the older reported checkpoints. This is planned work, not a fresh app build or device acceptance. The ongoing Antigravity handoff is unchanged.
+
+
+Stage completion checkpoint (28 October): see the [accepted completion workflow](Implementation%20Plan.md#stage-completion-accepted-2026-10-28). Completed work needs independent evidence-bound review; stage activation preserves other in-progress work and legacy history.

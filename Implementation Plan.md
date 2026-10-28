@@ -2100,3 +2100,9 @@ Reuse existing Finance, HR, document, asset and Android screen structures where 
 12. Existing project/task/document, TEST identity and colored-layout regression checks still pass after each module release.
 
 <!-- END CONSOLIDATED SOURCE 8d427ad8bf6a0207517a276a35e915e2fceb4330221bc27fe82403d62216cfbd -->
+
+
+<a id="stage-completion-accepted-2026-10-28"></a>
+## Stage completion acceptance — 28 October 2026
+
+The completion review and legacy-boundary fix is implemented in web commits `a464d47` / `98daa65` and deployed as migrations `20261028120000`–`20261028120002` to the existing backend. Starting another stage does not complete the previous one. Completed task evidence requires independent authorized approval; stale evidence and self-approval fail closed. Original screens and legacy history are retained. Tests 210/210, TypeScript and build pass. Live authenticated rollback acceptance passed; 34 records, 29 tasks, 21 approvals and 27 memberships were preserved. Full evidence is in the existing consolidated handoff §16.13. This closes the stage-completion defect only, not every pending module or Android device acceptance.
