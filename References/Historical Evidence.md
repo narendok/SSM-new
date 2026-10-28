@@ -3809,3 +3809,617 @@ Use descriptive feature labels on focused planning documents so their special sc
 | `Portal Progress and Handoffs/Portal Completion Handoff - 2026-10-19.md` | [References/Historical Evidence.md](Historical%20Evidence.md#source-28) | `ac955f3721dc77ae5f52783df9616eeb9c4e4523b4991b97915542408daa8bf4` | 0 |
 | `Portal Progress and Handoffs/Shared Task Board Checkpoint - 2026-10-19.md` | [References/Historical Evidence.md](Historical%20Evidence.md#source-29) | `7c51b8376ff25da4f71b02d715ba73d1c8f2d49b1e97bc7b6b4a49d09953b684` | 0 |
 | `README.md` | [References/Historical Evidence.md](Historical%20Evidence.md#source-30) | `e6115284762b95ca6fcbf54cc39bfdceacb1e2578bd0fdafa861c82cbf78b37d` | 0 |
+
+
+<a id="workspace-planning-consolidation--28-october-2026"></a>
+## Workspace planning consolidation — 28 October 2026
+
+These dated source files were consolidated from the working folder. Current master decisions and the ongoing Antigravity handoff take precedence; historical completion or pending statements are not current acceptance evidence. Application code, active repository handoffs and source data are unchanged. The source digest identifies the original bytes; the full source text is preserved below.
+
+| Former working-folder file | Original SHA-256 | Retained section |
+|---|---|---|
+| `ANDROID_SHARED_BUSINESS_REPAIR_2026-10-24.md` | `ced92b76374e33e3d6409dd47e11f1ac8949bf4c762e99b4ad6080ddf49d9017` | [Retained source](#workspace-android-shared-business-repair-2026-10-24-md) |
+| `ANTIGRAVITY_BATCH_RECHECK_b6de4c3_2026-10-21.md` | `2782466ce0e475e275ba9e7771e03d6f09a5ca3612eedf933f8a3dc970f81dc5` | [Retained source](#workspace-antigravity-batch-recheck-b6de4c3-2026-10-21-md) |
+| `ANTIGRAVITY_IMPLEMENTATION_REVIEW_2026-10-21.md` | `ed033256a0aba66f9d3d8cba9a0bdc099cfcc3dd3fe55c86e17b8bfc61dbc65d` | [Retained source](#workspace-antigravity-implementation-review-2026-10-21-md) |
+| `ANTIGRAVITY_IMPLEMENTATION_REVIEW_2026-10-25.md` | `3ab47f9d8c0c4a15162be4b4f2493ee2fa86874bfe90fe2029890e984de09c0f` | [Retained source](#workspace-antigravity-implementation-review-2026-10-25-md) |
+| `ANTIGRAVITY_MANUAL_VERIFICATION_2026-10-21.md` | `6b8d367067e1120b672b6c975a5d047acad3b1e1951ca196a6b21f05b7640d31` | [Retained source](#workspace-antigravity-manual-verification-2026-10-21-md) |
+| `DOCUMENT_UPLOAD_PILOT_BASELINE_2026-10-20.md` | `cc490ad0726cbeeba5c75250cc77cc051322b77286a1f9fc857fa3d23b28bc1e` | [Retained source](#workspace-document-upload-pilot-baseline-2026-10-20-md) |
+| `FINAL_DELIVERY_STATUS_2026-10-24.md` | `91ad0df9b74e1a865b2c69e7c7ac8a2c879f4fef8a861cbc0f5ece399b05fdab` | [Retained source](#workspace-final-delivery-status-2026-10-24-md) |
+| `portal-refinement-pr.md` | `aade3af95e7e3829fbc5aac0c29717437da93a58eaa9bbac4eadd791bc432c35` | [Retained source](#workspace-portal-refinement-pr-md) |
+| `PURCHASING_FORM_REFINEMENT_2026-10-24.md` | `63180c21b3fcab876e31b702b775d2434ce740c0cf7d28a73a30bcacb3028821` | [Retained source](#workspace-purchasing-form-refinement-2026-10-24-md) |
+| `RECORD_CREATION_VERIFICATION_2026-10-24.md` | `d184818c6be4b68a4b00ec90f0e38617cefe4af7f332483829ec8c367f804d50` | [Retained source](#workspace-record-creation-verification-2026-10-24-md) |
+| `REGRESSION_PARITY_AUDIT_2026-10-24.md` | `8e22dc473939980d6719fade484b578f70f4e9e52a5a3dd26f3cc49c42d4e8dd` | [Retained source](#workspace-regression-parity-audit-2026-10-24-md) |
+| `SHARED_BUSINESS_REPAIR_2026-10-24.md` | `fbeaa1031528622eb0e113bb12c0dfceedbf1ac374ed427b6fd9ab2ffd1d870a` | [Retained source](#workspace-shared-business-repair-2026-10-24-md) |
+| `UI_REFINEMENT_CHECKPOINT_2026-10-21.md` | `d21f59627de872fd2a05b00deddede2bf3ebe0717507650e9f451d64004e2a2a` | [Retained source](#workspace-ui-refinement-checkpoint-2026-10-21-md) |
+
+
+<a id="workspace-android-shared-business-repair-2026-10-24-md"></a>
+### Retained source: ANDROID_SHARED_BUSINESS_REPAIR_2026-10-24.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/ANDROID_SHARED_BUSINESS_REPAIR_2026-10-24.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE ced92b76374e33e3d6409dd47e11f1ac8949bf4c762e99b4ad6080ddf49d9017 -->
+# Android shared business repair — 24 October 2026
+
+Baseline: `5d10316`. The repository still targets the existing SSM-new backend; no endpoint or credential was changed.
+
+- Removed the synthetic authenticated-session fallback after unsuccessful sign-in. Cached demo/synthetic tokens cannot authenticate TEST operations.
+- Added SharedBusinessRepository using the same guarded get_business_workspace / mutate_business_workspace RPC contract as web. A save requires the server's saved:true response. Stable request IDs survive retries.
+- Shared business screens participate in real expense requests/review/posting, tickets, employee assignments, messages and polls. TEST entry points use these screens, while existing local examples remain separate.
+- Clearing/authentication errors and account changes invalidate business snapshots. Legacy local financial/chat mutations reject authenticated TEST use.
+- Existing native layout/navigation and engineering/inventory screens were retained. Advanced HR authoring remains on web.
+
+Verification: `testDebugUnitTest assembleDebug` succeeded; XML reports contain 54 tests, zero failures, zero errors. Three new tests cover failed reads without sample substitution, shared mutation identity/request IDs, and rejection of unconfirmed saves. This is compile/unit evidence, not a phone or web-to-phone round trip.
+
+Backend migrations are maintained in SSM-new-web. The first business migration was deployed through Lovable on 21 October. The follow-up 20261024084915 validation migration awaits fresh deployment confirmation as of this report; check the web verification report for its final deployment status.
+
+No templates, signatures, real employee facts, budget thresholds or production financial data were invented. Private letters/assets require their original controlled record contracts. Recurring delivery, advanced builder features, attachment integration and device acceptance still have the explicit limits recorded in the web repair report.
+
+<!-- END CONSOLIDATED SOURCE ced92b76374e33e3d6409dd47e11f1ac8949bf4c762e99b4ad6080ddf49d9017 -->
+
+
+<a id="workspace-antigravity-batch-recheck-b6de4c3-2026-10-21-md"></a>
+### Retained source: ANTIGRAVITY_BATCH_RECHECK_b6de4c3_2026-10-21.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/ANTIGRAVITY_BATCH_RECHECK_b6de4c3_2026-10-21.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE 2782466ce0e475e275ba9e7771e03d6f09a5ca3612eedf933f8a3dc970f81dc5 -->
+# Recheck of reported completion — b6de4c3 / 5d10316
+
+This is verification evidence, not another implementation prompt. Continue using ANTIGRAVITY_READY_TO_USE_CONSOLIDATED_HANDOFF_2026-10-21.md as the single specification.
+
+## Independently confirmed
+
+- Local web HEAD b6de4c3487dec01722c38734f59ffdfc6a557cd8; local Android HEAD 5d10316cd7d1f047a756c91dd896351d6f48d85e. No tracked working changes reported. Remote push/Lovable import were not independently rechecked in this pass.
+- Web tests rerun: 120/120 pass. Separate TypeScript check exited successfully without diagnostics.
+- Web expense view now accepts canonical-store props and update callbacks; TEST actions are explicitly denied pending RPC deployment. This is a useful fail-closed improvement, not a completed shared workflow.
+- Android approval now increases committed rather than spent and rejects absent dept/category allocation. Settlement method was added. These are local repository operations; transactional shared persistence is not established by their existence.
+- TEST regular-member profile no longer defaults to the departmental lead. However it fabricates employee code/email/phone/clearance and other details instead of representing missing verified employment fields. TEST Admin/lead profiles still copy sample profile details with only ID/name replaced.
+
+## Outstanding findings
+
+| Priority | Source | Remaining issue |
+|---|---|---|
+| P1 | DepartmentBudgetsWorkspace.tsx:182,204,227,252 | TEST submission/approval/rejection/settlement explicitly disabled awaiting backend RPC deployment. Report Batch A shared finance as pending, not completed. Need actual account-to-account persistence and Android round trip. |
+| P1 | ProjectAnalysisOverview.tsx:255-259; default readiness/intake definitions | Dependency graph uses hardcoded DEFAULT_DEPENDENCIES and explicitly falls back to AI4T for unmatched project. Readiness percentages and intake examples are hardcoded. This violates the two-distinct-project/sparse-project acceptance requirement; derive from original permitted records, showing missing/unknown instead of sample results. |
+| P1 | ScmsRepository.kt:2443-2553 | Approval still takes approverRole and uses role strings/name checks for identity. Finance can approve Pending_Admin; project mismatch falls back to dept/category allocation. No active period/currency check in the shown selection. Need stable authenticated requester/approver authority and exact pinned allocation, not arbitrary caller-supplied labels. |
+| P1 | ScmsRepository.kt:2556-2592 | Settlement has no actor/Finance authority check, selects a fresh possibly different allocation by dept/category with broad fallback, clamps commitment to zero, can mark Settled without finding any allocation, and creates an unpersisted finalRef. In-memory updates are not a server atomic transaction. Pin approval allocation and perform authorized posting atomically with real actual amount/evidence/reference and idempotency. |
+| P1 | HRAdministrationWorkspace.tsx:104,159-177,622; EmployeeSelfServiceWorkspace.tsx:166-191,754 | Anonymous flag and '100% Anonymous' label are not an anonymous response contract. Answers live on assignment objects and success says bound to employee code. No independently verified separated response/completion storage. Remove guarantee until actual privacy model/server checks exist. |
+| P2 | HRAdministrationWorkspace.tsx:85,113-177 | Directory is hardcoded local component state; creation supports a basic policy, training with empty questions, and a one-rating-question survey with hardcoded dates. No full question editor, immutable published versions, recurrence, campaign audience/submission contract shown. Do not claim whole Batch D complete. |
+| P1 | service-tickets.ts:207-229; index.tsx:3524-3533 | Ticket visibility uses client organization substring or requester email, and all client tickets for Sales without relevant client/project membership. Route synthesizes email from persona.id and sets organization to Hexense Labs. This is not actual authenticated requester/client binding. Must use stable identity and authorized organization/project membership server-side. |
+| P2 | employee-services.ts resolveEmployeeProfile | Do not display fabricated personnel fields as verified data. Missing fields remain explicit; synthetic defaults must be confined to DEMO and not impersonate authentic TEST employment details. |
+
+## Not revalidated this pass
+
+Production web build, Android Gradle tests/APK, live migrations, survey backend privacy, browser flows, Android device operation, latest Lovable preview import and live concurrent finance transactions. Earlier reported results are not substituted for independent reruns.
+
+No application edits/deployments/data mutations performed during this recheck. Existing handoff still governs; these are concrete gaps against it, not a new scope. Resolve shared foundations and accurate completion reporting before PDF/OCR.
+
+<!-- END CONSOLIDATED SOURCE 2782466ce0e475e275ba9e7771e03d6f09a5ca3612eedf933f8a3dc970f81dc5 -->
+
+
+<a id="workspace-antigravity-implementation-review-2026-10-21-md"></a>
+### Retained source: ANTIGRAVITY_IMPLEMENTATION_REVIEW_2026-10-21.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/ANTIGRAVITY_IMPLEMENTATION_REVIEW_2026-10-21.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE ed033256a0aba66f9d3d8cba9a0bdc099cfcc3dd3fe55c86e17b8bfc61dbc65d -->
+# Antigravity implementation review — 21 October 2026
+
+Reviewed local web commit `bfa704c3934b179003a39232913c243646e0ab51` against `fb67332`.
+Verdict: incomplete UI prototype; do not treat budgets, HR self-service or communication as completed shared workflows. PDF/OCR work should wait for these issues to be resolved or these modules explicitly isolated as DEMO.
+
+## Verification
+
+- Existing department suite: 108/108 passed. This commit adds no tests for its new modules.
+- Production build: passed; build does not enforce the separate TypeScript check.
+- TypeScript: failed, 22 diagnostics in new components/routing integration. See `antigravity-review-types.log`.
+- Browser: existing localhost tab reports site unreachable. End-to-end browser checks were not completed; no production/shared data was changed.
+- No source changes, commits, migrations or deployment performed during this review.
+
+## Required corrections
+
+| Priority | Evidence | Finding / required correction |
+|---|---|---|
+| P1 | DepartmentBudgetsWorkspace.tsx:48-49; EmployeeSelfServiceWorkspace.tsx:66-70; TeamCommunicationWorkspace.tsx:41-43 | All three initialize independent React state from hardcoded defaults. Mutations disappear on unmount/reload and do not sync between accounts or Android. Use the agreed canonical store for DEMO; authenticated shared operations need a complete server contract, not local success messages. |
+| P1 | RoleAwareSidebar.tsx:142-144,208-210,731-733,1202-1204; index.tsx:3109-3111,11134-11136 | New callbacks are declared/passed but have no corresponding rendered sidebar action. View union lacks the new views; mobile callbacks reference undefined setView. Wire navigation and correct types before claiming reachability. |
+| P1 | EmployeeSelfServiceWorkspace.tsx:49-70 | Employee identity is guessed from display-name substrings; unmatched users fall back to Admin profile. All users receive the same default letters/assets/assignments. Bind actual user/member ID; unknown identity must fail closed. Never reuse another employee's profile. Current defaults are illustrative, not evidence of a live personnel breach. |
+| P1 | DepartmentBudgetsWorkspace.tsx:71-97 | Budget and request visibility relies on user-selectable filters, not persona authority. Employees are not constrained to own claims; leads are not constrained to their authorized department. Enforce scope before totals/results and on every server operation. |
+| P1 | department-budgets.ts:128-169; DepartmentBudgetsWorkspace.tsx:100-141,161 | New requests skip lead review and start Pending_Finance. Approval goes directly to Approved; Finance rule does not require lead kind; Admin can approve any status. Reject handler lacks independent guard. Implement staged transitions, stable-ID self-approval prevention and alternate approver routing. |
+| P1 | DepartmentBudgetsWorkspace.tsx:121-131 | Two state updates are labelled atomic but are not a financial transaction. Approval lacks available-budget/period/currency/project validation and increments every matching dept/category allocation. Implement exact allocation selection, idempotency, concurrent budget checks and actual/commitment settlement ledger. |
+| P1 | TeamCommunicationWorkspace.tsx:41-57,60-179 | All channels/messages are loaded with no membership scoping. No shared transport, revocation or attachment authorization. Poll mutation has no closed-poll guard in handler. Implement real membership and voter checks before enabling shared use. |
+| P2 | EmployeeSelfServiceWorkspace.tsx:527-536 | Form action only changes status to Submitted without collecting/validating answers. Web authoring, recurrence and notifications are absent from this commit. Do not claim survey completion. |
+| P2 | EmployeeSelfServiceWorkspace.tsx:81-123 | Policy acknowledgment and quiz completion are local only; certificate reference is generated client-side, with no durable employee/version evidence. Implement real assignment/version-bound submissions and controlled certificate issue. |
+| P2 | New lib modules and workspace defaults | Sample allocations, amounts, dates, receipt names and messages are hardcoded; travel splits are invented at 60/30/10. Restrict examples to clearly labelled replaceable DEMO; real requests must use entered/approved data. |
+| P2 | Commit contains only three workspaces, three model files, route/sidebar edits and images | HR template generation/review/release, genuine anonymous surveys, recurring scheduling, notification delivery, shared tags/search and Android integration are not delivered by this commit. Report as pending rather than completed. |
+| P2 | index.tsx:3466 | Chat document callback expects string ID while supplied openDocument expects ControlledDocument. Resolve and authorize exact document before opening. |
+
+## Repair order / acceptance
+
+1. Correct routing and all TypeScript failures; keep existing colored UI unchanged.
+2. Isolate mock data and misleading successful-save/compliance messages from authenticated operation.
+3. Implement stable identity, scoped reads and server-authorized writes without mixing local/shared transactions.
+4. Complete expense state transitions and transactional budget ledger before real claims.
+5. Complete HR submissions and restricted chat membership, then Android parity, recurrence and search.
+6. Add new tests for the listed failures; existing 108 tests alone do not cover this implementation.
+7. Verify with employee, department lead, Finance, Admin and unauthorized cross-department accounts; test reload, second browser/account, concurrent approvals and failed writes.
+
+Only after these pass should the separate private PDF conversion/OCR plan be layered on top. Keep existing inventory/assets and Altium links.
+
+<!-- END CONSOLIDATED SOURCE ed033256a0aba66f9d3d8cba9a0bdc099cfcc3dd3fe55c86e17b8bfc61dbc65d -->
+
+
+<a id="workspace-antigravity-implementation-review-2026-10-25-md"></a>
+### Retained source: ANTIGRAVITY_IMPLEMENTATION_REVIEW_2026-10-25.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/ANTIGRAVITY_IMPLEMENTATION_REVIEW_2026-10-25.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE 3ab47f9d8c0c4a15162be4b4f2493ee2fa86874bfe90fe2029890e984de09c0f -->
+# Antigravity implementation review — 25 October 2026
+
+Scope: submitted web commit 91032cc and Android commit c75f74e against consolidated handoff sections 14.12–14.14. The later RACI discussion is excluded as an additional acceptance condition. Earlier business-module baseline work is not newly certified by this delta review. No application source was changed.
+
+## Checks executed
+
+- Web: npm run test:department — 153 tests passed, zero failures.
+- Web: npx tsc --noEmit — passed; production build — passed.
+- Android: testDebugUnitTest assembleDebug — BUILD SUCCESSFUL; tasks were up-to-date/cached. Available XML reports total 59 tests, zero failures/errors. This is not a device round trip or a fresh uncached execution of each test.
+- Source trace of inline modals, parent callbacks, authenticated routes, scenario imports and Android call sites. No new browser operational save or shared seed was performed for this review.
+
+## Findings against requirements already in the handoff
+
+| Requirement | Result | Evidence |
+|---|---|---|
+| Six distinct lifecycle stories and production arithmetic | Implemented as scenario data; automated checks pass | lifecycle-scenarios.ts and its tests; S02 has no project code; numeric production reconciliation represented. |
+| Connected original project/record fixtures, IDs and runnable lifecycle story | Incomplete | Scenario objects feed ProjectAnalysisOverview. No operational record fixture setup/ID manifest or canonical linked-record generation in submitted commit. Descriptive dependencies are not original record links. |
+| Scenarios available in authenticated TEST flow | Incomplete | index.tsx routes testMembership analysis to SharedProjectAnalysis, while the new scenarios tab is in the alternate ProjectAnalysisOverview used outside authenticated TEST. |
+| Android scenario presentation/shared parity | Incomplete | LifecycleScenarios object appears in the model and unit tests; no main-source consumer beyond its definition found. Matching model constants do not show mobile UI availability or shared-original-ID synchronization. |
+| Inline supplier/part creation durable canonical save | Incomplete | Modals create Date.now-based local objects and call synchronous callbacks. RecordForm calls optional onAddSupplier/onAddPart, but no parent invocation supplying these persistence callbacks was found. Parent selects supplier name/part MPN, not the newly saved canonical ID. SharedOperationalWorkspace still uses SharedSupplierSelect without these inline-create modals. |
+| Backend capability and draft-master release/PO gates | Not established / incomplete in submitted change | canAdd checks use local area/persona. Pending_Verification and Engineering_Only appear only in modal definitions; no server consumer/enforcement of these new statuses found. A status string alone does not enforce a transaction gate. |
+| Verified source facts rather than invented master data | Fails source rule | Missing supplier email/phone are synthesized; missing part manufacturer/footprint default to Generic/Surface Mount. Shared master data must remain missing or be explicitly supplied, not silently invented. |
+| Parent draft preservation | Partial | React spread preserves existing field values during local callback selection. Durable shared save, failure handling, correct returned ID and reload behavior are not proved. |
+| Supplier/part capability tests | Insufficient behavioral evidence | inline-master-creation.test.cjs primarily checks source-string presence, including display-name/MPN assignment. It does not execute authenticated saves, reject unauthorized API requests, or verify downstream master gates. |
+
+## Acceptance conclusion
+
+The submitted code compiles and its current tests pass. Scenario descriptions/models and local modal UI exist. Sections 14.12–14.14 are not fully implemented as connected authenticated flows. These are gaps against the provided plan, not later-added RACI expectations.
+
+Next correction scope: wire actual canonical master contracts and authenticated capabilities; return/select persisted IDs; remove fabricated master defaults; enforce actual master-state prerequisites in canonical transactions; build idempotent connected fixture manifests/original records; expose appropriate DEMO/TEST presentation without mixing data; wire mobile presentation/shared IDs where supported; replace string-presence claims with behavioral integration and browser/device evidence. Preserve existing functionality and all existing user records. No new scope or standards assertion is implied.
+
+## Follow-up review: submitted completion text and web d811ae4
+
+Web d811ae4 changes only `tests/all-records-and-sample-cycle.test.cjs` (204 lines). Android remains c75f74e. No application/backend correction to the above findings exists in this new commit. Independently reran the full web suite: 156 tests passed, zero failures. Existing build/type checks from the previous review apply to unchanged application source; they were not newly repeated in this follow-up.
+
+- “All 88 records”: the test iterates current formSpecs and invokes recordFieldValues, with strings and the first select value. It checks one required field and one select field per type when present. It does not save to backend, exercise UI, arrays/booleans/numbers, all required omissions, all roles, cross-account persistence or domain transaction effects. Its final count assertion is >=50, not exactly 88; independent catalogue inspection finds 88 entries including legacy groups. The report's 12-department type list is not the actual catalogue: Purchasing actually has six types (Rapid prototype request, Mass production request, ASL/ACML, F-PUR-10, F-PUR-16, PPAP Level 3), Sales four (Enquiry, Opportunity, Order, Handover).
+- “38 families validated”: tests assert 38 IDs and four family names. They do not execute every subtype/template/file/review flow. Reported grouping is inaccurate: actual D01 is Common operating pack and D11 is Engineering BOM, not the report's respective descriptions.
+- “End-to-end cycle”: test reads static getScenario values and calls pure draft/field helpers. No backend writes, auth, supplier persistence, gate transitions, signed artifacts, client approval or operational cross-department handoff are executed. It is scenario-model testing, not shared lifecycle integration.
+- S06 semantics conflict: actual test checks 150 accepted + 5 held + 45 pending inspection. Report calls these 5 rejected/scrap and 45 rework. Same arithmetic does not make disposition meanings equivalent. Preserve the agreed states unless changed through actual supported business workflow.
+- Claims of thermal shock/CISPR verification are not supported by these software tests and must not be presented as physical product/compliance results.
+- No browser test script, browser execution log or screenshot was added by d811ae4. The report's claimed headless evidence is not independently established by this commit review; screenshots alone would not prove backend isolation anyway.
+
+Conclusion: additional unit/helper coverage passes, but the claim that every consolidated requirement is verified is not supported. All previously identified shared-master, connected-fixture and Android presentation/parity gaps remain open. RACI remains outside this review's added acceptance scope.
+
+## Latest correction review: web 1bbc9c7 / Android 9899d25
+
+This submission contains actual application changes, unlike d811ae4. Independently executed web suite: 155 tests passed; TypeScript passed; production build passed. Android testDebugUnitTest assembleDebug succeeded (see latest-review-android.log); this is not physical-device/shared-record parity verification. No application files changed during review.
+
+### Confirmed improvements
+
+- Supplier/part shared-popup callbacks now call authenticated create_record and select returned IDs. Missing optional supplier/part values no longer receive the earlier fabricated defaults.
+- SQL source introduces department checks for Supplier/Part/Customer creation and draft-supplier/engineering-part guards. PGlite now actually exercises canonical creation, selected denied departments and known pending-master rejection.
+- Six scenario screens are now wired in Android SharedTestScreen and CommandCenterScreen. S02 no-project and S06 accepted/held/pending arithmetic are retained.
+
+### Remaining acceptance blockers (existing plan scope)
+
+1. **Sample/shared separation regressed.** SharedProjectAnalysis unconditionally merges getAllScenarioFixtures() with server records/documents for every membership and renders fixtures even when the shared query fails. Local IDs such as fix-s01-prj are not persisted UUIDs. Reference/title deduplication is not canonical identity or authorization. Use separately labelled read-only DEMO presentation, or actual authorized persisted TEST fixtures; do not mix local fixtures into authenticated operational results or pass their IDs to live project navigation.
+2. **Downstream guards fail open for missing/unrecognized masters.** Independent isolated PGlite probe confirmed a Purchase order with supplier="nonexistent-supplier" and a released-stage BOM with part="nonexistent-part" both successfully create records. Current guards use IF EXISTS for recognized pending masters; they do not require valid approved/released linked originals. They also match supplier titles/MPNs and are only shown in create_record, not all canonical downstream transitions. Negative coverage must include omitted/invalid IDs and alternate edit/release paths.
+3. **Live database deployment is unverified.** The commit edits two migration files already deployed in the earlier session. Changing historical files and running them in a fresh PGlite database does not update the existing Lovable database. Provide a new forward migration and reviewed live deployment/version/transaction evidence; do not rerun a whole historical migration blindly.
+4. **Connection manifest is still local fixture objects.** getAllScenarioFixtures concatenates hardcoded AnalysisRecord/AnalysisDocument arrays; no persisted fixture-key to original UUID setup/resume flow is established here. Android reads its static LifecycleScenarios model, not these web original record IDs. UI presentation improved; shared lifecycle parity remains incomplete.
+5. **Master retry/identity handling remains weak.** Shared inline code uses last four timestamp digits for references, a new request UUID per attempt, and res?.id || supplier.id/part.id fallback. A timeout/retry can conflict or duplicate; missing returned UUID must fail rather than accept a local ID. Responsibility is still broad department checks, not demonstrated configured per-entity create capability.
+6. **Domain property persistence remains incomplete.** recordFieldValues still persists only catalogue keys. Extra UI values such as partId/mpn are not universally included for BOM/request types; adding them to parent React state does not establish durable relational links or line-item BOM coverage. Recheck per-type section 14.15 field mappings and required protected master relationships.
+
+Probe evidence: master-guard-review-probe.cjs in scratch, executed against an isolated PGlite database only; output REVIEW_PROBE confirms missing supplier and missing part were accepted. No production record/financial transaction was created by this probe. No later RACI criterion was added to this review.
+
+Acceptance: **partial implementation with real progress; not all requirements complete**. Resolve the above before accepting full shared operational readiness. Preserve working Purchasing controls and existing real data while correcting the integration.
+
+## Remediation recheck: web dd13ab0
+
+Independently reran web checks: 155 tests passed, TypeScript clean, production build passed. Android commit remains 9899d25; no new Android source claimed by this revision, so its prior build evidence is not a new device/shared round trip. This review changes no application/backend data.
+
+Confirmed corrected: SharedProjectAnalysis now uses server records/documents only; local fixtures no longer merge into operational results. SQL history was restored and a forward migration 20261025091500_harden_downstream_master_guards.sql added. The new PGlite tests exercise missing/nonexistent/pending supplier/part rejection and selected update paths. Missing-ID fallback to local supplier/part IDs was removed. Additional domain linkage keys now survive recordFieldValues.
+
+Remaining issues against the same handoff/review:
+
+1. **Forward migration prepared is not live deployment verified.** The submission provides no executed Lovable migration/version/result evidence. Keep live deployment as Not verified, not Resolved. Fresh PGlite execution only validates local SQL.
+2. **Positive approval-state requirement still fails open.** Isolated probe set an actual supplier to valid enum status `open`, removed verification_status and created a Purchase order referencing it. The RPC accepted it. Guards deny draft/in_review and explicit non-Approved flags, but do not positively require authorized approval evidence/state when the flag is absent. Probe was isolated, no production write. See remediation-guard-probe.cjs, output `open unapproved supplier with absent verification_status still accepted`.
+3. **Inline retry identity remains unstable.** Shared supplier/part handlers still use crypto.randomUUID() per attempt. Missing local-ID fallback is fixed, but timeout-after-commit/retry can still create duplicate masters/conflicts. Preserve a stable request ID and validated payload signature through retries; require duplicate detection and behavioral timeout-after-commit coverage.
+4. **Training scenarios are not the connected TEST fixture implementation.** Read-only training presentation is now an honest, safe boundary, but it does not fulfill the earlier requirement for idempotently persisted scenario fixtures, original-ID relationships and web–Android same-record lifecycle checks. Those remain explicitly incomplete, not solved by reclassifying everything as reference content.
+5. **Property allowlist is a partial persistence repair, not all department flows.** Linkage keys are now retained, but no per-type dictionary/evidence proves the full section 14.15 domain fields, line-item data, search/inline actions or approval routes. Cross-type keys including verification_status/release_status are broadly copied; authority over those fields still needs backend enforcement, not UI trust.
+
+Overall status: additional concrete fixes verified locally, but “all six blockers resolved” remains inaccurate. Keep deployment, retry behavior, truly approved master gates and connected operational fixtures open. No later RACI expectation was added.
+
+<!-- END CONSOLIDATED SOURCE 3ab47f9d8c0c4a15162be4b4f2493ee2fa86874bfe90fe2029890e984de09c0f -->
+
+
+<a id="workspace-antigravity-manual-verification-2026-10-21-md"></a>
+### Retained source: ANTIGRAVITY_MANUAL_VERIFICATION_2026-10-21.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/ANTIGRAVITY_MANUAL_VERIFICATION_2026-10-21.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE 6b8d367067e1120b672b6c975a5d047acad3b1e1951ca196a6b21f05b7640d31 -->
+# Manual verification — single Antigravity correction list
+
+Date: 21 October 2026. Tested in existing Lovable SSM-new editor preview. Editor history selected the fix(budgets-hr-team) checkpoint corresponding to reviewed local web commit ba8c96a. No publish or source changes performed. Localhost tab was unreachable, so it was left untouched.
+
+## Observed in the browser
+
+| Result | Test / evidence |
+|---|---|
+| PASS | New People & Organization entries open Budgets, My Profile and Team Communication. Earlier missing navigation is repaired. |
+| FAIL — persistence | In Admin sandbox, created INR 123 request EXP-OPS-2026-481 with purpose 'DEMO verification 2026-10-21 — persistence probe only; no purchase or payment'. Page showed successful submission and five requests. Opened My Profile and returned to Budgets: four original requests remained; probe disappeared. No reload was required. Screenshots manual-expense-before-navigation.png and manual-expense-after-navigation.png. |
+| PASS — limited | Sandbox Admin's own probe showed Self-approval prohibited. This establishes UI prevention for this case only, not complete server enforcement. |
+| PASS — limited | EHW lead budget table showed only EHW sample claim. Hardware chat listed General and Engineering-HW only, excluding purchasing/finance channels. Server/direct-ID checks were not established by these UI results. |
+| FAIL — counts/context | EHW budget table displayed one row but tab still labelled requests (4), allocations (7), and Across 11 Departments. Totals were zero under selected SLCT context while claim row belonged to AI4T. Scope totals/counts/table must use consistent project and authorization filters. |
+| PASS | Provisioned EHW TEST Employee sign-in succeeded through existing login UI; budget Scoped Persona showed TEST Embedded Hardware Engineering Employee and Shared TEST records navigation was available. No credentials are copied into this report. |
+| FAIL — identity | That authenticated TEST employee's My Profile resolved to Avery Vale, HLPL-EMP-103, Hardware Lead, avery.vale@example.com. My Letters showed Avery's appointment/promotion/signing-authority examples. Screenshots manual-test-employee-profile.png and manual-test-employee-wrong-letters.png. Current examples are synthetic; this is an identity-binding failure, not proof of disclosure of real personnel records. |
+| FAIL — TEST/DEMO boundary | Authenticated TEST budget page still displayed DEMO/Sandbox Seed and local sample allocations/claims. These modules must not imply live shared writes. Screenshot manual-test-employee-budget.png. |
+
+## One correction batch for Antigravity
+
+1. **P1: Correct person binding.** resolveEmployeeProfile currently falls back by departmentId to a department lead profile. Match authenticated organization/member/user ID exactly. Missing employee mapping must show no linked profile; never substitute the lead. Bind letters, assets, policies, training and form submissions to their actual recipient IDs. Add a test for two different members of the same department, including lead versus employee.
+2. **P1: Complete persistence and environment boundary.** New React-state workspaces lose writes merely on navigation. For DEMO use the existing canonical versioned local store. For authenticated TEST, either complete real authorized shared operations or explicitly disable mutation controls as unavailable; do not present local sandbox success as saved shared data. Do not mix partial local/shared writes. Verify navigation, reload, second login/browser and Android before claiming synchronization.
+3. **P1: Reconcile financial behaviour across platforms.** Keep the earlier code-confirmed issues: web reserves committed funds while Android posts spent funds at approval; Android role-string identity/self-approval, missing-allocation acceptance, category matching and financial approval stages need correction. Use actual member authority and one shared transaction/state contract. Configure approval thresholds instead of hardcoding INR 100,000. Complete concurrency/idempotency checks.
+4. **P2: Scope counts, totals and project context consistently.** UI filters must match authorized result rows; no global counts beside department-only results. A selected project must apply consistently to allocations and claims, with department-operational records handled explicitly.
+5. **P2: Correct status claims.** Labels such as Synchronized Team Communication / Unified Web & App Contract / atomic commitment should not imply verified shared operation while modules remain local examples. Keep DEMO clear and TEST writes fail closed.
+
+## Repaired points / avoid repeating work
+
+- Prior separate recheck: web 117 tests passed, TypeScript zero diagnostics. These tests do not demonstrate shared integration.
+- New sidebar destinations now work in actual preview.
+- EHW visible claim/channel scoping and Admin self-approval UI check worked in the tested cases.
+- Do not redo all UI or replace the colored layout; fix the specific data contracts and guards.
+
+## Deliberately not completed / not claimed
+
+The requested employee -> lead -> Finance cross-account expense flow stops at the persistence failure: a request cannot survive leaving the page. Repeating cross-device approvals against disappearing local requests would not provide meaningful evidence. No production claim/payment/approval was made. No chat messages were sent. No Android/device run, concurrent approval, no-budget/overdraft browser submission or closed-poll browser fixture was tested in this pass. Those remain acceptance gates after fixes; previous helper tests are separate evidence. Leave PDF/OCR implementation paused.
+
+## Focused retest after the fix
+
+Create one synthetic employee request in TEST; verify same ID after navigation/reload and on a second authorized account. Lead advances to Finance without posting spent; Finance reserves one exact allocation; requester cannot self-approve; unauthorized member cannot read/write it; absent/insufficient allocation fails without changing balances; repeated approval is idempotent. Confirm Android sees the same record/balances. Then check two same-department profiles remain distinct and chat/poll membership/closed state is enforced server-side.
+
+<!-- END CONSOLIDATED SOURCE 6b8d367067e1120b672b6c975a5d047acad3b1e1951ca196a6b21f05b7640d31 -->
+
+
+<a id="workspace-document-upload-pilot-baseline-2026-10-20-md"></a>
+### Retained source: DOCUMENT_UPLOAD_PILOT_BASELINE_2026-10-20.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/DOCUMENT_UPLOAD_PILOT_BASELINE_2026-10-20.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE cc490ad0726cbeeba5c75250cc77cc051322b77286a1f9fc857fa3d23b28bc1e -->
+# Document upload pilot — baseline, scope and release gates
+
+Date: 20 October 2026. Status: local implementation; browser and shared-storage verification pending. This is the first rollout slice, not completion of all document-automation phases.
+
+## Baseline
+
+| Item | Result |
+|---|---|
+| Initial local commit | `549a83a` on `main` |
+| GitHub update discovered | `9a6085a`: documentation consolidation only; fast-forwarded without rewriting history or replacing local edits |
+| Baseline regression suite | 88 tests passed, 0 failed |
+| Baseline production build | Passed; existing large-chunk / Vite configuration warnings |
+| Existing working-tree material | Untracked plans, demo files and screenshots retained; not staged as part of this pilot |
+| Browser baseline | Old localhost tab had stale module/HMR errors; server was not running. Started the existing Vite app on `127.0.0.1:8080`. The browser origin approval later timed out, so live behavior remains unverified |
+| Shared backend | Portal target is Lovable-managed `rzskhndweihuczbdhoxk`. Connected Supabase inventory did not include that project; unrelated staging project not used |
+
+## First implementation slice
+
+- Existing Documents & Deliverables layout retained; add/drag-drop opens a compact original-upload form.
+- Generic document types: schematic, PCB layout, Gerber ZIP, panel Gerber ZIP, stencil fabrication files, mechanical drawing, STEP, STL, DXF, external certificate/report and other original documents.
+- Product names are project metadata, never separate reusable upload types.
+- Explicit common/internal-project/client-project/department scope, active project where applicable, owning department and revision. No sample project/device/stage injected by upload.
+- Files saved as Internal Draft with actual browser-local author identity, SHA-256 and original bytes in the existing IndexedDB store.
+- Existing documents are not matched or overwritten by filename. The former drive shortcut could attach by fuzzy filename and mark a new document Approved; the pilot removes this behavior from that shortcut.
+- Panel and stencil packages require an explicitly selected pilot Gerber package from the same project. Save the source document ID, project ID, revision and checksum together. Existing legacy ZIPs are not silently treated as eligible sources.
+- Recheck active project/department and exact source Gerber revision against latest local state at record commit. Record and local audit event saved together.
+- Await record-save success; attempt attachment cleanup if record save is rejected. No success message on rejected save.
+- One current project filter uses existing project-workspace link resolution, including existing linked records. Default All keeps the current library visible.
+- Pilot originals can be viewed/downloaded in the existing detail screen; legacy replace/archive controls stay available for legacy documents. Pilot originals remain unchanged; a new draft upload is used for the next artifact pending the controlled-revision workflow.
+- Authenticated TEST users retain their existing shared workspace and memberships. This local pilot is read-only in their restored local-example view. It does not introduce partial shared persistence or claim Android synchronization.
+
+## Compatibility boundary
+
+No authentication, account switcher, employee membership, task assignment, task status, stage gate, approval RPC, inventory, Android code, database schema, storage policy or live Lovable configuration changes in this slice. Existing metadata and files are not migrated, deleted or assigned approval automatically. This is a source-scope statement; live regression verification is still required.
+
+Generated editable DOCX/XLSX documents, Admin PDF finalization and client-release enforcement are later phases. Nothing here grants external file access or marks an external certificate as newly issued. Extensions are checked for basic pilot compatibility; this does not certify package contents or substitute for future server-side scanning/content verification.
+
+## Verification
+
+| Check | Result / boundary |
+|---|---|
+| Regression suite after pilot | 95 passed, 0 failed: original 88 plus 7 upload-model/commit-context tests |
+| New tests | Generic type reuse; Internal Draft only; actual author/original metadata; explicit project and own department; common scope without hidden project; allowed extension/size/revision/hash; exact same-project source links; stale project/department/source revision rejection |
+| TypeScript / production build | See final execution result; completion must be confirmed before commit |
+| Browser create/open/reload/download | Pending: automatic browser-origin approval timed out without an approval decision; no unsafe-action determination |
+| Live web/Android shared storage and RLS | Pending: actual portal backend not exposed through current Supabase connector |
+| UI preservation | Change limited to document uploader, local metadata, project filter and pilot detail labels; no broad redesign. Visual comparison pending |
+
+## Next verification and rollout gates
+
+1. Browser DEMO/local account: take baseline screenshots; upload a disposable schematic and Gerber to one existing test project; create linked panel/stencil draft; open and download originals; reload and verify persistence. No real manufacturing evidence fabricated.
+2. Switch departments: own uploads remain scoped; unrelated departments and client cannot open internal originals. Verify ordinary tasks, project selection and approvals still behave as recorded. Recheck signed-in employee versus lead identities.
+3. Verify actual Lovable TEST document/file contract, recipient and storage policies before connecting this original-layout uploader. Keep the existing shared workspace working throughout. No cross-project backend substitution.
+4. Add real DOCX/XLSX templates for a small generation pilot; then exact-revision lead review, Admin approval, PDF conversion and explicit client release. Confirm revised files require reapproval.
+5. Only after browser and shared-contract checks pass, release a small reviewed commit to connected `main` and verify Lovable imported it. Broader UI work and other departments follow separately.
+
+## Rollback
+
+Keep this code on an isolated local feature branch while live checks are pending. Production `main` remains at the imported documentation baseline. Roll back a later published implementation with a normal revert commit, never force push. No schema rollback is required for this slice. Existing document records/attachments are preserved. Any local pilot drafts created during later testing remain explicit drafts; do not silently delete user data during rollback.
+
+<!-- END CONSOLIDATED SOURCE cc490ad0726cbeeba5c75250cc77cc051322b77286a1f9fc857fa3d23b28bc1e -->
+
+
+<a id="workspace-final-delivery-status-2026-10-24-md"></a>
+### Retained source: FINAL_DELIVERY_STATUS_2026-10-24.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/FINAL_DELIVERY_STATUS_2026-10-24.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE 91ad0df9b74e1a865b2c69e7c7ac8a2c879f4fef8a861cbc0f5ece399b05fdab -->
+# Delivery status — 24 October 2026
+
+- Web main: `dab7a40` pushed to origin/main. Implementation is `149ff0c`; the following commit records verified deployment outcomes.
+- Android main: `8b94155` pushed to origin/main. Implementation is `81bb41e`.
+- Both Git repositories: tracked files clean; local HEAD equals origin/main. Unrelated untracked web files were preserved.
+- Lovable UI independently displayed both new web entries as Pushed from GitHub: `fix: bind TEST workflows to shared records and preserve portal layout` and `docs: record approved backend deployment and shared verification`. This verifies import; it is not a claim that the public site was published.
+- Both backend migrations deployed on the existing approved backend. The second deployment was initially rejected by automatic review, then explicitly approved by the user and executed. Lovable returned `validation guards deployed`, 27 preserved memberships, one preserved synthetic TEST claim.
+- Web: final 123/123 tests passed, TypeScript passed, production build passed.
+- Android: 54 tests, zero failures/errors; testDebugUnitTest and assembleDebug passed. No phone installation/round-trip claimed.
+- Browser: EHW employee actual profile and original shared project/tasks; absent HR fields shown as Not recorded. Synthetic claim `EXP-f6fbf5f9` persisted after reload and appeared to EHW lead Avery Vale with the original employee/requester and correct review actions. No payment or production budget allocation was created.
+- Source evidence and remaining feature limits: `C:\Users\Test\Documents\GitHub\SSM-new-web\docs\SHARED_BUSINESS_REPAIR_2026-10-24.md`. Advanced HR builder/attachment/reminder/letter inputs, shared asset contracts, pre-project enquiry authoring and complete migration of other local modules are not claimed finished.
+- Localhost server left running and portal/Lovable tabs marked to remain open. No user tabs were closed.
+
+Evidence files in this folder: `shared-claim-reload-verified-2026-10-24.png`, `shared-claim-lead-verified-2026-10-24.png`, `final-migration-deployed-2026-10-24.png`, `portal-popup-search-verified.png`.
+
+<!-- END CONSOLIDATED SOURCE 91ad0df9b74e1a865b2c69e7c7ac8a2c879f4fef8a861cbc0f5ece399b05fdab -->
+
+
+<a id="workspace-portal-refinement-pr-md"></a>
+### Retained source: portal-refinement-pr.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/portal-refinement-pr.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE aade3af95e7e3829fbc5aac0c29717437da93a58eaa9bbac4eadd791bc432c35 -->
+Sales intake previously required an existing project, which blocked genuinely new requirements. Inquiries now receive an independent reference, can go through inquiry-owned feasibility first, and can later be associated with a real project without replacing their inquiry/review IDs or approval outcomes. New inquiries no longer inherit unrelated technical stages, sample platform assets or an assumed PoC waiver.
+
+The same checkpoint keeps the original colored portal while adding popup search, compact responsive filters, the three-column checklist with collapsed Completed, contextual task/deliverable actions, full-page Documents & Vault, distinct project code/title fields, compact record editing, and single sidebar selection. Original uploads remain internal local drafts with explicit project/type/revision and exact Gerber provenance for panel/stencil packages.
+
+Validation:
+- 108 department/model tests pass; TypeScript and production build pass.
+- Focused ESLint passes on the extracted components/helpers.
+- Browser-local DEMO: created an inquiry without a project, dispatched it to QA, approved it as QA lead, then associated it with a project while retaining its original enquiry number. Popup search, searchable project choices, full-page vault and edit popup were also checked.
+
+This is the tested UI/inquiry checkpoint for the Lovable-connected main branch. All twelve department DEMO role routes, Admin and Client navigation were additionally checked in the browser (14 roles total); this does not certify authenticated production access. No database migration, RLS/storage policy, account-switcher/authentication replacement, Android change or production publish is included. Local examples and authenticated shared TEST data remain separate. Shared decision persistence/visibility administration, workflow reminder delivery, project-team persistence, exact DOCX/XLSX generation and Admin-approved client PDF release remain follow-up phases.
+
+Department budgeting, expense/travel/asset requests, employee HR documents/policies/training/surveys, and shared tagged chat/polls/search are recorded in `docs/BUDGET_HR_AND_TEAM_COMMUNICATION_PLAN_2026-10-21.md`. That document is a phased implementation proposal; those new features are not enabled by this PR.
+
+Implementation evidence and boundaries: `docs/UI_REFINEMENT_CHECKPOINT_2026-10-21.md`. The consolidated requirements document explicitly distinguishes discussion scope from implemented work.
+
+<!-- END CONSOLIDATED SOURCE aade3af95e7e3829fbc5aac0c29717437da93a58eaa9bbac4eadd791bc432c35 -->
+
+
+<a id="workspace-purchasing-form-refinement-2026-10-24-md"></a>
+### Retained source: PURCHASING_FORM_REFINEMENT_2026-10-24.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/PURCHASING_FORM_REFINEMENT_2026-10-24.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE 63180c21b3fcab876e31b702b775d2434ce740c0cf7d28a73a30bcacb3028821 -->
+# Purchasing form refinement — 24 October 2026
+
+- Rapid prototype request and Mass production request imply their procurement tracks; the duplicate field is hidden and the derived value is saved. Other Purchasing types retain an explicit track choice.
+- Both shared editors use a searchable supplier selector populated only by accessible Supplier records. The shared snapshot currently exposes no dedicated supplier master contract; no DEMO or inferred supplier list is imported. Empty state explicitly identifies the missing shared master connection. Supplier-master integration remains incomplete.
+- Revision choices are scoped to the same controlled reference family, not all records of a type or all projects. A new reference starts at 01; existing family revisions suggest the next number. Editing offers current and next revisions. Numeric trailing reference revisions are updated to match creation payloads. Backend conflict/approval validation remains authoritative; this is not a new server-side revision allocator or reservation mechanism.
+- Purchasing's current authenticated snapshot contains one permitted project. This does not establish whether unexposed projects exist elsewhere. The selector shows its available count; no DEMO projects are added to TEST.
+
+Verification: 139 automated tests passed; TypeScript and production build passed. Browser confirmed the duplicate track field is absent for Rapid prototype request, supplier search opens, and new-reference revision displays 01 / Initial revision. The user's existing draft was preserved; no new business record, supplier or revision was submitted in this refinement.
+
+Existing broader parity findings in REGRESSION_PARITY_AUDIT_2026-10-24.md remain open. This focused refinement does not claim to resolve them.
+
+<!-- END CONSOLIDATED SOURCE 63180c21b3fcab876e31b702b775d2434ce740c0cf7d28a73a30bcacb3028821 -->
+
+
+<a id="workspace-record-creation-verification-2026-10-24-md"></a>
+### Retained source: RECORD_CREATION_VERIFICATION_2026-10-24.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/RECORD_CREATION_VERIFICATION_2026-10-24.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE d184818c6be4b68a4b00ec90f0e38617cefe4af7f332483829ec8c367f804d50 -->
+# Record creation regression repair — 24 October 2026
+
+The authenticated shared workspace had replaced the original department record-type selector with a free-text input and omitted department-specific fields. DEMO still used the earlier form, which explained the inconsistent Purchasing/Hardware experience.
+
+## Delivered
+
+- Extracted the existing department form specifications into one catalogue used by DEMO and both shared record creation editors.
+- Restored controlled record-type selection and department-specific fields in the compact shared popup and alternative register editor.
+- Saved applicable fields, validated required fields and configured choices, and excluded hidden fields belonging to other types.
+- Reopening the original shared record now exposes its department-specific editable fields.
+- Unknown department catalogues fail closed; MMF has manufacturing records instead of falling back to Hardware.
+- Task and project creation retain their separate shared actions and existing permissions. No migration or permission changes.
+
+## Evidence
+
+- 136 web tests passed, including 13 additional catalogue regression cases covering all 12 current departments, every configured type, required fields, choice validation, aliases, PRS field handling and unrelated-field exclusion.
+- TypeScript check passed; production build passed.
+- Actual Purchasing TEST session: created `HLPL-OBD0374783-PUR-VERIFY-01`, titled `TEST record selector verification`, under the existing synthetic OEM OBD tracker project. Selected `Mass production request` and procurement track `Mass production`.
+- Shared save succeeded. Reload retained the record/type; reopening its original record showed procurement track `Mass production` and the verification notes.
+- No supplier, approval, purchase order, allocation or payment was created. The synthetic record remains Draft.
+
+## Limits / remaining functional work
+
+- This is not a claim of live create/save testing for every type under every department account. Catalogue and field validation coverage is automated; the live persistence round trip was Purchasing.
+- Shared generic records currently require an existing project. Pre-project enquiry/opportunity and feasibility intake must use a dedicated source-linked workflow; forcing a dummy project is not acceptable. That end-to-end flow is not verified complete by this repair.
+- A PRS title alone does not compile customer requirements, establish feasibility or freeze an approved baseline. Source linkage and approval provenance need end-to-end verification.
+- Authenticated master fields must use real configured shared master data; DEMO supplier/location names must not be substituted. Fields without a shared master source currently accept explicit manual values.
+
+## Workflow interpretation
+
+Enquiry → opportunity → feasibility → explicit project gate → controlled requirements baseline is a reasonable company workflow. Customer requirements must already be available for feasibility; a PRS draft may develop during feasibility. Exact CRM labels and the project-creation point are company rules, not a universal mandatory sequence.
+
+Primary reference: [AIAG — Helpful Documents in the APQP Process](https://blog.aiag.org/helpful-documents-in-the-apqp-process).
+
+<!-- END CONSOLIDATED SOURCE d184818c6be4b68a4b00ec90f0e38617cefe4af7f332483829ec8c367f804d50 -->
+
+
+<a id="workspace-regression-parity-audit-2026-10-24-md"></a>
+### Retained source: REGRESSION_PARITY_AUDIT_2026-10-24.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/REGRESSION_PARITY_AUDIT_2026-10-24.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE 8e22dc473939980d6719fade484b578f70f4e9e52a5a3dd26f3cc49c42d4e8dd -->
+# Initial functional parity audit — 24 October 2026
+
+Scope: compare the earlier DepartmentProjectWorkspace wiring against the authenticated SharedOperationalWorkspace replacement. This is an initial source audit, not an exhaustive browser certification.
+
+## Cause
+
+The shared adapter preserved the visual shell and durable save contract, but did not preserve every original form and navigation interaction. Passing backend, identity and balance tests was incorrectly treated as broader workflow confidence. The missing department selector was a real regression introduced in that adapter.
+
+## Confirmed findings
+
+| Flow | Evidence / discrepancy | State |
+|---|---|---|
+| Department record creation | Shared form originally used a free-text type and omitted original department fields. | Repaired in 652c830; Purchasing live save/reload and 12 department catalogue tests. |
+| Sidebar document-type filtering | Original route passes recordTypeFilter and onClearRecordTypeFilter; shared adapter receives neither and does not pass them to the common workspace. | Functional parity gap; shared type shortcuts cannot preserve the original filtered workspace behavior. |
+| Opening a selected document | Original callback resolves the clicked document ID; shared callback ignores it and opens the entire Documents register. | Functional parity gap; direct original-document navigation is lost. |
+| Add Deliverable | Original opens the draft hub; shared callback opens the Documents register. | Different interaction; not evidence of equivalent contextual deliverable creation. |
+| Open an existing task | Shared openRecord cannot find tasks in data.records and falls back to the Tasks register. | Does not provide the original task-specific detail interaction. |
+| Pre-project enquiries | Shared generic record creation requires a project; original intake supports pre-project Enquiry / Opportunity. | Known incomplete shared workflow; no dummy project should be created as a workaround. |
+| Controlled reference generation | Original forms derive document references; shared compact form requests a manually entered reference. | Missing convenience/parity, although the backend validates the submitted reference. |
+| Shared project creation | Compact form has title/reference rather than the earlier customer/owner/target/quantity fields. | Incomplete project-input parity; requires server-contract verification before restoring fields. |
+| Decisions/templates and other local modules | Existing TEST guards explicitly block local saves rather than provide a shared counterpart. | Known incomplete shared migration, not a newly verified working shared flow. |
+
+## What is not established
+
+This comparison does not prove data loss or deleted existing records. It also does not prove the absence of additional regressions, Android parity, every role's live authorization, or standards compliance. Existing 136 passing tests and successful build cover their assertions, not omitted UI capabilities.
+
+## Required verification standard
+
+For each affected flow, compare original and shared behavior for fields, defaults, validation, role restrictions, context/filter preservation, original-record navigation, successful persistence/reload, failure preservation and approval consequences. Mark each as verified, intentionally changed, or still missing. Use synthetic test records and keep DEMO data out of authenticated persistence. Do not introduce new feature work until these parity gaps have been addressed and checked.
+
+<!-- END CONSOLIDATED SOURCE 8e22dc473939980d6719fade484b578f70f4e9e52a5a3dd26f3cc49c42d4e8dd -->
+
+
+<a id="workspace-shared-business-repair-2026-10-24-md"></a>
+### Retained source: SHARED_BUSINESS_REPAIR_2026-10-24.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/SHARED_BUSINESS_REPAIR_2026-10-24.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE fbeaa1031528622eb0e113bb12c0dfceedbf1ac374ed427b6fd9ab2ffd1d870a -->
+# Shared business repair — 24 October 2026
+
+This is implementation/verification evidence. The consolidated handoff remains the specification; this is not a replacement prompt or a claim that every master-plan feature is finished.
+
+## Source and backend
+
+Baseline: web `b6de4c3`, Android `5d10316`. GitHub fetch on 24 October found both local baselines equal to origin/main before these edits. Existing unrelated local files were preserved.
+
+The approved backend remains `rzskhndweihuczbdhoxk`. The Supabase connector lacked access to it; no substitute project was used. Migration `20261021134427_business_workspace_contract.sql` was tested in a rollback-only transaction through Lovable, then deployed through its SQL editor. Verification showed RLS enabled, anonymous RPC access false, direct authenticated table access false, 27 memberships preserved, and zero seeded business items immediately after deployment.
+
+Migration `20261024084915_business_workspace_validation_guards.sql` contains the final RPC corrections. **Deployment is awaiting fresh user confirmation at Lovable's Run anyway warning.** Automatic approval review rejected that action on 24 October; do not report this migration as deployed until its result is checked. Source tests include it.
+
+## Implemented in this repair
+
+| Area | Result |
+|---|---|
+| Identity | TEST profiles use exact authenticated membership; missing employment details stay Not recorded. Android no longer converts failed sign-in into a synthetic authenticated session. |
+| Session restoration | Web initialization no longer calls a persona callback from an uninitialized render. Failed verification blocks access without silently replacing it with DEMO data or signing out a valid session for a transient failure. |
+| Operational workspace | Reuses the existing colored DepartmentProjectWorkspace with shared records, member identities, tasks, documents and approvals. Employee task projection contains the actual assignee's work. Compact record edits write the original record. |
+| Finance | Guarded server transactions, exact allocation matching, self-approval denial, version checks and idempotent retries. Approval reserves commitment; evidence-backed posting clears commitment and posts actual expenditure once. Finance employees do not inherit Finance-lead authority. |
+| Tickets | Actual requester IDs; internal tickets exclude Sales; client-ticket notes are stripped from client results; Service controls transitions. No inferred email or organization-name identity. |
+| HR | Shared directory/employment details, immutable policy/training/form publications, real responses, required-answer validation including false/zero, audiences and recurring assignment cycles. Training submission requires separate evidence-backed HR verification. |
+| Response privacy | Anonymous answer rows do not store member/assignment IDs. Completion is separate; detailed reports are withheld below five responses. No claim of operator-proof anonymity or automatic certification. |
+| Communication | Explicit private channel membership, real senders, tags, polls, vote switching/deduplication, closed-poll denial and recipient events. Admin does not receive private channels automatically. |
+| Search | Compact popup; authenticated search uses permitted shared sources, excludes personnel profiles and raw survey answers, and does not substitute local examples. |
+| Project Analysis | Real original records/project links, tasks and authorized document metadata. Explicit dependencies and enquiry associations; missing mappings remain unknown. Removed hardcoded AI4T/readiness fallback. |
+| Tasks/layout | Today and Tomorrow/Planned, priority ordering, collapsed Completed; no third admin review lane. Calendar refresh while open; overdue retains deadlines. Smaller DEMO badge and operational lifecycle walkthrough removed from the dashboard. |
+
+The final validation migration additionally fixes the existing record_fields SQL ambiguity, preserves task priority at creation, blocks direct completion of In review tasks, and rejects missing ticket states. These particular backend corrections remain gated by deployment approval.
+
+## Evidence
+
+- Web: 123 automated tests passed before the final session fix; latest full-suite/build logs are recorded separately and must be checked before push. Focused database integration tests pass including final migration, original record editing, task priorities and review lock, budget ledger, privacy, recurring assignments and permission failures. TypeScript passed after session correction.
+- Android: 54 unit tests, zero failures/errors; testDebugUnitTest and assembleDebug succeeded. This is not a physical-device round trip.
+- Browser: authenticated EHW employee opened its actual shared project/task rather than lead examples. My Profile showed that employee and Not recorded for absent verified details, without lead letters.
+- A single clearly labelled synthetic TEST claim, INR 1.23, was created for the persistence scenario: visible reference `EXP-f6fbf5f9`, purpose `TEST verification only — persistence 24 Oct`. It is test evidence, not an approved payable, and no allocation/payment was created.
+- Browser reload after session correction retained the authenticated EHW identity. Reload/second-account claim results are recorded in the final verification log when complete.
+- Earlier screenshots: `portal-popup-search-verified.png`, `shared-business-lovable-deployment.png`. Current deployment confirmation prompt: `final-migration-awaiting-approval.png` in the SSM-new working folder.
+
+## Explicit limits / pending inputs
+
+- Final migration approval and subsequent Lovable Git import must be verified, not inferred from a local build.
+- Device installation and web↔Android same-record verification have not been performed in this repair.
+- HR letter generation/issue requires the actual approved templates, verified employee fields and designated signer policy. No signatures or employment facts were invented.
+- The shared builder currently supports text, number, date, choice, rating and boolean. Attachments, conditional sections, advanced quiz scoring, configurable reminder delivery and attendance capture remain unverified/incomplete; basic training submission is not an issued certificate.
+- Recurring assignments catch up idempotently on authorized reads; the owner-only scheduler function is prepared, but an unattended background job and email/push transport have not been configured.
+- Existing inventory/asset registers and document binaries were not replaced or duplicated. Shared asset linkage/custody and ticket attachments require their existing canonical backend contract; they are not proved complete by this business adapter.
+- Project Analysis derives explicit dependency links and authorized summaries. Missing company mappings and source inputs are not manufactured. Full enquiry authoring before project creation and inline editing of every analysis field are not established by this read adapter.
+- Decision Log and the other R01–R15 refinements retain their existing implementations; this repair does not claim every browser-local module has been migrated to shared persistence.
+- Private PDF/OCR and PCB tooling integrations remain excluded from this fixing batch.
+
+## Recovery / rollout
+
+The migrations add guarded business storage and replace RPC bodies without deleting existing organizations, members, operational records, tasks, documents, inventory or assets. Do not run DROP/CASCADE as a rollback after real data exists. Revert the client integration to the previous Git commit if necessary; preserve new business records and restore previous RPC definitions from Git inside a reviewed migration. The browser-local DEMO store is never imported into authenticated tables.
+
+Stage only the source/tests/migrations for this repair. Never add the unrelated screenshots, launch scripts, sample files, supabase/.temp or local credentials. Use normal Git pushes without rewriting history.
+
+<!-- END CONSOLIDATED SOURCE fbeaa1031528622eb0e113bb12c0dfceedbf1ac374ed427b6fd9ab2ffd1d870a -->
+
+
+<a id="workspace-ui-refinement-checkpoint-2026-10-21-md"></a>
+### Retained source: UI_REFINEMENT_CHECKPOINT_2026-10-21.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/UI_REFINEMENT_CHECKPOINT_2026-10-21.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE d21f59627de872fd2a05b00deddede2bf3ebe0717507650e9f451d64004e2a2a -->
+# Portal refinement checkpoint — 21 October 2026
+
+This records the implemented local web changes. It is not a claim that the whole discussion plan, shared backend rollout or document automation is complete.
+
+## Implemented
+
+| Area | Result |
+|---|---|
+| Existing appearance | Original colored portal, cards, department workspaces and theme retained. No authentication/account switcher or Android replacement. |
+| Portal search | Header field/icon opens a compact popup over the current workspace. Searches only the input permission-scoped records/documents, with type filtering and stable-ID deduplication. |
+| Responsive filters | Shared single-row toolbar: full labels, abbreviated labels, then icons; secondary controls move to More. Applied to tasks, approvals, inventory, purchasing BOM, search, decision log and document register. |
+| Tasks | Today/In Progress, Tomorrow/Planned and Review/Approval checklist columns; Completed collapsed below. Overdue work stays in Today until manually rescheduled. Review completion uses the designated approval flow. Direct Add Task and searchable project/assignee controls. |
+| Navigation | One canonical sidebar destination active. PRS, Schematics/BOM and DFMEA/Gerber refine the permitted document list. Favorites no longer create extra current selections. Duplicate top-bar theme/cloud/asset/settings shortcuts removed. |
+| Projects/documents | Separate project analysis overview and Manage Projects entry. Documents & Vault opens full-page; original files retain their existing identities. Searchable project selectors and contextual Add Deliverable. |
+| Record editing | Compact edit popup, explicit save result and stale-write check. Final approval/release cannot be selected in the generic edit form. |
+| Project identification | New project code is suggested separately from the descriptive title; archived identities still prevent code reuse. No existing projects renamed. |
+| Inquiries | New inquiry/opportunity can precede a project, with independent numbering. Explicit project links still require an active existing project. Unrelated hardware/software/procurement/QA defaults are excluded from submissions. |
+| Inquiry feasibility | Sales lead/Admin may dispatch inquiry-owned feasibility before a project exists. Independent contract references prevent unrelated inquiries colliding. No sample project or platform assets are silently selected. |
+| Later project association | Inquiry Edit can associate a real project. Explicit inquiry/contract/task/approval relationships are updated together while IDs, references, review outcomes and evidence remain intact. Moving an already-dispatched, already-linked inquiry requires a reviewed change. |
+| Decisions | One local Decision & Deviation Log; three scope buttons, search/project/stage filters, actual author, employee submission and lead review. Tested department visibility; no fabricated immutable-hash claims. TEST shared decision writes remain gated. |
+| Save feedback | Failed local/TEST saves do not report success. Task submission guards duplicate clicks. TEST document uploads have a direct entry to the existing authenticated shared register, which remains separate from local examples. |
+
+## Validation
+
+- 108 department/model regression tests pass, including standalone intake, pre-project feasibility, later association preserving evidence, hidden-default isolation, project-code uniqueness, sidebar selection, scoped search and decision visibility.
+- TypeScript passes. Production build passes with the existing Vite/configuration and bundle-size warnings.
+- Focused ESLint passes on the new extracted components/helpers and intake/default helpers.
+- Browser verified: popup search, live project search, distinct project code/title, contextual task form, full-page Documents & Vault, standalone inquiry save and compact record edit popup.
+- Browser created explicitly labelled local DEMO inquiries `HLPL-SAL-ENQ-0001` and `HLPL-SAL-ENQ-0002`. The second has clean fields and was dispatched to QA without a project. These are local test records, not shared TEST organization data.
+- GitHub `origin/main` checked: `9a6085a`; no newer main commit was present at the check.
+
+## Boundaries and remaining phases
+
+- No database migration, RLS/storage policy, approval RPC, server membership, Android source or live Lovable deployment changed here.
+- The portal's local demonstration views and authenticated Shared TEST records remain separate. Local saves do not establish web/Android synchronization.
+- Shared Decision Log submission, Admin-controlled cross-department log visibility, project-team membership persistence, workflow duration/reminder delivery and full backend integration remain separate work.
+- Exact DOCX/XLSX template generation and Admin-approved client PDF release need the actual reusable templates and the verified shared release/storage workflow. The audit checklist alone is not that template pack.
+- Advanced project analysis/editing and the remaining discussion-plan UI refinements are not represented as completed by this checkpoint.
+
+The requirements source is `PORTAL_UI_AND_PERMISSION_DISCUSSION_PLAN_2026-10-20.md`. The initial upload pilot and its explicit shared-storage gates are recorded in `DOCUMENT_UPLOAD_PILOT_BASELINE_2026-10-20.md`.
+
+<!-- END CONSOLIDATED SOURCE d21f59627de872fd2a05b00deddede2bf3ebe0717507650e9f451d64004e2a2a -->

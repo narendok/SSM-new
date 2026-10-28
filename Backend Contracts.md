@@ -1239,3 +1239,43 @@ The backend had zero procurement records despite the prior seed completion messa
 - `create_purchase_request_from_bom_shortage(_bom_id uuid, _required_date date)`
 
 These are not used by the Android app yet. Any future mutation must be reviewed against the current backend handoff and remain online-only when required.
+
+
+<a id="workspace-planning-consolidation--28-october-2026"></a>
+## Workspace planning consolidation — 28 October 2026
+
+These dated source files were consolidated from the working folder. Current master decisions and the ongoing Antigravity handoff take precedence; historical completion or pending statements are not current acceptance evidence. Application code, active repository handoffs and source data are unchanged. The source digest identifies the original bytes; the full source text is preserved below.
+
+| Former working-folder file | Original SHA-256 | Retained section |
+|---|---|---|
+| `shared-test-workspace.md` | `22ad0243c3c0ed3604c3be2ff8c60f42e2a13305032cd9e255506fe385199c7d` | [Retained source](#workspace-shared-test-workspace-md) |
+
+
+<a id="workspace-shared-test-workspace-md"></a>
+### Retained source: shared-test-workspace.md
+
+Original location: `C:/Users/Test/Documents/SSM-new/shared-test-workspace.md`. Treat as dated reference, not a second execution plan.
+
+<!-- BEGIN CONSOLIDATED SOURCE 22ad0243c3c0ed3604c3be2ff8c60f42e2a13305032cd9e255506fe385199c7d -->
+# Shared TEST workspace
+
+Authenticated TEST sign-in opens `SharedTestWorkspace`, backed by the existing Lovable/Supabase project. The browser-local DEMO portal and its attachments are preserved independently; TEST never reads, imports, or writes that local record store.
+
+## Shared behavior
+
+- Projects, department evidence records, tasks and assignments, cross-department approval requests/decisions, document metadata, private-file revision access, and audit activity use the normalized backend tables.
+- Reads are refreshed after each successful transaction, when the window regains focus, and every ten seconds. The header shows the last server read. A connection failure does not fall back to a local save.
+- Admin/Sales create projects. Members can update their assigned tasks; leads manage their department. Only the explicitly requested reviewer department or an administrator can decide a review. Viewers receive no internal records without a separate client-release contract.
+- Server transactions derive organization, actor and department from active membership. They serialize TEST writes, reject stale versions, preserve request identities across uncertain network retries, and create attributable audit entries atomically.
+- Stage changes call the existing checked gate RPC. The client supplies approval identities and revisions; it cannot set stage/status as a substitute for a gate decision.
+- Existing synthetic employees are assigned their known TEST department without creating users or changing passwords. No approval permission is granted to the employee role.
+
+## Boundary
+
+The shared TEST interface exposes the connected workflow modules above. The extensive demonstration-only domain screens, sample lifecycle walkthrough, inventory simulations, and local draft catalogue remain in the local DEMO portal. They are not presented as shared operational screens. Existing local records/files are not silently migrated to the cloud.
+
+## Verification
+
+`tests/shared-test-postgres.test.cjs` runs the real repository migrations against PostgreSQL via PGlite. It verifies independent actor reads, assigned-employee updates, denied cross-department reads/writes, delegated review decisions, atomic stage checks, stale edits, idempotent replay, immutable decisions, viewer restrictions and migration reapplication without data loss. The complete Node test suite, TypeScript check and production build are required before sync/deployment.
+
+<!-- END CONSOLIDATED SOURCE 22ad0243c3c0ed3604c3be2ff8c60f42e2a13305032cd9e255506fe385199c7d -->
