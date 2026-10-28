@@ -852,3 +852,8 @@ The canonical task definitions are maintained in [Sample Data and Test Plan](Fea
 ## Working-folder plan cleanup — 28 October 2026
 
 Fifteen loose dated plans/reports from `C:/Users/Test/Documents/SSM-new` are retained with original SHA-256 recovery ledgers and full text in the existing [Historical Evidence](References/Historical%20Evidence.md#workspace-planning-consolidation--28-october-2026), [Implementation Plan](Implementation%20Plan.md#workspace-planning-consolidation--28-october-2026) and [Backend Contracts](Backend%20Contracts.md#workspace-planning-consolidation--28-october-2026). Their obsolete loose copies are removed; no new archive folder or redirect file is created. The ongoing Antigravity consolidated handoff and its supporting Web/Android repository documents remain untouched while implementation is active. These retained sources do not supersede current lifecycle, shared-data, layout or approval decisions.
+
+
+## Android repair execution — 28 October 2026
+
+Use the [UI-preserving Android repair sequence](Implementation%20Plan.md#android-ui-preserving-repair-2026-10-28) in the existing implementation plan. Preserve original Compose layouts and connect authenticated shared data through those screens; no generic raw TEST replacement. A0–A4 cover baseline, presentation and existing operational flows; A5–A6 consume verified seven-track lifecycle and connected sample contracts after their shared implementation. The current inspected app source is ad2a208, not the older reported checkpoints. This is planned work, not a fresh app build or device acceptance. The ongoing Antigravity handoff is unchanged.
