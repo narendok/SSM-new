@@ -875,5 +875,35 @@
     ],
     "plant_context": "Electronics, mechanical, shared test/quality, and facility/work-center classifications are configurable metadata/views over authorized records, not duplicate ledgers.",
     "transaction_boundary": "Reuse/BOM selection does not reserve, receive, issue, procure, adjust, or post inventory. Those are explicit authorized transactions with movement audit and lot/serial genealogy."
-  }
+  },
+  "final_lifecycle_alignment_2026_11_04": {
+  "reuse_contract": [
+    "immutable revision/hash",
+    "source project/stage provenance",
+    "compatibility and dependency assessment",
+    "consuming project links",
+    "derivative revision on edits",
+    "physical inventory item links; digital reuse never changes stock"
+  ],
+  "task_count_policy": "No fixed two/five-task runtime requirement; use pinned settings revisions.",
+  "hierarchy": [
+    "fixed company TG-0 through TG-9",
+    "department internal gates",
+    "editable versioned stages",
+    "settings-derived editable task defaults"
+  ],
+  "baseline_date": "2026-11-04",
+  "status": "web implemented and verified in isolated shared TEST; Android and hosted parity pending",
+  "approval_policy": "Task completion, upload or reuse never implies approval, release, customer acceptance or certification.",
+  "folder_policy": "Four business-context groups contain seven technical folders; no automatic relocation.",
+  "reusable_family_overlays": [
+    "D08",
+    "D10",
+    "D11",
+    "D13",
+    "D14",
+    "D23",
+    "D31"
+  ]
+}
 }

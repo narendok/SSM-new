@@ -1,6 +1,6 @@
 # SSM One Historical Evidence
 
-**Reference only.** This merged record preserves historical evidence, superseded plans and the old content audit. The [current master](../SSM_ONE_MASTER_PLAN.md) overrides them. Claims of deployment/completion below apply only to their original dates and environments. Repeated identical passages were retained once across the consolidated files; unique paragraphs, tables, code and fixture definitions remain. Original versions can also be recovered from Git history at the pre-consolidation commit `60c91e8a6a774565620dbb19f6627a2633ffe365`. No new backup/redirect files are required.
+**Reference only.** This merged record preserves historical evidence, superseded plans and the old content audit. The current [workspace master plan](../SSM_ONE_MASTER_PLAN.md) overrides them. Claims of deployment/completion below apply only to their original dates and environments. Repeated identical passages were retained once across the consolidated files; unique paragraphs, tables, code and fixture definitions remain. Original versions can also be recovered from Git history at the pre-consolidation commit `60c91e8a6a774565620dbb19f6627a2633ffe365`. No new backup/redirect files are required.
 
 
 <a id="source-05"></a>
@@ -254,7 +254,7 @@ Audit date: 19 October 2026. Scope: the current SSM-new root, web repository, An
 
 | Source | Package copy | Finding |
 |---|---|---|
-| `SSM_ONE_MASTER_PLAN.md` | SSM-new project root | Active cross-platform authority. `Electronics Project Lifecycle and APQP Roadmap.md` is domain-specific supporting detail and does not override it. |
+| `SSM_ONE_MASTER_PLAN.md` | SSM-new repository root | Active cross-platform authority. Product lifecycle and APQP details are supporting references and do not override it. |
 | `ssm-new-web/SSM_ONE_WEB_PORTAL_MASTER_PLAN.md` | `Current Plans/Web Implementation Plan.md` | Current detailed web/backend subplan. |
 | `SSM-new-app/docs/planning/SSM_ONE_ANDROID_BUILD_PLAN.md` | `Current Plans/Android Build Plan.md` | Current Android subplan; references backend contracts separately. |
 | Web sync ledger and 19 October completion/evidence files | `Portal Progress and Handoffs/` | Records implementation checkpoints and qualifications. Browser/local demo checks are not authenticated production acceptance. |
@@ -285,7 +285,7 @@ Included: the feature-first build roadmap and demo/test data plan; current share
 
 Excluded: source code, SQL migration/pending-install scripts, generated catalogue build utilities, screenshots, sample controlled business documents, generic repo instructions, and every dated implementation log. Relevant recent findings are summarized in the included handoffs; the originals remain in place.
 
-The root `SSM_ONE_MASTER_PLAN.md` is the active authority. The detailed product-process reference is `Electronics Project Lifecycle and APQP Roadmap.md`; the generic system-build sequence is `Feature Roadmap/Product Build Roadmap.md`. The 40 archived source copies and their index were removed from the library after confirming all 40 original files remain at their original paths byte-for-byte. No original source file was moved or deleted. The owner removed the DOCX review copy, so the Markdown master is the maintained source.
+The SSM-new repository-root `SSM_ONE_MASTER_PLAN.md` is the active authority. The detailed product-process reference is preserved in the planning archive; the generic system-build sequence is `Feature Roadmap/Product Build Roadmap.md`. The 40 archived source copies and their index were removed from the library after confirming all 40 original files remain at their original paths byte-for-byte. No original source file was moved or deleted. The owner removed the DOCX review copy, so the Markdown master is the maintained source.
 
 <a id="source-14-user-confirmed-refinements-traced-into-this-package"></a>
 #### User-confirmed refinements traced into this package
@@ -1982,7 +1982,7 @@ Site-visit MOM/report is visible to clients in web/mobile only at its accepted c
 
 **Source:** `Historical References/SSMone Web Portal Master Plan - superseded 2026-10-14.md`. **Treatment:** historical/superseded evidence; not current execution instructions. Latest decisions at the beginning of the master plan override conflicting older universal-stage, department or completion claims.
 
-> **Historical reference, not the active master plan.** The active cross-platform authority is `C:\Users\Admin\AndroidStudioProjects\SSM-new\SSM_ONE_MASTER_PLAN.md`, with web implementation details in `C:\Users\Admin\AndroidStudioProjects\SSM-new\ssm-new-web\SSM_ONE_WEB_PORTAL_MASTER_PLAN.md`. Do not add new decisions here; reconcile any still-valid unique requirements into SSM-new before archiving this copy.
+> **Historical reference, not the active master plan.** The active cross-platform authority is `C:\Users\Admin\AndroidStudioProjects\SSM-new\SSM-Planning\SSM_ONE_MASTER_PLAN.md`, with web implementation details in the web repository's implementation plan. Do not add new decisions here; reconcile any still-valid unique requirements into SSM-new before archiving this copy.
 
 ---
 <a id="source-24-ssmone--web-portal-master-plan"></a>
@@ -3746,17 +3746,17 @@ The local browser could not reach the restarted local server during this run; fi
 <a id="source-30-ssm-one-planning-library"></a>
 ### SSM One Planning Library
 
-This folder contains the compact planning set and supporting implementation references for SSM One. The active cross-platform authority is the project-root [SSM_ONE_MASTER_PLAN.md](../SSM_ONE_MASTER_PLAN.md#source-32). Original planning files remain in their original workspace folders; this library no longer keeps duplicate source snapshots. The owner deleted the master-plan DOCX review copy; the Markdown source is sufficient.
+This folder contains the historical consolidated planning bundle and supporting references. The active cross-platform authority is the repository-root [SSM_ONE_MASTER_PLAN.md](../SSM_ONE_MASTER_PLAN.md); the archived source sections are retained only to keep historical links resolvable. The owner deleted the master-plan DOCX review copy; current decisions belong in the active Markdown master.
 
 <a id="source-30-start-here"></a>
 #### Start here
 
 | Order | Document | Purpose |
 |---|---|---|
-| 1 | [SSM One Master Plan](../SSM_ONE_MASTER_PLAN.md#source-32) | Active cross-platform authority for shared requirements and current decisions. |
-| 2 | [Electronics Project Lifecycle and APQP Roadmap](../SSM_ONE_MASTER_PLAN.md#source-18) | Electronics product lifecycle, 37-activity APQP crosswalk, and supporting rebuild requirements; crosswalk remains proposed pending process-owner approval. |
-| 3 | [Department Lifecycle and Gate Framework — APQP, Audit, and IATF Mapping](../SSM_ONE_MASTER_PLAN.md#source-17) | Stage-by-stage department checkpoints and evidence; proposed profiles for owner review. |
-| 4 | [Product Build Roadmap](../SSM_ONE_MASTER_PLAN.md#source-19) | Generic SSM One system-build phases, scope choices, dependencies, and completion evidence. |
+| 1 | [SSM One Master Plan](../SSM_ONE_MASTER_PLAN.md) | Active cross-platform authority for shared requirements and current decisions. |
+| 2 | [Electronics Project Lifecycle and APQP Roadmap](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18) | Electronics product lifecycle, 37-activity APQP crosswalk, and supporting rebuild requirements; crosswalk remains proposed pending process-owner approval. |
+| 3 | [Department Lifecycle and Gate Framework — APQP, Audit, and IATF Mapping](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-17) | Stage-by-stage department checkpoints and evidence; proposed profiles for owner review. |
+| 4 | [Product Build Roadmap](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-19) | Generic SSM One system-build phases, scope choices, dependencies, and completion evidence. |
 | 5 | [Sample Data and Test Plan](../Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md#source-20) | Reusable sample team, client/OMS, projects, product tests, modular-asset lineage fixtures, and load/reset behavior. |
 | 6 | [Web Implementation Plan](../Implementation%20Plan.md#source-16) and [Android Build Plan](../Implementation%20Plan.md#source-15) | Platform-specific implementation plans governed by the root master. |
 | 7 | [SSM One Document Catalogue — Auto-Drafting, Audit, and Native Upload Rules](../SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.md#source-31) and [its JSON mapping](../SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.json) | Single reference for document families, structured auto-drafting, audit placement, and native-upload boundaries. Original source inventory is not included in this library. |
@@ -3779,10 +3779,10 @@ Use descriptive feature labels on focused planning documents so their special sc
 
 | Former tracked source | Consolidated destination | Source SHA-256 (normalized line endings) | Repeated blocks omitted |
 |---|---|---|---|
-| `SSM_ONE_MASTER_PLAN.md` | [SSM_ONE_MASTER_PLAN.md](../SSM_ONE_MASTER_PLAN.md#source-32) | `52e21c6ff8c216870d43a013e1c6f980af550afc15024a63227264e6da283812` | 0 |
-| `Electronics Project Lifecycle and APQP Roadmap.md` | [SSM_ONE_MASTER_PLAN.md](../SSM_ONE_MASTER_PLAN.md#source-18) | `01f0c459d6c696ff0f53a2aabddca2edf828d2c3346c6494d56b253db061fb2e` | 0 |
-| `Decisions and Controls/Department Lifecycle and Gate Framework - APQP Audit IATF Mapping.md` | [SSM_ONE_MASTER_PLAN.md](../SSM_ONE_MASTER_PLAN.md#source-17) | `d0be0380140a4e2965fbed548be38139fc5473942332a2aeb28b93777bd53a23` | 0 |
-| `Feature Roadmap/Product Build Roadmap of 0-8 phases.md` | [SSM_ONE_MASTER_PLAN.md](../SSM_ONE_MASTER_PLAN.md#source-19) | `528718aec085afbb54a0b5c9afa13ae56bc0f75ea62a8a3e39f6e133e3af1f2d` | 0 |
+| `SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md` | [SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-32) | `52e21c6ff8c216870d43a013e1c6f980af550afc15024a63227264e6da283812` | 0 |
+| `Electronics Project Lifecycle and APQP Roadmap.md` | [SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18) | `01f0c459d6c696ff0f53a2aabddca2edf828d2c3346c6494d56b253db061fb2e` | 0 |
+| `Decisions and Controls/Department Lifecycle and Gate Framework - APQP Audit IATF Mapping.md` | [SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-17) | `d0be0380140a4e2965fbed548be38139fc5473942332a2aeb28b93777bd53a23` | 0 |
+| `Feature Roadmap/Product Build Roadmap of 0-8 phases.md` | [SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-19) | `528718aec085afbb54a0b5c9afa13ae56bc0f75ea62a8a3e39f6e133e3af1f2d` | 0 |
 | `Android and Backend Contracts/Android Antigravity Handoff.md` | [Implementation Plan.md](../Implementation%20Plan.md#source-01) | `dd5593d821d6a035608589a8abef4b19472ae170f1e8c0614e35433f85dee3f0` | 0 |
 | `Android and Backend Contracts/People and Client Web to Android Handoff - planned 2026-10-18.md` | [Implementation Plan.md](../Implementation%20Plan.md#source-07) | `de0cf659eeba6744f796be1d758f9324baf459f27ca374beb7179a5db9833b5c` | 0 |
 | `Current Plans/Android Build Plan.md` | [Implementation Plan.md](../Implementation%20Plan.md#source-15) | `78c22def255b59e1701bfd2e44e93431d53d0ce7cbe8f047dbc2a90f798e829f` | 0 |

@@ -76,6 +76,10 @@ Actual organization/member identity and existing shared contracts govern records
 
 A0–A4 may proceed against existing verified contracts while web lifecycle implementation continues. A5–A6 depend on corresponding shared lifecycle/fixture patches; no speculative RPCs or replacement backend. Schema changes are coordinated with the existing web/cloud operator and additive migration ledger. Do not implement financial, stock, release or approval authority in local client logic as a substitute for backend enforcement.
 
+#### Android progress checkpoint — 30 October 2026
+
+A0 source audit is underway in the existing `SSM-new-app` checkout (HEAD `b572ba7`; S10 model/test changes are present). Source review confirmed that authenticated Team & Chat and mapped department-record sections currently route through a generic shared-data screen, while the original Compose Team & Chat screen is used in demo mode. The authenticated shell previously showed a hard-coded “Synced” label and the shared screen said “Shared TEST”; both cues were corrected to reflect successful/failed cloud reads and to avoid presenting an ordinary account as TEST. The status does not claim live network monitoring. This does not complete A0 device/action audit or A1 original-screen parity. Rebuild and execute the plan’s role, denial, offline, device-install and web/mobile round-trip gates before marking parity accepted. Preserve the configured signer and app data.
+
 ### Verification and release gates
 
 - Check real authenticated Employee, own-department Lead, other-department Lead, Admin and Client cases. Capture correct original UI and verify denied data/actions as well as positive writes, counts, search snippets and files. Admin department switching does not prove least-privilege access.
@@ -87,7 +91,7 @@ A0–A4 may proceed against existing verified contracts while web lifecycle impl
 **Minimum completion evidence for each patch:** original layout retained; required action works with canonical shared data; failure/retry preserves drafts; forbidden role denied; fresh reload and web/app readback agree; relevant build/tests and device checks pass; remaining source/access/policy gaps explicitly stated. Ask the user only for an actual missing rule or necessary authenticated access, not routine implementation choices.
 
 
-Merged web/Android plans and active handoffs. The [master plan](SSM_ONE_MASTER_PLAN.md) governs scope and the [sample catalogue](Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md) governs reusable fixtures. Preserve implemented features; inspect latest source before applying old requirements. Dated build/completion statements below are not fresh acceptance.
+Merged web/Android plans and active handoffs. The [active workspace master plan](SSM_ONE_MASTER_PLAN.md) governs scope and the [sample catalogue](Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md) governs reusable fixtures. Preserve implemented features; inspect latest source before applying old requirements. Dated build/completion statements below are not fresh acceptance.
 
 
 <a id="source-01"></a>
@@ -238,7 +242,7 @@ Google API/editor feasibility is excluded from selected integration scope. Backe
 
 **Target Repository:** `C:/Users/Admin/AndroidStudioProjects/SSM-new/SSM-new-app`
 
-**Cross-platform Master Plan Reference:** [SSM-new root master plan](SSM_ONE_MASTER_PLAN.md#source-32). The [Electronics Project Lifecycle and APQP Roadmap](SSM_ONE_MASTER_PLAN.md#source-18) adds product-process requirements; the [Product Build Roadmap](SSM_ONE_MASTER_PLAN.md#source-19) sequences generic system delivery. The [detailed web implementation plan](Implementation%20Plan.md#source-16) is a subordinate web handoff; Android-local copies are historical references.
+**Cross-platform Master Plan Reference:** [SSM-new root master plan](SSM_ONE_MASTER_PLAN.md). The [Electronics Project Lifecycle and APQP Roadmap](SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18) adds product-process requirements; the [Product Build Roadmap](SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-19) sequences generic system delivery. The [detailed web implementation plan](Implementation%20Plan.md#source-16) is a subordinate web handoff; Android-local copies are historical references.
 **Authoritative Backend Contracts:** [`docs/backend-handoff/mobile_backend_contract.json`](Mobile%20Backend%20Contract.json), [`docs/backend-handoff/MOBILE_BACKEND_CONTRACT.md`](Backend%20Contracts.md#source-04), [`docs/backend-handoff/ANDROID_BACKEND_HANDOFF.md`](Backend%20Contracts.md#source-02)
 
 ---
@@ -376,7 +380,7 @@ graph TD
     * Alternate component review rationale and datasheet links (`datasheet_cache`).
     * Revision comparison between Draft/Tentative engineering BOMs and Released production BOMs (`project_boms`).
   - Authorized read view of the selected project's exact reusable-asset revisions, reuse/fit-gap decision, component/asset certificate scope, separate project/product certification status, required delta verification, and as-built genealogy. Do not infer compatibility, certification, or stage waiver from a catalog match.
-  - Keep the domain types separate as defined in [Electronics Project Lifecycle and APQP Roadmap §6.2](SSM_ONE_MASTER_PLAN.md#source-18-62-inventory-reusable-design-assets-and-plant-assets): stock item and lot/serial; reusable asset/module revision and its controlled BOM; project-pinned configuration; serialized plant asset; and actual as-built genealogy. Display the links from the server's authorized projections; never create client-side balances or infer actual use from a BOM.
+  - Keep the domain types separate as defined in [Electronics Project Lifecycle and APQP Roadmap §6.2](SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18-62-inventory-reusable-design-assets-and-plant-assets): stock item and lot/serial; reusable asset/module revision and its controlled BOM; project-pinned configuration; serialized plant asset; and actual as-built genealogy. Display the links from the server's authorized projections; never create client-side balances or infer actual use from a BOM.
   - Engineering Changes: Review active ECR/ECO records, linked tasks, and impacted parts.
 
 <a id="source-15-33-procurement--stores-stage-5-detailed-delivery"></a>
@@ -693,7 +697,7 @@ Company-name anonymization: current repository display labels, planning/referenc
 
 This is a documentation/handoff update, not an Android implementation or device verification. Existing stage/build claims above describe historical checkpoints; they do not prove current live integration. No Kotlin, Gradle, APK or backend changes were made for this update, and Android tests/build were not rerun for documentation alone.
 
-The [SSM-new root master plan](SSM_ONE_MASTER_PLAN.md#source-32) is the cross-platform authority. The detailed web checkpoint (source reference: `../../ssm-new-web/SSM_ONE_WEB_PORTAL_MASTER_PLAN.md#28-cross-department-portal-correction-and-production-acceptance--19-october-2026`; not bundled) records fixes to department scoping, navigation, document drafts, task field retention, serialized local edits, designated approvals and client routing. Fourteen web tests, TypeScript/build and a two-tab Hardware-to-Quality round trip passed locally. These results do not certify Android behavior or shared server persistence. [Web browser evidence](References/Historical%20Evidence.md#source-26).
+The [SSM-new root master plan](SSM_ONE_MASTER_PLAN.md) is the cross-platform authority. The detailed web checkpoint (source reference: `https://github.com/narendok/ssm-new-web/blob/main/SSM_ONE_WEB_IMPLEMENTATION_PLAN.md#28-cross-department-portal-correction-and-production-acceptance--19-october-2026`) records fixes to department scoping, navigation, document drafts, task field retention, serialized local edits, designated approvals and client routing. Fourteen web tests, TypeScript/build and a two-tab Hardware-to-Quality round trip passed locally. These results do not certify Android behavior or shared server persistence. [Web browser evidence](References/Historical%20Evidence.md#source-26).
 
 Live Lovable inspection found no enabled sign-in method and no organization/users or operational rows in the inspected core tables. Real organization identity and first administrator work email are required for secure provisioning; no passwords belong in plans/chat. The user approved narendok/ssm-new-web main on 19 October; web fixes and the web plan were pushed through 3403586 and received by Lovable. Live-preview Service task navigation and Finance approval scoping passed. This resolves the earlier automatic-review push block. Production publishing and Android remote sync were not performed.
 
@@ -765,18 +769,18 @@ Shared functions such as HR/OPS, Finance, SIT, and QA can contribute horizontall
 <a id="source-16-plan-boundary"></a>
 #### Plan Boundary
 
-This document is the detailed implementation subplan for the SSM One web portal and backend. The cross-platform authority is the [SSM-new root master plan](SSM_ONE_MASTER_PLAN.md#source-32); this web plan must follow its shared department names, platform contracts, delivery gates, and acceptance rules. It specifies the portal architecture, operational flows, data schemas, department ownership, document controls, and web delivery roadmap.
+This document is the detailed implementation subplan for the SSM One web portal and backend. The cross-platform authority is the [SSM-new root master plan](SSM_ONE_MASTER_PLAN.md); this web plan must follow its shared department names, platform contracts, delivery gates, and acceptance rules. It specifies the portal architecture, operational flows, data schemas, department ownership, document controls, and web delivery roadmap.
 
 The target is the connected Lovable project `a3399684-daab-4b38-8666-187b96b451af`, managed Supabase PostgreSQL backend, and private Cloud Storage. Web/Supabase owns identities, role permissions, operational records, official document numbering (`HLPL-[PROJ_ID]-[DEPT]-[DOC_TYPE]-[REV]`), transactions, immutable audit logs, automation triggers, and private document storage.
 
-Evidence generated or imported for web source belongs in `docs/evidence/`. Shared product decisions live in the project-root [SSM_ONE_MASTER_PLAN.md](SSM_ONE_MASTER_PLAN.md#source-32); electronics product-process requirements are in the [Electronics Project Lifecycle and APQP Roadmap](SSM_ONE_MASTER_PLAN.md#source-18). The [Product Build Roadmap](SSM_ONE_MASTER_PLAN.md#source-19) sequences generic system delivery. This file contains the detailed web implementation requirements.
+Evidence generated or imported for web source belongs in `docs/evidence/`. Shared product decisions live in the project-root [SSM_ONE_MASTER_PLAN.md](SSM_ONE_MASTER_PLAN.md); electronics product-process requirements are in the [Electronics Project Lifecycle and APQP Roadmap](SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18). The [Product Build Roadmap](SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-19) sequences generic system delivery. This file contains the detailed web implementation requirements.
 
 ---
 
 <a id="source-16-1-authority-and-how-to-use-this-plan"></a>
 #### 1. Authority and How to Use This Plan
 
-1. **Plan hierarchy**: The project-root [SSM_ONE_MASTER_PLAN.md](SSM_ONE_MASTER_PLAN.md#source-32) is the shared cross-platform authority. The [Electronics Project Lifecycle and APQP Roadmap](SSM_ONE_MASTER_PLAN.md#source-18) defines product-process context; the [Product Build Roadmap](SSM_ONE_MASTER_PLAN.md#source-19) defines generic system-build phases. This document governs detailed web implementation only. Historical web plans and temporary notes are source material for reconciliation, not parallel active instructions.
+1. **Plan hierarchy**: The project-root [SSM_ONE_MASTER_PLAN.md](SSM_ONE_MASTER_PLAN.md) is the shared cross-platform authority. The [Electronics Project Lifecycle and APQP Roadmap](SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18) defines product-process context; the [Product Build Roadmap](SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-19) defines generic system-build phases. This document governs detailed web implementation only. Historical web plans and temporary notes are source material for reconciliation, not parallel active instructions.
 2. **Automotive & Enterprise Standards**:
    - **IATF 16949:2016** & **ISO 9001:2015**: Quality management, customer-oriented processes (COP), contract review gates, design verification (DVP&R), PPAP Level 3, and full part traceability.
    - **AIS-140 / TAC**: Telematics and emergency system certification (ARAI/ICAT).
@@ -1216,7 +1220,7 @@ The web model must keep the following server-owned records distinct and show the
 | Plant asset | Serialized production/test machinery, fixture, tool, or calibration equipment | Links custody, site, maintenance/calibration, qualification, and compatible process/product capability |
 | As-built genealogy | Actual unit/lot configuration after build | Links project-pinned revisions to actual consumed item lots/serials and used plant/tool IDs |
 
-Model the `Asset` label as a view over these typed records, not a single table that mixes designs, stock, and machinery. The build flow is **reusable asset revision → modular child revisions and controlled BOM → inventory item masters → actual lots/serials → project-pinned configuration → authorized issue/build transactions → as-built genealogy**. Plant-asset capability is checked against the project configuration and actual build. A planned BOM or reuse selection never creates stock, reserves it, or proves actual consumption. Digital FW/SW revisions remain reusable assets without quantity balances; physical manufactured instances can separately be tracked as stock when received or built. This cross-reference follows the entity boundaries in [Electronics Project Lifecycle and APQP Roadmap §6.2](SSM_ONE_MASTER_PLAN.md#source-18-62-inventory-reusable-design-assets-and-plant-assets).
+Model the `Asset` label as a view over these typed records, not a single table that mixes designs, stock, and machinery. The build flow is **reusable asset revision → modular child revisions and controlled BOM → inventory item masters → actual lots/serials → project-pinned configuration → authorized issue/build transactions → as-built genealogy**. Plant-asset capability is checked against the project configuration and actual build. A planned BOM or reuse selection never creates stock, reserves it, or proves actual consumption. Digital FW/SW revisions remain reusable assets without quantity balances; physical manufactured instances can separately be tracked as stock when received or built. This cross-reference follows the entity boundaries in [Electronics Project Lifecycle and APQP Roadmap §6.2](SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18-62-inventory-reusable-design-assets-and-plant-assets).
 
 <a id="source-16-architectural-principles--boundaries"></a>
 ###### Architectural Principles & Boundaries

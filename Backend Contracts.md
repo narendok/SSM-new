@@ -1,6 +1,6 @@
 # SSM One Backend Contracts
 
-The [master plan](SSM_ONE_MASTER_PLAN.md) and actual authenticated backend govern the shared contract. [Machine-readable baseline](Mobile%20Backend%20Contract.json) is preserved byte-for-byte. Sections below retain earlier verified snapshots and planned requirements; do not redeploy obsolete SQL or infer live availability from a snapshot. Account/organization/RLS and independent runtime acceptance remain required.
+The [active workspace master plan](SSM_ONE_MASTER_PLAN.md) and actual authenticated backend govern the shared contract. [Machine-readable baseline](Mobile%20Backend%20Contract.json) is preserved byte-for-byte. Sections below retain earlier verified snapshots and planned requirements; do not redeploy obsolete SQL or infer live availability from a snapshot. Account/organization/RLS and independent runtime acceptance remain required.
 
 
 <a id="source-02"></a>
