@@ -3,7 +3,7 @@
 # Sample Data and Test Plan
 
 **Status:** Canonical reusable non-production fixture specification; sample requirements reconciled 27 October 2026
-**Authority:** [SSM One Master Plan](../SSM_ONE_MASTER_PLAN.md); lifecycle context: [Electronics Multi-Track Lifecycle and APQP Roadmap](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18); generic delivery phases: [Product Build Roadmap](Product%20Build%20Roadmap.md). Older crosswalk passages below are retained historical context and do not supersede the active master.
+**Authority:** [SSM One Master Plan](../SSM_ONE_MASTER_PLAN.md); lifecycle context: [Electronics Multi-Track Lifecycle and APQP Roadmap](../Electronics%20Multi-Track%20Lifecycle%20and%20APQP%20Roadmap.md). This document owns only fictional fixtures, reset boundaries and repeatable test scenarios. Older crosswalk passages below are historical context and do not supersede the active lifecycle roadmap or master.
 
 <a id="source-20-purpose-and-boundaries"></a>
 #### Purpose and boundaries
@@ -529,8 +529,8 @@ Authorized responsible leads may add, edit, reorder or remove custom tasks withi
 Acceptance must include: adding tasks before and after stage activation; editing/reordering; unused deletion; cancellation with retained evidence; dependent-removal prevention; unchanged unrelated tasks; no global-template mutation; no regenerated cancelled tasks; concurrent edits/retry; authorized department versus read-only cross-department and client denial; shared web/mobile persistence after reload; and preservation of existing task numbering, approvals and history.
 
 
-## Final implementation baseline — 4 November 2026
+## Lifecycle and fixture authority — 8 November 2026
 
-The [final portal/Android implementation plan](../../FINAL_PORTAL_ANDROID_LIFECYCLE_IMPLEMENTATION_PLAN_2026-11-04.md) supersedes earlier nine-phase summaries and fixed task-count assumptions. Deliver catalog crosswalk, settings/RACI versions, progressive activation, PMSS/single-dialog deliverables, reusable revisions/inventory links, then shared TEST acceptance. TG-0…TG-9 company phases are fixed; department stages and settings-derived task defaults are editable and versioned. Preserve the existing RACI editor. Projects pin accepted revisions; tasks/uploads/reuse never imply approval or release.
+The [SSM One master plan](../SSM_ONE_MASTER_PLAN.md) owns shared lifecycle, department and RACI rules. This document owns fictional sample companies/projects, reset behavior, and repeatable test scenarios; samples must stay clearly TEST-only and never imply real customer approval, measured performance or release.
 
-Preserve the 38 catalogue families/source coverage. Reusable PCB/harness/enclosure/CAD and documents carry immutable revision/hash, source project/stage, compatibility and consumer links. Physical units link to inventory items and stock transactions; digital reuse changes no quantity. Four business-context groups contain seven technical folders. The linked plan defines cross-platform contracts, migration safeguards and acceptance. Planning is synchronized; implementation/deployment/persisted acceptance remain pending.
+Current shared TEST lifecycle evidence is summarized in the master plan. Keep fixture IDs and expected outcomes aligned to the approved TG-0–TG-9 phases, editable settings-derived department stages/tasks, feasibility-before-track selection, controlled documents and reusable revisions. A local fixture is not proof of shared backend or Android parity.

@@ -66,7 +66,7 @@ The chapters below preserve compatible prior detail. Any universal nine-stage/ma
 ### SSM One Cross-Platform Master Plan
 
 Last reconciled: 19 October 2026
-Status: Active planning baseline. This file is the shared authority for the SSM-new project. Detailed platform documents below implement this plan and must not redefine its cross-platform decisions.
+Status: Historical source snapshot; not an active plan. The current shared authority is [SSM_ONE_MASTER_PLAN.md](SSM_ONE_MASTER_PLAN.md). Details below are retained only as dated source context and must not override current shared decisions or the six active plans.
 
 <a id="source-32-scope-and-authority"></a>
 #### Scope and authority
@@ -873,9 +873,9 @@ The user clarified that the realistic fictional active-work portfolio must be sh
 
 ## Final implementation baseline — 4 November 2026
 
-The [final portal/Android implementation plan](../FINAL_PORTAL_ANDROID_LIFECYCLE_IMPLEMENTATION_PLAN_2026-11-04.md) supersedes earlier nine-phase summaries and fixed task-count assumptions. Deliver catalog crosswalk, settings/RACI versions, progressive activation, PMSS/single-dialog deliverables, reusable revisions/inventory links, then shared TEST acceptance. TG-0…TG-9 company phases are fixed; department stages and settings-derived task defaults are editable and versioned. Preserve the existing RACI editor. Projects pin accepted revisions; tasks/uploads/reuse never imply approval or release.
+The current lifecycle decisions are in the active [SSM One Master Plan](SSM_ONE_MASTER_PLAN.md). This 28 October bundle is historical source only; do not use its older phase names, department model or task counts as current requirements.
 
-Preserve the 38 catalogue families/source coverage. Reusable PCB/harness/enclosure/CAD and documents carry immutable revision/hash, source project/stage, compatibility and consumer links. Physical units link to inventory items and stock transactions; digital reuse changes no quantity. Four business-context groups contain seven technical folders. The linked plan defines cross-platform contracts, migration safeguards and acceptance. Planning is synchronized; implementation/deployment/persisted acceptance remain pending.
+Preserve the 38 catalogue families/source coverage. Reusable PCB/harness/enclosure/CAD and documents carry immutable revision/hash, source project/stage, compatibility and consumer links. Physical units link to inventory items and stock transactions; digital reuse changes no quantity. Four business-context groups contain seven technical folders. This was the 4 November planning checkpoint; implementation/deployment/persisted acceptance remain pending in that dated snapshot.
 
 ## Web implementation evidence — 4 November 2026
 
