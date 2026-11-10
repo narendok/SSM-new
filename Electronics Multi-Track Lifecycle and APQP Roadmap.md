@@ -1,6 +1,6 @@
 # Electronics Multi-Track Lifecycle and APQP Roadmap
 
-**Status:** Refined planning baseline — 31 October 2026  
+**Status:** Current lifecycle requirements — updated 10 November 2026
 **Scope:** Cross-platform lifecycle, engineering tracks, milestone handoffs, quality/certification, and change loops  
 **Authority:** Subordinate to the [SSM-new master plan](SSM_ONE_MASTER_PLAN.md); implementation is governed by the [Web implementation plan](https://github.com/narendok/ssm-new-web/blob/main/SSM_ONE_WEB_IMPLEMENTATION_PLAN.md) and [Android build plan](https://github.com/narendok/SSM-new-app/blob/main/docs/planning/SSM_ONE_ANDROID_BUILD_PLAN.md).
 **Input reviewed:** `SCMS & Multi-Track Lifecycle Requirements (HW, FW, SW, PMSS & Milestones).md` (user-supplied). SQL and database-schema sections were not adopted or implemented.
@@ -11,7 +11,7 @@ This is the dedicated product-lifecycle reference requested for hardware, firmwa
 
 - A project may use one or more applicable engineering tracks. Hardware, firmware, software, mechanical design, quality/certification, manufacturing, sourcing, finance, service/IT and HR/operations can progress in parallel where their dependencies allow.
 - Fixed TG-0…TG-9 company phases supersede the earlier nine-phase proposal; editable department gates/stages retain explicit dependencies and revision history.
-- The hardware track retains the 37-stage `HW_01`–`HW_37` framework. Firmware and software may use their G0–G11 gate framework after the authoritative gate register is reconciled. A stage number in the supplied document is not itself a registered stable ID.
+- The hardware track retains the 37-stage `HW_01`–`HW_37` framework. Firmware and software use configured track stages beneath TG-0–TG-9; internal numbering never adds company phases. A stage number in the supplied document is not itself a registered stable ID.
 - Each stage/gate has versioned applicability, entry/exit criteria, dependencies, evidence, ownership, and decision authority. A project pins the accepted lifecycle and responsibility-matrix versions.
 - QA owns quality governance and applicable certification disposition. Engineering, manufacturing, sourcing, finance, service/IT, and other departments contribute according to the project matrix. RACI assignment never grants data access or signing authority by itself.
 - Component/asset qualification and finished-product/project certification are separate scopes. Reusable PCB/assembly, enclosure, harness, firmware, or other asset evidence is linked to its exact revision; product certification is tied to the integrated project configuration, market and applicable authority.
@@ -19,40 +19,32 @@ This is the dedicated product-lifecycle reference requested for hardware, firmwa
 
 ## Lifecycle hierarchy
 
-| Level | Meaning | Examples | Governing record |
-|---|---|---|---|
-| Project overview phase | Business-facing lifecycle summary and major decision points | Enquiry, feasibility, baseline, PoC, prototype, validation, release, certification/readiness, production | Project lifecycle template version and project instance |
-| Track gate | Engineering or operational gate within an applicable workstream | `HW_01`–`HW_37`; proposed FW/SW `G0`–`G11`; configurable MECH, EMF, MMF, QA/CERT gates | Track gate instance with entry/exit checks, dependencies and decision |
-| Substage / work package | Coherent deliverable or technical activity under a gate | Interface freeze, PCB design review, board bring-up, telemetry contract, supplier qualification | Versioned work-package definition linked to its parent gate |
-| Task / checklist item | Assigned action or verification item | Prepare pin map, review drawing, record measured result, upload issued report | Task/checklist record with owner, due date, status and evidence links |
+| Level | Governing configuration |
+|---|---|
+| Project | Accepted track scope and pinned lifecycle/RACI version |
+| Phase | Fixed TG-0–TG-9 company phase |
+| Stage | Editable scoped work, dependencies, deliverables and RACI beneath a phase |
+| Task | Configured default or authorized project task with department, assignee and evidence links |
 
 The hierarchy is navigational and traceable: a completed task does not automatically complete its parent gate. A gate is satisfied only when all applicable predecessor gates, required work, evidence, acceptance criteria and authorized decisions are satisfied. A gate can be marked not applicable only by an authorized role with a recorded rationale. A missing or unverified value remains pending; it is never inferred from a label, percentage, animation, or local demo fixture.
 
-## Historical candidate nine-phase project overview (superseded 4 November 2026)
+## Fixed phases and configurable department execution
 
-These phase names refine the supplied nine-stage proposal. The approved template owner must assign canonical stable IDs and map the phase exits to the existing gate register before implementation.
+Use the [current role-action and lifecycle demo pack](Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md#current-demo-pack-for-role-actions-and-lifecycle-automation) to demonstrate all seven tracks and applicable TG-0–TG-9 stages. Sample counts, tasks, record/profile types, assignees and RACI derive from the selected settings revision. Fresh walkthroughs start before project creation; synthetic later-phase checkpoints are labelled separately. Feature acceptance requires actual saved-state readback, role isolation and user requirement confirmation.
 
-| Phase | Summary | Typical outputs / exit evidence |
-|---|---|---|
-| 1. Enquiry and intake | Record customer/program request, source material, commercial context and intake owner. | Reviewed enquiry/opportunity; required customer inputs identified; NDA only when applicable. |
-| 2. Feasibility and contract review | Collect applicable department assessments, assumptions, risks, constraints, costs and capacity. | Consolidated feasibility decision, conditions, owners and evidence; unresolved conflicts remain visible. |
-| 3. Requirement baseline and authorization | Resolve and approve the project requirements and commercial assumptions; identify the exact baseline and authorization to proceed. | Version-pinned PMSS/requirement baseline; recorded decision and permitted project-start condition. A client PO is not assumed for every project. |
-| 4. Architecture and proof of concept | Select applicable product tracks; test feasibility of key interfaces and concepts. | Architecture/PMSS references, PoC plan/results where performed, track scope and interface candidates. |
-| 5. Prototype and pilot build | Prepare the prototype configuration and traceable materials/assemblies; coordinate suppliers and manufacturing capability. | Tentative BOM and linked revisions; approved build request; outsourced PCBA lot evidence when applicable; build records. |
-| 6. Validation and pre-compliance | Execute planned engineering, product, software, manufacturing and quality verification on identified configurations. | Actual test records and external reports; issues, dispositions, corrective actions and retest evidence. |
-| 7. Design and configuration release | Freeze applicable HW/FW/SW/MECH design revisions and release controlled manufacturing data. | Approved release package, exact revision/effectivity, open-change disposition, and handoff acceptance. |
-| 8. Certification and production readiness | Complete applicable certification, supplier, process, capacity, tooling, training and quality readiness work. | Authentic certificates/reports where required; approved supplier/process readiness; authorized readiness decision. |
-| 9. Production, final test and delivery | Build against released configuration, record unit/lot traceability, final inspection/test and shipment. | Work-order/traveler, as-built identity, actual EOL/PDI results, authorized release and dispatch records. |
+Use **Project → Phase → Stage → Task**, with exactly ten company phases TG-0–TG-9 and names from the reconciled New Hexa source. The earlier nine-phase overview is superseded. Internal track gates are stages under a phase; a tollgate is the authorized boundary decision, not another work level.
 
-These are overview phases, not mandatory sequential department gates. Track work may run in parallel; the dependency graph determines which decisions block which downstream work. Post-release field service, warranty, RMA and feedback are a connected lifecycle loop, not an unreviewed tenth phase.
+The [master plan's department and lead rules](SSM_ONE_MASTER_PLAN.md#department-ownership-and-multiple-lead-roles) govern configurable departments, multiple department assignments per lead and access. Settings map stage/default-task ownership and RACI to departments; resolve people from department assignments instead of hard-coded names or one primary role. CFT/PM belongs to Operations; confirmed enclosure/3D manufacturing stages belong to MMF. Shared workspace grouping preserves separate records and permissions.
+
+Authorized leads refine scoped stages/default tasks; Admin manages shared mappings. Generate eligible default tasks once according to dependencies and the pinned configuration. Cross-department handoffs link the same project, stage, task, controlled record and document revision. Deliverables support auto-drafting from verified source parameters and/or original upload according to their configured type and eligible stage. Show provenance and missing inputs. Drafting, upload and task completion do not automatically approve a stage or tollgate. Existing projects change configuration only through a reviewed update.
 
 ## Track catalogue and applicability
 
 | Track / function | Default planning scope | Current boundary |
 |---|---|---|
 | EHW — Embedded Hardware Engineering | Requirements, architecture, circuit/PCB design, tentative/released BOM, verification, change and release | Use the reconciled `HW_01`–`HW_37` register; the supplied attachment's detailed task mapping is proposed material, not the verified register. |
-| FW — Firmware | Firmware requirements, architecture, BSP/drivers, application, security, testing, hardware integration, signed release and field maintenance | G0–G11 is a candidate shared gate framework; confirm gate definitions and internal substages before task generation. |
-| SW — Cloud & Application Software | Product/app/cloud requirements, interface contracts, architecture, implementation, security, tests, integration, staged deployment and monitoring | G0–G11 is a candidate shared gate framework; product feature software is distinct from this company portal's implementation work. |
+| FW — Firmware | Firmware requirements, architecture, BSP/drivers, application, security, testing, hardware integration, signed release and field maintenance | Use configured stages and default tasks beneath TG-0–TG-9. |
+| SW — Cloud & Application Software | Product/app/cloud requirements, interface contracts, architecture, implementation, security, tests, integration, staged deployment and monitoring | Use configured stages/default tasks beneath TG-0–TG-9; product software is distinct from portal implementation. |
 | MECH — Mechanical Engineering | Enclosure/part design, fit/thermal/DFM, drawings, tooling/package and design changes | Separate from MMF manufacturing. The attachment combines EHW and MECH without defining a standalone authoritative MECH gate register. |
 | QA — Quality Assurance & APQP | Quality planning, risk analysis, verification criteria, inspection/disposition, nonconformance/corrective action, audit and release review | Independent quality authority remains separate from the executing department. Regulatory applicability is product/market-specific. |
 | PUR — Purchasing & SCM | Sourcing, supplier qualification, RFQ/PO and supply readiness | Supplier/commercial actions require their verified contracts and approvals. |
@@ -133,52 +125,25 @@ Production shipment, service/RMA return or replacement, and R&D evaluation/sampl
 
 ## Document-control alignment
 
+Use the catalogue's [consolidated generation and role Docs Vault plan](SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.md#consolidated-generation-and-role-docs-vault-plan) for role profiles, generation/upload boundaries and TG-0–TG-9 document coverage. Every configured stage binds applicable required/optional profile IDs and exact source revisions. Reconcile conflicting source stage aliases before activation; a missing mapping is visible pending work. Project deliverables and operational/audit documents link into authorized role vaults and the central index without copies. Source changes propose draft updates and preserve approved history; independent review controls phase completion.
+
 The document catalogue remains the authority for document families, formats, auto-draft boundaries, uploads and the four top-level department groups: **Common & Standards**, **Internal Projects**, **Client Projects**, and **Department Operations & References**. This lifecycle plan does not add a seven-folder hardware tree or cap the system at twelve templates. A project's PMSS is a structured, versioned project baseline that links approved requirements, track configuration, gate decisions and controlled files; it does not replace native engineering artifacts or the catalogue.
 
 Auto-generated drafts may prefill only from authorized, verified project fields and linked source revisions. Native schematics, PCB/Gerber, firmware/software source and builds, mechanical STEP/CAD/drawings, actual test reports, and certificates are authored/issued in specialist tools and uploaded or linked. BOM is created in the portal from controlled item records; tentative BOM does not reserve stock or authorize procurement. Preview and downloaded DOCX/PDF rendition must reflect the same saved revision. A file attachment alone does not satisfy a gate without the configured review/acceptance decision.
 
-## Attachment reconciliation
+## Source and acceptance boundaries
 
-| Proposal in supplied document | Decision in this roadmap |
-|---|---|
-| Four-level hierarchy: project phases → track gates → substages → tasks | Adopt as the organizing model; keep stable IDs and versioned mappings. |
-| Nine overview phases | Adopt as a candidate default summary; parallel/conditional tracks and not-applicable decisions remain supported. |
-| HW–FW and FW–SW handshakes | Adopt as reusable, configurable handoff patterns with explicit package and acceptance. |
-| `C01`–`C15` certification breakdown | Retain as a candidate for QA review; no fixed durations or mandatory standards until applicability is approved. |
-| Four change loops and field RMA feedback | Adopt as separate controlled patterns; changes and repairs require human-authorized decisions. |
-| Five project modes, although six are listed | Replace with a configurable set of applicable tracks; do not encode a fixed mode count. |
-| Old EFW/ESW/TST and merged-manufacturing labels | Reject for active naming; follow the root plan's FW/SW and EMF/MMF model, with TST retired as a department. |
-| Seven fixed hardware folders and twelve document templates | Reject as competing taxonomy; follow the current document catalogue. |
-| Fixed product quantities/costs, facility names, engineering thresholds, durations and test claims | Do not import as company/project facts; require verified project or approved standards inputs. |
-| SQL DDL, triggers and task-spawner implementation | Not reviewed or adopted here; current backend plan/status governs, and SQL changes require a verified canonical schema and authorized migration workflow. |
+The reconciled New Hexa source governs fixed TG-0–TG-9 phase names and stage/task mappings; the master plan governs current department, lead-role and RACI decisions. Older SCMS proposals, nine-phase summaries and candidate internal gate numbering do not override these settings. Retire old labels through explicit stable-ID mappings so historical records remain readable.
 
-## Open validation before implementation
+QA confirms certification applicability and genuine component/product evidence for the actual market and configuration. Engineering, manufacturing and service handoffs retain scoped ownership and acceptance. Do not import illustrative quantities, costs, durations, thresholds or test claims as company facts. Supplied SQL proposals do not authorize database changes.
 
-1. Reconcile the exact `HW_01`–`HW_37` list and `FW`/`SW` G0–G11 definitions against the current approved lifecycle register; remove duplicates or old numbering only through controlled mapping.
-2. Define separate MECH engineering, EMF electronics manufacturing and MMF mechanical manufacturing gates, including the handoff to/from QA and service.
-3. Have QA validate the conditional C01–C15 certification crosswalk, component-vs-product evidence scope, and applicable standards by product/market.
-4. Pin the default nine-phase crosswalk and dependencies to the agreed hardware product lifecycle scenario; mark optional/branch-specific gates.
-5. Agree policy and authority for production, service/RMA, and R&D-to-client device shipments.
-6. Do not schedule backend-dependent implementation until the current backend identity, base schema, permissions, and contracts in the cross-platform plan are restored and verified.
+Verify configured task generation, cross-department access, handoff/review decisions, draft/upload and revision reuse through the sample test plan. Platform implementation and deployment status belong in the web and Android plans; historical test counts are not current acceptance claims.
 
 ## Companion references
 
 - [Cross-platform master plan](SSM_ONE_MASTER_PLAN.md)
 - [Web portal implementation plan](https://github.com/narendok/ssm-new-web/blob/main/SSM_ONE_WEB_IMPLEMENTATION_PLAN.md)
-- [Android build plan](../SSM-new-app/docs/planning/SSM_ONE_ANDROID_BUILD_PLAN.md)
-- [Document catalogue — Auto-Drafting, Audit, and Native Upload Rules](../SSM-new-app/docs/planning/SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.md)
-- [Sample Data and Test Plan](SSM-new/Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md) — concrete fixtures for exercising the lifecycle; sample values do not define required gates or real project facts.
+- [Android build plan](https://github.com/narendok/SSM-new-app/blob/main/docs/planning/SSM_ONE_ANDROID_BUILD_PLAN.md)
+- [Document catalogue — Auto-Drafting, Audit, and Native Upload Rules](SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.md)
+- [Sample Data and Test Plan](Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md) — concrete fixtures for exercising the lifecycle; sample values do not define required gates or real project facts.
 - [Android backend status snapshot](../SSM-new-app/docs/backend-handoff/mobile_backend_contract.json)
-
-
-## Final implementation baseline — 4 November 2026
-
-The [cross-platform master plan](SSM_ONE_MASTER_PLAN.md) owns the current phase, department, RACI and acceptance decisions. The [web plan](https://github.com/narendok/ssm-new-web/blob/main/SSM_ONE_WEB_IMPLEMENTATION_PLAN.md) and [Android plan](https://github.com/narendok/SSM-new-app/blob/main/docs/planning/SSM_ONE_ANDROID_BUILD_PLAN.md) own their platform work. This roadmap owns only the electronics phase/stage/task crosswalk; it does not claim that every crosswalk row or project path is fully accepted in live use.
-
-Preserve the 38 catalogue families/source coverage. Reusable PCB/harness/enclosure/CAD and documents carry immutable revision/hash, source project/stage, compatibility and consumer links. Physical units link to inventory items and stock transactions; digital reuse changes no quantity. Four business-context groups contain seven technical folders. The linked plan defines cross-platform contracts, migration safeguards and acceptance. Planning is synchronized; implementation/deployment/persisted acceptance remain pending.
-
-## Web implementation evidence — 4 November 2026
-
-Web refinements are implemented in isolated shared TEST: fixed TG phases, editable versioned stage/task settings with preserved RACI, pinned projects and reviewed migrations, guarded progressive work, eight-tab PMSS, same-dialog upload/reuse and immutable reusable revisions with inventory item links. The measured catalog has 89 stages and 38 document families; default task count is configurable. Browser save/reload/upload/retry/two-project reuse and a hash-matched original download were verified. Final checks: 258/258 tests, TypeScript, web build and whitespace check passed. Canonical stage projection was checked against the TEST database.
-
-Evidence: `ssm-new-web/docs/evidence/lifecycle-2026-11-04/WEB_LIFECYCLE_VERIFICATION.md`. Android runtime and hosted Lovable parity remain pending; native PDF export and every full business scenario are not claimed verified. No production writes, stock postings, customer acceptance or cloud business gate approvals were made. Earlier statements that runtime implementation is wholly pending are superseded only for the web behavior documented in that evidence.

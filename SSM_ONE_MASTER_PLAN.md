@@ -1,6 +1,6 @@
 # SSM One Cross-Platform Master Plan
 
-**Updated:** 8 November 2026
+**Updated:** 10 November 2026
 **Status:** Single authority for shared SSM One product requirements. Web and Android subplans implement this plan; they do not redefine shared lifecycle, organization, data or approval rules.
 
 ## Document map — one owner per topic
@@ -38,6 +38,16 @@ Employee self-service includes the person's permitted profile details, assigned 
 
 Each department has its own settings, procedures, supported registers, task templates and access scope. Shared teams can participate in a project where the configured responsibility matrix says they apply. No department inherits access simply because another department was merged into the same workspace.
 
+### Department ownership and multiple lead roles
+
+Department identity, workspace grouping, lead assignment and stage RACI are separate settings linked by stable IDs. A department owns its registers and work. One active person may lead multiple departments, such as Service and IT or Operations and HR; assign that person to each required department in Settings. Do not duplicate people or merge records. CFT/PM belongs to Operations; the confirmed enclosure/3D manufacturing stages belong to MMF.
+
+Explicit department assignments grant only configured capabilities and record scope. RACI selects Responsible, Accountable, Consulted and Informed departments; it does not grant access. Resolve task owners through those departments' lead/member assignments. Grouping workspaces grants no permissions. Independent review and alternate approvers remain required where applicable, including personal requests when one person leads both departments.
+
+Authorized leads edit their permitted stages and default tasks; Admin manages shared department/lead mappings and cross-department configuration. Keep ten fixed company phases TG-0–TG-9. Stages, dependencies, default tasks, deliverable mappings and RACI are versioned settings beneath them. New work uses the accepted configuration; existing projects keep their pinned version until a reviewed update. A lead change requires explicit audited handling of pending tasks/reviews and preserves historical signatures. Saved settings must feed all authorized portal views and the Android contract through one shared source, with refreshed views after saving.
+
+Acceptance: assign one lead to two departments and reload; verify both permitted workspaces, related record creation, generated task ownership, draft/upload options and scoped review actions; deny an unrelated lead. Verify tasks generate once from eligible stages/defaults and RACI. Verify pending work and attribution after changing the lead. Verify local, shared TEST and Android separately. The [multi-track roadmap](Electronics%20Multi-Track%20Lifecycle%20and%20APQP%20Roadmap.md) owns lifecycle details and handoffs.
+
 ## 3. Project lifecycle and work automation
 
 Use **Project → Phase → Stage → Task**. The company overview has fixed phases TG-0 through TG-9, named from the reconciled New Hexa source. A tollgate is the recorded decision at a phase boundary, not another work level. Within phases, authorized settings owners can edit applicable department stages, descriptions, dependencies, evidence/document links, RACI and default task templates. The settings screen filters stages by selected phase. Keep stable IDs and version history.
@@ -65,6 +75,8 @@ When a stage becomes eligible, create its configured default tasks for applicabl
 
 The document catalogue is the single source for the 38 document families and their mappings. Generate editable drafts from verified project, stage, people and settings data; show provenance and leave unknown/conflicting values for authorized review. An auto-draft is not an approved document.
 
+The [consolidated generation and role Docs Vault plan](SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.md#consolidated-generation-and-role-docs-vault-plan) owns role-wise profiles, TG-0–TG-9 deliverables, customer intake bindings, output formats and audit coverage. Each role's Docs Vault and the central index show the same canonical documents with scoped access. Company, role, policy, template and source-record changes refresh live indexes and flag affected drafts for reviewed regeneration; issued documents keep their original revisions until superseded. Lead/member assignments, RACI, document signers and workspace grouping remain separate configurable relationships. The supplied drafting specification is reconciled to the configured departments and stage IDs; its 25-role count, sample limits and illustrative data do not override Settings. Completion requires profile-by-role/stage coverage and saved-state verification, not a document count.
+
 Minimize effort with one contextual record/document dialog: infer project, current phase and eligible stage; record type determines its fixed stage rule. Allow draft entry, original-file upload or authorized reuse in the same flow. Common documents can be created without a project; project deliverables require one. Keep originals immutable and drafts/revisions distinct. Upload, reuse, task completion or a generated template never implies approval, release, certification or customer acceptance.
 
 PCB, harness, enclosure/3D, firmware and documents may be reused by linking an exact compatible source revision. Derivatives preserve source, project, stage, revision and consumer lineage; changing the source does not silently change existing projects. Physical inventory is tracked separately from digital design/document files.
@@ -81,6 +93,8 @@ RACI is separate from access and signer authority. Enforce organization membersh
 
 Use a realistic but explicitly fictional, resettable shared TEST portfolio for demonstrations and acceptance. Keep TEST distinct from production and browser-local fixtures. Reset is an authorized web Admin control; shared TEST data should be read consistently by web and Android. A local fixture, URL role, screenshot, passing unit test or HTTP response does not prove hosted persistence or cross-platform parity.
 
+The [current role-action and lifecycle demo pack](Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md#current-demo-pack-for-role-actions-and-lifecycle-automation) owns fixtures for all seven technical tracks, TG-0–TG-9 checkpoints, configured record/profile types, multi-department roles and task automation. It derives counts and mappings from the selected Settings revision. Demonstrate each implemented feature with saved-state readback and role-denial checks, then obtain user requirement confirmation before the next demo. User confirmation is distinct from business approval. The initial seven-track pack is loaded and save/reload verified in browser-local TEST, including enquiry dispatch and the repaired enquiry-specific feasibility shortcut. Later-phase business execution, document generation, shared TEST and Android coverage remain pending; the web plan records the implementation checkpoints.
+
 ## 8. Current evidence and remaining acceptance
 
 The latest recorded shared TEST verification confirms phase-filtered settings, RACI table editing, the 110-stage/478-default-task configuration, a fictional enquiry-to-project phase-0 path, and a project record with a private original shown as Draft. On 8 November, local browser TEST showed scoped ticket help, a recurring-issue candidate and an editable linked follow-up draft.
@@ -89,6 +103,6 @@ Still open: full TG-0–TG-9 business acceptance; all configured role/RACI and n
 
 ## 9. Delivery and completion rule
 
-Deliver in this order: (1) reconcile source, schema and settings; (2) verify department/people permissions and versioned RACI; (3) complete enquiry → feasibility → opportunity → project start; (4) verify phase/stage/default-task automation; (5) finish contextual record, drafting, upload and revision reuse; (6) complete department workflows for Procurement, Finance, QA, Service/IT and HR/OPS; (7) verify the shared TEST portfolio in web and Android; (8) report remaining gaps and deployment boundary.
+Deliver in this order: (1) reconcile source, schema and settings; (2) verify department/people permissions and versioned RACI; (3) complete enquiry → dispatch to Opportunity and feasibility → authorized decision and track selection → project start; (4) verify phase/stage/default-task automation; (5) finish contextual record, drafting, upload and revision reuse; (6) complete department workflows for Procurement, Finance, QA, Service/IT and HR/OPS; (7) verify the shared TEST portfolio in web and Android; (8) report remaining gaps and deployment boundary.
 
 For each feature, record the changed source, environment, role, saved record and reload/readback evidence. Run relevant web or Android checks after implementation. Close a feature only when positive and negative permissions, persistence, retries, linked records and user-visible behavior are verified. Never force-push, overwrite local work or claim parity from a plan or local test alone.

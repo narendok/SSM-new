@@ -905,5 +905,172 @@
     "D23",
     "D31"
   ]
-}
+},
+  "generation_and_role_vault_plan": {
+    "updated": "2026-11-10",
+    "status": "Consolidated requirements; new source profiles not claimed deployed",
+    "owner_document": "SSM One Document Catalogue - Auto-Drafting Audit and Native Upload Rules.md#consolidated-generation-and-role-docs-vault-plan",
+    "sources": [
+      {
+        "path": "References/SCMS Role-Based & Stage-Wise Auto-Drafting Master Specification.docx",
+        "sha256": "313528e960a2afc20be066ab8ca752ed14f3d7b81ad6713f2632413aa07ee512"
+      },
+      {
+        "path": "References/Autodrafted template for header footer.docx",
+        "sha256": "8cf0aecb348537d8805d70be54b78f293574ee0bc9b5c9a35eb83dea4600a2d7"
+      },
+      {
+        "path": "References/SCMS_Customer_Data_Drafting_Pack.md",
+        "sha256": "0c993bfce38b53717753069f7caddc6f085e46a471598c11fe8763c77fbe6dbd"
+      },
+      {
+        "path": "References/SCMS_Customer_Data_Drafting_Templates.json",
+        "sha256": "0a5bb22569fe443c610991a2577b06f452cb05990de36cfbc98abc3eef769c5c"
+      },
+      {
+        "path": "References/SCMS_Expanded_Customer_Intake.xlsx",
+        "sha256": "11d3b6fa7ae8a24d4d9de9cf1489d22d23e25987212ae21c3f754dfcc6eaf679"
+      },
+      {
+        "path": "References/SCMS_Portal_Intake_Handoff.md",
+        "sha256": "1b713270da32d0e4cc466d3a0fbc44b0139195f34c0863a449a41569747e6dc7"
+      },
+      {
+        "path": "References/Smart Company document management system audit checklist .xlsx",
+        "sha256": "1c9e17f21cc3fcd55d21184530cd7f576e6f935b7b9edcc95fe6018c442c7034"
+      }
+    ],
+    "fixed_phases": [
+      "TG_0",
+      "TG_1",
+      "TG_2",
+      "TG_3",
+      "TG_4",
+      "TG_5",
+      "TG_6",
+      "TG_7",
+      "TG_8",
+      "TG_9"
+    ],
+    "hierarchy": [
+      "Project",
+      "Phase",
+      "Stage",
+      "Task"
+    ],
+    "department_role_contract": {
+      "registry": "Settings; initial twelve departments; extensible",
+      "multiple_departments_per_lead": true,
+      "CFT_PM": "Operations",
+      "DOC_CTRL": "Configured capability, not mandatory department",
+      "SW_BE_SW_FE_SW_APP": "SW role profiles",
+      "STR_DSP": "Configured procurement/store/dispatch functions",
+      "TST": "QA/execution testing function; not a restored department",
+      "MMF": "Confirmed enclosure/3D stages",
+      "authorization": "Explicit membership/capability and scope; RACI and workspace grouping do not grant access"
+    },
+    "customer_profile_family_map": {
+      "INTAKE_SUMMARY": [
+        "D03"
+      ],
+      "CRS": [
+        "D04",
+        "D08"
+      ],
+      "CLARIFICATIONS": [
+        "D04"
+      ],
+      "SCOPE": [
+        "D04",
+        "D05"
+      ],
+      "FEASIBILITY_INPUT": [
+        "D05"
+      ],
+      "QUOTATION_INPUT": [
+        "D06"
+      ],
+      "PRS": [
+        "D08"
+      ],
+      "FUNCTIONAL_REQ": [
+        "D08",
+        "D09"
+      ],
+      "TARGET_SPEC": [
+        "D08"
+      ],
+      "DVP_PLAN": [
+        "D13"
+      ]
+    },
+    "required_profile_fields": [
+      "id",
+      "family_id",
+      "subtype",
+      "owner_department_id",
+      "role_capability",
+      "context",
+      "track_variant_applicability",
+      "phase_stage_bindings",
+      "operational_trigger",
+      "requiredness",
+      "prerequisite_evidence",
+      "source_bindings",
+      "calculations_units",
+      "editable_fields",
+      "output_formats",
+      "template_version",
+      "branding_version",
+      "review_approval_release_route",
+      "classification",
+      "retention",
+      "source_aliases",
+      "mapping_status"
+    ],
+    "generation_modes": [
+      "structured_draft",
+      "native_original_upload",
+      "authorized_exact_revision_reuse"
+    ],
+    "output_formats": {
+      "narrative": "DOCX and A4 portrait PDF where supported",
+      "register_matrix": "Genuine XLSX and A4 landscape PDF where supported",
+      "native_engineering": "Uploaded specialist-authored originals plus generated metadata cover/index"
+    },
+    "vault_contract": {
+      "identity": "One canonical document with exact revisions linked into role/project/central views",
+      "contexts": [
+        "Common & Standards",
+        "Internal Projects",
+        "Client Projects",
+        "Department Operations & References"
+      ],
+      "audit": "Versioned applicable checklist items link to owner/profile/source/file/revision/validity; dated manifest for exports",
+      "access": "Server checks at list, preview, export and download; confidential fields filtered"
+    },
+    "update_contract": {
+      "triggers": [
+        "company_branding_location",
+        "department_lead_role_RACI",
+        "requirement_BOM_design_test_evidence",
+        "policy_SOP_template_standard_audit_checklist",
+        "operational_event",
+        "scheduled_review_expiry"
+      ],
+      "editable_drafts": "Flag stale sources; preview/merge proposed section diffs and preserve manual edits",
+      "issued_documents": "Immutable history; new superseding revision with review and effectivity",
+      "processing": "Versioned source dependencies, deduplicated event keys, retry/error state, audit and configured notifications"
+    },
+    "source_reconciliation_gaps": [
+      "SCMS_Expanded_Intake.json referenced but absent; validated export and existing portal-key mapping required",
+      "DFMEA HW_13 versus HW_11 and DVP HW_14 versus HW_12 need canonical stage crosswalk",
+      "Legacy G0_00/OTS/ESW stage aliases need reviewed mapping",
+      "25 role labels are functions, not a fixed department registry",
+      "Example company addresses, thresholds, schedules and certification banners need configured verified values",
+      "In-house SMT/THT not adopted; retain current outsourced-PCBA/assembly scope",
+      "Audit workbook rows/editions/applicability must be reconciled; overlapping specification ranges are not item IDs"
+    ],
+    "acceptance": "Profile-by-role/stage coverage, actual sources, supported output rendering, persistence/replay, independent approvals, multi-department lead access and negative tests, update diffs, revision/expiry/audit manifests; shared TEST and Android parity separately verified"
+  }
 }

@@ -2,17 +2,113 @@
 <a id="source-20-sample-data-and-test-plan"></a>
 # Sample Data and Test Plan
 
-**Status:** Canonical reusable non-production fixture specification; sample requirements reconciled 27 October 2026
+**Status:** Canonical fictional sample and live-demo acceptance plan; updated 10 November 2026. New pack specified below is planned, not a claim of seeded or accepted runtime data.
 **Authority:** [SSM One Master Plan](../SSM_ONE_MASTER_PLAN.md); lifecycle context: [Electronics Multi-Track Lifecycle and APQP Roadmap](../Electronics%20Multi-Track%20Lifecycle%20and%20APQP%20Roadmap.md). This document owns only fictional fixtures, reset boundaries and repeatable test scenarios. Older crosswalk passages below are historical context and do not supersede the active lifecycle roadmap or master.
 
 <a id="source-20-purpose-and-boundaries"></a>
 #### Purpose and boundaries
 
+Auto-drafting acceptance is owned by the [consolidated generation and role Docs Vault plan](../SSM%20One%20Document%20Catalogue%20-%20Auto-Drafting%20Audit%20and%20Native%20Upload%20Rules.md#delivery-and-acceptance). Add a fictional portfolio covering the ten customer-data profiles, applicable deliverables in every TG-0–TG-9 phase, common/operational documents for all configured roles, one lead in multiple departments, genuine sample original files and audit checklist links. Exercise company/lead/policy/source changes, stale drafts, preserved manual edits, superseding revisions, expiry and denied access. Keep results, signatures, certification and business acceptance distinct from generated drafts. Missing profile/stage/question mappings remain explicit gaps rather than invented data.
+
 Define a small, linked dataset for demonstrating and testing SSM One across web, Android, and backend. Every fixture is synthetic and visibly marked `DEMO_ONLY`. This plan defines the intended sample contents and lifecycle; it does not seed a database or authorize production data changes.
 
-Use the master plan's department registry, access rules and terminology. The nine-stage examples below are the preserved legacy baseline, not a mandatory lifecycle for every track. New sample packs follow track → phases → stages → tasks, with track-specific applicability and versioned mapping to existing stage IDs. Active department labels are **SAL, EHW, FW, SW, MECH, PUR, QA, EMF, MMF, FIN, SIT, HR/OPS**. **EMF** handles electronics box-build using outsourced PCB assemblies; **MMF** handles mechanical manufacturing; in-house PCB assembly is out of scope. FW and SW are the active software department labels.
+Use the master plan's department registry, access rules and terminology. The nine-stage examples below are preserved historical references. The current hierarchy is **Project → fixed Phase TG-0–TG-9 → configured Stage → Task**, with track/variant applicability applied to that graph. Active department labels initially are **SAL, EHW, FW, SW, MECH, PUR, QA, EMF, MMF, FIN, SIT, HR/OPS**; the registry and role assignments are configurable. **EMF** handles electronics box-build using outsourced PCB assemblies; **MMF** handles mechanical manufacturing and the confirmed enclosure/3D stages; in-house PCB assembly is out of scope. FW and SW are the active software department labels.
 
 RACI describes work responsibility only. It never grants record access, approval authority, or signing rights. Access is checked independently using authenticated identity, organization membership, project/record scope, and capability. A project pins the approved responsibility-matrix version; future departments can be added through configuration without changing lifecycle stages.
+
+## Current demo pack for role actions and lifecycle automation
+
+**Pack key:** `SCMS-ROLE-LIFECYCLE-2026-11-10-v1`. This section governs new sample implementation and supersedes conflicting older starting states, nine-stage examples and hard-coded role/task assumptions below. Keep old manifests and historical records versioned; load this pack with its own deterministic entity keys. Link current fixtures to existing LC2 scenario keys without overwriting user-created work. Resolve current display names and assignments from the fixture's configured roster, not names copied from old narrative examples.
+
+**Initial implementation checkpoint, 10 November:** the seven-track entry-stage slice is loaded and save/reload verified in browser-local TEST. Its manifest records the actual saved counts and selected Settings revision. Remaining later-phase, document/profile, original-file, supplemental-scenario, shared TEST and Android coverage stays planned. See the web implementation plan for runtime details; loading a fixture does not complete its business walkthrough.
+
+### Shared sample configuration and provenance
+
+Snapshot the chosen company, department/role assignments, lifecycle revision, stage RACI, default task definitions, deliverable/profile mappings, branding and policy versions into the pack manifest. Retain each entity's saved UUID, fixture key, environment, source references, owner, assignee, actor, revision, expected status and replay identity. Store actual loaded counts; do not force 110 stages, 477/478 tasks or a fixed department count if Settings has changed. Never generate a second configuration catalogue just for demonstrations.
+
+Provision fictional Admin, lead/member pairs for every active department, document-controller capability, scoped client accounts for two different customers, a viewer and an unmapped employee. Add one multi-department lead, one authorized alternate reviewer and one inactive/replaced lead. Assign department responsibilities through Settings; CFT/PM belongs to Operations. Service/IT grouping preserves separate ticket responsibilities. Every relevant active role/profile/stage must have a sample or a recorded coverage gap. Keep credentials out of documents and fixture files.
+
+Maintain two independent fixture modes: **walkthrough** starts from an unsent enquiry/internal request with no Project or selected engineering track; **checkpoint** opens a later phase with clearly labelled synthetic prior history and pinned source versions. Prefer real TEST actions during a walkthrough. Checkpoint history is seeded simulation, not proof those approvals/tests were executed. Never present seeded signatures as human decisions or use checkpoint status as live verification evidence.
+
+### Seven technical track demonstrations
+
+| Scenario key and intended post-feasibility track | Fictional project/story | Distinct required demonstration |
+|---|---|---|
+| LC2-P01 · `hardware_only` | Internal harness continuity/EOL jig | Internal requester and accepted scope; schematic/layout/BOM, outsourced PCBA and MMF fixture; QA verification and asset handoff. No default FW/SW development |
+| LC2-P05 · `firmware_only` | Firmware defect correction on an existing controller | Exact existing board/HSI/build reference; defect → scoped requirements → patch/review/regression → candidate release. No new PCB or manufacturing branch unless explicitly required |
+| LC2-P07 · `software_only` | Internal service application | PRD/SRS, role permissions, API/schema, implementation/security/integration, staging/rollback and release; no mandatory PCB/BOM/assembly |
+| LC2-P03 · `hardware_firmware` | Client fleet-tracker PoC | Customer requirement → hardware/firmware interfaces → board bring-up → firmware integration → QA and client feedback. PoC approval never authorizes production automatically |
+| LC2-P09 · `firmware_software_existing_hardware` | Existing device connectivity upgrade | Existing platform pinned; FW/cloud payload contract, simulator, compatibility, joint validation and coordinated releases; no new hardware design by default |
+| LC2-P04 · `hardware_firmware_software` | Client vehicle gateway pilot | Parallel EHW/FW/SW and applicable MMF/PUR/QA/EMF work; exact interface/asset revisions, integration, field pilot, applicable production and service handoff |
+| LC2-P08 · `ready_made` | Existing-product configuration and deployment | Fit/gap, existing released product/configuration, order/fulfilment, installation, verification and support; no automatic custom engineering from product contents |
+
+The track column is the scenario's intended choice after an authorized feasibility decision; it is not preselected in the enquiry. Internal/client origin, new/variant/change intent, PoC/pilot/production purpose and certification applicability are independent dimensions. Use reviewed variants to cover them rather than multiplying unrelated copies. Add LC2-P06 as the production/reconciliation checkpoint, LC2-P10 as the uncertain multi-domain research case, and LC2-P02 as the declined enquiry/opportunity with no Project. Correct any old LC2-P10 example that pre-creates a Project while feasibility is pending: its future project key is reserved metadata only until start is authorized.
+
+For each track retain the ten-phase overview, calculate applicable configured stages/dependencies, and show omitted stages with a reason. A software-only or ready-made project must not be forced through irrelevant fabrication, homologation or manufacturing work merely to fill every phase. Cover every phase through the overall portfolio and every applicable phase/stage in each track. Certification is a conditional branch with real applicability review, not a default successful certificate.
+
+### Role actions and linked record types
+
+| Role/function | Positive action sample | Related record/profile examples and negative case |
+|---|---|---|
+| Admin/configuration owner | Save lifecycle/role settings, preview impact and create new defaults revision | Company, department, stage/default task/RACI; old project stays pinned; ordinary member cannot configure global authority |
+| SAL lead/member and scoped client | Capture/clarify enquiry, dispatch to Opportunity and selected feasibility reviewers | Customer, Enquiry, Opportunity, SOR/requirements, clarification, scope and quote input; another client cannot read it; Project/track unavailable before decision |
+| Operations/CFT/PM | Coordinate readiness, charter/PMSS, risks and phase review | Charter, PMSS, risk, handoff and gate-review records; CFT is not an extra department; no bypass of engineering/QA decisions |
+| EHW lead/member | Prepare requirements/design, BOM and linked sourcing handoff | PRS, KPA, Schematic, BOM, Gerber release, review/change; native original plus generated cover; future-stage upload and unrelated-department edits denied |
+| FW lead/member | Prepare SWRS/HSI, implementation task, smoke/regression and release candidate | Firmware specification/design, test plan/report, Firmware release and change; developer cannot provide required independent review |
+| SW lead/member | Prepare requirements/contracts, implementation, test and deployment candidate | PRD/SRS, API/payload/UI review, software FMEA, security/test/release; unauthorized production deployment not implied by a saved draft |
+| MECH/MMF lead/member | Review assigned geometry, clearance, tooling and part/assembly work | STEP clearance, CAD original, FAI, tooling, dimensional/leak plan/report and WI; confirmed enclosure/3D stage ownership remains MMF |
+| PUR/stores/dispatch | Receive goods/service request, compare suppliers, PO/receiving and packing | Supplier, Part, Purchase request/order, quotation, GRN and serial manifest; unqualified supplier/held stock block the corresponding action |
+| EMF lead/member | Use released inputs for outsourced-PCBA acceptance and assembly/build trace | Traveler/build, PFD/PFMEA/control plan, startup, checks, maintenance and lot/serial records; no simulated in-house SMT process |
+| QA/reviewer | Review evidence, request correction, decide permitted independent gate | DVP&R, IQC/IPQC/FQC/PDI, NCR/8D CAPA, PPAP/PSW and certificate index; blank template or absent actual result cannot pass a gate |
+| FIN lead/member | Review direct travel/reimbursement, procurement-linked payment and budget/quote inputs | Expense, budget, invoice, settlement and financial summary; self-approval and unrelated HR/client access denied; no real payment |
+| HR/Operations lead/member | Prepare people/competency/policy/operational readiness | Training, skill matrix, onboarding, controlled letter/policy, review/acknowledgement; protected employee details excluded from general project views |
+| SIT/Service/IT/facilities | Create ticket, dispatch scoped help, record visit/RMA and recurring issue | Ticket/help response, service draft, backup/access/DR check, EHS/service register; help does not grant full access or silently close a ticket |
+| Document controller and reviewer | View exact canonical revision, review pending draft and compile scoped audit coverage | Master document index, role vault and checklist/manifest; unissued Draft is never completed audit evidence |
+| Multi-department lead/alternate/viewer | One account handles two assigned departments, alternate reviews when independence requires | No copied person/records; denied third-department access; replaced/inactive actor loses future authority while attribution remains |
+
+Record names above are semantic coverage, not new enum declarations. Resolve each to the configured supported record/profile ID and owning stage before loading. Track missing/unsupported types explicitly. A generic `Stage evidence` wrapper cannot substitute for a required subtype's fields or native original. Shared Customer/Supplier/Part masters are reused by exact IDs across projects; edits and permission scope remain independent.
+
+### Live walkthrough checkpoints by phase
+
+| Checkpoint | Records and action demonstrated | Expected automation and blocked case |
+|---|---|---|
+| Settings foundation | Filter phase/department, edit one stage/default task, choose R and one A, preview/save/reload | New defaults revision; old project/task snapshots unchanged; inactive owner, dependency cycle and duplicate task key rejected |
+| TG-0 intake/feasibility | Save enquiry/internal request, SOR answers, dispatch, department responses and decision | Dispatch idempotently creates Opportunity/feasibility work; chosen R/lead receives tasks; track/project creation waits for authorized decision |
+| TG-1 requirements/interfaces | Accept baseline, start project, prepare applicable PRS/SRS/HSI/contracts | Project pins settings; eligible defaults generated once; missing required clarification or interface acceptance blocks dependent work |
+| TG-2 PoC | Plan experiment, link exact sample/revision, enter synthetic observed results and review | Optional branch decision recorded; planned targets alone cannot populate actual test results or mark completion |
+| TG-3 engineering | Prepare design/native original, BOM and procurement handoff; task reassignment/custom task | Cross-department tasks use configured owners; current/previous eligible record stage rules apply; no list-position inference for parallel branches |
+| TG-4 integration | Pin board/FW/SW/mechanical configurations and interface evidence | Parallel work continues where ready; incompatible or missing interface/source revision blocks integration review |
+| TG-5 verification | Populate actual TEST measurement fields, attach sample report, fail one check and retest | Failure routes controlled corrective work; no certificate/PASS inferred from template, upload or task completion |
+| TG-6 field/certification | Field ticket/visit, conditional certification evidence, pilot review | Only applicable scope required; expired/missing evidence blocks the relevant release, not unrelated work |
+| TG-7 pilot launch | PFD/PFMEA/control plan, WI, training/startup and pilot traveler | Released configuration and qualified/current inputs required; independent QA review remains separate |
+| TG-8 ramp-up | Applicable PPAP, supplier/calibration/inspection, lot disposition | Reconcile planned/accepted/held/pending quantities; never release held/pending units or create real inventory transactions |
+| TG-9 handover/closure | PDI/manifest, as-built/manual/service package, lessons learned, closure review | Canonical revision links and actual TEST decision; outstanding required work/acceptance prevents closure |
+| Operational/change loop | Ticket/CAPA/policy/training/Finance event and requirement/template/lead update | Role vault/index updates; editable drafts show proposed differences; issued files and original actors stay immutable |
+
+### Automation and configuration variation tests
+
+- Generate tasks from the pinned version and applicable stage graph; use stable project/stage/default-task keys. Activating or refreshing twice and retrying the same request creates no duplicates. Future tasks stay planned until their prerequisites are satisfied.
+- Vary default counts, task titles, owners and RACI through authorized Settings. A task assigned to a new R department routes to its configured lead/member; one A receives the review. C/I notifications respect access. Unknown/inactive department or missing owner is a visible blocking configuration gap, never a fallback assignment to Admin.
+- Compare a new project with an existing pinned one after settings changes. New work uses accepted defaults; old work changes only through reviewed migration with impact preview. Lead replacement explicitly handles pending assignments/approvals and preserves past signatures.
+- Create/edit/reorder a custom task before and during activation. Unused deletion and used-task cancellation follow configured controls; dependencies/evidence stay linked. Cancelled tasks never regenerate, and deleting work never passes a gate.
+- Exercise two ready parallel branches, a blocked dependency, optional omission with rationale, a returned review, failed validation/retest, declined feasibility and a change after release. Derived progress must distinguish done work, pending review and approved phase decisions.
+- Repeat with two clients and an internal project: no title/filename inference, no cross-client originals, and no client access to internal cost/HR/security data. Test explicit cross-department help without exposing the full protected record.
+
+### Document generation and role audit vault samples
+
+Use all ten source profiles (`INTAKE_SUMMARY`, `CRS`, `CLARIFICATIONS`, `SCOPE`, `FEASIBILITY_INPUT`, `QUOTATION_INPUT`, `PRS`, `FUNCTIONAL_REQ`, `TARGET_SPEC`, `DVP_PLAN`) and later-stage profiles from the catalogue. Each sample links its family ID, profile/template/branding version, stage eligibility, requirement baseline and source revisions. Native original samples must have actual bytes and expected size/hash/type; do not seed attachment metadata without a file and call upload verified. Use synthetic fixture originals, not forged certificates, lab findings or real customer files.
+
+Include unanswered/conflicting inputs, true zero/false values, compatible and incompatible units, two variants, SOR extraction candidates and manual edits. The missing `SCMS_Expanded_Intake.json` and unresolved source stage aliases remain coverage gaps until reconciled. DVP planning populates expected targets only; actual TEST results come from a separate explicit simulated execution action and stay visibly synthetic.
+
+For every configured role, include an applicable common/standard template, operational record where relevant, project deliverable where applicable, pending review and scoped vault/audit link. One canonical document may appear in several permitted views. Exercise Draft → review/return → approval → release on exact revisions, a superseding version, an expired item and a not-applicable audit clause with reason. Check company/branding/policy/source changes create reviewed draft updates and reminders rather than overwriting issued files. Confirm document list, preview, export and original download enforce the same scope.
+
+### Manifest, demonstration order and acceptance receipt
+
+The loader manifest must include `packVersion`, `schemaVersion`, `mode`, `scenarioKey`, environment/organization, configuration pins, deterministic entity map, expected roles/actions, upstream/downstream IDs, file hashes, synthetic-history flags, row counts and gaps. Track coverage in one generated view by **track × applicable stage × record/profile × role/action**. Counts derive from Settings; every required combination must be Verified, Failed, Planned, Needs source mapping or Not applicable with rationale.
+
+Run Settings foundation first, then TG-0 intake/feasibility on a fresh fictional request, then each applicable phase in order with ready parallel tracks visible. Demonstrate the seven track variants and operational/audit loops using the same configuration source. After each completed feature, leave the exact screen/record open, explain expected versus observed behavior, and obtain the user's requirement confirmation before moving to the next demonstration. Record user confirmation separately from a business approval; approval of the UI never passes a gate.
+
+Capture a concise acceptance receipt with environment, pack/config versions, actor/capability, scenario, record/revision, action, expected/observed result, save/reload readback, permission-denial result and remaining gaps. Test simulated decisions through authenticated TEST actors and explicit remarks; never silently impersonate a signer. Browser-local, shared TEST, web deployment and Android results have separate status. Existing settings UI save/reload evidence does not complete the rest of this pack. Implementation and actual seeded/verified counts belong in the platform plans; this document remains the fixture and acceptance specification.
 
 <a id="source-20-sample-data-operations"></a>
 #### Sample data operations
@@ -60,30 +156,10 @@ Use two fictional sample employees per department: a lead (`A`) and a member (`M
 | HR/OPS | `DEMO-HROPS-M` | Aman Kapoor | HR/Operations Coordinator | Record training assignments and evidence fixtures. |
 
 <a id="source-20-legacy-baseline-detailed-development-gates-mapped-to-nine-portal-stages"></a>
-##### Legacy baseline: detailed development gates mapped to nine portal stages
-
-The legacy sample lifecycle and RACI below use the earlier **nine top-level project stages**. Preserve these as a versioned reference and map them explicitly when adopting the latest track → phases → stages → tasks hierarchy; do not force all nine stages or every department into every track. They do not replace detailed engineering activities or turn every activity into a separate portal stage. The [Electronics Project Lifecycle and APQP Roadmap](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18) retains **37 detailed activities (`HW_01`–`HW_37`)**, with APQP phase gates 1–5, and proposes their mapping to the nine portal stages in [§5.2](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18-52-preserve-the-complete-37-activity-apqp-framework). That crosswalk still needs process-owner approval before it becomes the operating workflow.
-
-The master plan does not yet define a numbered firmware-specific gate sequence. Firmware requirements, builds, and verification belong in the shared project lifecycle and should use versioned firmware work packages/gates mapped to the relevant portal stages once the firmware process owner approves them. This sample plan does not invent gate names or counts. Hardware and firmware gates should link to common project requirements, revisions, evidence, owners, and approval controls. See the [Department Lifecycle and Gate Framework — APQP, Audit, and IATF Mapping](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-17) for the proposed department-by-department profiles.
-
 <a id="source-20-example-stage-raci"></a>
-##### Example stage RACI
+#### Superseded nine-stage examples
 
-This is an illustrative, versioned demo configuration. `A` is accountable for the named demo gate/work package, `R` performs work, `C` is consulted, and `I` is informed only if authorized to read the record. `—` means no default assignment. Split stage work into separate packages where needed (for example, EMF build and MMF build), with exactly one accountable owner per package.
-
-| Stage | A | R | C | I | Demo remark |
-|---|---|---|---|---|---|
-| 1. Sales intake and client portal | SAL | SAL | EHW, FW, SW, MECH, QA | PUR, FIN | Fictional enquiry and client profile; no real contact or commitment. |
-| 2. Cross-department feasibility | SAL | EHW, FW, SW, MECH, PUR, QA, EMF, MMF, FIN, SIT, HR/OPS | — | — | Show department responses and one open assumption. |
-| 3. Requirement freeze and commercial confirmation | SAL | EHW, FW, SW, MECH, PUR, FIN | QA, EMF, MMF | SIT, HR/OPS | Draft baseline with deliberately missing source values; cannot be marked verified. |
-| 4. Design and development / PoC | EHW | EHW, FW, SW, MECH | QA, PUR, SIT | SAL, EMF, MMF, FIN, HR/OPS | Link revisioned design and software drafts; no fabricated build artifacts. |
-| 5. Pilot build and manufacturing readiness | EMF | EMF, MMF, PUR | EHW, MECH, QA, FIN, HR/OPS | SAL, FW, SW, SIT | Separate EMF/MMF travelers and simulated outsourced-PCBA receipt. |
-| 6. Client validation and pre-compliance | QA | EHW, FW, SW, MECH, EMF, MMF | SAL, SIT | PUR, FIN, HR/OPS | DVP&R plan with simulated results only; no claimed measurements. |
-| 7. Production release and PPAP | QA | EHW, FW, SW, MECH, EMF, MMF, PUR | FIN, SAL | SIT, HR/OPS | Demonstrate blocked release until required evidence is approved. |
-| 8. Type approval and supply readiness / mass-run authorization | SAL | QA, PUR, EMF, MMF, FIN | EHW, FW, SW, MECH | SIT, HR/OPS | Authority, capacity, and supply values remain `Not recorded`. |
-| 9. SOP, production inspection, delivery and feedback | EMF | EMF, MMF, QA, PUR, SAL, FIN, SIT | EHW, FW, SW, MECH | HR/OPS | Demonstrate blocked closure without verified release and delivery records. |
-
-This example is for UI and workflow tests only. Replace it with an owner-approved matrix before using it for a real project. Matrix membership, assignment, and RACI do not imply access or signer authority.
+The old nine-stage sample/RACI tables are retired from this active plan. Use the current seven-track demonstration and ten-phase checkpoints above; all RACI and default tasks come from the selected Settings revision. Historical manifests retain their original IDs and assignments. Do not translate old numeric stage labels by list position or use an old display name as current authority.
 
 <a id="source-20-legacy-baseline-linked-client-oms-and-project-fixtures"></a>
 #### Legacy baseline: linked client, OMS, and project fixtures
@@ -251,119 +327,11 @@ Current status: this update adds the requested sample coverage and placement pla
 
 **Current source and decision boundary.** This catalogue adapts the user's milestone guide and SCMS Multi-Track reference, keeping the confirmed portal scope and original UI. It is a versioned planning/fixture contract, not deployed SQL, a claim of standards compliance or authorization to seed real business data. Seven tracks are now confirmed, including Firmware + Software on existing hardware. Task generation is progressive, while the full planned roadmap stays visible.
 
-### Phase and milestone model
+### Phase and milestone configuration source
 
-| Profile | Default phases | Applicability |
-|---|---|---|
-| Common | CM-P1 Request/feasibility; CM-P2 baseline/plan; CL-P1 release/handover/closure | Internal requests need no client; a declined enquiry remains pre-project. |
-| Hardware | HW-P1 requirements/feasibility; HW-P2 architecture/schematic; HW-P3 layout/native outputs; HW-P4 prototype/verification; HW-P5 pilot/release | All 37 reference activities are preserved below. Mechanical, jig, external testing and production work apply only if required; outsourced PCBA replaces in-house SMT assumptions. |
-| Firmware | FW-P1 scope/interfaces; FW-P2 architecture/environment; FW-P3 implementation; FW-P4 verification/integration; FW-P5 release/support | FW_01–FW_13 are distinct activities grouped into phases; G0–G11 remain source gate aliases, not 12 mandatory project phases. |
-| Software | SW-P1 scope/contracts; SW-P2 design/environment; SW-P3 implementation/security; SW-P4 verification/acceptance; SW-P5 deployment/support | SW_01–SW_11; cloud, telemetry, device registry and OTA details are conditional, not required for every application. |
-| Coupled integration | INT-P1 interface agreement, integrated verification and pilot feedback | Apply HW/FW and/or FW/SW handshakes to selected domains; no dependency on absent new hardware. |
-| Ready-made | RM-P1 fit/gap; RM-P2 configuration; RM-P3 deployment checks | No new schematic, board or firmware development by default. A custom extension changes the reviewed scope. |
-| QA certification | CERT-P1 applicability/agency; CERT-P2 pre-compliance; CERT-P3 final testing; CERT-P4 evidence/decision | C01–C15 are optional QA-owned workstream activities, not an eighth project track. |
+Use TG-0–TG-9 and the current lifecycle revision from Settings. Internal gate labels, stage codes, task titles/counts, role ownership, dependencies and exit documents are properties of that revision. The former static stage/task catalogue is removed from this sample plan to prevent drift. Generate the fixture manifest and planned-work preview from the same selected revision and keep stable template-task identities. New or edited configurations are adopted by existing projects only through a reviewed migration.
 
-Milestones record completed outcomes and link stage evidence: M01 requirements accepted; M02 plan/kickoff agreed; M03 design/interface baseline; M04 prototype or feature build ready; M05 integration verified; M06 validation accepted; M07 pilot disposition; M08 authorized release/deployment; M09 support handover; M10 closure. Select applicable milestones rather than force ten onto every project. A milestone needs owner, criteria, dependencies, actual evidence and configured approval where required. Unplanned dates remain empty. No automatic financial posting, client acceptance or release follows from a task checkbox.
-
-**BOM costing rule — 28 October:** Hardware submits its tentative BOM; Purchasing reviews that same BOM/revision in one consolidated costing and sourcing analysis. Component prices (RAM, MCU, modem, connectors and other lines), quantities, currency, quotation source/date, availability, lead time and unresolved assumptions belong in that linked analysis, not separate default price tasks. Reuse canonical parts, suppliers and quotations wherever available; unknown values remain unresolved rather than fabricated. Firmware RAM/Flash sizing remains a technical feasibility requirement, not a purchasing-price task. Only an actual missing quote, alternate-part decision or sourcing blocker may create an assigned follow-up. A changed BOM revision identifies affected lines and requires review of stale cost evidence; it must not duplicate the whole task set. HW_05 is an early technical response, so it does not depend on HW_19. Preserve the existing 89 stage codes and 178 task keys; T02 of HW_19 belongs to PUR, subject to existing permissions and approval rules.
-
-### All phase/stage/task templates in one file
-
-Template namespace is **LC2-2026-10-28**. Each stage key is `LC2-2026-10-28:<code>`; its two ordered task keys are `<stage-key>:T01` and `<stage-key>:T02`. Reference codes HW_01 etc are aliases inside this version only. Never overwrite an older stage UUID or infer equivalence from equal numbers. Owners below are default Responsible departments; Accountable/signatory assignments follow the existing governed matrix. Supporting departments do not gain access through a dependency.
-
-| Phase | Stage code and name | Default owner | Prerequisites / applicability | T01 — default task | T02 — default task |
-|---|---|---|---|---|---|
-| CM-P1 | CM_01 — Request and input capture | SAL | none | Capture internal request or client source and objective | Link verified input sources and identify missing values |
-| CM-P1 | CM_02 — Applicable feasibility review | SAL | CM_01 | Collect relevant departmental feasibility remarks and risks | Record accepted scope or reasoned decline without creating a dummy project |
-| CM-P2 | CM_03 — Requirements baseline | SAL | CM_02 | Resolve required parameters and document exclusions | Route baseline to existing authorized approvers |
-| CM-P2 | CM_04 — Plan and kickoff | SAL | CM_03 | Assign accountable owners and dependency-aware schedule | Record kickoff decisions and agreed acceptance criteria |
-| HW-P1 | HW_01 — Hardware requirement capture | EHW | CM_01 | Review electrical and physical requirements with source provenance | Record clarification queries and missing parameters |
-| HW-P1 | HW_02 — Hardware PRS baseline | EHW | HW_01,CM_03 | Populate the shared electrical and interface parameter table | Review the hardware requirement baseline through existing authority |
-| HW-P1 | HW_03 — Component feasibility and alternatives | EHW | HW_01 | Search canonical parts and compare supported alternatives | Link sourcing availability and obsolescence risks from approved sources |
-| HW-P1 | HW_04 — System architecture and power tree | EHW | HW_02,HW_03 | Draft functional blocks and interface boundaries | Calculate power and thermal budgets from approved requirements |
-| HW-P1 | HW_05 — Initial technical feasibility response | EHW | HW_03,HW_04 | Record architecture and component assumptions without requiring the later tentative BOM | Submit technical feasibility, risks and unresolved commercial assumptions |
-| HW-P2 | HW_06 — Evaluation setup or breadboard | EHW | HW_04,HW_05 | Select existing evaluation boards and bench setup | Record configuration and verify the required concept functions |
-| HW-P2 | HW_07 — Prototype component request | EHW | HW_03 | Select canonical part revisions and requested quantities | Submit linked prototype request with approved alternates where available |
-| HW-P2 | HW_08 — Prototype procurement and acceptance references | PUR | HW_07 | Link authorized supplier order and receipt records | Obtain QA acceptance or keep held components unavailable |
-| HW-P2 | HW_09 — Pinout and draft hardware-firmware interface | EHW | HW_04,FW_02 when FW is selected | Review required pin assignments and conflicts | Record the joint interface baseline or existing-platform reference |
-| HW-P2 | HW_10 — Circuit calculations and simulation | EHW | HW_04 | Calculate selected circuit blocks against source requirements | Link native simulation evidence and design assumptions |
-| HW-P2 | HW_11 — Symbols footprints and native models | EHW | HW_03 | Validate library pin mappings and package footprints | Attach authorized native model references and library revision |
-| HW-P2 | HW_12 — Concept peripheral and signal checks | EHW | HW_06,HW_08 | Run approved bench checks using available test tools | Record interface observations and linked firmware build only where applicable |
-| HW-P2 | HW_13 — Design risk review | EHW | HW_04,HW_10 | Identify circuit failure modes and mitigation actions | Review risks using the applicable company-approved method |
-| HW-P2 | HW_14 — Verification planning | QA | HW_02,HW_13 | Map requirements to tests criteria units and configurations | Review planned evidence and applicable external testing needs |
-| HW-P2 | HW_15 — Schematic preparation | EHW | HW_09,HW_10,HW_11 | Create revisioned schematics in the engineering tool | Link the native schematic and source requirements |
-| HW-P2 | HW_16 — Schematic review | EHW | HW_15,HW_13 | Run configured electrical checks and peer review | Resolve findings and record the authorized review decision |
-| HW-P3 | HW_17 — Mechanical interface and board outline | MECH | HW_16 | Confirm outline mounting connector and height constraints | Link existing or revised drawing STEP and outline files |
-| HW-P3 | HW_18 — Placement and floorplan | EHW | HW_16,HW_17 | Place parts using the approved interface constraints | Review power signal thermal and accessibility concerns |
-| HW-P3 | HW_19 — Tentative BOM and sourcing analysis | EHW; T02: PUR | HW_16 | EHW submits the tentative revisioned BOM with canonical part links and quantities | PUR completes one linked BOM-level costing, availability and lead-time analysis without implying production release |
-| HW-P3 | HW_20 — Fit and thermal review | MECH | HW_17,HW_18 | Check populated board fit against enclosure references | Record clearance thermal findings and required changes |
-| HW-P3 | HW_21 — PCB stackup and routing | EHW | HW_18,HW_20 | Route against approved stackup and electrical constraints | Review return paths clearances and required impedance targets |
-| HW-P3 | HW_22 — Board marking and fabrication preparation | EHW | HW_21 | Review identifiers polarity revision markings and fiducials | Define applicable panel constraints with the supplier |
-| HW-P3 | HW_23 — Layout and manufacturability review | EHW | HW_21,HW_22 | Run configured DRC and supplier DFM checks | Record and close peer-review findings before export |
-| HW-P3 | HW_24 — Prototype fabrication package | EHW | HW_23 | Export native-tool Gerber drill and assembly outputs | Register original package revision and integrity hash |
-| HW-P4 | HW_25 — Authorized supplier fabrication request | PUR | HW_24 | Link approved supplier request for PCB PCBA and stencil as applicable | Resolve fabrication questions against the exact package revision |
-| HW-P4 | HW_26 — Prototype enclosure and kitting | MMF | HW_17,HW_19 | Link authorized prototype enclosure drawing or existing case | Prepare a traceable kit through the agreed inventory source |
-| HW-P4 | HW_27 — Applicable pre-compliance evidence | QA | HW_32,C08 when certification workstream applies | Coordinate the applicable formal pre-compliance checks | Link QA test evidence rather than duplicate C08 execution tasks |
-| HW-P4 | HW_28 — Verified final hardware-firmware interface | EHW | HW_09,HW_31 | Verify actual pin behaviour and electrical scaling | Record the final joint interface reference where firmware is in scope |
-| HW-P4 | HW_29 — Production test fixture readiness | EMF | HW_14,HW_16 | Link the approved test fixture design and diagnostic interface | Verify fixture readiness when production testing is required |
-| HW-P4 | HW_30 — Outsourced PCBA receipt and prototype box-build | EMF | HW_25,HW_08 | Link supplier assembly receipt and independent QA disposition | Perform applicable authorized box-build and inspection checks |
-| HW-P4 | HW_31 — Board bring-up | EHW | HW_30 | Perform approved current-limited power and basic interface checks | Record measurements against source criteria and log faults |
-| HW-P4 | HW_32 — Bench functional validation | EHW | HW_31,HW_14,FW_08 when FW is selected | Execute the applicable bench validation plan on pinned revisions | Link defects corrective iterations and retest evidence |
-| HW-P5 | HW_33 — Pilot or field evaluation | EHW | HW_32,HW_28,HW_27 if required | Support the authorized pilot configuration and installation | Capture user feedback and unresolved acceptance conditions |
-| HW-P5 | HW_34 — Production BOM baseline | EHW | HW_33,HW_36 | Verify released part revisions and approved sourcing references | Submit the final BOM through the configured release authority |
-| HW-P5 | HW_35 — Final fabrication and panel package | EHW | HW_34,HW_23 | Export the approved native fabrication package and associated panel stencil files | Pin the source Gerber revision checksum and release evidence |
-| HW-P5 | HW_36 — Relevant design-change closure | EHW | HW_32 | Resolve or formally disposition open design changes | Preserve the prior revisions and link verified corrective evidence |
-| HW-P5 | HW_37 — Production handover readiness | EMF | HW_34,HW_35,HW_29 if required,C15 if certification is required | Review applicable design manufacturing and QA handover evidence | Request authorized production release without auto-approving it |
-| FW-P1 | FW_01 — Firmware feasibility and target sizing | FW | CM_01 | Assess existing target resources and required behaviours | Record firmware risks and implementation assumptions |
-| FW-P1 | FW_02 — Firmware requirements and interface proposal | FW | FW_01,CM_03 | Define state behaviour and required peripheral protocol contracts | Review interface proposals against the selected existing or new hardware baseline |
-| FW-P2 | FW_03 — Firmware architecture | FW | FW_02 | Design scheduling memory fault handling and persistence | Review resource allocation and testability |
-| FW-P2 | FW_04 — Toolchain and evaluation environment | FW | FW_03 | Configure the approved source toolchain and reproducible build | Verify the development target and mock interfaces |
-| FW-P3 | FW_05 — Core drivers and protocol implementation | FW | FW_04 | Implement only the required hardware abstraction and protocol behaviours | Link code changes and module checks to requirements |
-| FW-P3 | FW_06 — Application security update and power behaviour | FW | FW_05 | Implement applicable application state and power logic | Implement and verify secure update or boot behaviour only where required |
-| FW-P4 | FW_07 — Code review and unit verification | FW | FW_05,FW_06 | Run agreed static analysis and unit checks | Record peer review and fix required findings without invented coverage thresholds |
-| FW-P4 | FW_08 — Target integration | FW | FW_07,HW_31 when new HW is selected | Integrate against the pinned target and HSI revision | Record timing peripheral and configuration findings |
-| FW-P4 | FW_09 — Production diagnostic support | FW | FW_08 | Prepare diagnostic firmware or test interface when required | Verify its controlled handoff to the production test fixture |
-| FW-P4 | FW_10 — Recovery and persistence verification | FW | FW_08 | Test applicable communication recovery buffering and retained state | Record failures and corrective tests against approved criteria |
-| FW-P4 | FW_11 — Firmware validation | FW | FW_07,FW_08,FW_10 | Execute the agreed functional robustness and environmental plan | Review required defects and evidence before release |
-| FW-P5 | FW_12 — Controlled firmware release | FW | FW_11 | Pin the approved source build configuration and binary hash | Obtain configured release authorization and record rollback instructions |
-| FW-P5 | FW_13 — Field support and update monitoring | FW | FW_12 | Monitor the agreed deployment and diagnostic feedback | Record follow-up updates through versioned change control |
-| SW-P1 | SW_01 — Software feasibility and scope | SW | CM_01 | Identify users features interfaces and deployment scope | Record capacity security and delivery assumptions |
-| SW-P1 | SW_02 — Software requirements and API contract | SW | SW_01,CM_03 | Define agreed workflows data and API behaviours | Review the firmware payload contract only where devices are in scope |
-| SW-P2 | SW_03 — Software architecture and access design | SW | SW_02 | Design application data and authenticated authorization boundaries | Review UI flows and external integration contracts |
-| SW-P2 | SW_04 — Build environment and simulators | SW | SW_03 | Configure approved source testing and staging tools | Create contract-based mock inputs for independent development |
-| SW-P3 | SW_05 — Feature implementation | SW | SW_04 | Implement the planned application and service capabilities | Link changes to requirements and preserve existing APIs |
-| SW-P3 | SW_06 — Access security and operations controls | SW | SW_03 | Implement the agreed identity permissions and sensitive-data controls | Verify applicable operational and update-management behaviour |
-| SW-P4 | SW_07 — Automated tests and peer review | SW | SW_05,SW_06 | Run unit integration regression and authorization checks | Resolve required review findings before integration |
-| SW-P4 | SW_08 — End-to-end integration | SW | SW_07,FW_08 when FW is selected | Verify the selected external or device-to-application contract end to end | Record failures and recovery behaviour using agreed test data |
-| SW-P4 | SW_09 — Acceptance and security validation | SW | SW_08 | Run applicable user acceptance security and performance checks | Record authorized acceptance and required issue disposition |
-| SW-P5 | SW_10 — Controlled deployment | SW | SW_09,FW_12 for coordinated firmware release | Rehearse the approved deployment data migration and rollback | Obtain release authorization and verify the intended environment |
-| SW-P5 | SW_11 — Post-release monitoring | SIT | SW_10 | Monitor agreed service indicators and recovery readiness | Record support handover and follow-up improvements without invented SLA values |
-| INT-P1 | INT_01 — Cross-track baseline handshake | EHW | HW_09 and FW_02 for HW-FW; FW_02 and SW_02 for FW-SW | Pin the joint interface and participating version references | Record the accountable joint review before dependent implementation |
-| INT-P1 | INT_02 — Integrated system verification | QA | selected HW_32 FW_11 SW_08 | Verify end-to-end behaviour on the pinned full configuration | Record unresolved cross-department blockers and owners |
-| INT-P1 | INT_03 — Coordinated pilot acceptance | SAL | INT_02 | Collect authorized customer or internal pilot feedback | Record accepted scope limitations and refinement actions |
-| RM-P1 | RM_01 — Existing product fit and gap review | SAL | CM_03 | Select the actual existing product and released reference configuration | Record fit gaps and conditions without creating a new engineering development track |
-| RM-P2 | RM_02 — Configuration and integration preparation | SIT | RM_01 | Prepare approved installation configuration and interface settings | Verify existing version compatibility and authorization |
-| RM-P3 | RM_03 — Ready-made deployment verification | SIT | RM_02 | Execute the authorized installation or deployment plan | Record operational checks and exceptions against agreed criteria |
-| CL-P1 | CL_01 — Release decision readiness | QA | applicable engineering or RM completion | Compile the applicable signed evidence and unresolved conditions | Obtain the configured release decision without replacing it with task completion |
-| CL-P1 | CL_02 — Delivery and support handover | SAL | CL_01 | Link the actual authorized dispatch or deployment evidence | Record recipient acceptance documents and support ownership |
-| CL-P1 | CL_03 — Closure and lessons | SAL | CL_02 | Review remaining obligations defects and follow-up ownership | Record authorized closure or keep the project open for refinement |
-| CERT-P1 | C01 — Certification applicability review | QA | CM_03 | Identify only the approved applicable regulatory and customer requirements | Map required configurations and test evidence without asserting blanket certification |
-| CERT-P1 | C02 — External test matrix | QA | C01 | Prepare the relevant test criteria samples and method references | Review technical inputs and required approval authority |
-| CERT-P1 | C03 — Test agency selection | PUR | C02 | Collect permitted agency quotations and capability evidence | Route the selection through existing commercial and QA authority |
-| CERT-P1 | C04 — Pre-compliance service authorization | PUR | C03 | Prepare the authorized testing order request | Link Finance-approved payment evidence only if actually available |
-| CERT-P2 | C05 — Sample readiness | EMF | C04,HW_31 if new HW,FW_08 if FW | Prepare traceable samples and applicable test configuration | Record QA readiness checks before dispatch |
-| CERT-P2 | C06 — Technical file compilation | QA | C04,applicable design baseline | Compile original requirements design and configuration references | Record authorized submission and external reference if submitted |
-| CERT-P2 | C07 — Lab scheduling and dispatch readiness | QA | C05,C06 | Confirm the actual agreed test slot and attendance | Link authorized sample dispatch evidence |
-| CERT-P2 | C08 — Pre-compliance execution evidence | QA | C07 | Coordinate applicable external testing against the approved plan | Record genuine lab reports observations and configuration references |
-| CERT-P2 | C09 — Findings and corrective verification | EHW | C08 | Assign findings to the responsible domain and link corrective changes | Record QA-reviewed retest or justified disposition |
-| CERT-P3 | C10 — Final test service authorization | PUR | C09 | Prepare the applicable final test order request | Link actual Finance-authorized payment evidence if available |
-| CERT-P3 | C11 — Final controlled sample readiness | QA | C10,HW_34 and HW_35 if new HW,FW_12 if FW | Verify sample build and version provenance against released engineering references | Record QA sample-release evidence without inventing results |
-| CERT-P3 | C12 — Final compliance evidence | QA | C11 | Track actual applicable external test execution | Link original reports and open findings without simulated measurements |
-| CERT-P4 | C13 — Report accuracy review | QA | C12 | Review report identity version criteria and result provenance | Resolve documented report discrepancies with the responsible source |
-| CERT-P4 | C14 — External certificate decision | QA | C13 | Track the actual authority decision where certification is required | Upload the issued original or retain a clearly pending state |
-| CERT-P4 | C15 — Compliance record handover | QA | C14 | Archive verified original evidence and applicable approval references | Update compliance readiness for the separate authorized release decision |
-
-Hardware ordering deliberately follows the dependency graph rather than the attachment's numeric sequence: HW_30 receipt/assembly precedes HW_31 bring-up; HW_32 bench validation precedes HW_27 formal pre-compliance. HW_36 corrective closure precedes final production release. HW_27 links C08 evidence when that workstream applies; do not create duplicate test execution for the same event. FW_09 production diagnostics, mechanical customization, external certification and production handover can be explicitly not applicable. No blanket 72-hour soak, 80% coverage, fixed impedance/voltage, SLA or universal client approval is imposed.
+BOM sourcing remains one linked review of the exact tentative BOM/revision: parts, quantities, currency, quote source/date, prices, availability, lead time and open assumptions. Do not generate one default price task per component. Technical RAM/Flash sizing remains engineering work. Missing quotes/alternate decisions may create scoped follow-up tasks. Read the configured stage dependencies and task owners rather than hard-coding an early technical task to a later BOM or assigning every task to its stage owner.
 
 ### Owner resolution and conditional links
 
@@ -373,7 +341,7 @@ For CL_01, ready-made projects depend on RM_02 before deployment; software depen
 
 ### Progressive generation and actual sample values
 
-- Store every applicable phase, stage and both planned task definitions in the fixture manifest, including future and not-applicable work. Future tasks are a plan preview, not active To Do rows or inflated workload counts.
+- Store every applicable phase, stage and configured planned task definition in the fixture manifest, including future and not-applicable work. Future tasks are a plan preview, not active To Do rows or inflated workload counts.
 - At baseline activate only entry stages whose source/baseline prerequisites are satisfied. Once a stage becomes ready, create its actual tasks once using project + template version + stage key + task key. A retry, refresh, double click or two concurrent completions cannot create duplicates. Independent ready stages can activate in parallel.
 - A completed task prepares the stage for review where a review is required; it does not approve a milestone. Missing evidence, required sign-off, unresolved blocking change, revoked owner or rejected predecessor keeps dependent work blocked. Reopening creates a linked correction/retest iteration, preserves history, and holds affected future releases. Never silently mark them complete again.
 - Cross-track prerequisites apply only to selected domains and capabilities. Existing-device FW/SW projects pin an existing board/platform reference. Pure software uses agreed service/mock interfaces and cannot depend on HW_31 or FW_08. Certification dependencies use applicable design references, not invented PCB requirements.
@@ -396,7 +364,7 @@ This pack uses new stable fixture keys and can be selected instead of the preser
 | LC2-P07 Service application | SW only; internal tool | SW_08 active: service workflow integration using synthetic API fixtures | User roles, service API contract, schema/version, access tests, staging and rollback plan; HW/FW/manufacturing stages not applicable. |
 | LC2-P08 Existing product deployment | Ready-made; client deployment | RM_03 active: configuration verification awaiting recipient feedback | Existing product/model and released references, configuration, installation/checklist and handover; no automatically generated custom engineering stages. |
 | LC2-P09 Device connectivity upgrade | FW+SW; existing hardware | INT_02 active: firmware payload/cloud decoder compatibility needs verification | Existing platform identity, payload contract, firmware/application versions, mock simulator, reconnect test and coordinated release dependency; no new HW development. |
-| LC2-P10 Offline-capable telematics tracker | HW+FW+SW; client PoC → conditional pilot/production | CM_02 feasibility in review; no requirement baseline frozen until open connectivity, RF, power, coverage and certification decisions are resolved | Fictional client `DEMO-CLIENT-010`, enquiry `DEMO-ENQ-010`, draft OMS `DEMO-OMS-010`, project `DEMO-PROJ-010`, product `DEMO-PROD-010`; 4G GNSS tracker concept with NavIC/IRNSS receiver support to be verified, and local LoRa research for no-internet operation. |
+| LC2-P10 Offline-capable telematics tracker | HW+FW+SW; client PoC → conditional pilot/production | CM_02 feasibility in review; no requirement baseline frozen until open connectivity, RF, power, coverage and certification decisions are resolved | Fictional client `DEMO-CLIENT-010`, enquiry `DEMO-ENQ-010`, draft OMS `DEMO-OMS-010`, reserved future project key `DEMO-PROJ-010` (no Project while feasibility is pending), product `DEMO-PROD-010`; 4G GNSS tracker concept with NavIC/IRNSS receiver support to be verified, and local LoRa research for no-internet operation. |
 
 This current pack covers nine projects plus one declined enquiry, all seven tracks and the six requested outcome scenarios. Each selected profile includes every stage/task above in its full roadmap and marks genuinely inapplicable stages with a reason; only ready/past activated tasks exist as work rows. The duplicated HW+FW case intentionally tests PoC versus bulk-production purpose. LC2-P10 is an additional detailed client PoC case for feasibility, requirement freeze and multi-domain development handoffs.
 
@@ -412,7 +380,7 @@ This is a synthetic end-to-end example for the portal walkthrough. All parties, 
 | Client | `DEMO-CLIENT-010` — Northstar Field Systems (fictional) | Pending synthetic client profile; no contact address, legal identity or credentials. |
 | Enquiry | `DEMO-ENQ-010` — remote-equipment visibility | Open intake; source asks for location/status when public internet is unavailable and later remote synchronization. |
 | OMS | `DEMO-OMS-010` — feasibility/PoC request | Draft and unaccepted. Amount, tax, unit quantity, delivery promise and purchase commitment remain `Not recorded`. |
-| Project | `DEMO-PROJ-010` — Offline-capable Fleet Tracker PoC | Client-origin; HW+FW+SW; PoC purpose; fictional owner SAL; no production authorization. |
+| Future Project | `DEMO-PROJ-010` — Offline-capable Fleet Tracker PoC | Reserved key only before feasibility acceptance; create through the authorized start action. HW+FW+SW is a proposed scenario intent, confirmed after review; no production authorization. |
 | Product | `DEMO-PROD-010` — 4G/GNSS + local LoRa tracker concept | Draft concept only. NavIC/IRNSS compatibility and all radio/network choices require hardware and regulatory feasibility. |
 | Fixture pack | `LC2-2026-10-28`, case `LC2-P10` | Reuse this template version; project-specific custom tasks are keyed by project and template version, not global edits. |
 
@@ -529,7 +497,7 @@ Authorized responsible leads may add, edit, reorder or remove custom tasks withi
 Acceptance must include: adding tasks before and after stage activation; editing/reordering; unused deletion; cancellation with retained evidence; dependent-removal prevention; unchanged unrelated tasks; no global-template mutation; no regenerated cancelled tasks; concurrent edits/retry; authorized department versus read-only cross-department and client denial; shared web/mobile persistence after reload; and preservation of existing task numbering, approvals and history.
 
 
-## Lifecycle and fixture authority — 8 November 2026
+## Lifecycle and fixture authority — 10 November 2026
 
 The [SSM One master plan](../SSM_ONE_MASTER_PLAN.md) owns shared lifecycle, department and RACI rules. This document owns fictional sample companies/projects, reset behavior, and repeatable test scenarios; samples must stay clearly TEST-only and never imply real customer approval, measured performance or release.
 
