@@ -200,7 +200,35 @@ Each project has a separate owner, stage instance, task set, document links, rem
 
 Use synthetic, clearly `DEMO_ONLY` master assets to test reuse lineage without implying real compatibility or certification. Seed reusable PCB assembly, enclosure/case, and harness revisions, each with fictional owner/status, interfaces, linked native-file placeholders/checksums, and verification state marked `DEMO_ONLY`. Link their exact revisions to Project 001 through a project configuration record; make Project 002 a proposed variant with one changed interface and an unresolved compatibility/qualification item. Add visibly invalid certificate-evidence placeholders that distinguish component/asset scope (PCB, enclosure/material, harness) from the separate pending finished-project certificate/test scope. They must be labeled `DEMO_ONLY — NOT VALID` and never appear as proof or release evidence. Include a synthetic reuse assessment showing requirement links, fit/gap, delta-test requirement, decision owner, and pending status, plus an as-built trace fixture recording actual demo revisions for a unit/lot.
 
-Legacy inventory fixture coverage (activate only after the authoritative inventory source/adapter is identified and the selected isolated fixture pack is authorized): separated inventory fixtures following [Electronics Project Lifecycle and APQP Roadmap §6.2](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18-62-inventory-reusable-design-assets-and-plant-assets): inventory item masters for an electronics component, outsourced PCBA, mechanical raw material, and consumable/packaging item; synthetic lot/serial and movement records; reusable asset/module revisions with controlled BOM lines pointing to item IDs; project configurations pinning those revisions; and a fixed production/test-machine asset with plant/site, custody, maintenance/calibration, and compatibility metadata. Link a demo as-built unit/lot to the actual demo revisions and lots/serials used. All stock balances and movements remain synthetic demo fixtures. The machine is a plant asset, not consumable stock; selecting any reusable module does not reserve or move its linked inventory.
+<a id="current-shared-test-inventory-part-pack"></a>
+##### Current Shared TEST inventory Part pack — `SSM-DEMO-INVENTORY-2026-11-v1`
+
+Read-only Shared TEST inspection on 14 November 2026 found 20 active, fictional canonical `Part` masters in this pack, all marked as examples and not approved specifications. Their stable references, category and intended department views are the reusable filter-coverage source below. This list is a Part-master fixture only: it contains no on-hand quantity, location, supplier, cost, accepted receipt, stock movement or assignment. Do not infer those values, and do not treat browser-local inventory quantities as these records' stock.
+
+| Canonical Part reference | Category | Primary department | Department views |
+|---|---|---|---|
+| `HLPL-DEMO-INV-CAB-01` | Wire and Cable | EMF | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-CAB-02` | Wire and Cable | EMF | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-CON-01` | Connectors | EMF | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-CON-02` | Connectors | EHW | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-CON-03` | Connectors | EMF | EMF, PUR, QA |
+| `HLPL-DEMO-INV-CON-04` | Connectors | EMF | EMF, PUR, QA |
+| `HLPL-DEMO-INV-ELE-01` | Electronics | EHW | EHW, FW, PUR, QA |
+| `HLPL-DEMO-INV-ELE-02` | Electronics | EHW | EHW, PUR, QA |
+| `HLPL-DEMO-INV-ENC-01` | Enclosures | MMF | MMF, EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-ENC-02` | Enclosures | MMF | MMF, EMF, QA, PUR |
+| `HLPL-DEMO-INV-HAR-01` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-HAR-02` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-HAR-03` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-HAR-04` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-HAR-05` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
+| `HLPL-DEMO-INV-HAR-06` | Wire Harnesses | EMF | EHW, EMF, QA, MMF |
+| `HLPL-DEMO-INV-MEC-01` | Mechanical Parts | MMF | MMF, EHW, PUR, QA |
+| `HLPL-DEMO-INV-MEC-02` | Mechanical Parts | MMF | MMF, EHW, PUR, QA |
+| `HLPL-DEMO-INV-PKG-01` | Packaging & Consumables | PUR | PUR, EMF, QA |
+| `HLPL-DEMO-INV-TOOL-01` | Production Tools | EMF | EMF, QA, PUR |
+
+The Web inventory page reads these canonical IDs and this category/department metadata in its Shared Part Masters tab. Its existing interactive quantities, receipts, assignments and movement history remain a separate browser-local demo until a permission-checked shared stock ledger is implemented. Reusable asset/module revisions, controlled BOM lines, lot/serial movements, project-pinned configurations and plant/test-machine custody remain future fixtures under [Electronics Project Lifecycle and APQP Roadmap §6.2](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18-62-inventory-reusable-design-assets-and-plant-assets). The machine is a plant asset, not consumable stock; selecting any reusable module does not reserve or move its linked inventory.
 
 Acceptance: reuse never silently copies or changes a master asset; the project pins exact revisions; unresolved fit/qualification gaps remain visible and block any simulated skip; a changed variant has a new ID/revision and source lineage; and the as-built view shows what was actually selected. Component-level certificate placeholders never satisfy the pending project-level certification scope. Inventory item classes, lots, and plant assets stay distinguishable, and viewing/selecting fixtures does not post stock movements. No fixture may claim real qualification, regulatory approval, savings, or production use.
 
