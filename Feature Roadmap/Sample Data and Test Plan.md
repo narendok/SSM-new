@@ -2,7 +2,7 @@
 <a id="source-20-sample-data-and-test-plan"></a>
 # Sample Data and Test Plan
 
-**Status:** Canonical fictional sample and live-demo acceptance plan; updated 13 November 2026. New pack specified below is planned, not a claim of seeded or accepted runtime data.
+**Status:** Canonical fictional sample and live-demo acceptance plan; updated 14 November 2026. The inventory Part/opening-balance pack below is deployed to Shared TEST as explicitly fictional fixtures; the broader lifecycle/profile pack remains planned unless a section says otherwise.
 **Authority:** [SSM One Master Plan](../SSM_ONE_MASTER_PLAN.md); lifecycle context: [Electronics Multi-Track Lifecycle and APQP Roadmap](../Electronics%20Multi-Track%20Lifecycle%20and%20APQP%20Roadmap.md). This document owns only fictional fixtures, reset boundaries and repeatable test scenarios. Older crosswalk passages below are historical context and do not supersede the active lifecycle roadmap or master.
 
 <a id="source-20-purpose-and-boundaries"></a>
@@ -203,32 +203,32 @@ Use synthetic, clearly `DEMO_ONLY` master assets to test reuse lineage without i
 <a id="current-shared-test-inventory-part-pack"></a>
 ##### Current Shared TEST inventory Part pack — `SSM-DEMO-INVENTORY-2026-11-v1`
 
-Read-only Shared TEST inspection on 14 November 2026 found 20 active, fictional canonical `Part` masters in this pack, all marked as examples and not approved specifications. Their stable references, category and intended department views are the reusable filter-coverage source below. This list is a Part-master fixture only: it contains no on-hand quantity, location, supplier, cost, accepted receipt, stock movement or assignment. Do not infer those values, and do not treat browser-local inventory quantities as these records' stock.
+Shared TEST contains 20 active fictional canonical `Part` masters in this pack, all examples and not approved specifications. Their stable references, category, intended department views and demo-only opening quantities below are the reusable filter-coverage source. Migration `20261114175021_shared_inventory_ledger` seeded each opening amount once into an append-only TEST ledger; all three held quantities are also fixture values. They are not actual company stock, real receipts, supplier commitments, cost, or Production inventory. Subsequent operational movements must use authorized ledger actions and exact Part/PO/role IDs; never infer or import browser-local demo actions as saved TEST history.
 
-| Canonical Part reference | Category | Primary department | Department views |
-|---|---|---|---|
-| `HLPL-DEMO-INV-CAB-01` | Wire and Cable | EMF | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-CAB-02` | Wire and Cable | EMF | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-CON-01` | Connectors | EMF | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-CON-02` | Connectors | EHW | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-CON-03` | Connectors | EMF | EMF, PUR, QA |
-| `HLPL-DEMO-INV-CON-04` | Connectors | EMF | EMF, PUR, QA |
-| `HLPL-DEMO-INV-ELE-01` | Electronics | EHW | EHW, FW, PUR, QA |
-| `HLPL-DEMO-INV-ELE-02` | Electronics | EHW | EHW, PUR, QA |
-| `HLPL-DEMO-INV-ENC-01` | Enclosures | MMF | MMF, EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-ENC-02` | Enclosures | MMF | MMF, EMF, QA, PUR |
-| `HLPL-DEMO-INV-HAR-01` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-HAR-02` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-HAR-03` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-HAR-04` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-HAR-05` | Wire Harnesses | EMF | EHW, EMF, PUR, QA |
-| `HLPL-DEMO-INV-HAR-06` | Wire Harnesses | EMF | EHW, EMF, QA, MMF |
-| `HLPL-DEMO-INV-MEC-01` | Mechanical Parts | MMF | MMF, EHW, PUR, QA |
-| `HLPL-DEMO-INV-MEC-02` | Mechanical Parts | MMF | MMF, EHW, PUR, QA |
-| `HLPL-DEMO-INV-PKG-01` | Packaging & Consumables | PUR | PUR, EMF, QA |
-| `HLPL-DEMO-INV-TOOL-01` | Production Tools | EMF | EMF, QA, PUR |
+| Canonical Part reference | Category | Primary department | Department views | Fictional opening on-hand | Fictional opening held |
+|---|---|---|---|---:|---:|
+| `HLPL-DEMO-INV-CAB-01` | Wire and Cable | EMF | EHW, EMF, PUR, QA | 120 pcs | 0 pcs |
+| `HLPL-DEMO-INV-CAB-02` | Wire and Cable | EMF | EHW, EMF, PUR, QA | 44 pcs | 0 pcs |
+| `HLPL-DEMO-INV-CON-01` | Connectors | EMF | EHW, EMF, PUR, QA | 48 pcs | 0 pcs |
+| `HLPL-DEMO-INV-CON-02` | Connectors | EHW | EHW, EMF, PUR, QA | 17 pcs | 0 pcs |
+| `HLPL-DEMO-INV-CON-03` | Connectors | EMF | EMF, PUR, QA | 6 pcs | 0 pcs |
+| `HLPL-DEMO-INV-CON-04` | Connectors | EMF | EMF, PUR, QA | 24 pcs | 3 pcs |
+| `HLPL-DEMO-INV-ELE-01` | Electronics | EHW | EHW, FW, PUR, QA | 96 pcs | 0 pcs |
+| `HLPL-DEMO-INV-ELE-02` | Electronics | EHW | EHW, PUR, QA | 32 pcs | 0 pcs |
+| `HLPL-DEMO-INV-ENC-01` | Enclosures | MMF | MMF, EHW, EMF, PUR, QA | 20 pcs | 0 pcs |
+| `HLPL-DEMO-INV-ENC-02` | Enclosures | MMF | MMF, EMF, QA, PUR | 11 pcs | 3 pcs |
+| `HLPL-DEMO-INV-HAR-01` | Wire Harnesses | EMF | EHW, EMF, PUR, QA | 14 pcs | 0 pcs |
+| `HLPL-DEMO-INV-HAR-02` | Wire Harnesses | EMF | EHW, EMF, PUR, QA | 22 pcs | 0 pcs |
+| `HLPL-DEMO-INV-HAR-03` | Wire Harnesses | EMF | EHW, EMF, PUR, QA | 9 pcs | 0 pcs |
+| `HLPL-DEMO-INV-HAR-04` | Wire Harnesses | EMF | EHW, EMF, PUR, QA | 31 pcs | 0 pcs |
+| `HLPL-DEMO-INV-HAR-05` | Wire Harnesses | EMF | EHW, EMF, PUR, QA | 16 pcs | 3 pcs |
+| `HLPL-DEMO-INV-HAR-06` | Wire Harnesses | EMF | EHW, EMF, QA, MMF | 7 pcs | 0 pcs |
+| `HLPL-DEMO-INV-MEC-01` | Mechanical Parts | MMF | MMF, EHW, PUR, QA | 36 pcs | 0 pcs |
+| `HLPL-DEMO-INV-MEC-02` | Mechanical Parts | MMF | MMF, EHW, PUR, QA | 18 pcs | 0 pcs |
+| `HLPL-DEMO-INV-PKG-01` | Packaging & Consumables | PUR | PUR, EMF, QA | 72 pcs | 0 pcs |
+| `HLPL-DEMO-INV-TOOL-01` | Production Tools | EMF | EMF, QA, PUR | 8 pcs | 0 pcs |
 
-The Web inventory page reads these canonical IDs and this category/department metadata in its Shared Part Masters tab. Its existing interactive quantities, receipts, assignments and movement history remain a separate browser-local demo until a permission-checked shared stock ledger is implemented. Reusable asset/module revisions, controlled BOM lines, lot/serial movements, project-pinned configurations and plant/test-machine custody remain future fixtures under [Electronics Project Lifecycle and APQP Roadmap §6.2](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18-62-inventory-reusable-design-assets-and-plant-assets). The machine is a plant asset, not consumable stock; selecting any reusable module does not reserve or move its linked inventory.
+The Web inventory page reads these canonical IDs and metadata in its Shared Part Masters tab; the Shared TEST inventory tab reads the separate fictional balances and exposes role allocation through stable IDs. The append-only Shared TEST RPC contract also validates eligible PO receipts, holds/releases, returns/consumption and Admin adjustment, but the other classic inventory tabs remain browser-local and those shared movement controls are not all wired into the page yet. Shared TEST currently has no configured L1–L4 role mapping, so allocation requires that setup before live role assignment can be accepted. Android must not treat browser-local actions as shared. Reusable asset/module revisions, controlled BOM lines, lot/serial movements, project-pinned configurations and plant/test-machine custody remain future fixtures under [Electronics Project Lifecycle and APQP Roadmap §6.2](../SSM_ONE_PLANNING_ARCHIVE_2026-10-28.md#source-18-62-inventory-reusable-design-assets-and-plant-assets). The machine is a plant asset, not consumable stock; selecting any reusable module does not reserve or move its linked inventory.
 
 Acceptance: reuse never silently copies or changes a master asset; the project pins exact revisions; unresolved fit/qualification gaps remain visible and block any simulated skip; a changed variant has a new ID/revision and source lineage; and the as-built view shows what was actually selected. Component-level certificate placeholders never satisfy the pending project-level certification scope. Inventory item classes, lots, and plant assets stay distinguishable, and viewing/selecting fixtures does not post stock movements. No fixture may claim real qualification, regulatory approval, savings, or production use.
 
