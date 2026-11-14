@@ -3,6 +3,11 @@
 The [active workspace master plan](SSM_ONE_MASTER_PLAN.md) and actual authenticated backend govern the shared contract. [Machine-readable baseline](Mobile%20Backend%20Contract.json) is preserved byte-for-byte. Sections below retain earlier verified snapshots and planned requirements; do not redeploy obsolete SQL or infer live availability from a snapshot. Account/organization/RLS and independent runtime acceptance remain required.
 
 
+## Current connection authority — 11 November 2026
+
+The active web local configuration (`.env` and `.env.staging.local`) points to **https://jiqbxcqlywvvmhbgirzl.supabase.co**, the newer project named `ssm-one-staging`. Supabase management reports it ACTIVE_HEALTHY. Android now defaults to the same project through its existing staging configuration and publishable-key properties. `rzskhndweihuczbdhoxk` is the older explicitly selectable configuration; older environment-mapping paragraphs below are historical snapshots, not the current web target.
+
+The live migration ledger currently lists 32 entries through `department_workspace_responsibilities`; the source migration `20261110090000_multi_department_lead_access.sql` is not listed by version/name. This is a ledger check, not a full schema or authenticated workflow acceptance. Preserve the TEST label and verify deployment/signatures/RLS and persisted cross-client behavior before claiming complete Android parity. Actual publishable keys stay in ignored local configuration; privileged credentials never belong in either client or this document.
 <a id="source-02"></a>
 ## Android Backend Handoff
 
