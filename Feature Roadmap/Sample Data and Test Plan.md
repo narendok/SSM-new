@@ -2,7 +2,7 @@
 <a id="source-20-sample-data-and-test-plan"></a>
 # Sample Data and Test Plan
 
-**Status:** Canonical fictional sample and live-demo acceptance plan; updated 14 November 2026. The inventory Part/opening-balance pack below is deployed to Shared TEST as explicitly fictional fixtures; the broader lifecycle/profile pack remains planned unless a section says otherwise.
+**Status:** Canonical fictional sample and live-demo acceptance plan; updated 15 November 2026. The inventory Part/opening-balance pack below is deployed to Shared TEST as explicitly fictional fixtures; the broader lifecycle/profile pack remains planned unless a section says otherwise.
 **Authority:** [SSM One Master Plan](../SSM_ONE_MASTER_PLAN.md); lifecycle context: [Electronics Multi-Track Lifecycle and APQP Roadmap](../Electronics%20Multi-Track%20Lifecycle%20and%20APQP%20Roadmap.md). This document owns only fictional fixtures, reset boundaries and repeatable test scenarios. Older crosswalk passages below are historical context and do not supersede the active lifecycle roadmap or master.
 
 <a id="source-20-purpose-and-boundaries"></a>
@@ -334,7 +334,7 @@ Every sample entity needs: fixture key, canonical saved UUID, organization, owni
 | Deliveries / PoC units | Actual synthetic lot/dispatch/serial evidence where supported, receiver and delivery status | Physical delivery records are distinct from document deliverables; reconcile quantities and link original evidence. |
 | Approval / Decision & Deviation | Separate author/reviewer where required; pending, recorded, rejected or approved examples with meaningful synthetic reasons | Do not forge signatures or bypass required approval to seed final states. Use authorized existing workflow or clearly provenance-labelled fixture contract. |
 | Team Chat | A permitted channel with realistic synthetic discussion, reply, open/closed poll and searchable tags related to a sample project | Use actual members only with permission; never auto-add every employee. Poll agreement does not approve a gate. No broadcast/import is authorized by this planning row. |
-| Profiles / budgets / assets | Only safe synthetic account-owned data supported by actual canonical source | No fabricated private letters/assets or stock. Inventory source is still a separate unresolved decision. |
+| Profiles / budgets / assets | Only safe synthetic account-owned data supported by actual canonical source | No fabricated private letters or asset custody. Inventory fixtures are now defined: Shared TEST has 22 fictional canonical Part masters, 8 categories and 22 fictional opening-balance ledger entries; the classic inventory tabs remain browser-local fixtures. Neither source represents actual company stock. See [Current Shared TEST inventory Part pack](#current-shared-test-inventory-part-pack). |
 
 <a id="source-20-documents--vault-samples-in-the-original-library"></a>
 #### Documents & Vault: samples in the original library
