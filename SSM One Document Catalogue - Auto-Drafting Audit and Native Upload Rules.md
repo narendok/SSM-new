@@ -314,3 +314,27 @@ Source coverage checked: **89 of 89 unique annexure blocks mapped across 90 fami
 This catalogue is the single owner for the 38 controlled-document families and their source mappings. The [SSM One master plan](SSM_ONE_MASTER_PLAN.md) owns shared lifecycle and approval rules; the web and Android plans own platform implementation. Fixed TG-0–TG-9 phases and configurable department stages/tasks link to these existing families and exact revisions; a deliverable label does not create a new family or imply approval/release.
 
 The latest recorded shared TEST settings checkpoint contains 110 stages and 478 default tasks, including 82 workbook source stages and 28 supporting stages. The 82 evidence bindings reuse the existing catalogue families. Full TG-0–TG-9 business acceptance and Android/hosted-preview parity remain open; refer to the master plan and dated evidence rather than older checkpoint counts.
+
+## Department lead-maintained document and audit profiles
+
+The controlled list must not be Admin-only. Each department lead can manage that department's own active profiles, subject to the shared server-side department permission. One versioned registry is the source for both the **manual upload document-type list** and the **auto-draft chooser** so the lists cannot drift apart. Admin has cross-department oversight; Android reads the same active registry and scope instead of carrying a separate mobile catalogue.
+
+### Profile fields and audit coverage
+
+For each profile, preserve a stable profile ID and canonical D01–D38 family mapping, with owning department, clear title/subtype, project or non-project use, audit/checklist source and edition, applicability rule (required / conditional / optional / authorized not-applicable), accepted formats, allowed intake route (manual original, structured draft, or both), supported draft template/revision, source-field/provenance expectations, confidentiality, reviewer/approval path, and active/retired state. Identify unsupported or unmapped source entries as visible gaps; do not silently omit them or create a second family registry. Existing Catalogue and checklist sources define the candidate coverage baseline—"all possible" coverage still requires a row-by-row applicability review against the supplied audit checklist and adopted customer/program requirements, not a claim of universal legal or standards completeness.
+
+### Department lead editing boundary
+
+- A lead may add, rename, revise applicability/format/route, update the department's draft template, and retire or restore only profiles owned by that lead's authorized department. New department subtypes must select an existing canonical family; stable IDs are never renamed or reused.
+- Changes publish as a new department-profile revision with actor, timestamp, prior/new values and reason. New uploads/drafts use the current revision. Existing saved drafts, document identity, original binaries, approvals and issued revisions retain the revision under which they were created; changes never rewrite history or silently make a previously required item disappear from an in-progress project.
+- Cross-department or Common & Standards profiles, a new D01–D38 family, changes to company-wide audit policy, and approval/release authority require the designated Document Control/governance owner. Routine edits to an existing department-owned profile do not require Admin to perform them.
+- Enforce access in the server/database as well as in Settings UI. A lead cannot change another department's list, grant themselves document or approval permissions, bypass reviewer/signature rules, or turn an uploaded/drafted item into Approved, Released, certified or audit-passed.
+- Provide a change preview showing affected future projects/tasks and a warning when a new revision affects required coverage. Keep old revisions visible to historical records and audit indexes.
+
+### Acceptance criteria
+
+1. Build the candidate inventory by reconciling all existing upload types, all auto-draft entries, the D01–D38 subtype registry, role/stage profiles, the supplied audit checklist and departmental-special-features specification. Record source, owner, project/non-project scope, applicability and gaps for every row.
+2. For each department, verify a lead can add/edit/retire/restore an owned profile; cannot alter another department or a global profile; Admin can review all; and unauthorized member/client calls are rejected by the server.
+3. Verify one source registry updates both the manual-upload and auto-draft lists, including after refresh and on another authorized client. Android renders the same eligible profiles with its compact interaction and cannot widen access.
+4. Verify published changes create a revision, leave existing documents and issued outputs untouched, keep audit provenance, and preserve human review, approval and release gates.
+5. Keep source checklists as applicability evidence. A coverage percentage measures configured records only and never states an audit passed.
