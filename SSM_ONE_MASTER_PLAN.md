@@ -74,6 +74,8 @@ These four level meanings are the canonical organization-chart vocabulary owned 
 
 The fictional employee roster, stable fixture keys, sample contact/profile fields and org-chart test coverage are owned by the [Sample Data and Test Plan](Feature%20Roadmap/Sample%20Data%20and%20Test%20Plan.md#canonical-employee-and-organization-chart-sample-roster). Runtime team, demo profile and directory views must derive from that single roster; it never replaces live organization Settings or contains real employee data.
 
+Shared TEST sample cleanup is limited to explicitly fictional demo Project rows. Preserve their related operational records, tasks, approvals, stage reviews, draft documents, uploads and evidence; preserve all non-demo TEST records and Production. A broader fixture reset stays unavailable until its exact effects match an explicitly approved scope. The Web and Android clients must use this same boundary.
+
 The [Electronics Multi-Track Lifecycle and APQP Roadmap](Electronics%20Multi-Track%20Lifecycle%20and%20APQP%20Roadmap.md) owns detailed phase names, track applicability, stage/task crosswalks, scheduling, timers and handoffs. This master owns shared company rules for organization, department ownership, lead roles, access, RACI and cross-portal behavior. Both plans require versioned settings and pinned project baselines; changes must not silently rewrite accepted schedules, assignments or approvals.
 
 ## 4. Operational systems and procedures
