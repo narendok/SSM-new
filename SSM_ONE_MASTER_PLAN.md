@@ -179,6 +179,8 @@ At the earlier checkpoint, shared record edit forms had been updated to reopen C
 
 Still open: full TG-0–TG-9 business acceptance; all configured role/RACI and negative-access cases; complete common/project document-family coverage; hosted Lovable and Android read/write parity; and final deployment acceptance. Do not describe these as complete until independently reproduced with saved-state readback and evidence. Production data, approvals, releases and stock must remain untouched during TEST verification.
 
+**Deferred plan-maintenance task:** After current feature work stabilizes, carefully make this master plan more concise. Preserve its existing summary and add a short quick checklist; retain every unique requirement, safety rule, unresolved acceptance item and source-of-truth link. Before removing repeated detail, verify that the authoritative reference fully covers it and that links resolve. Do not treat this editorial cleanup as feature completion or discard historical evidence; review the diff for coverage before syncing.
+
 Lifecycle Settings may retire or restore only non-core, dependency-free stage codes for future project defaults; TG-0–TG-9 and stable stage identifiers remain fixed, and existing project baselines stay pinned. Shared TEST demo refresh is limited to fictional demo rows and must replace only a validated, manifest-tagged sample pack atomically; do not reset current demo records until the new pack loader and full saved-state readback are verified. See the [web implementation plan](../ssm-new-web/SSM_ONE_WEB_IMPLEMENTATION_PLAN.md#12-november-2026--safe-lifecycle-stage-retirement-and-demo-refresh) for the current inventory and implementation boundary.
 
 ## 9. Delivery and completion rule
