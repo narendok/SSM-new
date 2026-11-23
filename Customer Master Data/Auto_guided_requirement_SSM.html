@@ -1714,7 +1714,7 @@
     </div>
 
     <!-- Formal Engineering Technical Deliverables Modal (Tabbed: Pinout Diagram, Spec Sheet, DVP Matrix) -->
-    <div id="spec-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/60 backdrop-blur-xs">
+    <div id="spec-modal" onclick="if(event.target === this) toggleSpecSheet()" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/60 backdrop-blur-xs cursor-pointer">
       <div class="bg-[var(--card)] border border-[var(--card-border)] rounded-xl max-w-4xl w-full p-4 space-y-3 shadow-2xl max-h-[90vh] overflow-y-auto">
         
         <!-- Header -->
@@ -2383,6 +2383,9 @@
       renderColumnPins();
       updateStandardsBadges();
       updateLiveImpact();
+      if (typeof renderSidebarConnectorPinout === 'function') {
+        renderSidebarConnectorPinout();
+      }
     }
 
     // ISOLATED GNSS & NAVIC CONTROLLER (User Request: Optional GPS & Combined GPS + NavIC label)
@@ -4669,15 +4672,25 @@
     let specViewMode = 'table'; // 'table', 'software', or 'cards'
     let specSearchQuery = '';
     let specCategoryFilter = 'all';
+    let specTypeFilter = 'all';
 
     function setSpecViewMode(mode) {
       specViewMode = mode;
       renderSpecSheetTab();
     }
 
+    
+    function clearSpecSearch() {
+      specSearchQuery = '';
+      const input = document.getElementById('spec-search-input');
+      if (input) input.value = '';
+      filterSpecTable();
+    }
+
     function filterSpecTable() {
       specSearchQuery = (document.getElementById('spec-search-input')?.value || '').toLowerCase();
       specCategoryFilter = document.getElementById('spec-category-filter')?.value || 'all';
+      specTypeFilter = document.getElementById('spec-type-filter')?.value || 'all';
       renderSpecTableBody();
     }
 
@@ -4760,34 +4773,53 @@
             </div>
           </div>
 
-          <!-- Search & Filter Controls -->
+          <!-- Search & Filter Controls (User Request: Search by Keyword, Type & Domain) -->
           <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center pt-1 border-t border-[var(--card-border)]">
-            <div class="sm:col-span-7 flex items-center gap-2 bg-[var(--card)] px-2.5 py-1 rounded-md border border-[var(--card-border)]">
+            <!-- Search Keyword Input (5 cols) -->
+            <div class="sm:col-span-5 flex items-center gap-2 bg-[var(--card)] px-2.5 py-1 rounded-md border border-[var(--card-border)] shadow-xs">
               <span class="text-[var(--muted-foreground)] text-xs">🔍</span>
-              <input type="text" id="spec-search-input" oninput="filterSpecTable()" value="${specSearchQuery}" placeholder="Search parameter ID, requirement name, value, or standard (e.g. NavIC, CAN, 16750, Battery)..." class="w-full bg-transparent text-[11px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)] font-sans" />
+              <input type="text" id="spec-search-input" oninput="filterSpecTable()" value="${specSearchQuery}" placeholder="Search 700 params (e.g. NavIC, CAN, DI, Starter, Fuel, 16750)..." class="w-full bg-transparent text-[11px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)] font-sans" />
+              ${specSearchQuery ? '<button onclick="clearSpecSearch()" class="text-[10px] text-[var(--muted-foreground)] hover:text-[var(--foreground)]">✕</button>' : ''}
             </div>
 
-            <div class="sm:col-span-5 flex items-center gap-1.5">
-              <span class="text-[10px] text-[var(--muted-foreground)] whitespace-nowrap">Filter Domain:</span>
-              <select id="spec-category-filter" onchange="filterSpecTable()" class="w-full bg-[var(--card)] text-[10.5px] text-[var(--foreground)] p-1 rounded border border-[var(--card-border)] outline-none cursor-pointer">
-                <option value="all" ${specCategoryFilter === 'all' ? 'selected' : ''}>All Subsystems (All ${params.length} Parameters)</option>
-                <option value="Project" ${specCategoryFilter === 'Project' ? 'selected' : ''}>🏢 Customer & Project Identity</option>
-                <option value="Electrical" ${specCategoryFilter === 'Electrical' ? 'selected' : ''}>⚡ Electrical Power & Voltage</option>
-                <option value="Battery" ${specCategoryFilter === 'Battery' ? 'selected' : ''}>🔋 Battery & Power Backup</option>
-                <option value="Cellular" ${specCategoryFilter === 'Cellular' ? 'selected' : ''}>📶 Cellular & SIM Architecture</option>
-                <option value="GNSS" ${specCategoryFilter === 'GNSS' ? 'selected' : ''}>🛰️ GNSS & Antennas</option>
-                <option value="Local RF" ${specCategoryFilter === 'Local RF' ? 'selected' : ''}>📡 Local RF (BLE/Wi-Fi/LoRa)</option>
-                <option value="Wired I/O" ${specCategoryFilter === 'Wired I/O' ? 'selected' : ''}>🔌 Wired I/O & Vehicle Bus</option>
-                <option value="Sensors" ${specCategoryFilter === 'Sensors' ? 'selected' : ''}>🎯 Sensors & Offline Memory</option>
-                <option value="Firmware" ${specCategoryFilter === 'Firmware' ? 'selected' : ''}>⚙️ Firmware, Cloud & Security</option>
-                <option value="Mechanical" ${specCategoryFilter === 'Mechanical' ? 'selected' : ''}>🛡️ Mechanical & Housing</option>
-                <option value="Commercial">📦 Commercial Staging Roadmap</option>
-                <option value="Lighting">💡 Vehicle Lighting & Signaling (INT-0432-437)</option>
-                <option value="Actuation">🔄 Wiper & Motor Actuation (INT-0438-441)</option>
-                <option value="Chassis">🚜 Driveline & Diff Lock Controls (INT-0442-446)</option>
-                <option value="Agri Implements">🌾 Agricultural EQL & Implement Controls (INT-0447-452)</option>
-                <option value="Power Drivers">⚡ Smart High-Side Power Distribution (INT-0453-455)</option>
-                <option value="Networks">🌐 Multi-CAN & LIN Sub-Networks (INT-0460-0700)</option>
+            <!-- Type Filter Dropdown (3.5 cols) -->
+            <div class="sm:col-span-3.5 flex items-center gap-1 bg-[var(--card)] px-2 py-0.5 rounded-md border border-[var(--card-border)]">
+              <span class="text-[9.5px] text-[var(--muted-foreground)] whitespace-nowrap font-semibold">Type:</span>
+              <select id="spec-type-filter" onchange="filterSpecTable()" class="w-full bg-transparent text-[10px] text-[var(--foreground)] p-0.5 outline-none cursor-pointer font-sans">
+                <option value="all" ${specTypeFilter === 'all' ? 'selected' : ''}>All I/O & Signal Types</option>
+                <option value="DI" ${specTypeFilter === 'DI' ? 'selected' : ''}>🔘 DI (Digital Inputs / Keys / Panic)</option>
+                <option value="DO" ${specTypeFilter === 'DO' ? 'selected' : ''}>⚡ DO (Digital Outputs / Relays / Drives)</option>
+                <option value="AI" ${specTypeFilter === 'AI' ? 'selected' : ''}>📈 AI (Analog Inputs / Float / ADC)</option>
+                <option value="CAN" ${specTypeFilter === 'CAN' ? 'selected' : ''}>🔌 CAN-FD / J1939 / LIN Bus</option>
+                <option value="Serial" ${specTypeFilter === 'Serial' ? 'selected' : ''}>📟 Serial (RS485 Modbus / UART)</option>
+                <option value="GNSS" ${specTypeFilter === 'GNSS' ? 'selected' : ''}>🛰️ GNSS / NavIC L5 / GPS</option>
+                <option value="Cellular" ${specTypeFilter === 'Cellular' ? 'selected' : ''}>📶 4G LTE / GSM / eSIM</option>
+                <option value="Battery" ${specTypeFilter === 'Battery' ? 'selected' : ''}>🔋 Power Supply / Battery / JEITA</option>
+                <option value="DVP" ${specTypeFilter === 'DVP' ? 'selected' : ''}>📋 DVP Standards / Environmental</option>
+              </select>
+            </div>
+
+            <!-- Domain Category Filter Dropdown (3.5 cols) -->
+            <div class="sm:col-span-3.5 flex items-center gap-1 bg-[var(--card)] px-2 py-0.5 rounded-md border border-[var(--card-border)]">
+              <span class="text-[9.5px] text-[var(--muted-foreground)] whitespace-nowrap font-semibold">Domain:</span>
+              <select id="spec-category-filter" onchange="filterSpecTable()" class="w-full bg-transparent text-[10px] text-[var(--foreground)] p-0.5 outline-none cursor-pointer font-sans">
+                <option value="all" ${specCategoryFilter === 'all' ? 'selected' : ''}>All 37 Domains (All 700)</option>
+                <option value="Vehicle networks" ${specCategoryFilter === 'Vehicle networks' ? 'selected' : ''}>🌐 Vehicle Networks & CAN-FD</option>
+                <option value="Digital inputs" ${specCategoryFilter === 'Digital inputs' ? 'selected' : ''}>🔘 Digital Inputs & Switches</option>
+                <option value="Analog inputs" ${specCategoryFilter === 'Analog inputs' ? 'selected' : ''}>📈 Analog & ADC Inputs</option>
+                <option value="Outputs and loads" ${specCategoryFilter === 'Outputs and loads' ? 'selected' : ''}>⚡ Outputs, Relays & Loads</option>
+                <option value="Smart power distribution" ${specCategoryFilter === 'Smart power distribution' ? 'selected' : ''}>💡 Smart Power & Lighting</option>
+                <option value="Battery" ${specCategoryFilter === 'Battery' ? 'selected' : ''}>🔋 Battery, Power & Backup</option>
+                <option value="GNSS" ${specCategoryFilter === 'GNSS' ? 'selected' : ''}>🛰️ GNSS & ISRO NavIC L5</option>
+                <option value="Wireless" ${specCategoryFilter === 'Wireless' ? 'selected' : ''}>📶 Wireless, 4G LTE & eSIM</option>
+                <option value="Wired interfaces" ${specCategoryFilter === 'Wired interfaces' ? 'selected' : ''}>🔌 Wired Interfaces & Serial</option>
+                <option value="Sensors" ${specCategoryFilter === 'Sensors' ? 'selected' : ''}>🎯 Sensors & IMU Crash Log</option>
+                <option value="Vehicle lighting" ${specCategoryFilter === 'Vehicle lighting' ? 'selected' : ''}>💡 Vehicle Lighting & Signal</option>
+                <option value="Vehicle motor" ${specCategoryFilter === 'Vehicle motor' ? 'selected' : ''}>🔄 Motor, Wiper & Actuation</option>
+                <option value="Agricultural" ${specCategoryFilter === 'Agricultural' ? 'selected' : ''}>🚜 Agri Implement & PTO</option>
+                <option value="Environment" ${specCategoryFilter === 'Environment' ? 'selected' : ''}>🛡️ Environment & Ingress IP67</option>
+                <option value="DVP" ${specCategoryFilter === 'DVP' ? 'selected' : ''}>🧪 DVP Test Plan & Validation</option>
+                <option value="Firmware" ${specCategoryFilter === 'Firmware' ? 'selected' : ''}>⚙️ Firmware, FOTA & Protocols</option>
               </select>
             </div>
           </div>
@@ -4807,16 +4839,48 @@
 
       const allParams = getMasterParametersList();
       const filtered = allParams.filter(item => {
-        const matchesCat = specCategoryFilter === 'all' || item.cat === specCategoryFilter;
+        // 1. Domain Category filter (substring / case-insensitive)
+        let matchesCat = true;
+        if (specCategoryFilter !== 'all') {
+          matchesCat = item.cat.toLowerCase().includes(specCategoryFilter.toLowerCase());
+        }
+
+        // 2. Type filter (DI, DO, AI, CAN, Serial, GNSS, Cellular, Battery, DVP)
+        let matchesType = true;
+        if (specTypeFilter !== 'all') {
+          const combined = (item.param + ' ' + item.cat + ' ' + (item.val || '') + ' ' + (item.std || '')).toLowerCase();
+          if (specTypeFilter === 'DI') {
+            matchesType = item.cat.toLowerCase().includes('digital input') || combined.includes('digital input') || combined.includes(' di ') || combined.includes('switch') || combined.includes('panic') || combined.includes('ignition');
+          } else if (specTypeFilter === 'DO') {
+            matchesType = item.cat.toLowerCase().includes('output') || combined.includes('output') || combined.includes('relay') || combined.includes('solenoid') || combined.includes('starter cut') || combined.includes('driver');
+          } else if (specTypeFilter === 'AI') {
+            matchesType = item.cat.toLowerCase().includes('analog') || combined.includes('analog') || combined.includes('adc') || combined.includes('float') || combined.includes('sensor input');
+          } else if (specTypeFilter === 'CAN') {
+            matchesType = combined.includes('can') || combined.includes('j1939') || combined.includes('lin') || combined.includes('11898');
+          } else if (specTypeFilter === 'Serial') {
+            matchesType = combined.includes('rs485') || combined.includes('rs232') || combined.includes('uart') || combined.includes('serial') || combined.includes('modbus');
+          } else if (specTypeFilter === 'GNSS') {
+            matchesType = combined.includes('gnss') || combined.includes('gps') || combined.includes('navic') || combined.includes('irnss') || combined.includes('antenna');
+          } else if (specTypeFilter === 'Cellular') {
+            matchesType = combined.includes('cellular') || combined.includes('lte') || combined.includes('4g') || combined.includes('sim') || combined.includes('esim');
+          } else if (specTypeFilter === 'Battery') {
+            matchesType = combined.includes('battery') || combined.includes('backup') || combined.includes('voltage') || combined.includes('jeita') || combined.includes('power');
+          } else if (specTypeFilter === 'DVP') {
+            matchesType = combined.includes('dvp') || combined.includes('iso') || combined.includes('ais') || combined.includes('test') || combined.includes('validation');
+          }
+        }
+
+        // 3. Text query search (matches across all fields)
         const q = specSearchQuery.trim();
         const matchesQuery = !q || 
           item.id.toLowerCase().includes(q) ||
           item.cat.toLowerCase().includes(q) ||
           item.param.toLowerCase().includes(q) ||
-          item.val.toLowerCase().includes(q) ||
-          item.std.toLowerCase().includes(q) ||
-          item.dvp.toLowerCase().includes(q);
-        return matchesCat && matchesQuery;
+          (item.val && item.val.toLowerCase().includes(q)) ||
+          (item.std && item.std.toLowerCase().includes(q)) ||
+          (item.dvp && item.dvp.toLowerCase().includes(q));
+
+        return matchesCat && matchesType && matchesQuery;
       });
 
       
@@ -5248,6 +5312,17 @@
       updateLiveImpact();
     }
 
-</script>
+
+    // Escape key closes modal (User Request)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('spec-modal');
+        if (modal && !modal.classList.contains('hidden')) {
+          modal.classList.add('hidden');
+        }
+      }
+    });
+
+  </script>
 </body>
 </html>
