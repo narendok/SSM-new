@@ -118,8 +118,8 @@
         <!-- ================= STEP 1: VEHICLE & VOLTAGE ================= -->
         <div id="step-pane-1" class="space-y-3">
           <div class="space-y-0.5">
-            <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 1: Vehicle Platform & Incoming Voltage</h2>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Selecting a vehicle class automatically cascades smart defaults across I/O signals, mounting blueprints, voltage quality, and DVP compliance standards.</p>
+            <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 1: Vehicle & Power Architecture</h2>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Platform selection defines nominal voltage, ISO pulse clamping, and base parameters.</p>
           </div>
 
           <!-- Target Deployment Market / Homologation Country Selector (Standard Automotive Flow) -->
@@ -303,12 +303,12 @@
         <div id="step-pane-2" class="space-y-3 hidden">
           <div class="space-y-1.5">
             <div class="flex items-center justify-between">
-              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 2: I/O Channels, Software Features & Vehicle Networks</h2>
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 2: I/O Channels & Hardware Features</h2>
               <span id="step2-veh-badge" class="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
                 🚜 Tractor Signals Active
               </span>
             </div>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Select I/O channels or software capabilities to dynamically build your harness. Switch below to configure networks without long scrolling.</p>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Configure DI, DO, AI, vehicle networks, and custom peripherals without long scrolling.</p>
 
             <!-- Step 2 Section View Switcher (User Request: Prevent excessive scroll by separating I/O and Networks) -->
             <div class="flex items-center gap-1.5 p-1 rounded-lg bg-[var(--background)] border border-[var(--card-border)] text-xs font-semibold">
@@ -586,6 +586,10 @@
               <!-- Dynamically populated via renderUnclassifiedList() -->
             </div>
           </div>
+        </div>
+
+        <!-- Step 2 Section 2: Vehicle Networks & Wireless (User Request: Prevent vertical scroll) -->
+        <div id="s2-section-net" class="space-y-3 hidden">
 
           <!-- COMPACT RESPONSIVE CONNECTIVITY & NETWORK PROTOCOLS (4-COLUMN GRID) -->
           <div class="space-y-1.5">
@@ -727,7 +731,7 @@
             </div>
           </div>
 
-          </div>
+        </div>
 
           <!-- Calculated Harness Preview Banner -->
           <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
@@ -855,12 +859,12 @@
         <div id="step-pane-4" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <div class="flex items-center justify-between">
-              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 4: Mounting Scheme & Enclosure Dimensions</h2>
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 4: Mechanical & Mounting Scheme</h2>
               <span id="blueprint-vehicle-title" class="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
                 🚜 Tractor Cross-Section Active
               </span>
             </div>
-            <p class="text-[11px] text-[var(--muted-foreground)]">2D blueprint vehicle cross-section, physical mounting location, hardware fixation & enclosure dimensional envelope.</p>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Dynamic enclosure dimensions and mounting brackets scaled to internal PCB and battery.</p>
           </div>
 
           <!-- Dynamic 2D Vehicle Blueprint (Changes with Vehicle Selection) -->
@@ -1233,10 +1237,10 @@
         <div id="step-pane-5" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <div class="flex items-center justify-between">
-              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 5: Commercial Staging, Batch Quantities & Delivery Schedule</h2>
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 5: Production Volume & Target Timeline</h2>
               <span class="px-1.5 py-0.5 rounded text-[9.5px] bg-emerald-500/20 text-emerald-500 font-bold font-mono">3-Stage Rollout</span>
             </div>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Customizable prototype batch quantities, turnaround lead times, pilot trial scale, and annual production target.</p>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Annual volume tiers and delivery schedules for BOM optimization and tooling lead time.</p>
           </div>
 
           <!-- Stage 1: Initial Engineering Proto & Bench Testing Batch -->
@@ -1388,10 +1392,10 @@
         <div id="step-pane-6" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <div class="flex items-center justify-between">
-              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 6: Environmental Parameters & Compliance Standards (DVP)</h2>
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 6: Environmental & Regulatory DVP Plan</h2>
               <span class="px-1.5 py-0.5 rounded text-[9.5px] bg-purple-500/20 text-purple-400 font-bold">DVP Basis</span>
             </div>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Target deployment market, operating temperatures, climatic stress & auto-derived ISO/AIS compliance standards.</p>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Automotive compliance targets and automated Design Verification Plan (DVP) matrix.</p>
           </div>
 
           <!-- Section 6.0: Target Deployment Country & Regional Regulatory Regime (User Request) -->
@@ -2164,36 +2168,64 @@
       if (document.getElementById('spec-sheet-container')) renderSpecSheetTab();
     }
 
-    function renderStep3ConnectorPinout() {
-      const visualContainer = document.getElementById('step3-pin-diagram-visual');
-      const tbody = document.getElementById('step3-pinout-tbody');
-      const badge = document.getElementById('step3-conn-pin-badge');
-      const title = document.getElementById('step3-conn-title');
-
+    // SINGLE SOURCE OF TRUTH PINOUT ALLOCATOR (User Request: 100% Real-Time Synchronized Pinout)
+    function getAllocatedPinsList() {
       const allocatedPins = [];
       let pinNum = 1;
 
-      allocatedPins.push({ pin: pinNum++, label: "KL30 Battery Positive", type: "PWR_IN", spec: "9V–36V DC Continuous", wireColor: "Red (18 AWG)", purpose: "Main Battery Power Input", bg: "bg-red-500", text: "text-white" });
-      allocatedPins.push({ pin: pinNum++, label: "GND Chassis Ground", type: "GND", spec: "0V Reference Ground", wireColor: "Black (18 AWG)", purpose: "System Ground Return", bg: "bg-slate-700 dark:bg-slate-500", text: "text-white" });
-      allocatedPins.push({ pin: pinNum++, label: "KL15 Ignition Sense", type: "IGN_SENSE", spec: "0V–32V (Active High >7.5V)", wireColor: "Yellow (22 AWG)", purpose: "Engine Key-ON Wakeup", bg: "bg-amber-500", text: "text-white" });
-
-      wizardState.pins.forEach(p => {
-        let bg = "bg-blue-500", wire = "Blue-White (22 AWG)";
-        if (p.type === 'DO') { bg = "bg-emerald-500"; wire = "Green-White (20 AWG)"; }
-        else if (p.type === 'AI') { bg = "bg-purple-500"; wire = "Orange-White (22 AWG)"; }
-        allocatedPins.push({
-          pin: pinNum++,
-          label: p.label,
-          type: p.type,
-          spec: p.spec,
-          wireColor: wire,
-          purpose: p.purpose,
-          bg: bg,
-          text: "text-white"
-        });
+      // Core Automotive Power & Ground Baseline (3 pins)
+      allocatedPins.push({
+        pin: pinNum++,
+        label: "KL30 Battery Positive",
+        type: "PWR_IN",
+        spec: "9V–36V DC Continuous",
+        wireColor: "Red (18 AWG)",
+        purpose: "Main Battery Power Input",
+        bg: "bg-red-500",
+        text: "text-white"
+      });
+      allocatedPins.push({
+        pin: pinNum++,
+        label: "GND Chassis Ground",
+        type: "GND",
+        spec: "0V Reference Ground",
+        wireColor: "Black (18 AWG)",
+        purpose: "System Ground Return",
+        bg: "bg-slate-700 dark:bg-slate-500",
+        text: "text-white"
+      });
+      allocatedPins.push({
+        pin: pinNum++,
+        label: "KL15 Ignition Sense",
+        type: "IGN_SENSE",
+        spec: "0V–32V (Active High >7.5V)",
+        wireColor: "Yellow (22 AWG)",
+        purpose: "Engine Key-ON Wakeup",
+        bg: "bg-amber-500",
+        text: "text-white"
       });
 
-      if (wizardState.customRequirements && wizardState.customRequirements.length > 0) {
+      // Dynamic I/O Channels (DI, DO, AI)
+      if (wizardState && wizardState.pins) {
+        wizardState.pins.forEach(p => {
+          let bg = "bg-blue-500", wire = "Blue-White (22 AWG)";
+          if (p.type === 'DO') { bg = "bg-emerald-500"; wire = "Green-White (20 AWG)"; }
+          else if (p.type === 'AI') { bg = "bg-purple-500"; wire = "Orange-White (22 AWG)"; }
+          allocatedPins.push({
+            pin: pinNum++,
+            label: p.label,
+            type: p.type,
+            spec: p.spec || "Automotive Signal Line",
+            wireColor: wire,
+            purpose: p.purpose || `${p.type} Channel`,
+            bg: bg,
+            text: "text-white"
+          });
+        });
+      }
+
+      // Custom & Unclassified Peripheral Lines
+      if (wizardState && wizardState.customRequirements && wizardState.customRequirements.length > 0) {
         wizardState.customRequirements.forEach((r, idx) => {
           allocatedPins.push({
             pin: pinNum++,
@@ -2202,22 +2234,72 @@
             spec: "Dedicated Peripheral Line",
             wireColor: "Brown-White (22 AWG)",
             purpose: r.text || "Custom Peripheral Sensor",
-            bg: "bg-purple-600",
+            bg: "bg-pink-600",
             text: "text-white"
           });
         });
       }
 
-      if (wizardState.hasCAN) {
-        allocatedPins.push({ pin: pinNum++, label: "CAN_H (CAN High)", type: "CAN-FD", spec: "ISO 11898-2 5Mbps (Terminated)", wireColor: "Yellow-Green (24 AWG)", purpose: "CAN High Differential", bg: "bg-orange-500", text: "text-white" });
-        allocatedPins.push({ pin: pinNum++, label: "CAN_L (CAN Low)", type: "CAN-FD", spec: "ISO 11898-2 5Mbps (Terminated)", wireColor: "Green (24 AWG)", purpose: "CAN Low Differential", bg: "bg-orange-500", text: "text-white" });
+      // Vehicle Network CAN-FD Interface
+      const canActive = (document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true);
+      if (canActive) {
+        allocatedPins.push({
+          pin: pinNum++,
+          label: "CAN_H (CAN High)",
+          type: "CAN-FD",
+          spec: "ISO 11898-2 5Mbps (Terminated)",
+          wireColor: "Yellow-Green (24 AWG)",
+          purpose: "CAN High Differential",
+          bg: "bg-orange-500",
+          text: "text-white"
+        });
+        allocatedPins.push({
+          pin: pinNum++,
+          label: "CAN_L (CAN Low)",
+          type: "CAN-FD",
+          spec: "ISO 11898-2 5Mbps (Terminated)",
+          wireColor: "Green (24 AWG)",
+          purpose: "CAN Low Differential",
+          bg: "bg-orange-500",
+          text: "text-white"
+        });
       }
 
-      if (wizardState.hasRS485) {
-        allocatedPins.push({ pin: pinNum++, label: "RS485_A", type: "RS485", spec: "TIA/EIA-485-A Differential +", wireColor: "Violet (24 AWG)", purpose: "Aux Telematics / Fuel Sensor", bg: "bg-purple-500", text: "text-white" });
-        allocatedPins.push({ pin: pinNum++, label: "RS485_B", type: "RS485", spec: "TIA/EIA-485-A Differential -", wireColor: "Grey (24 AWG)", purpose: "Aux Telematics / Fuel Sensor", bg: "bg-purple-500", text: "text-white" });
+      // Industrial RS485 Modbus Interface
+      const rs485Active = (document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false);
+      if (rs485Active) {
+        allocatedPins.push({
+          pin: pinNum++,
+          label: "RS485_A",
+          type: "RS485",
+          spec: "TIA/EIA-485-A Differential +",
+          wireColor: "Violet (24 AWG)",
+          purpose: "Aux Telematics / Fuel Sensor",
+          bg: "bg-indigo-500",
+          text: "text-white"
+        });
+        allocatedPins.push({
+          pin: pinNum++,
+          label: "RS485_B",
+          type: "RS485",
+          spec: "TIA/EIA-485-A Differential -",
+          wireColor: "Grey (24 AWG)",
+          purpose: "Aux Telematics / Fuel Sensor",
+          bg: "bg-indigo-500",
+          text: "text-white"
+        });
       }
 
+      return allocatedPins;
+    }
+
+    function renderStep3ConnectorPinout() {
+      const visualContainer = document.getElementById('step3-pin-diagram-visual');
+      const tbody = document.getElementById('step3-pinout-tbody');
+      const badge = document.getElementById('step3-conn-pin-badge');
+      const title = document.getElementById('step3-conn-title');
+
+      const allocatedPins = getAllocatedPinsList();
       const totalPinsCount = allocatedPins.length;
       let totalCavities = 14;
       let headerName = "TE Superseal 1.0 (14-Pin Header)";
@@ -2233,7 +2315,7 @@
         else { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
       }
 
-      if (badge) badge.textContent = `${headerName} (${totalPinsCount} Active / ${totalCavities - totalPinsCount} Spares)`;
+      if (badge) badge.textContent = `${headerName} (${totalPinsCount} Active / ${Math.max(0, totalCavities - totalPinsCount)} Spares)`;
       if (title) title.textContent = `Live Connector Cavity Pinout Diagram (${headerName}):`;
 
       // Build cavities list with spares
@@ -2264,18 +2346,19 @@
         `;
 
         const grid = document.createElement('div');
-        const cols = totalCavities <= 8 ? "grid-cols-4" : (totalCavities <= 14 ? "grid-cols-7" : "grid-cols-13");
-        grid.className = `grid ${cols} gap-1.5 pt-1`;
+        grid.style.display = 'grid';
+        grid.style.gridTemplateColumns = totalCavities <= 8 ? "repeat(4, minmax(0, 1fr))" : (totalCavities <= 14 ? "repeat(7, minmax(0, 1fr))" : "repeat(13, minmax(0, 1fr))");
+        grid.className = "gap-1.5 pt-1";
 
         allCavities.forEach(p => {
           const cell = document.createElement('div');
           cell.className = "flex flex-col items-center gap-0.5 p-1 rounded-lg bg-[var(--card)] border border-[var(--card-border)] hover:border-[var(--primary)] transition-all cursor-default";
-          cell.title = `Pin ${p.pin}: ${p.type} - ${p.purpose} (${p.wireColor})`;
+          cell.title = `Pin ${p.pin}: ${p.label} [${p.type}] - ${p.purpose} (${p.wireColor})`;
           cell.innerHTML = `
             <div class="w-6 h-6 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-[10px] font-mono shadow-xs">
               ${p.pin}
             </div>
-            <span class="font-bold text-[8.5px] text-[var(--foreground)] truncate max-w-[55px]">${p.type}</span>
+            <span class="font-bold text-[8.5px] text-[var(--foreground)] truncate max-w-[50px] text-center">${p.type}</span>
           `;
           grid.appendChild(cell);
         });
@@ -2436,9 +2519,7 @@
       renderColumnPins();
       updateStandardsBadges();
       updateLiveImpact();
-      if (typeof renderSidebarConnectorPinout === 'function') {
-        renderSidebarConnectorPinout();
-      }
+      recalculatePins();
     }
 
     // ISOLATED GNSS & NAVIC CONTROLLER (User Request: Optional GPS & Combined GPS + NavIC label)
@@ -2704,6 +2785,8 @@
         pin.isCustom = !list.includes(pin.purpose);
         renderColumnPins();
         updateLiveImpact();
+        renderSidebarConnectorPinout();
+        renderStep3ConnectorPinout();
       }
     }
 
@@ -3079,56 +3162,7 @@
       const headerNameBadge = document.getElementById('sb-conn-header-name');
       if (!container) return;
 
-      const allocatedPins = [];
-      let pinNum = 1;
-
-      allocatedPins.push({ pin: pinNum++, label: "KL30 Battery Positive", type: "PWR_IN", spec: "9V–36V DC Continuous", wireColor: "Red (18 AWG)", purpose: "Main Battery Power Input", bg: "bg-red-500", text: "text-white" });
-      allocatedPins.push({ pin: pinNum++, label: "GND Chassis Ground", type: "GND", spec: "0V Reference Ground", wireColor: "Black (18 AWG)", purpose: "System Ground Return", bg: "bg-slate-700 dark:bg-slate-500", text: "text-white" });
-      allocatedPins.push({ pin: pinNum++, label: "KL15 Ignition Sense", type: "IGN_SENSE", spec: "0V–32V (Active High >7.5V)", wireColor: "Yellow (22 AWG)", purpose: "Engine Key-ON Wakeup", bg: "bg-amber-500", text: "text-white" });
-
-      if (wizardState && wizardState.pins) {
-        wizardState.pins.forEach(p => {
-          let bg = "bg-blue-500", wire = "Blue-White (22 AWG)";
-          if (p.type === 'DO') { bg = "bg-emerald-500"; wire = "Green-White (20 AWG)"; }
-          else if (p.type === 'AI') { bg = "bg-purple-500"; wire = "Orange-White (22 AWG)"; }
-          allocatedPins.push({
-            pin: pinNum++,
-            label: p.label,
-            type: p.type,
-            spec: p.spec,
-            wireColor: wire,
-            purpose: p.purpose,
-            bg: bg,
-            text: "text-white"
-          });
-        });
-      }
-
-      if (wizardState && wizardState.customRequirements && wizardState.customRequirements.length > 0) {
-        wizardState.customRequirements.forEach((r, idx) => {
-          allocatedPins.push({
-            pin: pinNum++,
-            label: `CUST ${idx + 1}`,
-            type: "CUSTOM",
-            spec: "Dedicated Peripheral Line",
-            wireColor: "Brown-White (22 AWG)",
-            purpose: r.text || "Custom Peripheral Sensor",
-            bg: "bg-purple-600",
-            text: "text-white"
-          });
-        });
-      }
-
-      if (wizardState && wizardState.hasCAN) {
-        allocatedPins.push({ pin: pinNum++, label: "CAN_H", type: "CAN-FD", spec: "ISO 11898-2 5Mbps", wireColor: "Yellow-Green (24 AWG)", purpose: "CAN High Differential", bg: "bg-orange-500", text: "text-white" });
-        allocatedPins.push({ pin: pinNum++, label: "CAN_L", type: "CAN-FD", spec: "ISO 11898-2 5Mbps", wireColor: "Green (24 AWG)", purpose: "CAN Low Differential", bg: "bg-orange-500", text: "text-white" });
-      }
-
-      if (wizardState && wizardState.hasRS485) {
-        allocatedPins.push({ pin: pinNum++, label: "RS485_A", type: "RS485", spec: "TIA/EIA-485-A", wireColor: "Violet (24 AWG)", purpose: "Aux Telematics / Fuel Sensor", bg: "bg-purple-500", text: "text-white" });
-        allocatedPins.push({ pin: pinNum++, label: "RS485_B", type: "RS485", spec: "TIA/EIA-485-A", wireColor: "Grey (24 AWG)", purpose: "Aux Telematics / Fuel Sensor", bg: "bg-purple-500", text: "text-white" });
-      }
-
+      const allocatedPins = getAllocatedPinsList();
       const totalPinsCount = allocatedPins.length;
       let totalCavities = 14;
       let headerName = "TE Superseal 1.0 (14-Pin Header)";
@@ -3174,18 +3208,19 @@
       `;
 
       const grid = document.createElement('div');
-      const cols = totalCavities <= 8 ? "grid-cols-4" : (totalCavities <= 14 ? "grid-cols-7" : "grid-cols-13");
-      grid.className = `grid ${cols} gap-1 pt-0.5`;
+      grid.style.display = 'grid';
+      grid.style.gridTemplateColumns = totalCavities <= 8 ? "repeat(4, minmax(0, 1fr))" : (totalCavities <= 14 ? "repeat(7, minmax(0, 1fr))" : "repeat(13, minmax(0, 1fr))");
+      grid.className = "gap-1 pt-0.5";
 
       allCavities.forEach(p => {
         const cell = document.createElement('div');
         cell.className = "flex flex-col items-center gap-0.5 p-0.5 rounded bg-[var(--card)] border border-[var(--card-border)] hover:border-[var(--primary)] transition-all cursor-pointer";
-        cell.title = `Pin ${p.pin}: ${p.type} - ${p.purpose} (${p.wireColor})`;
+        cell.title = `Pin ${p.pin}: ${p.label} [${p.type}] - ${p.purpose} (${p.wireColor})`;
         cell.innerHTML = `
           <div class="w-5 h-5 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-[9px] font-mono shadow-xs">
             ${p.pin}
           </div>
-          <span class="font-bold text-[7.5px] text-[var(--foreground)] truncate max-w-[38px] leading-tight">${p.type}</span>
+          <span class="font-bold text-[7.5px] text-[var(--foreground)] truncate max-w-[36px] leading-tight text-center">${p.type}</span>
         `;
         grid.appendChild(cell);
       });
@@ -3228,20 +3263,14 @@
     }
 
     function recalculatePins() {
-      const diCount = wizardState.pins.filter(p => p.type === 'DI').length;
-      const doCount = wizardState.pins.filter(p => p.type === 'DO').length;
-      const aiCount = wizardState.pins.filter(p => p.type === 'AI').length;
       const can = document.getElementById('net_can')?.checked ?? true;
       const rs485 = document.getElementById('net_rs485')?.checked ?? false;
 
       wizardState.hasCAN = can;
       wizardState.hasRS485 = rs485;
 
-      let customPins = 0;
-      wizardState.customRequirements.forEach(r => customPins += (r.pins || 2));
-
-      let pins = 3 + diCount + doCount + (aiCount * 2) + (can ? 2 : 0) + (rs485 ? 2 : 0) + customPins;
-      pins = Math.max(pins, 6);
+      const allocatedPins = getAllocatedPinsList();
+      const pins = allocatedPins.length;
 
       const recConnEl = document.getElementById('rec-conn-name');
       let recName = "TE Superseal 1.0 (14-Pin Sealed)";
@@ -3253,8 +3282,29 @@
       const s2El = document.getElementById('step2-pins-text');
       if (s2El) s2El.textContent = `${pins} Harness Pins`;
 
+      // Update Step 2 sub-tab badge counts
+      const diCount = wizardState.pins.filter(p => p.type === 'DI').length;
+      const doCount = wizardState.pins.filter(p => p.type === 'DO').length;
+      const aiCount = wizardState.pins.filter(p => p.type === 'AI').length;
+      const ioBadge = document.getElementById('s2-io-count-badge');
+      if (ioBadge) ioBadge.textContent = `${diCount} DI • ${doCount} DO • ${aiCount} AI`;
+
+      const netBadge = document.getElementById('s2-net-count-badge');
+      if (netBadge) {
+        const netParts = [];
+        if (can) netParts.push('CAN-FD');
+        if (rs485) netParts.push('RS485');
+        if (wizardState.has4G) netParts.push('4G');
+        if (wizardState.gnssOption && wizardState.gnssOption !== 'none') netParts.push('GNSS');
+        netBadge.textContent = netParts.join(' • ') || 'Configured';
+      }
+
       updateStandardsBadges();
       updateLiveImpact();
+
+      // REAL-TIME INSTANT LIVE CONNECTOR PREVIEW RE-RENDERING
+      renderSidebarConnectorPinout();
+      renderStep3ConnectorPinout();
     }
 
     function setDeviceViewMode(mode) {
