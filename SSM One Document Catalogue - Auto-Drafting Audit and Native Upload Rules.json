@@ -877,35 +877,35 @@
     "transaction_boundary": "Reuse/BOM selection does not reserve, receive, issue, procure, adjust, or post inventory. Those are explicit authorized transactions with movement audit and lot/serial genealogy."
   },
   "final_lifecycle_alignment_2026_11_04": {
-  "reuse_contract": [
-    "immutable revision/hash",
-    "source project/stage provenance",
-    "compatibility and dependency assessment",
-    "consuming project links",
-    "derivative revision on edits",
-    "physical inventory item links; digital reuse never changes stock"
-  ],
-  "task_count_policy": "No fixed two/five-task runtime requirement; use pinned settings revisions.",
-  "hierarchy": [
-    "fixed company TG-0 through TG-9",
-    "department internal gates",
-    "editable versioned stages",
-    "settings-derived editable task defaults"
-  ],
-  "baseline_date": "2026-11-04",
-  "status": "web implemented and verified in isolated shared TEST; Android and hosted parity pending",
-  "approval_policy": "Task completion, upload or reuse never implies approval, release, customer acceptance or certification.",
-  "folder_policy": "Four business-context groups contain seven technical folders; no automatic relocation.",
-  "reusable_family_overlays": [
-    "D08",
-    "D10",
-    "D11",
-    "D13",
-    "D14",
-    "D23",
-    "D31"
-  ]
-},
+    "reuse_contract": [
+      "immutable revision/hash",
+      "source project/stage provenance",
+      "compatibility and dependency assessment",
+      "consuming project links",
+      "derivative revision on edits",
+      "physical inventory item links; digital reuse never changes stock"
+    ],
+    "task_count_policy": "No fixed two/five-task runtime requirement; use pinned settings revisions.",
+    "hierarchy": [
+      "fixed company TG-0 through TG-9",
+      "department internal gates",
+      "editable versioned stages",
+      "settings-derived editable task defaults"
+    ],
+    "baseline_date": "2026-11-04",
+    "status": "web implemented and verified in isolated shared TEST; Android and hosted parity pending",
+    "approval_policy": "Task completion, upload or reuse never implies approval, release, customer acceptance or certification.",
+    "folder_policy": "Four business-context groups contain seven technical folders; no automatic relocation.",
+    "reusable_family_overlays": [
+      "D08",
+      "D10",
+      "D11",
+      "D13",
+      "D14",
+      "D23",
+      "D31"
+    ]
+  },
   "generation_and_role_vault_plan": {
     "updated": "2026-11-10",
     "status": "Consolidated requirements; new source profiles not claimed deployed",
@@ -916,23 +916,23 @@
         "sha256": "313528e960a2afc20be066ab8ca752ed14f3d7b81ad6713f2632413aa07ee512"
       },
       {
-        "path": "References/Autodrafted template for header footer.docx",
+        "path": "Customer Master Data/Templates/Autodrafted Template (Header Footer Reference).docx",
         "sha256": "8cf0aecb348537d8805d70be54b78f293574ee0bc9b5c9a35eb83dea4600a2d7"
       },
       {
-        "path": "References/SCMS_Customer_Data_Drafting_Pack.md",
+        "path": "Customer Master Data/SCMS_Customer_Data_Drafting_Pack.md",
         "sha256": "0c993bfce38b53717753069f7caddc6f085e46a471598c11fe8763c77fbe6dbd"
       },
       {
-        "path": "References/SCMS_Customer_Data_Drafting_Templates.json",
+        "path": "Customer Master Data/SCMS_Customer_Data_Drafting_Templates.json",
         "sha256": "0a5bb22569fe443c610991a2577b06f452cb05990de36cfbc98abc3eef769c5c"
       },
       {
-        "path": "References/SCMS_Expanded_Customer_Intake.xlsx",
+        "path": "Customer Master Data/SCMS_Expanded_Customer_Intake_Question_Bank.xlsx",
         "sha256": "11d3b6fa7ae8a24d4d9de9cf1489d22d23e25987212ae21c3f754dfcc6eaf679"
       },
       {
-        "path": "References/SCMS_Portal_Intake_Handoff.md",
+        "path": "Customer Master Data/SCMS_Portal_Intake_Handoff.md",
         "sha256": "1b713270da32d0e4cc466d3a0fbc44b0139195f34c0863a449a41569747e6dc7"
       },
       {
@@ -1063,7 +1063,7 @@
       "processing": "Versioned source dependencies, deduplicated event keys, retry/error state, audit and configured notifications"
     },
     "source_reconciliation_gaps": [
-      "SCMS_Expanded_Intake.json referenced but absent; validated export and existing portal-key mapping required",
+      "Customer intake workbook is the human-review question bank; a separate validated question-bank export and portal-key mapping are required before implementation",
       "DFMEA HW_13 versus HW_11 and DVP HW_14 versus HW_12 need canonical stage crosswalk",
       "Legacy G0_00/OTS/ESW stage aliases need reviewed mapping",
       "25 role labels are functions, not a fixed department registry",

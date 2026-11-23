@@ -2,6 +2,8 @@
 
 Scope: customer-intake content only. Uses the current generic intake bank and supplied Autodrafted template header/footer. Stage/task and later engineering automation remain in SSM-new.
 
+Template reference: Templates/Autodrafted Template (Header Footer Reference).docx. Use its header/footer and branding/layout elements only; populate document body content from accepted customer-master fields and applicable project-stage inputs.
+
 This is a template/binding specification for implementation, not a deployed document generator. No customer answers have been fabricated.
 
 ## What can draft from customer data

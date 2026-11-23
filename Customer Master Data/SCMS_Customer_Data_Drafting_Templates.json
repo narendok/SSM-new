@@ -1,14 +1,14 @@
 {
   "version": "0.1-customer-data-only",
   "status": "IMPLEMENTATION HANDOFF; templates not deployed",
-  "question_bank": "SCMS_Expanded_Intake.json",
-  "question_bank_sha256": "909f02decf00186348c0af560d1c4f7f82b470e363c40ee2d32c1c3c5afe5343",
+  "question_bank": "SCMS_Expanded_Customer_Intake_Question_Bank.xlsx",
+  "question_bank_sha256": "ff6e1080f741d2bceffffa3ff7bc38c00310dfac7a99bdd66ad98fd7b47079ed",
   "template_source": {
     "source_id": "SRC-004",
-    "file": "Autodrafted template.docx",
-    "path": "C:\\Users\\Admin\\Dropbox\\Autodrafted template.docx",
+    "file": "Autodrafted Template (Header Footer Reference).docx",
+    "path": "Templates/Autodrafted Template (Header Footer Reference).docx",
     "sha256": "8cf0aecb348537d8805d70be54b78f293574ee0bc9b5c9a35eb83dea4600a2d7",
-    "role": "Header/footer layout only; environmental procedure body excluded",
+    "role": "Header/footer, logo/branding and page/document metadata reference only; exclude the sample environmental-procedure body.",
     "approval": "Not established",
     "last_modified": "2026-11-10T13:19:01.211429"
   },

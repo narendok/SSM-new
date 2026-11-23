@@ -4,8 +4,9 @@ Status: review and integration input. The portal has not been modified or releas
 
 ## Use these latest files
 
-- SCMS_Expanded_Customer_Intake.xlsx: latest human review view. Earlier generic/master workbooks are background material, not the current question-bank authority.
-- SCMS_Expanded_Intake.json: matching question records, conditional rules, role routing, source audit and portal-preset references.
+- SCMS_Expanded_Customer_Intake_Question_Bank.xlsx: latest expanded question-bank workbook; it contains intake questions, not completed customer responses. Earlier generic/master workbooks are background material, not the current question-bank authority.
+- SCMS_Customer_Data_Drafting_Templates.json: document draft profiles and field-to-document bindings; this is not a question-bank export.
+- Templates/Autodrafted Template (Header Footer Reference).docx: header/footer and branding reference only; the sample procedure body is excluded.
 
 ## Intended client flow
 
@@ -49,4 +50,4 @@ Use the supplied Autodrafted template's header/footer only, with versioned compa
 
 ## Checks completed here
 
-Question/parameter IDs are unique; no historical numbered-pin or DRG/customer-specific prompts remain in Questions; answer/default values start blank; fixed/conditional/unitless states are explicit. The saved workbook opens and its row counts match the JSON. Rendered workbook views were inspected. Source audit is retained in JSON, outside the customer-facing question sheets.
+Question/parameter IDs are unique; no historical numbered-pin or DRG/customer-specific prompts remain in Questions; answer/default values start blank; fixed/conditional/unitless states are explicit. The workbook is the human-review question bank. The template profile JSON is a separate mapping file and does not serve as a question-bank export. Rendered workbook views were inspected. Source audit is retained in JSON, outside the customer-facing question sheets.

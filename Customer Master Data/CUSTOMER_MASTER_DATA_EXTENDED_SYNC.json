@@ -1,0 +1,96 @@
+{
+  "sync_title": "SCMS Customer Master Data & Project Requirement Sheet Synchronization",
+  "sync_timestamp": "2026-11-22T11:44:00+05:30",
+  "status": "SYNCHRONIZED",
+  "authorities": {
+    "portal_smart_inputs": "C:/Users/Admin/AndroidStudioProjects/SSM-new/ssm-new-web/src/lib/project-smart-inputs.ts",
+    "portal_master_spec_sheet": "C:/Users/Admin/AndroidStudioProjects/SSM-new/ssm-new-web/src/components/ProjectMasterSpecSheet.tsx",
+    "master_plan": "C:/Users/Admin/AndroidStudioProjects/SSM-new/SSM-Planning/SSM_ONE_MASTER_PLAN.md",
+    "customer_master_table": "SCMS_Expanded_Customer_Intake_Question_Bank.xlsx"
+  },
+  "summary": "Synchronized conversation outcomes and extended vehicle feature & I/O parameters into the SSM-New Project Master Spec Sheet (PMSS) and smart parameter definitions without using restrictive controller acronyms.",
+  "vehicle_application_classes": [
+    "Agricultural Tractor / Farm Equipment",
+    "Commercial Vehicle (Truck / Bus)",
+    "Electric Vehicle (EV Subsystems)",
+    "Light Commercial Vehicle (LCV / Pickup)",
+    "Special Purpose Vehicle"
+  ],
+  "synced_parameter_domains": [
+    {
+      "domain": "Vehicle Electrical Architecture",
+      "parameters": [
+        "vehicle_application_class",
+        "system_nominal_voltage",
+        "load_dump_transient_target",
+        "quiescent_sleep_current_limit",
+        "vehicle_wakeup_sources"
+      ],
+      "downstream_impact": "Drives PRS power rail architecture, LDO headroom, and ISO 16750-2/ISO 7637-2 electrical stress testing in DVP."
+    },
+    {
+      "domain": "Exterior Lighting & Signaling",
+      "parameters": [
+        "headlamp_low_high_beam_control",
+        "turn_indicator_hazard_control",
+        "parking_tail_stop_lamp_control",
+        "front_rear_fog_lamp_drive",
+        "reverse_lamp_and_rpas_buzzer",
+        "daytime_running_lamps_drl"
+      ],
+      "downstream_impact": "Maps to smart high-side drivers (HSD) with real-time analog current sense (ISENSE), electronic flasher doubling, and short-circuit protection."
+    },
+    {
+      "domain": "Wiper & Motor Actuation",
+      "parameters": [
+        "wiper_motor_speed_control",
+        "wiper_park_position_sensing",
+        "windshield_washer_pump_drive",
+        "vehicle_horn_control"
+      ],
+      "downstream_impact": "Governs dynamic motor braking, park switch debouncing, and automated wash-wipe coordination."
+    },
+    {
+      "domain": "Driveline & Chassis Actuation",
+      "parameters": [
+        "inter_axle_differential_lock_iad",
+        "inter_wheel_differential_lock_iwd",
+        "parking_brake_status_monitoring",
+        "service_brake_switch_interface",
+        "transmission_neutral_reverse_switches"
+      ],
+      "downstream_impact": "Controls heavy commercial tandem axle solenoids, starter lockout interlocks, and ISO 26262 brake plausibility checking."
+    },
+    {
+      "domain": "Agricultural Equipment & Smart Implements",
+      "parameters": [
+        "electronic_quick_lift_eql_hitch",
+        "auto_implement_lift_on_turn",
+        "auto_implement_lift_on_reverse",
+        "pto_auto_disengagement_turn_reverse",
+        "implement_depth_position_sensor",
+        "steering_wheel_angle_sensor_input"
+      ],
+      "downstream_impact": "Automates agricultural 3-point hitch lift based on wheel angle ADC / reverse gear detection, and commands PTO safety cutout."
+    },
+    {
+      "domain": "Smart Power Distribution & Driver Protection",
+      "parameters": [
+        "high_side_driver_fault_strategy",
+        "analog_current_sense_diagnostics",
+        "inductive_load_demag_clamping"
+      ],
+      "downstream_impact": "Implements thermal shutdown auto-retry and active Vds inductive coil energy clamping in BOM and HSI."
+    },
+    {
+      "domain": "Vehicle Networks & Diagnostics",
+      "parameters": [
+        "vehicle_can_channel_count",
+        "can_bus_speed_and_canfd_support",
+        "lin_sub_network_support"
+      ],
+      "downstream_impact": "Allocates physical CAN transceivers (up to 3 isolated buses), CAN-FD termination, and LIN master transceiver for cabin switch clusters."
+    }
+  ],
+  "customer_master_table": "SCMS_Expanded_Customer_Intake_Question_Bank.xlsx"
+}
