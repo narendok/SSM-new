@@ -301,14 +301,28 @@
 
         <!-- ================= STEP 2: COLUMN-SPECIFIC I/O ALLOCATION & ISOLATED NAVIC GNSS ================= -->
         <div id="step-pane-2" class="space-y-3 hidden">
-          <div class="space-y-0.5">
+          <div class="space-y-1.5">
             <div class="flex items-center justify-between">
-              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 2: Column-Wise I/O Allocation & Isolated NavIC GNSS</h2>
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 2: I/O Channels, Software Features & Vehicle Networks</h2>
               <span id="step2-veh-badge" class="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
                 🚜 Tractor Signals Active
               </span>
             </div>
-            <p class="text-[11px] text-[var(--muted-foreground)]">I/O rows live inside their respective columns. GNSS isolates NavIC L5 selection with realistic cost & lead time impacts.</p>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Select I/O channels or software capabilities to dynamically build your harness. Switch below to configure networks without long scrolling.</p>
+
+            <!-- Step 2 Section View Switcher (User Request: Prevent excessive scroll by separating I/O and Networks) -->
+            <div class="flex items-center gap-1.5 p-1 rounded-lg bg-[var(--background)] border border-[var(--card-border)] text-xs font-semibold">
+              <button type="button" onclick="switchStep2SubTab('io')" id="s2-tab-btn-io" class="flex-1 py-1 px-3 rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
+                <span>⚡</span>
+                <span>Hardware I/O & Features</span>
+                <span id="s2-io-count-badge" class="px-1.5 py-0.1 rounded text-[9px] bg-black/20 text-white font-mono">Active</span>
+              </button>
+              <button type="button" onclick="switchStep2SubTab('net')" id="s2-tab-btn-net" class="flex-1 py-1 px-3 rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <span>🌐</span>
+                <span>Vehicle Networks & Wireless</span>
+                <span id="s2-net-count-badge" class="px-1.5 py-0.1 rounded text-[9px] bg-amber-500/20 text-amber-400 font-mono">CAN / 4G / GNSS</span>
+              </button>
+            </div>
           </div>
 
           <!-- Datalists for Embedded Searchable Comboboxes -->
@@ -317,7 +331,8 @@
           <datalist id="ai-suggestions"></datalist>
 
           
-          <!-- Software Feature to Recommended Hardware I/O Auto-Recommender (User Request) -->
+          <div id="s2-section-io" class="space-y-3">
+<!-- Software Feature to Recommended Hardware I/O Auto-Recommender (User Request) -->
           <div class="p-3 rounded-xl border border-[var(--primary)]/40 bg-[var(--card)] space-y-2 shadow-xs">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div class="flex items-center gap-1.5">
@@ -342,7 +357,13 @@
               <span class="text-[8.5px] font-mono text-emerald-400">Auto-allocates DI, DO, AI, CAN & RS485</span>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 max-h-48 overflow-y-auto pr-1 text-[10px] custom-scrollbar">
+            <!-- Instant Search for Software Features (User Request) -->
+            <div class="flex items-center gap-1.5 bg-[var(--background)] px-2 py-1 rounded-md border border-[var(--card-border)] shadow-xs">
+              <span class="text-[var(--muted-foreground)] text-xs">🔍</span>
+              <input type="text" id="sw-feature-search-input" oninput="filterSoftwareCards()" placeholder="Quick search 9 features (e.g. starter cut, fuel theft, SOS panic, PTO, reefer, CAN)..." class="w-full bg-transparent text-[10.5px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)] font-sans" />
+            </div>
+
+            <div id="sw-features-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 max-h-48 overflow-y-auto pr-1 text-[10px] custom-scrollbar">
               <!-- Feature 1: Engine Starter Cut -->
               <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
                 <input type="checkbox" id="rec-feat-immob" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
@@ -516,7 +537,7 @@
           <div class="p-2.5 rounded-xl border border-purple-500/30 bg-purple-500/5 space-y-2">
             <div class="flex items-center justify-between">
               <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
-                <span>⚡</span> <span>Custom / Unclassified Peripheral Requirements (Full-Width Router):</span>
+                <span>⚡</span> <span>Custom & Unclassified Peripheral Requirements:</span>
               </span>
               <span class="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-400 font-mono font-bold">Smart Classifier</span>
             </div>
@@ -529,10 +550,25 @@
               <input 
                 type="text" 
                 id="custom-req-input" 
-                placeholder="e.g. Grain moisture probe, Seed drill rate, Retarder lever, RS485 camera..." 
-                class="flex-1 px-2 py-1 rounded bg-[var(--card)] border border-[var(--card-border)] text-[10.5px] text-[var(--foreground)] focus:border-[var(--primary)] focus:outline-none"
-                onkeydown="if(event.key === 'Enter') addCustomRequirement()"
+                list="custom-peripherals-suggestions"
+                placeholder="Search or type custom sensor (e.g. Axle Load Cell, TPMS Receiver, Hydraulic Pressure, RFID)..." 
+                class="flex-1 px-2 py-1 rounded bg-[var(--card)] border border-[var(--card-border)] text-[10.5px] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] outline-none"
               >
+              <datalist id="custom-peripherals-suggestions">
+                <option value="Axle Weight / Load Cell Sensor (0–5V AI)">
+                <option value="Tire Pressure TPMS Receiver (RS485 Modbus)">
+                <option value="Driver RFID / Dallas iButton Reader (1-Wire)">
+                <option value="Refrigeration Cargo Temp Probe (PT100/NTC)">
+                <option value="Hydraulic Lift / Dump Bed Pressure Transducer">
+                <option value="Trailer Coupling / Fifth Wheel Kingpin Sensor">
+                <option value="Door Security / Cargo Tamper Magnetic Reed Switch">
+                <option value="Engine Coolant Level Float Switch (Active Low)">
+                <option value="Secondary Auxiliary Fuel Tank Float Sensor">
+                <option value="Cabin Air Quality & Particulate PM2.5 Sensor">
+                <option value="Driver Breathalyzer / Alcohol Interlock Sensor">
+                <option value="Crash Impact Accelerometer High-G Pulse Line">
+                <option value="Emergency Siren & High-Decibel Warning Strobe">
+              </datalist>
               <select id="custom-req-target" class="px-2 py-1 rounded bg-[var(--card)] border border-[var(--card-border)] text-[10px] font-medium text-[var(--foreground)]">
                 <option value="auto">⚡ Auto-Detect & Route</option>
                 <option value="DI">📥 Promote to DI Column</option>
@@ -689,6 +725,8 @@
               </div>
 
             </div>
+          </div>
+
           </div>
 
           <!-- Calculated Harness Preview Banner -->
@@ -2155,6 +2193,21 @@
         });
       });
 
+      if (wizardState.customRequirements && wizardState.customRequirements.length > 0) {
+        wizardState.customRequirements.forEach((r, idx) => {
+          allocatedPins.push({
+            pin: pinNum++,
+            label: `CUST ${idx + 1}`,
+            type: "CUSTOM",
+            spec: "Dedicated Peripheral Line",
+            wireColor: "Brown-White (22 AWG)",
+            purpose: r.text || "Custom Peripheral Sensor",
+            bg: "bg-purple-600",
+            text: "text-white"
+          });
+        });
+      }
+
       if (wizardState.hasCAN) {
         allocatedPins.push({ pin: pinNum++, label: "CAN_H (CAN High)", type: "CAN-FD", spec: "ISO 11898-2 5Mbps (Terminated)", wireColor: "Yellow-Green (24 AWG)", purpose: "CAN High Differential", bg: "bg-orange-500", text: "text-white" });
         allocatedPins.push({ pin: pinNum++, label: "CAN_L (CAN Low)", type: "CAN-FD", spec: "ISO 11898-2 5Mbps (Terminated)", wireColor: "Green (24 AWG)", purpose: "CAN Low Differential", bg: "bg-orange-500", text: "text-white" });
@@ -3051,6 +3104,21 @@
         });
       }
 
+      if (wizardState && wizardState.customRequirements && wizardState.customRequirements.length > 0) {
+        wizardState.customRequirements.forEach((r, idx) => {
+          allocatedPins.push({
+            pin: pinNum++,
+            label: `CUST ${idx + 1}`,
+            type: "CUSTOM",
+            spec: "Dedicated Peripheral Line",
+            wireColor: "Brown-White (22 AWG)",
+            purpose: r.text || "Custom Peripheral Sensor",
+            bg: "bg-purple-600",
+            text: "text-white"
+          });
+        });
+      }
+
       if (wizardState && wizardState.hasCAN) {
         allocatedPins.push({ pin: pinNum++, label: "CAN_H", type: "CAN-FD", spec: "ISO 11898-2 5Mbps", wireColor: "Yellow-Green (24 AWG)", purpose: "CAN High Differential", bg: "bg-orange-500", text: "text-white" });
         allocatedPins.push({ pin: pinNum++, label: "CAN_L", type: "CAN-FD", spec: "ISO 11898-2 5Mbps", wireColor: "Green (24 AWG)", purpose: "CAN Low Differential", bg: "bg-orange-500", text: "text-white" });
@@ -3124,6 +3192,39 @@
 
       shell.appendChild(grid);
       container.appendChild(shell);
+    }
+
+    
+    // STEP 2 SUB-TAB SWITCHER (User Request: Prevent long scrolling)
+    function switchStep2SubTab(tab) {
+      const ioSec = document.getElementById('s2-section-io');
+      const netSec = document.getElementById('s2-section-net');
+      const btnIo = document.getElementById('s2-tab-btn-io');
+      const btnNet = document.getElementById('s2-tab-btn-net');
+
+      if (tab === 'io') {
+        if (ioSec) ioSec.classList.remove('hidden');
+        if (netSec) netSec.classList.add('hidden');
+        if (btnIo) btnIo.className = "flex-1 py-1 px-3 rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer";
+        if (btnNet) btnNet.className = "flex-1 py-1 px-3 rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all flex items-center justify-center gap-1.5 cursor-pointer";
+      } else {
+        if (ioSec) ioSec.classList.add('hidden');
+        if (netSec) netSec.classList.remove('hidden');
+        if (btnNet) btnNet.className = "flex-1 py-1 px-3 rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer";
+        if (btnIo) btnIo.className = "flex-1 py-1 px-3 rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all flex items-center justify-center gap-1.5 cursor-pointer";
+      }
+    }
+
+    
+    function filterSoftwareCards() {
+      const q = (document.getElementById('sw-feature-search-input')?.value || '').toLowerCase().trim();
+      const container = document.getElementById('sw-features-container');
+      if (!container) return;
+      const labels = container.querySelectorAll('label');
+      labels.forEach(lbl => {
+        const text = lbl.innerText.toLowerCase();
+        lbl.style.display = (!q || text.includes(q)) ? '' : 'none';
+      });
     }
 
     function recalculatePins() {
