@@ -549,8 +549,8 @@
               <span class="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-400 font-mono font-bold">Smart Classifier</span>
             </div>
             
-            <p class="text-[10px] text-[var(--muted-foreground)]">
-              Customer doesn't know the pin type or has a special sensor/actuator? Type it below. If detected as standard automotive DI/DO/AI it auto-promotes to the column above; otherwise it stays here as an unclassified custom peripheral.
+            <p class="text-[9.5px] text-[var(--muted-foreground)]">
+              Add custom sensors or actuators. Auto-routes to DI, DO, AI or allocates dedicated peripheral pins.
             </p>
 
             <div class="flex flex-wrap sm:flex-nowrap items-center gap-1.5">
@@ -2239,7 +2239,7 @@
         wizardState.pins.forEach(p => {
           let bg = "bg-blue-500", wire = "Blue-White (22 AWG)";
           if (p.type === 'DO') { bg = "bg-emerald-500"; wire = "Green-White (20 AWG)"; }
-          else if (p.type === 'AI') { bg = "bg-purple-500"; wire = "Orange-White (22 AWG)"; }
+          else if (p.type === 'AI') { bg = "bg-amber-500"; wire = "Orange-White (22 AWG)"; }
           allocatedPins.push({
             pin: pinNum++,
             label: p.label,
@@ -2341,7 +2341,9 @@
       } else {
         if (totalPinsCount <= 8) { totalCavities = 8; headerName = "TE Superseal 1.0 (8-Pin Header)"; }
         else if (totalPinsCount <= 14) { totalCavities = 14; headerName = "TE Superseal 1.0 (14-Pin Header)"; }
-        else { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
+        else if (totalPinsCount <= 26) { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
+        else if (totalPinsCount <= 34) { totalCavities = 34; headerName = "TE Superseal 1.0 (34-Pin Header)"; }
+        else { totalCavities = Math.ceil(totalPinsCount / 2) * 2; headerName = `Automotive Header (${totalCavities}-Pin)`; }
       }
 
       if (badge) badge.textContent = `${headerName} (${totalPinsCount} Active / ${Math.max(0, totalCavities - totalPinsCount)} Spares)`;
@@ -2374,9 +2376,16 @@
           </div>
         `;
 
+        let cols = 7;
+        if (totalCavities <= 8) cols = 4;
+        else if (totalCavities <= 14) cols = 7;
+        else if (totalCavities <= 26) cols = 13;
+        else if (totalCavities <= 34) cols = 17;
+        else cols = Math.ceil(totalCavities / 2);
+
         const grid = document.createElement('div');
         grid.style.display = 'grid';
-        grid.style.gridTemplateColumns = totalCavities <= 8 ? "repeat(4, minmax(0, 1fr))" : (totalCavities <= 14 ? "repeat(7, minmax(0, 1fr))" : "repeat(13, minmax(0, 1fr))");
+        grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
         grid.className = "gap-1.5 pt-1";
 
         allCavities.forEach(p => {
@@ -2387,7 +2396,7 @@
             <div class="w-6 h-6 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-[10px] font-mono shadow-xs">
               ${p.pin}
             </div>
-            <span class="font-bold text-[8.5px] text-[var(--foreground)] truncate max-w-[50px] text-center">${p.type}</span>
+            <span class="font-bold text-[8.5px] text-[var(--foreground)] truncate max-w-[50px] text-center" title="${p.label}: ${p.purpose}">${p.label || p.type}</span>
           `;
           grid.appendChild(cell);
         });
@@ -2416,8 +2425,6 @@
     }
   
     function jumpToStep(step) {
-      if (step === 3) setTimeout(renderStep3ConnectorPinout, 50);
-
       currentStep = step;
       for (let i = 1; i <= totalSteps; i++) {
         const pane = document.getElementById(`step-pane-${i}`);
@@ -2452,14 +2459,14 @@
       document.getElementById('step-badge').textContent = titles[step - 1];
       document.getElementById('step-indicator-text').textContent = `Step ${step} of ${totalSteps}`;
 
-      if (step === 4) {
-        renderDeviceBlueprint();
+      // Refresh real-time diagrams
       renderSidebarConnectorPinout();
-      }
+      if (step === 3) renderStep3ConnectorPinout();
+      if (step === 4) renderDeviceBlueprint();
 
       updateLiveImpact();
     }
-
+  
     function nextStep() {
       if (currentStep < totalSteps) jumpToStep(currentStep + 1);
       else toggleSpecSheet();
@@ -2787,6 +2794,16 @@
         if (diCount <= 1) return;
       }
       wizardState.pins = wizardState.pins.filter(p => p.id !== pinId);
+
+      // Two-way sync: uncheck corresponding recommender feature if applicable
+      if (pinId === 'do-immob') { const el = document.getElementById('rec-feat-immob'); if (el) el.checked = false; }
+      if (pinId === 'ai-fuel') { const el = document.getElementById('rec-feat-fuel'); if (el) el.checked = false; }
+      if (pinId === 'di-sos') { const el = document.getElementById('rec-feat-sos'); if (el) el.checked = false; }
+      if (pinId === 'di-pto' || pinId === 'di-pto-speed') { const el = document.getElementById('rec-feat-pto'); if (el) el.checked = false; }
+      if (pinId === 'ai-reefer') { const el = document.getElementById('rec-feat-reefer'); if (el) el.checked = false; }
+      if (pinId === 'do-buzzer') { const el = document.getElementById('rec-feat-buzzer'); if (el) el.checked = false; }
+      if (pinId.startsWith('do-eql') || pinId === 'ai-eql-draft') { const el = document.getElementById('rec-feat-eql'); if (el) el.checked = false; }
+
       renumberPins();
       renderColumnPins();
       recalculatePins();
@@ -2795,9 +2812,16 @@
     function renumberPins() {
       let diC = 1, doC = 1, aiC = 1;
       wizardState.pins.forEach(pin => {
-        if (pin.type === 'DI') pin.label = `DI ${diC++}`;
-        else if (pin.type === 'DO') pin.label = `DO ${doC++}`;
-        else if (pin.type === 'AI') pin.label = `AI ${aiC++}`;
+        if (pin.type === 'DI') {
+          pin.label = (pin.isCustom && pin.label.includes('(')) ? pin.label : `DI ${diC}`;
+          diC++;
+        } else if (pin.type === 'DO') {
+          pin.label = (pin.isCustom && pin.label.includes('(')) ? pin.label : `DO ${doC}`;
+          doC++;
+        } else if (pin.type === 'AI') {
+          pin.label = (pin.isCustom && pin.label.includes('(')) ? pin.label : `AI ${aiC}`;
+          aiC++;
+        }
       });
     }
 
@@ -2812,13 +2836,12 @@
         else if (pin.type === 'AI') list = sigs.ai;
 
         pin.isCustom = !list.includes(pin.purpose);
-        renderColumnPins();
         updateLiveImpact();
         renderSidebarConnectorPinout();
         renderStep3ConnectorPinout();
       }
     }
-
+  
     function renderColumnPins() {
       const diContainer = document.getElementById('di-column-pins');
       const doContainer = document.getElementById('do-column-pins');
@@ -3204,7 +3227,9 @@
       } else {
         if (totalPinsCount <= 8) { totalCavities = 8; headerName = "TE Superseal 1.0 (8-Pin Header)"; }
         else if (totalPinsCount <= 14) { totalCavities = 14; headerName = "TE Superseal 1.0 (14-Pin Header)"; }
-        else { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
+        else if (totalPinsCount <= 26) { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
+        else if (totalPinsCount <= 34) { totalCavities = 34; headerName = "TE Superseal 1.0 (34-Pin Header)"; }
+        else { totalCavities = Math.ceil(totalPinsCount / 2) * 2; headerName = `Automotive Header (${totalCavities}-Pin)`; }
       }
 
       if (headerNameBadge) {
@@ -3236,9 +3261,16 @@
         </div>
       `;
 
+      let cols = 7;
+      if (totalCavities <= 8) cols = 4;
+      else if (totalCavities <= 14) cols = 7;
+      else if (totalCavities <= 26) cols = 13;
+      else if (totalCavities <= 34) cols = 17;
+      else cols = Math.ceil(totalCavities / 2);
+
       const grid = document.createElement('div');
       grid.style.display = 'grid';
-      grid.style.gridTemplateColumns = totalCavities <= 8 ? "repeat(4, minmax(0, 1fr))" : (totalCavities <= 14 ? "repeat(7, minmax(0, 1fr))" : "repeat(13, minmax(0, 1fr))");
+      grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
       grid.className = "gap-1 pt-0.5";
 
       allCavities.forEach(p => {
@@ -3249,7 +3281,7 @@
           <div class="w-5 h-5 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-[9px] font-mono shadow-xs">
             ${p.pin}
           </div>
-          <span class="font-bold text-[7.5px] text-[var(--foreground)] truncate max-w-[36px] leading-tight text-center">${p.type}</span>
+          <span class="font-bold text-[7.5px] text-[var(--foreground)] truncate max-w-[36px] leading-tight text-center" title="${p.label}: ${p.purpose}">${p.label || p.type}</span>
         `;
         grid.appendChild(cell);
       });
@@ -3257,9 +3289,7 @@
       shell.appendChild(grid);
       container.appendChild(shell);
     }
-
-    
-    // STEP 2 SUB-TAB SWITCHER (User Request: Prevent long scrolling)
+  
     function switchStep2SubTab(tab) {
       const ioSec = document.getElementById('s2-section-io');
       const netSec = document.getElementById('s2-section-net');
@@ -4987,10 +5017,8 @@
         }
       }
 
-      let customPins = 0;
-      wizardState.customRequirements.forEach(r => customPins += (r.pins || 2));
-      let pins = 3 + diCount + doCount + (aiCount * 2) + (wizardState.hasCAN ? 2 : 0) + (wizardState.hasRS485 ? 2 : 0) + customPins;
-      pins = Math.max(pins, 6);
+      const allocatedPins = getAllocatedPinsList();
+      const pins = allocatedPins.length;
       const rtPins = document.getElementById('rt-pins-text');
       if (rtPins) rtPins.textContent = `${pins} Harness Pins`;
 
@@ -5005,11 +5033,11 @@
 
       let connDisplay = "TE Superseal 1.0 (14-Pin)";
       if (wizardState.connectorOption === 'oem') {
-        connDisplay = document.getElementById('cust_connector_pn')?.value || "Custom OEM";
+        connDisplay = (document.getElementById('cust_connector_pn')?.value || "Custom OEM") + " Header";
       } else if (wizardState.connectorOption === 'flying') {
         connDisplay = "Pigtail Flying Leads";
       } else {
-        connDisplay = pins <= 8 ? "TE Superseal (8-Pin)" : (pins <= 14 ? "TE Superseal (14-Pin)" : "TE Superseal (26-Pin)");
+        connDisplay = pins <= 8 ? "TE Superseal (8-Pin)" : (pins <= 14 ? "TE Superseal (14-Pin)" : (pins <= 26 ? "TE Superseal (26-Pin)" : (pins <= 34 ? "TE Superseal (34-Pin)" : `Automotive Header (${Math.ceil(pins/2)*2}-Pin)`)));
       }
       const rtConn = document.getElementById('rt-conn-text');
       if (rtConn) rtConn.textContent = connDisplay;
@@ -5314,72 +5342,26 @@
       if (!pinoutBody) return;
       pinoutBody.innerHTML = '';
       
-      const allocatedPins = [];
-      let pinNum = 1;
-
-      // Base Power & Ground Pins
-      allocatedPins.push({ pin: pinNum++, type: "PWR_IN", purpose: "Main Battery Power (+12V/+24V)", wireColor: "Red", class: "Power Feed", bg: "bg-red-500", text: "text-white" });
-      allocatedPins.push({ pin: pinNum++, type: "GND", purpose: "Chassis Ground Reference", wireColor: "Black", class: "System Return", bg: "bg-slate-700 dark:bg-slate-500", text: "text-white" });
-      allocatedPins.push({ pin: pinNum++, type: "IGN_SENSE", purpose: "Ignition Key Wakeup Line", wireColor: "Yellow", class: "Wakeup Trigger", bg: "bg-amber-500", text: "text-white" });
-
-      // Configured I/O Pins
-      wizardState.pins.forEach(p => {
-        let bg = "bg-blue-500", wire = "Blue-White";
-        if (p.type === 'DO') { bg = "bg-emerald-500"; wire = "Green-White"; }
-        else if (p.type === 'AI') { bg = "bg-amber-500"; wire = "Orange-White"; }
-        allocatedPins.push({
-          pin: pinNum++,
-          type: p.label,
-          purpose: `${p.purpose} (${p.spec})`,
-          wireColor: wire,
-          class: p.isCustom ? "Custom Feature" : "OEM Standard",
-          bg: bg,
-          text: "text-white"
-        });
-      });
-
-      // Custom Unclassified Peripherals
-      wizardState.customRequirements.forEach(req => {
-        allocatedPins.push({
-          pin: `${pinNum++}-${pinNum++}`,
-          type: "CUSTOM_PERIPH",
-          purpose: `${req.text} (Dedicated 2-wire peripheral)`,
-          wireColor: "Violet-White",
-          class: "Unclassified",
-          bg: "bg-fuchsia-500",
-          text: "text-white"
-        });
-      });
-
-      // CAN-FD Bus
-      if (wizardState.hasCAN) {
-        allocatedPins.push({ pin: pinNum++, type: "CAN_H", purpose: "CAN-FD High Differential Bus", wireColor: "Yellow-Green", class: "ISO 11898", bg: "bg-purple-500", text: "text-white" });
-        allocatedPins.push({ pin: pinNum++, type: "CAN_L", purpose: "CAN-FD Low Differential Bus", wireColor: "Green-Black", class: "ISO 11898", bg: "bg-purple-500", text: "text-white" });
-      }
-
-      // RS485 Modbus Bus
-      if (wizardState.hasRS485) {
-        allocatedPins.push({ pin: pinNum++, type: "RS485_A", purpose: "RS485 Modbus Data Line A (+)", wireColor: "Blue-Orange", class: "Serial Bus", bg: "bg-cyan-500", text: "text-white" });
-        allocatedPins.push({ pin: pinNum++, type: "RS485_B", purpose: "RS485 Modbus Data Line B (-)", wireColor: "Orange-Black", class: "Serial Bus", bg: "bg-cyan-500", text: "text-white" });
-      }
+      const allocatedPins = getAllocatedPinsList();
 
       // Populate Pinout Table
       allocatedPins.forEach(p => {
         const tr = document.createElement('tr');
-        const classBadge = p.class === 'Custom Feature' || p.class === 'Unclassified'
-          ? `<span class="text-purple-400 font-bold">${p.class}</span>`
-          : `<span class="text-emerald-500">${p.class}</span>`;
+        const isCustom = p.type === 'CUSTOM' || p.type.includes('CUST') || p.label.includes('(');
+        const classBadge = isCustom
+          ? `<span class="text-purple-400 font-bold">Custom Feature</span>`
+          : `<span class="text-emerald-500">OEM Standard</span>`;
         tr.innerHTML = `
           <td class="p-1.5 font-bold font-mono text-[var(--foreground)]">Pin ${p.pin}</td>
-          <td class="p-1.5 font-bold"><span class="px-1.5 py-0.2 rounded ${p.bg} ${p.text} text-[9.5px]">${p.type}</span></td>
-          <td class="p-1.5 text-[var(--foreground)]">${p.purpose}</td>
+          <td class="p-1.5 font-bold"><span class="px-1.5 py-0.2 rounded ${p.bg} ${p.text} text-[9.5px]">${p.label || p.type}</span></td>
+          <td class="p-1.5 text-[var(--foreground)]">${p.purpose} (${p.spec})</td>
           <td class="p-1.5 text-[var(--muted-foreground)] font-mono text-[10px]">${p.wireColor}</td>
           <td class="p-1.5 text-right font-mono">${classBadge}</td>
         `;
         pinoutBody.appendChild(tr);
       });
 
-      const totalPinsCount = pinNum - 1;
+      const totalPinsCount = allocatedPins.length;
       const badge = document.getElementById('modal-pin-count-badge');
       if (badge) badge.textContent = `${totalPinsCount} Pins Total Allocated`;
 
@@ -5391,17 +5373,24 @@
       const container = document.getElementById('pin-diagram-visual');
       if (!container) return;
 
-      const headerName = document.getElementById('rt-conn-text')?.textContent || "TE Superseal 1.0";
+      const totalPinsCount = allocatedPins.length;
+      let totalCavities = 14;
+      let headerName = "TE Superseal 1.0 (14-Pin Header)";
+      if (totalPinsCount <= 8) { totalCavities = 8; headerName = "TE Superseal 1.0 (8-Pin Header)"; }
+      else if (totalPinsCount <= 14) { totalCavities = 14; headerName = "TE Superseal 1.0 (14-Pin Header)"; }
+      else if (totalPinsCount <= 26) { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
+      else if (totalPinsCount <= 34) { totalCavities = 34; headerName = "TE Superseal 1.0 (34-Pin Header)"; }
+      else { totalCavities = Math.ceil(totalPinsCount / 2) * 2; headerName = `Automotive Header (${totalCavities}-Pin)`; }
+
       const headerLabel = document.getElementById('pin-header-type-label');
-      if (headerLabel) headerLabel.textContent = `${headerName} Header Pin Cavity Map`;
+      if (headerLabel) headerLabel.textContent = `${headerName} Cavity Map`;
 
       container.innerHTML = '';
 
       // Connector Receptacle Enclosure Visual Shell
       const shell = document.createElement('div');
-      shell.className = "w-full max-w-2xl p-3 rounded-xl border-2 border-[var(--primary)] bg-[var(--background)] shadow-inner space-y-2";
+      shell.className = "w-full max-w-3xl p-3 rounded-xl border-2 border-[var(--primary)] bg-[var(--background)] shadow-inner space-y-2";
 
-      // Receptacle Keyway / Locking Tab Visual
       shell.innerHTML = `
         <div class="flex items-center justify-between px-2 text-[9px] font-mono text-[var(--muted-foreground)] border-b border-[var(--card-border)] pb-1">
           <span>[ RECEPTACLE HOUSING: FRONT MATING VIEW ]</span>
@@ -5410,20 +5399,41 @@
         </div>
       `;
 
-      // Two-Row Grid Layout for Connector Pin Cavities
-      const grid = document.createElement('div');
-      grid.className = "grid grid-cols-7 gap-1.5 pt-1";
+      let cols = 7;
+      if (totalCavities <= 8) cols = 4;
+      else if (totalCavities <= 14) cols = 7;
+      else if (totalCavities <= 26) cols = 13;
+      else if (totalCavities <= 34) cols = 17;
+      else cols = Math.ceil(totalCavities / 2);
 
-      allocatedPins.forEach(p => {
+      const grid = document.createElement('div');
+      grid.style.display = 'grid';
+      grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+      grid.className = "gap-1.5 pt-1";
+
+      const allCavities = [...allocatedPins];
+      for (let c = totalPinsCount + 1; c <= totalCavities; c++) {
+        allCavities.push({
+          pin: c,
+          label: "SPARE_P" + c,
+          type: "SPARE",
+          spec: "Unassigned Cavity Seal Plugged",
+          wireColor: "Sealing Cavity Plug",
+          purpose: "Expansion / Headroom",
+          bg: "bg-[var(--card)] border border-dashed border-gray-400 text-gray-400",
+          text: "text-gray-400"
+        });
+      }
+
+      allCavities.forEach(p => {
         const cell = document.createElement('div');
         cell.className = "flex flex-col items-center gap-0.5 p-1 rounded-lg bg-[var(--card)] border border-[var(--card-border)] hover:border-[var(--primary)] transition-all cursor-default";
-        cell.title = `Pin ${p.pin}: ${p.type} - ${p.purpose} (${p.wireColor})`;
+        cell.title = `Pin ${p.pin}: ${p.label} [${p.type}] - ${p.purpose} (${p.wireColor})`;
         cell.innerHTML = `
           <div class="w-6 h-6 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-[10px] font-mono shadow-xs">
             ${p.pin}
           </div>
-          <span class="font-bold text-[8.5px] text-[var(--foreground)] truncate max-w-[55px]">${p.type}</span>
-          <span class="text-[7.5px] text-[var(--muted-foreground)] font-mono truncate max-w-[55px]">${p.wireColor}</span>
+          <span class="font-bold text-[8.5px] text-[var(--foreground)] truncate max-w-[50px] text-center" title="${p.label}: ${p.purpose}">${p.label || p.type}</span>
         `;
         grid.appendChild(cell);
       });
@@ -5431,7 +5441,7 @@
       shell.appendChild(grid);
       container.appendChild(shell);
     }
-
+  
     function downloadCsv(filename, rows) {
       const processRow = function (row) {
         let finalVal = '';
@@ -6145,62 +6155,92 @@
       const reefer = document.getElementById('rec-feat-reefer')?.checked ?? false;
       const rs485 = document.getElementById('rec-feat-rs485')?.checked ?? false;
       const buzzer = document.getElementById('rec-feat-buzzer')?.checked ?? false;
+      const eql = document.getElementById('rec-feat-eql')?.checked ?? false;
 
+      // 1. Remote Engine Starter Cut: 1x DO
       if (immob && !wizardState.pins.some(p => p.id === 'do-immob')) {
         wizardState.pins.push({ id: 'do-immob', type: 'DO', label: 'DO (Starter Cut)', spec: 'Low-Side Open-Drain 1.5A', purpose: 'Remote Starter Cut Relay (Immobilizer)', isCustom: true });
       } else if (!immob) {
         wizardState.pins = wizardState.pins.filter(p => p.id !== 'do-immob');
       }
 
+      // 2. Fuel Theft & Level: 1x AI
       if (fuel && !wizardState.pins.some(p => p.id === 'ai-fuel')) {
         wizardState.pins.push({ id: 'ai-fuel', type: 'AI', label: 'AI (Fuel Float)', spec: '12-bit ADC 0-32V', purpose: 'Diesel Fuel Float Sender (0-300Ω)', isCustom: true });
       } else if (!fuel) {
         wizardState.pins = wizardState.pins.filter(p => p.id !== 'ai-fuel');
       }
 
+      // 3. Driver SOS / Panic Button: 1x DI
       if (sos && !wizardState.pins.some(p => p.id === 'di-sos')) {
         wizardState.pins.push({ id: 'di-sos', type: 'DI', label: 'DI (SOS Panic)', spec: 'Active Low Pulled-Up', purpose: 'Emergency SOS Panic Button', isCustom: true });
       } else if (!sos) {
         wizardState.pins = wizardState.pins.filter(p => p.id !== 'di-sos');
       }
 
-      if (pto && !wizardState.pins.some(p => p.id === 'di-pto')) {
-        wizardState.pins.push({ id: 'di-pto', type: 'DI', label: 'DI (PTO Sensor)', spec: '12V/24V Level Shifted', purpose: 'PTO Engaged Switch', isCustom: true });
-      } else if (!pto) {
-        wizardState.pins = wizardState.pins.filter(p => p.id !== 'di-pto');
+      // 4. Tractor PTO & Acreage: 2x DI
+      if (pto) {
+        if (!wizardState.pins.some(p => p.id === 'di-pto')) {
+          wizardState.pins.push({ id: 'di-pto', type: 'DI', label: 'DI (PTO Sensor)', spec: '12V/24V Level Shifted', purpose: 'PTO Engaged Switch', isCustom: true });
+        }
+        if (!wizardState.pins.some(p => p.id === 'di-pto-speed')) {
+          wizardState.pins.push({ id: 'di-pto-speed', type: 'DI', label: 'DI (PTO Switch)', spec: '12V/24V Level Shifted', purpose: 'Implement Hitch Engagement Switch', isCustom: true });
+        }
+      } else {
+        wizardState.pins = wizardState.pins.filter(p => p.id !== 'di-pto' && p.id !== 'di-pto-speed');
       }
 
-      if (buzzer && !wizardState.pins.some(p => p.id === 'do-buzzer')) {
-        wizardState.pins.push({ id: 'do-buzzer', type: 'DO', label: 'DO (Buzzer)', spec: 'Low-Side 500mA Driver', purpose: 'Overspeed Warning Buzzer', isCustom: true });
-      } else if (!buzzer) {
-        wizardState.pins = wizardState.pins.filter(p => p.id !== 'do-buzzer');
-      }
-
+      // 5. J1939 CAN-FD
       if (can) {
         wizardState.hasCAN = true;
         const cb = document.getElementById('net_can');
         if (cb) cb.checked = true;
       }
 
+      // 6. Cold-Chain Reefer: 1x AI
+      if (reefer) {
+        wizardState.has1Wire = true;
+        if (!wizardState.pins.some(p => p.id === 'ai-reefer')) {
+          wizardState.pins.push({ id: 'ai-reefer', type: 'AI', label: 'AI (Reefer Temp)', spec: '12-bit ADC (Pt100/NTC)', purpose: 'Refrigerated Cargo Temperature Probe', isCustom: true });
+        }
+      } else {
+        wizardState.pins = wizardState.pins.filter(p => p.id !== 'ai-reefer');
+      }
+
+      // 7. Multi-Tank Probes / RFID: RS485 Modbus
       if (rs485) {
         wizardState.hasRS485 = true;
         const cb = document.getElementById('net_rs485');
         if (cb) cb.checked = true;
       }
 
-      if (reefer) {
-        wizardState.has1Wire = true;
+      // 8. Over-Speed Buzzer: 1x DO
+      if (buzzer && !wizardState.pins.some(p => p.id === 'do-buzzer')) {
+        wizardState.pins.push({ id: 'do-buzzer', type: 'DO', label: 'DO (Buzzer)', spec: 'Low-Side 500mA Driver', purpose: 'Overspeed Warning Buzzer', isCustom: true });
+      } else if (!buzzer) {
+        wizardState.pins = wizardState.pins.filter(p => p.id !== 'do-buzzer');
       }
 
-      recalculatePins();
+      // 9. Agricultural EQL Hitch: 2x DO (PWM) + 1x AI (Draft)
+      if (eql) {
+        if (!wizardState.pins.some(p => p.id === 'do-eql-raise')) {
+          wizardState.pins.push({ id: 'do-eql-raise', type: 'DO', label: 'DO (EQL Raise)', spec: 'Low-Side PWM Driver (2A)', purpose: 'Hitch Raise Hydraulic Solenoid', isCustom: true });
+        }
+        if (!wizardState.pins.some(p => p.id === 'do-eql-lower')) {
+          wizardState.pins.push({ id: 'do-eql-lower', type: 'DO', label: 'DO (EQL Lower)', spec: 'Low-Side PWM Driver (2A)', purpose: 'Hitch Lower Hydraulic Solenoid', isCustom: true });
+        }
+        if (!wizardState.pins.some(p => p.id === 'ai-eql-draft')) {
+          wizardState.pins.push({ id: 'ai-eql-draft', type: 'AI', label: 'AI (Draft/Angle)', spec: '12-bit ADC (0–5V Range)', purpose: 'Implement Draft Load / Hitch Angle Sensor', isCustom: true });
+        }
+      } else {
+        wizardState.pins = wizardState.pins.filter(p => p.id !== 'do-eql-raise' && p.id !== 'do-eql-lower' && p.id !== 'ai-eql-draft');
+      }
+
+      renumberPins();
       renderColumnPins();
-      renderStep3ConnectorPinout();
-      renderSidebarConnectorPinout();
-      updateLiveImpact();
+      recalculatePins();
     }
-
-
-    // Escape key closes modal (User Request)
+  
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         const modal = document.getElementById('spec-modal');
