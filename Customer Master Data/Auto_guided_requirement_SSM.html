@@ -300,15 +300,15 @@
               <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
                 <span>🔋</span> <span>Internal Backup Battery & Energy Storage:</span>
               </span>
-              <span id="step1-battery-badge" class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-cyan-500/20 text-cyan-400 font-mono">
-                LiFePO4 1,100 mAh (6–8h Backup Ping)
+              <span id="step1-battery-badge" class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-[var(--card)] text-[var(--muted-foreground)] font-mono border border-[var(--card-border)]">
+                -- (Select Option Below)
               </span>
             </div>
             <p class="text-[10px] text-[var(--muted-foreground)]">Provides autonomous tracking & anti-theft alert transmission when external vehicle battery (KL30) is disconnected or tampered.</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
               <!-- LiFePO4 -->
-              <div onclick="setBatteryOption('lifepo4')" id="bcard-lifepo4" class="p-2.5 rounded-lg border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] cursor-pointer card-selected transition-all space-y-1">
+              <div onclick="setBatteryOption('lifepo4')" id="bcard-lifepo4" class="p-2.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer transition-all space-y-1">
                 <div class="flex items-center justify-between">
                   <span class="font-bold text-[11px] text-[var(--foreground)]">LiFePO4 (Phosphate)</span>
                   <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-400 font-bold">Safest / High-Temp</span>
@@ -1192,8 +1192,8 @@
               <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
                 <span>📐</span> <span>Enclosure Form-Factor & Dimensional Envelope:</span>
               </span>
-              <span id="dim-summary-badge" class="text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-emerald-500/15 text-emerald-500">
-                125 × 85 × 32 mm • Glass-Filled PBT
+              <span id="dim-summary-badge" class="text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-[var(--card)] text-[var(--muted-foreground)] border border-[var(--card-border)]">
+                -- (Select Preset or Customize Below)
               </span>
             </div>
 
@@ -1236,8 +1236,8 @@
                 <p class="text-[9.5px] text-[var(--muted-foreground)]">Flame-retardant PC (UL94-V0). Ideal for Cabin dash, OBD-II slot & EV under-seat.</p>
               </div>
 
-              <!-- Preset 2: Standard Automotive Flanged (Default) -->
-              <div onclick="setEnclosurePreset('standard')" id="dimcard-standard" class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] cursor-pointer transition-all card-selected space-y-1">
+              <!-- Preset 2: Standard Automotive Flanged -->
+              <div onclick="setEnclosurePreset('standard')" id="dimcard-standard" class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer transition-all space-y-1">
                 <div class="flex items-center justify-between">
                   <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
                     <span>🚙</span> Standard Flanged (IP67)
@@ -1637,7 +1637,7 @@
           <div id="sb-stage-preview-1" class="space-y-1.5 text-[10.5px]">
             <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
               <span class="text-[var(--muted-foreground)] flex items-center gap-1"><span>🌍</span> Homologation Mandate:</span>
-              <span id="sb-p1-country" class="font-bold text-amber-500 font-mono">India (AIS-140 / ARAI)</span>
+              <span id="sb-p1-country" class="font-bold text-amber-500 font-mono">🇮🇳 India (AIS-140 Mandate)</span>
             </div>
             <div class="grid grid-cols-2 gap-1.5">
               <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
@@ -1651,7 +1651,7 @@
             </div>
             <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
               <span class="text-[var(--muted-foreground)] flex items-center gap-1"><span>🔋</span> Battery Backup Spec:</span>
-              <span id="sb-p1-battery" class="font-semibold text-blue-400 font-mono">Li-ion 3.7V 1000mAh (&lt;2mA Sleep)</span>
+              <span id="sb-p1-battery" class="font-semibold text-[var(--muted-foreground)] font-mono">-- (Pending Selection)</span>
             </div>
           </div>
 
@@ -2051,7 +2051,7 @@
             </div>
             <div class="flex justify-between items-center text-[10px]">
               <span class="text-[var(--muted-foreground)]">Enclosure Envelope:</span>
-              <span id="rt-dim-text" class="font-semibold text-emerald-500 font-mono">125 × 85 × 32 mm</span>
+              <span id="rt-dim-text" class="font-semibold text-[var(--muted-foreground)] font-mono">-- mm (Pending Step 5)</span>
             </div>
             <div class="flex justify-between items-center text-[10px]">
               <span class="text-[var(--muted-foreground)]">Staged Rollout:</span>
@@ -2293,9 +2293,14 @@
               <span>📥</span> <span>Download Pinout Matrix (.xlsx)</span>
             </button>
             
-            <!-- Tab 2 Export -->
-            <button id="modal-export-btn-specs" onclick="exportSpecSheetCsv()" class="px-3 py-1.5 rounded border border-[var(--card-border)] bg-[var(--background)] hover:bg-[var(--card)] font-medium text-xs flex items-center gap-1.5 hidden">
+            <!-- Tab 2 Export: Spec Summary -->
+            <button id="modal-export-btn-specs" onclick="exportSpecSheetCsv()" class="px-3 py-1.5 rounded border border-[var(--card-border)] bg-[var(--background)] hover:bg-[var(--card)] font-medium text-xs flex items-center gap-1.5 hidden" title="Download System Specifications">
               <span>📥</span> <span>Download Spec Sheet (.xlsx)</span>
+            </button>
+            
+            <!-- Tab 2 Export: Full 700 Parameter Master Customer Data -->
+            <button id="modal-export-btn-master700" onclick="exportMaster700Csv()" class="px-3 py-1.5 rounded border border-emerald-500/40 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 font-bold text-xs flex items-center gap-1.5 hidden" title="Export complete 700-parameter customer master database table with live wizard values mapped">
+              <span>📊</span> <span>Export 700 Master Data (.csv / .xlsx)</span>
             </button>
             
             <!-- Tab 3 Export -->
@@ -2767,6 +2772,8 @@
 
       const badge = document.getElementById('step1-battery-badge');
       const thermalRow = document.getElementById('battery-thermal-row');
+      const sbBatt = document.getElementById('sb-p1-battery');
+
       if (badge) {
         if (type === 'lifepo4') {
           badge.textContent = "LiFePO4 1,100 mAh (6–8h Backup Ping)";
@@ -2780,6 +2787,22 @@
           badge.textContent = "No Battery (-$4.50 BOM Savings)";
           badge.className = "px-2 py-0.5 rounded text-[9.5px] font-bold bg-emerald-500/20 text-emerald-400 font-mono";
           if (thermalRow) thermalRow.style.display = 'none';
+        }
+      }
+
+      if (sbBatt) {
+        if (type === 'lifepo4') {
+          sbBatt.textContent = "LiFePO4 1,100 mAh (6–8h Backup)";
+          sbBatt.className = "font-semibold text-cyan-400 font-mono";
+        } else if (type === 'lipoly') {
+          sbBatt.textContent = "Li-Polymer 450 mAh (JEITA)";
+          sbBatt.className = "font-semibold text-purple-400 font-mono";
+        } else if (type === 'none') {
+          sbBatt.textContent = "No Battery (External DC Supply)";
+          sbBatt.className = "font-semibold text-emerald-400 font-mono";
+        } else {
+          sbBatt.textContent = "-- (Pending Selection)";
+          sbBatt.className = "font-semibold text-[var(--muted-foreground)] font-mono";
         }
       }
 
@@ -3148,13 +3171,23 @@
         }
       }
 
-      // Populate stage 1 live values
-      const cName = (wizardState.country === 'europe') ? 'Europe (E-Mark / UN ECE R10)' :
-                    ((wizardState.country === 'usa') ? 'USA (FCC Part 15 / PTCRB)' :
-                    ((wizardState.country === 'australia') ? 'Australia (ADR Mandate)' :
-                    ((wizardState.country === 'brazil') ? 'Brazil / LatAm (ANATEL)' : 'India (AIS-140 / ARAI)')));
+      // Populate stage 1 live values (Multi-Market Dynamic Sync)
+      const activeList = wizardState.targetCountries || [wizardState.targetCountry || 'india'];
+      let cName = "";
+      if (activeList.includes('global')) {
+        cName = "🌐 Global Multi-Region (Universal CE + FCC + E-Mark)";
+      } else if (activeList.length === 1) {
+        const m = (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[activeList[0]]) || { flag: '🇮🇳', name: 'India', shortStd: 'AIS-140' };
+        cName = `${m.flag} ${m.name} (${m.shortStd} Mandate)`;
+      } else {
+        const flags = activeList.map(c => (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]?.flag) || '').join(' ');
+        const stds = activeList.map(c => (typeof MARKET_REGISTRY !== 'undefined' && (MARKET_REGISTRY[c]?.shortStd || MARKET_REGISTRY[c]?.name)) || c).join(' + ');
+        cName = `${flags} Multi (${activeList.length}): ${stds}`;
+      }
       const elP1C = document.getElementById('sb-p1-country');
       if (elP1C) elP1C.textContent = cName;
+      const elRtCountry = document.getElementById('rt-country-text');
+      if (elRtCountry) elRtCountry.textContent = cName;
 
       const vType = wizardState.vehicle;
       const vText = (vType === 'ev') ? '36V – 96V DC (Direct Traction Pack)' :
@@ -5355,6 +5388,12 @@
         badge.className = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500";
       }
 
+      // Real-time Sidebar Mandate Previews (Stage 1 live preview card & Pin/Harness summary)
+      const elP1C = document.getElementById('sb-p1-country');
+      if (elP1C) elP1C.textContent = badgeText;
+      const elRtCountry = document.getElementById('rt-country-text');
+      if (elRtCountry) elRtCountry.textContent = badgeText;
+
       const araiCb = document.getElementById('std_arai');
       const emarkCb = document.getElementById('std_emark');
       const fccCb = document.getElementById('std_fcc');
@@ -5427,6 +5466,11 @@
           badge.className = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-emerald-500/15 text-emerald-500";
         }
       }
+      const rtDim = document.getElementById('rt-dim-text');
+      if (rtDim) {
+        rtDim.textContent = `${wizardState.dimL} × ${wizardState.dimW} × ${wizardState.dimH} mm`;
+        rtDim.className = "font-semibold text-emerald-500 font-mono";
+      }
       renderDeviceBlueprint();
       updateLiveImpact();
     }
@@ -5451,6 +5495,11 @@
       if (badge) {
         badge.textContent = `${dimL} × ${dimW} × ${dimH} mm • Custom Envelope`;
         badge.className = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-purple-500/15 text-purple-400";
+      }
+      const rtDim = document.getElementById('rt-dim-text');
+      if (rtDim) {
+        rtDim.textContent = `${dimL} × ${dimW} × ${dimH} mm`;
+        rtDim.className = "font-semibold text-purple-400 font-mono";
       }
       renderDeviceBlueprint();
       updateLiveImpact();
@@ -5990,6 +6039,11 @@
           if (exportBtn) exportBtn.classList.add('hidden');
         }
       });
+      const master700Btn = document.getElementById('modal-export-btn-master700');
+      if (master700Btn) {
+        if (tab === 'specs') master700Btn.classList.remove('hidden');
+        else master700Btn.classList.add('hidden');
+      }
     }
 
     
@@ -6441,6 +6495,25 @@
         ["Commercial Staging", "commercial_and_schedule.phase_3_mass_sop", (wizardState.sopAnnual || '25k') + " Units / Year (" + (document.getElementById('sop_month')?.value || "2027-04") + ")", "Target SOP Mass Production", "Customer Intake Phase 3"]
       ];
       downloadCsv("SCMS_Master_Specifications.csv", rows);
+    }
+
+    function exportMaster700Csv() {
+      const params = getMasterParametersList();
+      const rows = [
+        ["PARAMETER ID", "ENGINEERING DOMAIN / CATEGORY", "PARAMETER REQUIREMENT / DESCRIPTION", "CONFIGURED LIVE VALUE", "SIGNAL / TYPE", "MANDATE / STANDARD", "DVP TEST TRACE"]
+      ];
+      params.forEach(p => {
+        rows.push([
+          p.id,
+          p.cat,
+          p.param,
+          p.val,
+          p.unit,
+          p.std,
+          p.dvp
+        ]);
+      });
+      downloadCsv("SSM_Automotive_700_Master_Customer_Data.csv", rows);
     }
 
     function exportDvpCsv() {
@@ -7035,9 +7108,21 @@
     wizardState.targetCountries = ['india'];
     wizardState.targetCountry = 'india';
     updateCountryUI();
-    setEnclosurePreset('standard');
     updateStagedRolloutUI();
     recalculatePins();
+    
+    // Clean initial sidebar defaults (User Request: Clean default state until selected)
+    const initBatt = document.getElementById('sb-p1-battery');
+    if (initBatt) {
+      initBatt.textContent = "-- (Pending Selection)";
+      initBatt.className = "font-semibold text-[var(--muted-foreground)] font-mono";
+    }
+    const initDim = document.getElementById('rt-dim-text');
+    if (initDim) {
+      initDim.textContent = "-- mm (Pending Step 5)";
+      initDim.className = "font-semibold text-[var(--muted-foreground)] font-mono";
+    }
+
     jumpToStep(1);
   
 
