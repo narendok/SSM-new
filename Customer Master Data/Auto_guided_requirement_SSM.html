@@ -129,6 +129,51 @@
             <p class="text-[11px] text-[var(--muted-foreground)]">Platform selection defines nominal voltage, ISO pulse clamping, and base parameters.</p>
           </div>
 
+          <!-- STEP 1: QUICK HARDWARE REUSE & PCB SELECTOR DRAWER (User Request: Step 1 expandable arrow & top pop-up) -->
+          <div class="rounded-xl border border-indigo-500/40 bg-indigo-500/5 shadow-xs overflow-hidden transition-all">
+            <!-- Header Bar with Expandable Arrow & Pop-up Trigger -->
+            <div class="flex items-center justify-between p-2.5 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-transparent cursor-pointer select-none" onclick="toggleStep1PcbDrawer()">
+              <div class="flex items-center gap-2">
+                <span class="text-base">🔄</span>
+                <div>
+                  <h3 class="text-xs font-bold text-[var(--foreground)] flex items-center gap-1.5">
+                    <span>Reuse Existing Sixsense PCB Architecture</span>
+                    <span id="s1-pcb-top-match-badge" class="px-1.5 py-0.2 rounded text-[8.5px] bg-emerald-500/20 text-emerald-400 font-bold font-mono">10 Made PCBs Available</span>
+                  </h3>
+                  <p class="text-[9.5px] text-[var(--muted-foreground)]">Pre-load an existing proven design to eliminate NRE (save ₹1.5L–₹4.5L) & fast-track production (save 6–12 weeks).</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="event.stopPropagation(); togglePcbComparisonModal();" class="px-2 py-1 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[9.5px] flex items-center gap-1 shadow-xs transition-all cursor-pointer" title="Open full 16-parameter side-by-side comparison modal">
+                  <span>🪟 Top Pop-up Matrix</span>
+                </button>
+                <button type="button" id="s1-pcb-drawer-toggle-btn" class="p-1 rounded-md hover:bg-[var(--card)] text-[var(--foreground)] font-mono text-xs transition-transform duration-200">
+                  <span id="s1-pcb-arrow-icon">▼</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Expandable Drawer Body (Default Collapsed, Toggled with Arrow) -->
+            <div id="s1-pcb-drawer-body" class="hidden p-2.5 pt-1 border-t border-indigo-500/20 space-y-2">
+              <div class="flex items-center justify-between text-[9px] text-[var(--muted-foreground)]">
+                <span>Select any of your 10 production boards to auto-populate Step 1–3 parameters as a baseline template:</span>
+                <span class="font-mono text-indigo-400 font-bold">10 Production Designs Verified</span>
+              </div>
+
+              <!-- 10 PCB Mini Cards Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-1.5 max-h-64 overflow-y-auto pr-1 custom-scrollbar" id="s1-pcb-cards-grid">
+                <!-- Dynamically populated via renderStep1PcbCards() -->
+              </div>
+
+              <div class="flex items-center justify-between pt-1 border-t border-[var(--card-border)]/60 text-[9.5px]">
+                <span class="text-[var(--muted-foreground)]">Want detailed parameter-by-parameter gap analysis?</span>
+                <button type="button" onclick="togglePcbComparisonModal()" class="text-indigo-400 hover:text-indigo-300 font-bold underline cursor-pointer flex items-center gap-1">
+                  <span>📊 Open Full 16-Parameter Side-by-Side Comparison Matrix &rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <!-- Target Deployment Market / Homologation Country Selector (Standard Automotive Flow) -->
           <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-1.5">
             <div class="flex items-center justify-between">
@@ -3650,6 +3695,54 @@
 ];
 
     let pcbCategoryFilter = 'all';
+
+    // STEP 1 EXPANDABLE PCB REUSE DRAWER (User Request: Expandable arrow & top pop-up)
+    function toggleStep1PcbDrawer() {
+      const drawer = document.getElementById('s1-pcb-drawer-body');
+      const arrow = document.getElementById('s1-pcb-arrow-icon');
+      if (!drawer || !arrow) return;
+      const isHidden = drawer.classList.contains('hidden');
+      if (isHidden) {
+        drawer.classList.remove('hidden');
+        arrow.textContent = '▲';
+        renderStep1PcbCards();
+      } else {
+        drawer.classList.add('hidden');
+        arrow.textContent = '▼';
+      }
+    }
+
+    function renderStep1PcbCards() {
+      const container = document.getElementById('s1-pcb-cards-grid');
+      if (!container) return;
+      const matches = evaluatePcbMatches();
+
+      container.innerHTML = '';
+      matches.forEach(m => {
+        const pcb = m.pcb;
+        const card = document.createElement('div');
+        card.className = "p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] hover:border-indigo-500/80 transition-all flex flex-col justify-between space-y-1 shadow-xs";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between gap-1 pb-1 border-b border-[var(--card-border)]">
+              <span class="font-bold text-[10px] text-[var(--foreground)] truncate" title="${pcb.name}">${pcb.name}</span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-${m.tierColor}-500/20 text-${m.tierColor}-400">${m.score}%</span>
+            </div>
+            <div class="text-[8.5px] text-indigo-400 font-semibold pt-0.5 truncate">${pcb.appType || 'Automotive PCB'}</div>
+            <div class="text-[8px] text-[var(--muted-foreground)] line-clamp-2 leading-tight">${pcb.mcu}</div>
+            <div class="pt-1 flex flex-wrap gap-1 text-[7.5px] font-mono text-[var(--foreground)]">
+              <span class="px-1 py-0.2 rounded bg-[var(--background)] border border-[var(--card-border)]">${pcb.voltageMin}–${pcb.voltageMax}V</span>
+              <span class="px-1 py-0.2 rounded bg-[var(--background)] border border-[var(--card-border)]">${pcb.di}DI • ${pcb.do}DO • ${pcb.ai}AI</span>
+              <span class="px-1 py-0.2 rounded bg-emerald-500/15 text-emerald-400">${pcb.nreSavings ? pcb.nreSavings.split('+')[0].trim() : 'Save NRE'}</span>
+            </div>
+          </div>
+          <button type="button" onclick="event.stopPropagation(); applyPcbAsTemplate('${pcb.id}')" class="w-full mt-1.5 py-1 px-1.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[8.5px] transition-all flex items-center justify-center gap-0.5 cursor-pointer shadow-xs">
+            <span>⚡ Apply Baseline</span>
+          </button>
+        `;
+        container.appendChild(card);
+      });
+    }
 
     function togglePcbComparisonModal() {
       const modal = document.getElementById('pcb-comparison-modal');
