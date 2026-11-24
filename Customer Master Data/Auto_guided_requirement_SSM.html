@@ -156,8 +156,8 @@
             <p class="text-[11px] text-[var(--muted-foreground)]">Platform selection defines nominal voltage, ISO pulse clamping, and base parameters.</p>
           </div>
 
-          <!-- Target Deployment Market / Homologation Country Selector (Standard Automotive Flow) -->
-          <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-1.5">
+          <!-- Target Deployment Market / Homologation Country Selector (Compact & Horizontally Scrollable) -->
+          <div class="p-2 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-1">
             <div class="flex items-center justify-between">
               <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
                 <span>🌍</span> <span>Target Country & Regional Homologation:</span>
@@ -166,32 +166,48 @@
                 🇮🇳 India (AIS-140 / ARAI Mandate)
               </span>
             </div>
-            <p class="text-[10px] text-[var(--muted-foreground)]">Pre-selects regional compliance, RF carrier bands, emergency protocols & homologation standards.</p>
-            <div class="grid grid-cols-5 gap-1.5 pt-0.5">
-              <div onclick="setCountry('india')" id="s1-ccard-india" class="p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] cursor-pointer card-selected text-center transition-all">
-                <div class="text-base">🇮🇳</div>
-                <div class="font-bold text-[10px] text-[var(--foreground)]">India</div>
-                <div class="text-[8px] text-amber-500 font-mono font-bold">AIS-140</div>
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 pt-0.5 custom-scrollbar">
+              <!-- 1. India -->
+              <div onclick="setCountry('india')" id="s1-ccard-india" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] cursor-pointer card-selected text-center transition-all select-none">
+                <div class="text-sm">🇮🇳</div>
+                <div class="font-bold text-[10px] text-[var(--foreground)] truncate">India</div>
+                <div class="text-[8px] text-amber-500 font-mono font-bold truncate">AIS-140 / ARAI</div>
               </div>
-              <div onclick="setCountry('europe')" id="s1-ccard-europe" class="p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all">
-                <div class="text-base">🇪🇺</div>
-                <div class="font-bold text-[10px] text-[var(--foreground)]">Europe</div>
-                <div class="text-[8px] text-blue-400 font-mono font-bold">E-Mark</div>
+              <!-- 2. Bangladesh -->
+              <div onclick="setCountry('bangladesh')" id="s1-ccard-bangladesh" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <div class="text-sm">🇧🇩</div>
+                <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Bangladesh</div>
+                <div class="text-[8px] text-emerald-400 font-mono font-bold truncate">BRTA / BSTI</div>
               </div>
-              <div onclick="setCountry('usa')" id="s1-ccard-usa" class="p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all">
-                <div class="text-base">🇺🇸</div>
-                <div class="font-bold text-[10px] text-[var(--foreground)]">USA</div>
-                <div class="text-[8px] text-emerald-500 font-mono font-bold">FCC/PTCRB</div>
+              <!-- 3. Europe & UK -->
+              <div onclick="setCountry('europe')" id="s1-ccard-europe" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <div class="text-sm">🇪🇺</div>
+                <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Europe & UK</div>
+                <div class="text-[8px] text-blue-400 font-mono font-bold truncate">E-Mark / CE</div>
               </div>
-              <div onclick="setCountry('australia')" id="s1-ccard-australia" class="p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all">
-                <div class="text-base">🇦🇺</div>
-                <div class="font-bold text-[10px] text-[var(--foreground)]">Australia</div>
-                <div class="text-[8px] text-purple-400 font-mono font-bold">RCM/ADR</div>
+              <!-- 4. North America -->
+              <div onclick="setCountry('usa')" id="s1-ccard-usa" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <div class="text-sm">🇺🇸</div>
+                <div class="font-bold text-[10px] text-[var(--foreground)] truncate">USA & NA</div>
+                <div class="text-[8px] text-emerald-500 font-mono font-bold truncate">FCC / PTCRB</div>
               </div>
-              <div onclick="setCountry('global')" id="s1-ccard-global" class="p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all">
-                <div class="text-base">🌐</div>
-                <div class="font-bold text-[10px] text-[var(--foreground)]">Global</div>
-                <div class="text-[8px] text-cyan-400 font-mono font-bold">Universal</div>
+              <!-- 5. Australia & NZ -->
+              <div onclick="setCountry('australia')" id="s1-ccard-australia" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <div class="text-sm">🇦🇺</div>
+                <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Australia / NZ</div>
+                <div class="text-[8px] text-purple-400 font-mono font-bold truncate">RCM / ADR 80</div>
+              </div>
+              <!-- 6. Middle East / UAE -->
+              <div onclick="setCountry('uae')" id="s1-ccard-uae" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <div class="text-sm">🇦🇪</div>
+                <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Middle East</div>
+                <div class="text-[8px] text-amber-400 font-mono font-bold truncate">GSO / SASO</div>
+              </div>
+              <!-- 7. Global Multi-Region -->
+              <div onclick="setCountry('global')" id="s1-ccard-global" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <div class="text-sm">🌐</div>
+                <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Global Export</div>
+                <div class="text-[8px] text-cyan-400 font-mono font-bold truncate">Universal CE+FCC</div>
               </div>
             </div>
           </div>
@@ -1441,54 +1457,23 @@
             <p class="text-[11px] text-[var(--muted-foreground)]">Automotive compliance targets and automated Design Verification Plan (DVP) matrix.</p>
           </div>
 
-          <!-- Section 6.0: Target Deployment Country & Regional Regulatory Regime (User Request) -->
-          <div class="space-y-1.5 p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)]">
-            <div class="flex items-center justify-between">
-              <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
-                <span>🌍</span> <span>Target Country & Regional Regulatory Framework:</span>
-              </span>
-              <span id="country-badge" class="text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
-                🇮🇳 India (AIS-140 / ARAI Mandate)
-              </span>
-            </div>
-            <p class="text-[10px] text-[var(--muted-foreground)]">Selecting a market automatically activates mandatory automotive homologation, carrier certifications & regional testing standards.</p>
-
-            <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 pt-1">
-              <!-- 1. India -->
-              <div onclick="setCountry('india')" id="ccard-india" class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] cursor-pointer card-selected space-y-1 text-center">
-                <div class="text-lg">🇮🇳</div>
-                <div class="font-bold text-[11px] text-[var(--foreground)]">India</div>
-                <div class="text-[8.5px] text-amber-500 font-mono font-bold">AIS-140 • ARAI/ICAT</div>
-              </div>
-
-              <!-- 2. Europe & UK -->
-              <div onclick="setCountry('europe')" id="ccard-europe" class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer space-y-1 text-center">
-                <div class="text-lg">🇪🇺</div>
-                <div class="font-bold text-[11px] text-[var(--foreground)]">Europe & UK</div>
-                <div class="text-[8.5px] text-blue-400 font-mono font-bold">E-Mark • CE RED</div>
-              </div>
-
-              <!-- 3. North America -->
-              <div onclick="setCountry('usa')" id="ccard-usa" class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer space-y-1 text-center">
-                <div class="text-lg">🇺🇸</div>
-                <div class="font-bold text-[11px] text-[var(--foreground)]">North America</div>
-                <div class="text-[8.5px] text-emerald-500 font-mono font-bold">FCC • PTCRB • SAE</div>
-              </div>
-
-              <!-- 4. Australia / NZ -->
-              <div onclick="setCountry('australia')" id="ccard-australia" class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer space-y-1 text-center">
-                <div class="text-lg">🇦🇺</div>
-                <div class="font-bold text-[11px] text-[var(--foreground)]">Australia / NZ</div>
-                <div class="text-[8.5px] text-purple-400 font-mono font-bold">RCM • ADR</div>
-              </div>
-
-              <!-- 5. Global Multi-Region -->
-              <div onclick="setCountry('global')" id="ccard-global" class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer space-y-1 text-center">
-                <div class="text-lg">🌐</div>
-                <div class="font-bold text-[11px] text-[var(--foreground)]">Global Export</div>
-                <div class="text-[8.5px] text-cyan-400 font-mono font-bold">Universal CE+FCC+ISO</div>
+          <!-- Active Homologation & Target Regulatory Framework (Consolidated from Step 1) -->
+          <div class="p-2 px-2.5 rounded-xl border border-amber-500/30 bg-amber-500/5 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-sm">🌍</span>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-xs font-bold text-[var(--foreground)]">Target Market & Homologation Mandate:</span>
+                  <span id="country-badge" class="text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
+                    🇮🇳 India (AIS-140 / ARAI Mandate)
+                  </span>
+                </div>
+                <p class="text-[9.5px] text-[var(--muted-foreground)]">Configured in Step 1. Drives applicable DVP environmental stress profiles & test certificates below.</p>
               </div>
             </div>
+            <button type="button" onclick="jumpToStep(1)" class="px-2.5 py-1 rounded-lg bg-[var(--card)] border border-[var(--card-border)] hover:border-amber-500 text-[10px] text-amber-400 font-bold transition-all cursor-pointer shadow-xs">
+              ⚙ Change in Step 1
+            </button>
           </div>
 
           <!-- Section 6.1: Operating Temperature Selector -->
@@ -5207,14 +5192,9 @@
 
     function setCountry(country) {
       wizardState.targetCountry = country;
-      const countries = ['india', 'europe', 'usa', 'australia', 'global'];
+      const countries = ['india', 'bangladesh', 'europe', 'usa', 'australia', 'uae', 'global'];
       countries.forEach(c => {
-        const el = document.getElementById(`ccard-${c}`);
         const elS1 = document.getElementById(`s1-ccard-${c}`);
-        if (el) {
-          if (c === country) el.classList.add('card-selected');
-          else el.classList.remove('card-selected');
-        }
         if (elS1) {
           if (c === country) {
             elS1.classList.add('card-selected');
@@ -5247,6 +5227,14 @@
         if (fccCb) fccCb.checked = false;
         if (rcmCb) rcmCb.checked = false;
         if (rohsCb) rohsCb.checked = true;
+      } else if (country === 'bangladesh') {
+        badgeText = "🇧🇩 Bangladesh (BRTA / BSTI Automotive Standard)";
+        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-emerald-500/15 text-emerald-400";
+        if (araiCb) araiCb.checked = false;
+        if (emarkCb) emarkCb.checked = false;
+        if (fccCb) fccCb.checked = false;
+        if (rcmCb) rcmCb.checked = false;
+        if (rohsCb) rohsCb.checked = true;
       } else if (country === 'europe') {
         badgeText = "🇪🇺 Europe & UK (E-Mark / CE RED Directive)";
         badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-blue-500/15 text-blue-400";
@@ -5271,6 +5259,14 @@
         if (fccCb) fccCb.checked = false;
         if (rcmCb) rcmCb.checked = true;
         if (rohsCb) rohsCb.checked = true;
+      } else if (country === 'uae') {
+        badgeText = "🇦🇪 Middle East / UAE (GSO / SASO Telematics)";
+        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-400";
+        if (araiCb) araiCb.checked = false;
+        if (emarkCb) emarkCb.checked = false;
+        if (fccCb) fccCb.checked = false;
+        if (rcmCb) rcmCb.checked = false;
+        if (rohsCb) rohsCb.checked = true;
       } else {
         badgeText = "🌐 Global Multi-Region (Universal CE + FCC + E-Mark)";
         badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-cyan-500/15 text-cyan-400";
@@ -5286,6 +5282,9 @@
         if (country === 'india') {
           gnssHint.textContent = "↳ 🇮🇳 India Mandate: AIS-140 requires ISRO NavIC dual-band.";
           gnssHint.className = "text-[9px] text-amber-500 font-mono font-medium pt-0.5";
+        } else if (country === 'bangladesh') {
+          gnssHint.textContent = "↳ 🇧🇩 Bangladesh Mandate: BRTA commercial vehicle tracking & BSTI standards.";
+          gnssHint.className = "text-[9px] text-emerald-400 font-mono font-medium pt-0.5";
         } else if (country === 'europe') {
           gnssHint.textContent = "↳ 🇪🇺 Europe Mandate: UNECE R10 / CE RED standard GNSS tracking.";
           gnssHint.className = "text-[9px] text-blue-400 font-mono font-medium pt-0.5";
@@ -5295,6 +5294,9 @@
         } else if (country === 'australia') {
           gnssHint.textContent = "↳ 🇦🇺 Australia Mandate: ADR 80 heavy vehicle telemetry standard.";
           gnssHint.className = "text-[9px] text-purple-400 font-mono font-medium pt-0.5";
+        } else if (country === 'uae') {
+          gnssHint.textContent = "↳ 🇦🇪 Middle East Mandate: GSO 2698 / SASO commercial vehicle tracking.";
+          gnssHint.className = "text-[9px] text-amber-400 font-mono font-medium pt-0.5";
         } else {
           gnssHint.textContent = "↳ 🌐 Global Mandate: Universal Multi-Constellation positioning.";
           gnssHint.className = "text-[9px] text-cyan-400 font-mono font-medium pt-0.5";
@@ -5564,6 +5566,13 @@
           reason: "Triggered by: India Target Deployment Market",
           tag: "🇮🇳 ARAI / ICAT"
         });
+      } else if (wizardState.targetCountry === 'bangladesh') {
+        standards.push({
+          code: "BRTA / BSTI Commercial VTS",
+          title: "Bangladesh Road Transport Authority Vehicle Tracking & BSTI Standards",
+          reason: "Triggered by: Bangladesh Target Deployment Market",
+          tag: "🇧🇩 BRTA / BSTI"
+        });
       } else if (wizardState.targetCountry === 'europe') {
         standards.push({
           code: "UNECE R10.06 & CE RED",
@@ -5584,6 +5593,13 @@
           title: "ACMA Telematics Regulatory Compliance & Heavy Vehicle Telemetry",
           reason: "Triggered by: Australia & NZ Target Deployment Market",
           tag: "🇦🇺 RCM / ADR"
+        });
+      } else if (wizardState.targetCountry === 'uae') {
+        standards.push({
+          code: "GSO 2698 & SASO",
+          title: "Gulf Standardization Organization & SASO Commercial Telematics",
+          reason: "Triggered by: Middle East / UAE Target Market",
+          tag: "🇦🇪 GSO / SASO"
         });
       } else {
         standards.push({
@@ -6348,9 +6364,11 @@
     function exportSpecSheetCsv() {
       const v = wizardState.vehicle.toUpperCase();
       let regName = "India (AIS-140 / ARAI Mandate)";
-      if (wizardState.targetCountry === 'europe') regName = "Europe & UK (E-Mark / CE RED)";
+      if (wizardState.targetCountry === 'bangladesh') regName = "Bangladesh (BRTA / BSTI Mandate)";
+      else if (wizardState.targetCountry === 'europe') regName = "Europe & UK (E-Mark / CE RED)";
       else if (wizardState.targetCountry === 'usa') regName = "North America (FCC / PTCRB)";
       else if (wizardState.targetCountry === 'australia') regName = "Australia (RCM / ADR 80)";
+      else if (wizardState.targetCountry === 'uae') regName = "Middle East / UAE (GSO / SASO)";
       else if (wizardState.targetCountry === 'global') regName = "Global Multi-Region (CE + FCC + E-Mark)";
 
       const rows = [
@@ -6447,9 +6465,11 @@
       const v = wizardState.vehicle.toUpperCase();
       let regName = "India (AIS-140 / ARAI Mandate)";
       let regStd = "AIS-140 Annexure A & B";
-      if (wizardState.targetCountry === 'europe') { regName = "Europe & UK (E-Mark / CE RED)"; regStd = "UNECE R10.06 / CE RED"; }
+      if (wizardState.targetCountry === 'bangladesh') { regName = "Bangladesh (BRTA / BSTI Mandate)"; regStd = "BRTA VTS / BSTI"; }
+      else if (wizardState.targetCountry === 'europe') { regName = "Europe & UK (E-Mark / CE RED)"; regStd = "UNECE R10.06 / CE RED"; }
       else if (wizardState.targetCountry === 'usa') { regName = "North America (FCC / PTCRB)"; regStd = "FCC Part 15 / PTCRB"; }
       else if (wizardState.targetCountry === 'australia') { regName = "Australia (RCM / ADR 80)"; regStd = "ADR 80 / RCM AS/NZS"; }
+      else if (wizardState.targetCountry === 'uae') { regName = "Middle East / UAE (GSO / SASO)"; regStd = "GSO 2698 / SASO"; }
       else if (wizardState.targetCountry === 'global') { regName = "Global Multi-Region (Universal)"; regStd = "CE + FCC + UNECE R10"; }
 
       const isCellActive = (document.getElementById('net_4g')?.checked ?? false) || (document.getElementById('net_2g_fallback')?.checked ?? false);
@@ -6766,9 +6786,11 @@
         // Render 7 Cards View
         const v = wizardState.vehicle.toUpperCase();
         let regName = "🇮🇳 India (AIS-140 / ARAI Mandate)";
-        if (wizardState.targetCountry === 'europe') regName = "🇪🇺 Europe & UK (E-Mark / CE RED)";
+        if (wizardState.targetCountry === 'bangladesh') regName = "🇧🇩 Bangladesh (BRTA / BSTI Mandate)";
+        else if (wizardState.targetCountry === 'europe') regName = "🇪🇺 Europe & UK (E-Mark / CE RED)";
         else if (wizardState.targetCountry === 'usa') regName = "🇺🇸 North America (FCC / PTCRB)";
         else if (wizardState.targetCountry === 'australia') regName = "🇦🇺 Australia (RCM / ADR 80)";
+        else if (wizardState.targetCountry === 'uae') regName = "🇦🇪 Middle East / UAE (GSO / SASO)";
         else if (wizardState.targetCountry === 'global') regName = "🌐 Global Multi-Region (CE + FCC + E-Mark)";
 
         const pwr = wizardState.powerQuality === 'raw' ? "Raw Alternator (+12% Surge Clamp Diode)" : "Clean Regulated DC (-12% Cost Optimized)";
@@ -6930,7 +6952,14 @@
         trigger: "India (Govt. Mandate)"
       };
 
-      if (wizardState.targetCountry === 'europe') {
+      if (wizardState.targetCountry === 'bangladesh') {
+        regTest = {
+          domain: "BRTA / BSTI VTS",
+          std: "BRTA VTS / BSTI Standards",
+          condition: "Bangladesh Road Transport Authority AIS tracking compliance & BSTI electrical safety",
+          trigger: "Bangladesh Market"
+        };
+      } else if (wizardState.targetCountry === 'europe') {
         regTest = {
           domain: "ECE Homologation",
           std: "UNECE R10.06 & CE RED",
@@ -6950,6 +6979,13 @@
           std: "AS/NZS CISPR 32 / ADR 80",
           condition: "Australian Communications and Media Authority (ACMA) RCM compliance mark",
           trigger: "Australia / NZ Market"
+        };
+      } else if (wizardState.targetCountry === 'uae') {
+        regTest = {
+          domain: "GSO & SASO Homologation",
+          std: "GSO 2698 & SASO Telematics",
+          condition: "Gulf Cooperation Council automotive EMC, extreme heat operation & SASO vehicle tracking",
+          trigger: "Middle East / UAE Market"
         };
       } else if (wizardState.targetCountry === 'global') {
         regTest = {
@@ -7818,45 +7854,103 @@
       </div>
 
       <div class="p-4 space-y-3.5 text-xs text-[var(--foreground)] max-h-[75vh] overflow-y-auto custom-scrollbar">
-        <!-- Section 1: PCB Reuse Workflow -->
-        <div class="p-3 rounded-xl border border-indigo-500/30 bg-indigo-500/5 space-y-1.5">
-          <h3 class="font-bold text-indigo-400 text-xs flex items-center gap-1.5">
-            <span>🔄</span> <span>1. Sixsense Hardware Reusability & Matching Workflow</span>
-          </h3>
-          <p class="text-[11px] text-[var(--muted-foreground)] leading-relaxed">
-            Every incoming customer requirement is dynamically scored against all 10 production-tested Sixsense PCBs. Instead of developing a new board from scratch, the system calculates exact NRE savings (₹1.5L–₹4.5L) and lead-time reductions (6–12 weeks). Click <strong>"PCB Reuse & Best-Match"</strong> in the top header or right sidebar to view the full side-by-side comparison matrix and gap analysis.
-          </p>
-        </div>
-
-        <!-- Section 2: 700 Parameters Bank -->
-        <div class="p-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 space-y-1.5">
-          <h3 class="font-bold text-emerald-400 text-xs flex items-center gap-1.5">
-            <span>📋</span> <span>2. 700-Parameter Engineering Bank & Internal Config</span>
-          </h3>
-          <p class="text-[11px] text-[var(--muted-foreground)] leading-relaxed">
-            Click <strong>"700 Parameter Configuration"</strong> in the top header to inspect all 700 automotive parameters across 22 disciplines (electrical power, CAN/UDS, transient protection, MCU GPIO, DVP test suite). You can search by keyword or filter by domain.
-          </p>
-        </div>
-
-        <!-- Section 3: 6-Step Intake Flow -->
-        <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2">
-          <h3 class="font-bold text-amber-500 text-xs flex items-center gap-1.5">
-            <span>🧭</span> <span>3. The 6-Step Requirement Flow</span>
-          </h3>
-          <ol class="list-decimal list-inside space-y-1 text-[11px] text-[var(--muted-foreground)]">
-            <li><strong>Step 1: Vehicle & Power Architecture</strong> — Select target market, platform (Tractor, Truck, EV, Car), and voltage profile.</li>
-            <li><strong>Step 2: I/O & Network Architecture</strong> — Use the 9 Software Feature Recommender cards or configure DI, DO, AI, CAN-FD, and RS485.</li>
-            <li><strong>Step 3: Harness Scheme</strong> — Review live connector pin diagram (TE Superseal 8/14/26-pin) and pinout register table.</li>
-            <li><strong>Step 4: Mounting & Dimensions</strong> — View 3D isometric & orthographic blueprints and thermal mounting zones.</li>
-            <li><strong>Step 5: Production & Batches</strong> — Set prototype batches, pilot quantities, and target annual SOP volume.</li>
-            <li><strong>Step 6: Environmental & DVP</strong> — Review AIS-140 / ISO 16750 test suites and download CSV / PDF dossier.</li>
+        <!-- Section 1: The 7-Step Automotive Intake & Engineering Flow -->
+        <div class="p-3 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-2">
+          <div class="flex items-center justify-between pb-1 border-b border-amber-500/20">
+            <h3 class="font-bold text-amber-400 text-xs flex items-center gap-1.5">
+              <span>🧭</span> <span>1. The 7-Step Automotive Intake & Architecture Flow</span>
+            </h3>
+            <span class="px-2 py-0.2 rounded text-[8.5px] font-mono font-bold bg-amber-500/20 text-amber-400">Complete Engineering Pipeline</span>
+          </div>
+          <ol class="list-decimal list-inside space-y-1.5 text-[11px] text-[var(--muted-foreground)] leading-relaxed">
+            <li>
+              <strong class="text-[var(--foreground)]">Step 1: Vehicle & Power Architecture</strong> — 
+              Configure Target Deployment Country (India, Bangladesh, Europe, North America, Australia, Middle East / UAE, or Global Export) which automatically configures regional homologation (AIS-140, BRTA, E-Mark, FCC/PTCRB, RCM, GSO). Select vehicle platform (Tractor, Commercial Truck, EV, Passenger Car) with severe-duty ISO 7637-2 pulse 5b (100V) surge clamping, 3.2V cold cranking dips, and JEITA thermal charge-controlled backup batteries.
+            </li>
+            <li>
+              <strong class="text-[var(--foreground)]">Step 2: Hardware I/O Channels & Vehicle Busses</strong> — 
+              Discrete Digital Inputs (12V/24V opto-isolated), Digital Outputs (1.5A low-side solid-state relay), and Analog Inputs (12-bit ADC 0–32V) are presented in a clean top 3-column row. Directly below sits the dedicated <strong>Vehicle Bus & Serial Communications</strong> section (CAN-FD 5Mbps with 120Ω termination, Galvanically Isolated RS485 Modbus, and ±12V RS232 Serial UART for MDVR dashcams & ticketing printers), plus the Smart Peripheral Classifier for custom sensors.
+            </li>
+            <li>
+              <strong class="text-[var(--foreground)]">Step 3: Network & Wireless Telematics</strong> — 
+              Configure Cellular 4G LTE Cat-1 with 2G fallback, eSIM (soldered MFF2) vs Nano-SIM tray, Dual-Band ISRO NavIC L5 + GPS L1 (AIS-140 mandate) vs RTK cm-precision GNSS, Bluetooth BLE 5.2, Wi-Fi 802.11 b/g/n for depot offload, and LoRaWAN long-range agricultural mesh.
+            </li>
+            <li>
+              <strong class="text-[var(--foreground)]">Step 4: Harness Scheme & Connector Studio</strong> — 
+              Mating connector catalog featuring TE Superseal 1.0 (8, 14, 26-Pin), Molex, Amphenol, and the Sixsense 20-Pin Sealed Header (<code class="text-indigo-400">conn-sixsense-20</code>) engineered for TCU-AIS140 and ITL-TCU03 telematics. Review live cavity assignments, wire color-coding, AWG gauges, and drag-and-drop pinout modeling.
+            </li>
+            <li>
+              <strong class="text-[var(--foreground)]">Step 5: Mechanical Design & Mounting Schemes</strong> — 
+              CAD dimensional envelopes (Compact 95x65x22mm, Standard 125x85x32mm, Rugged 145x105x38mm), IP67 / IP69K sealing, chassis 4x M4 bolt vs battery strap mounting, and ISO 16750-3 Class VII vibration damping.
+            </li>
+            <li>
+              <strong class="text-[var(--foreground)]">Step 6: Production Batches & SOP Planning</strong> — 
+              Select commercial volume tiers (Prototype 50–500 units, Pilot 1k–5k, Annual Mass SOP 10k–100k). Live relative cost slider (80%–140%) and lead-time complexity modeling dynamically calculate commercial estimates based on active components.
+            </li>
+            <li>
+              <strong class="text-[var(--foreground)]">Step 7: Homologation, Environmental & DVP</strong> — 
+              Country-driven homologation (AIS-140, BRTA, UNECE R10, FCC, RCM, GSO), ISO 16750-4 thermal soak (-40°C to +105°C), 96h / 240h salt spray NSS, and automated Design Verification Plan (DVP) sign-off schedule.
+            </li>
           </ol>
         </div>
 
-        <!-- Section 4: Keyboard Shortcuts -->
+        <!-- Section 2: Global Software Feature Driver & Expandable Studio Modal -->
+        <div class="p-3 rounded-xl border border-blue-500/30 bg-blue-500/5 space-y-1.5">
+          <div class="flex items-center justify-between pb-1 border-b border-blue-500/20">
+            <h3 class="font-bold text-blue-400 text-xs flex items-center gap-1.5">
+              <span>🎯</span> <span>2. Software Feature Driver & Expandable Studio Modal</span>
+            </h3>
+            <span class="px-2 py-0.2 rounded text-[8.5px] font-mono font-bold bg-blue-500/20 text-blue-400">15 Automotive Capabilities</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted-foreground)] leading-relaxed">
+            The dedicated <strong>Software Driver Panel</strong> in the right sidebar bridges client software use-cases directly to MCU GPIOs and vehicle transceivers. Click <strong>"⛶ Open Feature Studio"</strong> or <strong>"Pop-up"</strong> to launch the fullscreen matrix detailing edge algorithms, payload schemas, and required hardware I/O. Enabling any feature (such as Remote Starter Cut, Dual Fuel Float, CAN ECU Sniffer, RS485 Modbus Probes, or RS232 MDVR) automatically locks its allocated hardware pins, preventing conflict during connector pinning.
+          </p>
+        </div>
+
+        <!-- Section 3: Sixsense Hardware Reusability & Matching Workflow -->
+        <div class="p-3 rounded-xl border border-indigo-500/30 bg-indigo-500/5 space-y-1.5">
+          <div class="flex items-center justify-between pb-1 border-b border-indigo-500/20">
+            <h3 class="font-bold text-indigo-400 text-xs flex items-center gap-1.5">
+              <span>🔄</span> <span>3. Sixsense Hardware Reusability & NRE Optimization</span>
+            </h3>
+            <span class="px-2 py-0.2 rounded text-[8.5px] font-mono font-bold bg-indigo-500/20 text-indigo-400">10 Production PCBs</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted-foreground)] leading-relaxed">
+            Every configured parameter is dynamically evaluated against all 10 production-tested Sixsense PCBs (TCU-AIS140 Dhruv, ITL-TCU03, CAN Logger, Telematics Hub, etc.). Instead of developing a board from scratch, the system calculates exact NRE cost savings (<strong>₹1.5L – ₹4.5L</strong>) and lead-time reductions (<strong>6 – 12 weeks</strong>). Click <strong>"PCB Reuse & Best-Match"</strong> in the top header or right sidebar to view the full side-by-side comparison matrix and gap analysis.
+          </p>
+        </div>
+
+        <!-- Section 4: 700 Parameters Bank & Master Dossier Exports -->
+        <div class="p-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 space-y-1.5">
+          <div class="flex items-center justify-between pb-1 border-b border-emerald-500/20">
+            <h3 class="font-bold text-emerald-400 text-xs flex items-center gap-1.5">
+              <span>📋</span> <span>4. 700-Parameter Bank & Master Dossier Exports</span>
+            </h3>
+            <span class="px-2 py-0.2 rounded text-[8.5px] font-mono font-bold bg-emerald-500/20 text-emerald-400">APQP Phase 1</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted-foreground)] leading-relaxed">
+            Click <strong>"700 Params"</strong> in the top navigation bar to open the comprehensive engineering parameters matrix across 22 automotive domains. From the master modal, engineers and clients can export:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 pt-1 text-[10.5px]">
+            <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="font-bold text-emerald-400">📄 SCMS Pinout Matrix (CSV)</span>
+              <p class="text-[9px] text-[var(--muted-foreground)]">Cavity #, signal label, electrical spec, AWG wire color, and system purpose.</p>
+            </div>
+            <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="font-bold text-blue-400">📊 Master Spec Sheet (CSV)</span>
+              <p class="text-[9px] text-[var(--muted-foreground)]">Complete parameter keys, configured values, and homologation standards.</p>
+            </div>
+            <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="font-bold text-purple-400">📑 Word / PDF APQP Dossier</span>
+              <p class="text-[9px] text-[var(--muted-foreground)]">Formal client sign-off report with architecture, DVP test suite & bill of materials.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Keyboard Shortcuts & Reactive Auto-Save -->
         <div class="p-2.5 rounded-lg bg-[var(--background)] border border-[var(--card-border)] flex items-center justify-between text-[10.5px]">
           <span class="text-[var(--muted-foreground)]">⌨️ <strong>Quick Shortcuts:</strong> Press <code>Esc</code> to dismiss any modal pop-up. Use mouse wheel or <code>+ / -</code> buttons to zoom connector diagrams.</span>
-          <span class="font-mono text-emerald-400 font-bold">Auto-Saved</span>
+          <span class="font-mono text-emerald-400 font-bold">✓ Reactive State Synced</span>
         </div>
       </div>
 
