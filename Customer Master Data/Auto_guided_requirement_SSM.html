@@ -69,56 +69,74 @@
 <body class="antialiased p-0 m-0 select-none">
   <div class="p-3 max-w-5xl mx-auto space-y-3 font-sans text-xs">
 
-    <!-- Compact Single-Row Top Wizard Stepper & Action Bar (User Request: Single row beside logo, ultra-compact) -->
-    <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[var(--card-border)] whitespace-nowrap overflow-x-auto custom-scrollbar">
-      <!-- Left: Logo + Compact Title + 4 Quick Action Buttons right next to logo/title -->
-      <div class="flex items-center gap-2 shrink-0">
-        <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-sm shadow-xs shrink-0">🚚</span>
-        <div class="flex items-center gap-1.5 shrink-0">
-          <h1 class="text-xs font-bold tracking-tight text-[var(--foreground)]">SSM Requirement Wizard</h1>
-          <span id="step-badge" class="px-1.5 py-0.2 rounded text-[9px] bg-blue-500/15 text-blue-500 font-bold font-mono">Step 1</span>
+    <!-- Top Header: Row 1 Compact Logo & Actions + Row 2 Step Navigation Pills (User Request) -->
+    <div class="space-y-2 pb-2.5 border-b border-[var(--card-border)]">
+      <!-- ROW 1: Logo + Short Heading + 4 Compact Action Buttons (User Request: right next to logo) -->
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-sm shadow-xs shrink-0">🚚</span>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <h1 class="text-xs font-bold tracking-tight text-[var(--foreground)]">SSM Requirement Wizard</h1>
+            <span id="step-badge" class="px-1.5 py-0.2 rounded text-[9px] bg-blue-500/15 text-blue-500 font-bold font-mono">Step 1</span>
+          </div>
+
+          <!-- Vertical Divider -->
+          <span class="h-4 w-px bg-[var(--card-border)] shrink-0 hidden sm:inline-block"></span>
+
+          <!-- 4 Compact Action Buttons Right Next to Logo/Title (User Request) -->
+          <div class="flex items-center gap-1.5 shrink-0">
+            <!-- 1. PCB Reuse Button -->
+            <button onclick="togglePcbComparisonModal()" id="btn-pcb-comparison" class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Compare new requirements against 10 made Sixsense PCBs, view Delta/Gap analysis, or apply baseline">
+              <span>🔄</span>
+              <span>PCB Reuse</span>
+              <span id="header-pcb-match-badge" class="px-1.5 py-0.2 rounded text-[8.5px] bg-black/25 text-indigo-100 font-mono">10 Boards</span>
+            </button>
+
+            <!-- 2. 700 Parameter Master Configuration -->
+            <button onclick="openMasterSpecTable()" id="btn-700-params" class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Open master 700-parameter bank across 22 automotive engineering domains">
+              <span>📋</span>
+              <span>700 Params</span>
+            </button>
+
+            <!-- 3. Light / Dark Mode Toggle -->
+            <button onclick="toggleTheme()" id="theme-toggle-btn" class="flex items-center gap-1 px-2.5 py-1 rounded-md border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] text-[10.5px] font-semibold text-[var(--foreground)] transition-all cursor-pointer shadow-xs" title="Toggle Light / Dark mode">
+              <span id="theme-icon">☀️</span>
+              <span id="theme-text">Light</span>
+            </button>
+
+            <!-- 4. Help & Workflow Guide -->
+            <button onclick="toggleHelpModal()" id="btn-top-help" class="flex items-center gap-1 px-2.5 py-1 rounded-md border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Open portal usage guide, hardware reuse workflow, and shortcuts">
+              <span>❓</span>
+              <span>Help</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Vertical Divider -->
-        <span class="h-4 w-px bg-[var(--card-border)] shrink-0"></span>
-
-        <!-- 4 Compact Action Buttons Right Next to Logo/Title (User Request) -->
-        <div class="flex items-center gap-1.5 shrink-0">
-          <!-- 1. PCB Reuse Button -->
-          <button onclick="togglePcbComparisonModal()" id="btn-pcb-comparison" class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Compare new requirements against 10 made Sixsense PCBs, view Delta/Gap analysis, or apply baseline">
-            <span>🔄</span>
-            <span>PCB Reuse</span>
-            <span id="header-pcb-match-badge" class="px-1.5 py-0.2 rounded text-[8.5px] bg-black/25 text-indigo-100 font-mono">10 Boards</span>
-          </button>
-
-          <!-- 2. 700 Parameter Master Configuration -->
-          <button onclick="openMasterSpecTable()" id="btn-700-params" class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Open master 700-parameter bank across 22 automotive engineering domains">
-            <span>📋</span>
-            <span>700 Params</span>
-          </button>
-
-          <!-- 3. Light / Dark Mode Toggle -->
-          <button onclick="toggleTheme()" id="theme-toggle-btn" class="flex items-center gap-1 px-2.5 py-1 rounded-md border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] text-[10.5px] font-semibold text-[var(--foreground)] transition-all cursor-pointer shadow-xs" title="Toggle Light / Dark mode">
-            <span id="theme-icon">☀️</span>
-            <span id="theme-text">Light</span>
-          </button>
-
-          <!-- 4. Help & Workflow Guide -->
-          <button onclick="toggleHelpModal()" id="btn-top-help" class="flex items-center gap-1 px-2.5 py-1 rounded-md border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Open portal usage guide, hardware reuse workflow, and shortcuts">
-            <span>❓</span>
-            <span>Help</span>
-          </button>
+        <div class="text-[10px] text-[var(--muted-foreground)] font-mono hidden md:block">
+          Sixsense Hardware Engine • 700-Param DVP
         </div>
       </div>
 
-      <!-- Right: Step Navigation Pills (1 to 6) in the same row -->
-      <div class="flex items-center gap-1 bg-[var(--card)] p-1 rounded-lg border border-[var(--card-border)] shrink-0">
-        <button onclick="jumpToStep(1)" id="pill-1" class="px-2 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[9.5px]">1. Vehicle & Power</button>
-        <button onclick="jumpToStep(2)" id="pill-2" class="px-2 py-0.5 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[9.5px]">2. I/O & Network</button>
-        <button onclick="jumpToStep(3)" id="pill-3" class="px-2 py-0.5 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[9.5px]">3. Harness</button>
-        <button onclick="jumpToStep(4)" id="pill-4" class="px-2 py-0.5 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[9.5px]">4. Mounting</button>
-        <button onclick="jumpToStep(5)" id="pill-5" class="px-2 py-0.5 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[9.5px]">5. Production</button>
-        <button onclick="jumpToStep(6)" id="pill-6" class="px-2 py-0.5 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[9.5px]">6. DVP & Summary</button>
+      <!-- ROW 2: Step Navigation Pills Bar on the Row Below (User Request: Step icons below row 1) -->
+      <div class="flex items-center gap-1.5 bg-[var(--card)] p-1 rounded-lg border border-[var(--card-border)] overflow-x-auto custom-scrollbar">
+        <button onclick="jumpToStep(1)" id="pill-1" class="px-3 py-1 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>1.</span> <span>Vehicle & Power</span>
+        </button>
+        <button onclick="jumpToStep(2)" id="pill-2" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>2.</span> <span>I/O & Network</span>
+        </button>
+        <button onclick="jumpToStep(3)" id="pill-3" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>3.</span> <span>Harness Scheme</span>
+        </button>
+        <button onclick="jumpToStep(4)" id="pill-4" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>4.</span> <span>Mounting & Dimensions</span>
+        </button>
+        <button onclick="jumpToStep(5)" id="pill-5" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>5.</span> <span>Production & Batches</span>
+        </button>
+        <button onclick="jumpToStep(6)" id="pill-6" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>6.</span> <span>Environmental & DVP</span>
+        </button>
       </div>
     </div>
 
