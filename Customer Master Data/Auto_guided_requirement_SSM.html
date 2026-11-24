@@ -2351,6 +2351,7 @@
 
   <script>
     let currentStep = 1;
+    var currentSoftwareFilterMode = 'auto';
     var AUTOMOTIVE_CONNECTOR_CATALOG = [
       {
         id: 'conn-sixsense-20',
@@ -7431,7 +7432,7 @@
       });
     }  
     // ================= UPGRADED STEP-AWARE SOFTWARE DRIVER & MODAL LOGIC =================
-    let currentSoftwareFilterMode = 'auto'; // 'auto', 1, 2, 3, 'all'
+    var currentSoftwareFilterMode = 'auto'; // 'auto', 1, 2, 3, 'all'
 
     function openSoftwareFeaturesModal() {
       const modal = document.getElementById('software-features-modal');
