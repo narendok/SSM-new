@@ -156,55 +156,65 @@
             <p class="text-[11px] text-[var(--muted-foreground)]">Platform selection defines nominal voltage, ISO pulse clamping, and base parameters.</p>
           </div>
 
-          <!-- Target Deployment Market / Homologation Country Selector (Compact & Horizontally Scrollable) -->
+          <!-- Target Deployment Market / Homologation Country Selector (Multi-Select Supported) -->
           <div class="p-2 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-1">
             <div class="flex items-center justify-between">
-              <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
-                <span>🌍</span> <span>Target Country & Regional Homologation:</span>
-              </span>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
+                  <span>🌍</span> <span>Target Countries & Regional Homologation:</span>
+                </span>
+                <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-indigo-500/15 text-indigo-400 font-mono font-bold">Multi-Select Supported</span>
+              </div>
               <span id="step1-country-badge" class="text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
                 🇮🇳 India (AIS-140 / ARAI Mandate)
               </span>
             </div>
             <div class="flex items-center gap-1.5 overflow-x-auto pb-1 pt-0.5 custom-scrollbar">
               <!-- 1. India -->
-              <div onclick="setCountry('india')" id="s1-ccard-india" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] cursor-pointer card-selected text-center transition-all select-none">
+              <div onclick="toggleCountry('india')" id="s1-ccard-india" class="relative min-w-[102px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] cursor-pointer card-selected text-center transition-all select-none">
+                <span class="s1-check-indicator absolute top-1 right-1.5 text-[9px] text-emerald-400 font-bold">✓</span>
                 <div class="text-sm">🇮🇳</div>
                 <div class="font-bold text-[10px] text-[var(--foreground)] truncate">India</div>
                 <div class="text-[8px] text-amber-500 font-mono font-bold truncate">AIS-140 / ARAI</div>
               </div>
               <!-- 2. Bangladesh -->
-              <div onclick="setCountry('bangladesh')" id="s1-ccard-bangladesh" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+              <div onclick="toggleCountry('bangladesh')" id="s1-ccard-bangladesh" class="relative min-w-[102px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <span class="s1-check-indicator absolute top-1 right-1.5 text-[9px] text-emerald-400 font-bold opacity-0">✓</span>
                 <div class="text-sm">🇧🇩</div>
                 <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Bangladesh</div>
                 <div class="text-[8px] text-emerald-400 font-mono font-bold truncate">BRTA / BSTI</div>
               </div>
               <!-- 3. Europe & UK -->
-              <div onclick="setCountry('europe')" id="s1-ccard-europe" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+              <div onclick="toggleCountry('europe')" id="s1-ccard-europe" class="relative min-w-[102px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <span class="s1-check-indicator absolute top-1 right-1.5 text-[9px] text-emerald-400 font-bold opacity-0">✓</span>
                 <div class="text-sm">🇪🇺</div>
                 <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Europe & UK</div>
                 <div class="text-[8px] text-blue-400 font-mono font-bold truncate">E-Mark / CE</div>
               </div>
               <!-- 4. North America -->
-              <div onclick="setCountry('usa')" id="s1-ccard-usa" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+              <div onclick="toggleCountry('usa')" id="s1-ccard-usa" class="relative min-w-[102px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <span class="s1-check-indicator absolute top-1 right-1.5 text-[9px] text-emerald-400 font-bold opacity-0">✓</span>
                 <div class="text-sm">🇺🇸</div>
                 <div class="font-bold text-[10px] text-[var(--foreground)] truncate">USA & NA</div>
                 <div class="text-[8px] text-emerald-500 font-mono font-bold truncate">FCC / PTCRB</div>
               </div>
               <!-- 5. Australia & NZ -->
-              <div onclick="setCountry('australia')" id="s1-ccard-australia" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+              <div onclick="toggleCountry('australia')" id="s1-ccard-australia" class="relative min-w-[102px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <span class="s1-check-indicator absolute top-1 right-1.5 text-[9px] text-emerald-400 font-bold opacity-0">✓</span>
                 <div class="text-sm">🇦🇺</div>
                 <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Australia / NZ</div>
                 <div class="text-[8px] text-purple-400 font-mono font-bold truncate">RCM / ADR 80</div>
               </div>
               <!-- 6. Middle East / UAE -->
-              <div onclick="setCountry('uae')" id="s1-ccard-uae" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+              <div onclick="toggleCountry('uae')" id="s1-ccard-uae" class="relative min-w-[102px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <span class="s1-check-indicator absolute top-1 right-1.5 text-[9px] text-emerald-400 font-bold opacity-0">✓</span>
                 <div class="text-sm">🇦🇪</div>
                 <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Middle East</div>
                 <div class="text-[8px] text-amber-400 font-mono font-bold truncate">GSO / SASO</div>
               </div>
               <!-- 7. Global Multi-Region -->
-              <div onclick="setCountry('global')" id="s1-ccard-global" class="min-w-[100px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+              <div onclick="toggleCountry('global')" id="s1-ccard-global" class="relative min-w-[102px] flex-1 sm:flex-none p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] cursor-pointer text-center transition-all select-none">
+                <span class="s1-check-indicator absolute top-1 right-1.5 text-[9px] text-emerald-400 font-bold opacity-0">✓</span>
                 <div class="text-sm">🌐</div>
                 <div class="font-bold text-[10px] text-[var(--foreground)] truncate">Global Export</div>
                 <div class="text-[8px] text-cyan-400 font-mono font-bold truncate">Universal CE+FCC</div>
@@ -2336,6 +2346,101 @@
   <script>
     let currentStep = 1;
     var currentSoftwareFilterMode = 'auto';
+
+    const MARKET_REGISTRY = {
+      india: {
+        id: 'india',
+        name: 'India',
+        flag: '🇮🇳',
+        stdCode: 'AIS-140 / BIS IS 16833',
+        stdTitle: 'MoRTH National Automotive Homologation (ARAI / ICAT Mandate)',
+        stdTag: '🇮🇳 ARAI / ICAT',
+        shortStd: 'AIS-140',
+        gnssHint: 'AIS-140 requires ISRO NavIC dual-band (<2.5m precision).',
+        dvpDomain: 'AIS Homologation',
+        dvpCondition: 'ARAI/ICAT AIS-140 Annexure A & B certification + SOS panic loop',
+        silkscreen: 'AIS-140 / ARAI'
+      },
+      bangladesh: {
+        id: 'bangladesh',
+        name: 'Bangladesh',
+        flag: '🇧🇩',
+        stdCode: 'BRTA / BSTI Commercial VTS',
+        stdTitle: 'Bangladesh Road Transport Authority Vehicle Tracking & BSTI Standards',
+        stdTag: '🇧🇩 BRTA / BSTI',
+        shortStd: 'BRTA / BSTI',
+        gnssHint: 'BRTA commercial vehicle tracking & BSTI standards.',
+        dvpDomain: 'BRTA / BSTI VTS',
+        dvpCondition: 'Bangladesh BRTA AIS tracking compliance & BSTI standards',
+        silkscreen: 'BRTA / BSTI'
+      },
+      europe: {
+        id: 'europe',
+        name: 'Europe & UK',
+        flag: '🇪🇺',
+        stdCode: 'UNECE R10.06 & CE RED',
+        stdTitle: 'Type Approval (E-Mark) & Radio Equipment Directive 2014/53/EU',
+        stdTag: '🇪🇺 E-Mark / CE',
+        shortStd: 'E-Mark / CE',
+        gnssHint: 'UNECE R10 / CE RED standard GNSS tracking.',
+        dvpDomain: 'ECE Homologation',
+        dvpCondition: 'Automotive EMC Immunity 30V/m, CE Radio Equipment Directive',
+        silkscreen: 'E-MARK UNECE R10'
+      },
+      usa: {
+        id: 'usa',
+        name: 'North America',
+        flag: '🇺🇸',
+        stdCode: 'FCC Part 15B & PTCRB',
+        stdTitle: 'Unintentional Radiator Class B & Cellular Carrier Conformance',
+        stdTag: '🇺🇸 FCC / PTCRB',
+        shortStd: 'FCC / PTCRB',
+        gnssHint: 'FCC / PTCRB carrier certified positioning.',
+        dvpDomain: 'FCC & Carrier Cert',
+        dvpCondition: 'Unintentional radiator FCC Class B + PTCRB cellular cert',
+        silkscreen: 'FCC PART 15 / PTCRB'
+      },
+      australia: {
+        id: 'australia',
+        name: 'Australia & NZ',
+        flag: '🇦🇺',
+        stdCode: 'RCM / ADR 80/04',
+        stdTitle: 'ACMA Telematics Regulatory Compliance & Heavy Vehicle Telemetry',
+        stdTag: '🇦🇺 RCM / ADR',
+        shortStd: 'RCM / ADR',
+        gnssHint: 'ADR 80 heavy vehicle telemetry standard.',
+        dvpDomain: 'RCM Homologation',
+        dvpCondition: 'Australian Communications and Media Authority (ACMA) RCM mark',
+        silkscreen: 'RCM / ADR 80'
+      },
+      uae: {
+        id: 'uae',
+        name: 'Middle East / UAE',
+        flag: '🇦🇪',
+        stdCode: 'GSO 2698 & SASO',
+        stdTitle: 'Gulf Standardization Organization & SASO Commercial Telematics',
+        stdTag: '🇦🇪 GSO / SASO',
+        shortStd: 'GSO / SASO',
+        gnssHint: 'GSO 2698 / SASO commercial vehicle tracking.',
+        dvpDomain: 'GSO & SASO Homologation',
+        dvpCondition: 'Gulf Cooperation Council automotive EMC, high ambient heat & SASO tracking',
+        silkscreen: 'GSO 2698 / SASO'
+      },
+      global: {
+        id: 'global',
+        name: 'Global Multi-Region',
+        flag: '🌐',
+        stdCode: 'Universal CE + FCC + E-Mark + BIS',
+        stdTitle: 'Cross-Continental Universal Homologation & Type Approval Suite',
+        stdTag: '🌐 Global Export',
+        shortStd: 'Universal CE+FCC',
+        gnssHint: 'Universal Multi-Constellation positioning (GPS + GLONASS + Galileo + NavIC).',
+        dvpDomain: 'Universal Homologation',
+        dvpCondition: 'Multi-market regulatory compliance for cross-continental commercialization',
+        silkscreen: 'CE / FCC / E-MARK'
+      }
+    };
+
     var AUTOMOTIVE_CONNECTOR_CATALOG = [
       {
         id: 'conn-sixsense-20',
@@ -2668,7 +2773,8 @@
       pilotCustomLead: null,
       sopAnnual: '25k',
       sopBudgetBracket: 'std',
-      targetCountry: 'india', // 'india', 'europe', 'usa', 'australia', 'global'
+      targetCountries: ['india'],
+      targetCountry: 'india', // 'india', 'bangladesh', 'europe', 'usa', 'australia', 'uae', 'global'
       deviceViewMode: 'isometric' // 'isometric' (3D Solid) or 'blueprint' (2D CAD Plan)
     };
 
@@ -4976,12 +5082,10 @@
         `;
       }
 
-      // Country Regulatory Silkscreen
-      let regText = "AIS-140 / ARAI";
-      if (wizardState.targetCountry === 'europe') regText = "E-MARK UNECE R10";
-      else if (wizardState.targetCountry === 'usa') regText = "FCC PART 15 / PTCRB";
-      else if (wizardState.targetCountry === 'australia') regText = "RCM / ADR 80";
-      else if (wizardState.targetCountry === 'global') regText = "CE / FCC / E-MARK";
+      // Country Regulatory Silkscreen (Multi-Market Supported)
+      const activeMarkets = wizardState.targetCountries || [wizardState.targetCountry || 'india'];
+      const regCodes = activeMarkets.map(c => (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]?.shortStd) || c.toUpperCase());
+      const regText = regCodes.slice(0, 3).join(' • ');
 
       const housingStroke = wizardState.enclosurePreset === 'rugged' ? '#a855f7' : (wizardState.enclosurePreset === 'compact' ? '#38bdf8' : '#10b981');
 
@@ -5190,121 +5294,115 @@
       `;
     }
 
+    function toggleCountry(country) {
+      if (!Array.isArray(wizardState.targetCountries)) {
+        wizardState.targetCountries = wizardState.targetCountry ? [wizardState.targetCountry] : ['india'];
+      }
+
+      if (country === 'global') {
+        if (wizardState.targetCountries.includes('global')) {
+          if (wizardState.targetCountries.length > 1) {
+            wizardState.targetCountries = wizardState.targetCountries.filter(c => c !== 'global');
+          } else {
+            wizardState.targetCountries = ['india'];
+          }
+        } else {
+          wizardState.targetCountries = ['global'];
+        }
+      } else {
+        if (wizardState.targetCountries.includes('global') && wizardState.targetCountries.length === 1) {
+          wizardState.targetCountries = [];
+        } else if (wizardState.targetCountries.includes('global')) {
+          wizardState.targetCountries = wizardState.targetCountries.filter(c => c !== 'global');
+        }
+
+        const idx = wizardState.targetCountries.indexOf(country);
+        if (idx > -1) {
+          if (wizardState.targetCountries.length > 1) {
+            wizardState.targetCountries.splice(idx, 1);
+          }
+        } else {
+          wizardState.targetCountries.push(country);
+        }
+      }
+
+      wizardState.targetCountry = wizardState.targetCountries[0] || 'india';
+      updateCountryUI();
+    }
+
     function setCountry(country) {
-      wizardState.targetCountry = country;
-      const countries = ['india', 'bangladesh', 'europe', 'usa', 'australia', 'uae', 'global'];
-      countries.forEach(c => {
+      toggleCountry(country);
+    }
+
+    function updateCountryUI() {
+      const allMarkets = ['india', 'bangladesh', 'europe', 'usa', 'australia', 'uae', 'global'];
+      const activeList = wizardState.targetCountries || ['india'];
+
+      allMarkets.forEach(c => {
         const elS1 = document.getElementById(`s1-ccard-${c}`);
+        const isActive = activeList.includes(c);
         if (elS1) {
-          if (c === country) {
+          const checkIcon = elS1.querySelector('.s1-check-indicator');
+          if (isActive) {
             elS1.classList.add('card-selected');
             elS1.classList.remove('bg-[var(--background)]');
             elS1.classList.add('bg-[var(--card)]');
+            elS1.classList.add('border-indigo-500');
+            if (checkIcon) checkIcon.classList.remove('opacity-0');
           } else {
             elS1.classList.remove('card-selected');
             elS1.classList.remove('bg-[var(--card)]');
+            elS1.classList.remove('border-indigo-500');
             elS1.classList.add('bg-[var(--background)]');
+            if (checkIcon) checkIcon.classList.add('opacity-0');
           }
         }
       });
 
-      const badge = document.getElementById('country-badge');
       const s1Badge = document.getElementById('step1-country-badge');
+      const badge = document.getElementById('country-badge');
+
+      let badgeText = "";
+      if (activeList.includes('global')) {
+        badgeText = "🌐 Global Multi-Region (Universal CE + FCC + E-Mark)";
+      } else if (activeList.length === 1) {
+        const m = MARKET_REGISTRY[activeList[0]] || MARKET_REGISTRY.india;
+        badgeText = `${m.flag} ${m.name} (${m.shortStd} Mandate)`;
+      } else {
+        const flags = activeList.map(c => MARKET_REGISTRY[c]?.flag || '').join(' ');
+        const names = activeList.map(c => MARKET_REGISTRY[c]?.name || c).join(' + ');
+        badgeText = `${flags} Multi-Market (${activeList.length}): ${names}`;
+      }
+
+      if (s1Badge) {
+        s1Badge.textContent = badgeText;
+        s1Badge.className = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500";
+      }
+      if (badge) {
+        badge.textContent = badgeText;
+        badge.className = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500";
+      }
+
       const araiCb = document.getElementById('std_arai');
       const emarkCb = document.getElementById('std_emark');
       const fccCb = document.getElementById('std_fcc');
       const rcmCb = document.getElementById('std_rcm');
       const rohsCb = document.getElementById('std_rohs');
 
-      let badgeText = "🇮🇳 India (AIS-140 / ARAI Mandate)";
-      let badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500";
-
-      if (country === 'india') {
-        badgeText = "🇮🇳 India (AIS-140 / ARAI Mandate)";
-        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500";
-        if (araiCb) araiCb.checked = true;
-        if (emarkCb) emarkCb.checked = false;
-        if (fccCb) fccCb.checked = false;
-        if (rcmCb) rcmCb.checked = false;
-        if (rohsCb) rohsCb.checked = true;
-      } else if (country === 'bangladesh') {
-        badgeText = "🇧🇩 Bangladesh (BRTA / BSTI Automotive Standard)";
-        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-emerald-500/15 text-emerald-400";
-        if (araiCb) araiCb.checked = false;
-        if (emarkCb) emarkCb.checked = false;
-        if (fccCb) fccCb.checked = false;
-        if (rcmCb) rcmCb.checked = false;
-        if (rohsCb) rohsCb.checked = true;
-      } else if (country === 'europe') {
-        badgeText = "🇪🇺 Europe & UK (E-Mark / CE RED Directive)";
-        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-blue-500/15 text-blue-400";
-        if (araiCb) araiCb.checked = false;
-        if (emarkCb) emarkCb.checked = true;
-        if (fccCb) fccCb.checked = false;
-        if (rcmCb) rcmCb.checked = false;
-        if (rohsCb) rohsCb.checked = true;
-      } else if (country === 'usa') {
-        badgeText = "🇺🇸 North America (FCC Part 15 / PTCRB Cellular)";
-        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-emerald-500/15 text-emerald-400";
-        if (araiCb) araiCb.checked = false;
-        if (emarkCb) emarkCb.checked = false;
-        if (fccCb) fccCb.checked = true;
-        if (rcmCb) rcmCb.checked = false;
-        if (rohsCb) rohsCb.checked = true;
-      } else if (country === 'australia') {
-        badgeText = "🇦🇺 Australia / NZ (RCM / ADR Telematics)";
-        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-purple-500/15 text-purple-400";
-        if (araiCb) araiCb.checked = false;
-        if (emarkCb) emarkCb.checked = false;
-        if (fccCb) fccCb.checked = false;
-        if (rcmCb) rcmCb.checked = true;
-        if (rohsCb) rohsCb.checked = true;
-      } else if (country === 'uae') {
-        badgeText = "🇦🇪 Middle East / UAE (GSO / SASO Telematics)";
-        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-400";
-        if (araiCb) araiCb.checked = false;
-        if (emarkCb) emarkCb.checked = false;
-        if (fccCb) fccCb.checked = false;
-        if (rcmCb) rcmCb.checked = false;
-        if (rohsCb) rohsCb.checked = true;
-      } else {
-        badgeText = "🌐 Global Multi-Region (Universal CE + FCC + E-Mark)";
-        badgeClass = "text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-cyan-500/15 text-cyan-400";
-        if (araiCb) araiCb.checked = true;
-        if (emarkCb) emarkCb.checked = true;
-        if (fccCb) fccCb.checked = true;
-        if (rcmCb) rcmCb.checked = true;
-        if (rohsCb) rohsCb.checked = true;
-      }
+      if (araiCb) araiCb.checked = activeList.includes('india') || activeList.includes('global');
+      if (emarkCb) emarkCb.checked = activeList.includes('europe') || activeList.includes('global');
+      if (fccCb) fccCb.checked = activeList.includes('usa') || activeList.includes('global');
+      if (rcmCb) rcmCb.checked = activeList.includes('australia') || activeList.includes('global');
+      if (rohsCb) rohsCb.checked = true;
 
       const gnssHint = document.getElementById('gnss-country-mandate-hint');
       if (gnssHint) {
-        if (country === 'india') {
-          gnssHint.textContent = "↳ 🇮🇳 India Mandate: AIS-140 requires ISRO NavIC dual-band.";
-          gnssHint.className = "text-[9px] text-amber-500 font-mono font-medium pt-0.5";
-        } else if (country === 'bangladesh') {
-          gnssHint.textContent = "↳ 🇧🇩 Bangladesh Mandate: BRTA commercial vehicle tracking & BSTI standards.";
-          gnssHint.className = "text-[9px] text-emerald-400 font-mono font-medium pt-0.5";
-        } else if (country === 'europe') {
-          gnssHint.textContent = "↳ 🇪🇺 Europe Mandate: UNECE R10 / CE RED standard GNSS tracking.";
-          gnssHint.className = "text-[9px] text-blue-400 font-mono font-medium pt-0.5";
-        } else if (country === 'usa') {
-          gnssHint.textContent = "↳ 🇺🇸 USA Mandate: FCC / PTCRB carrier certified positioning.";
-          gnssHint.className = "text-[9px] text-emerald-400 font-mono font-medium pt-0.5";
-        } else if (country === 'australia') {
-          gnssHint.textContent = "↳ 🇦🇺 Australia Mandate: ADR 80 heavy vehicle telemetry standard.";
-          gnssHint.className = "text-[9px] text-purple-400 font-mono font-medium pt-0.5";
-        } else if (country === 'uae') {
-          gnssHint.textContent = "↳ 🇦🇪 Middle East Mandate: GSO 2698 / SASO commercial vehicle tracking.";
-          gnssHint.className = "text-[9px] text-amber-400 font-mono font-medium pt-0.5";
-        } else {
-          gnssHint.textContent = "↳ 🌐 Global Mandate: Universal Multi-Constellation positioning.";
-          gnssHint.className = "text-[9px] text-cyan-400 font-mono font-medium pt-0.5";
-        }
+        const hints = activeList.map(c => {
+          const m = MARKET_REGISTRY[c];
+          return m ? `${m.flag} ${m.name}: ${m.gnssHint}` : '';
+        }).filter(Boolean);
+        gnssHint.innerHTML = hints.map(h => `<div class="text-[9px] text-amber-500 font-mono font-medium pt-0.5">↳ ${h}</div>`).join('');
       }
-
-      if (badge) { badge.textContent = badgeText; badge.className = badgeClass; }
-      if (s1Badge) { s1Badge.textContent = badgeText; s1Badge.className = badgeClass; }
 
       renderDeviceBlueprint();
       updateStandardsBadges();
@@ -5558,57 +5656,19 @@
 
       const standards = [];
 
-      // 0. Target Country Regional Homologation Mandate (Directly changes with Country selection)
-      if (wizardState.targetCountry === 'india') {
-        standards.push({
-          code: "AIS-140 / BIS IS 16833",
-          title: "MoRTH National Automotive Homologation (ARAI / ICAT Mandate)",
-          reason: "Triggered by: India Target Deployment Market",
-          tag: "🇮🇳 ARAI / ICAT"
-        });
-      } else if (wizardState.targetCountry === 'bangladesh') {
-        standards.push({
-          code: "BRTA / BSTI Commercial VTS",
-          title: "Bangladesh Road Transport Authority Vehicle Tracking & BSTI Standards",
-          reason: "Triggered by: Bangladesh Target Deployment Market",
-          tag: "🇧🇩 BRTA / BSTI"
-        });
-      } else if (wizardState.targetCountry === 'europe') {
-        standards.push({
-          code: "UNECE R10.06 & CE RED",
-          title: "Type Approval (E-Mark) & Radio Equipment Directive 2014/53/EU",
-          reason: "Triggered by: Europe & UK Target Deployment Market",
-          tag: "🇪🇺 E-Mark / CE"
-        });
-      } else if (wizardState.targetCountry === 'usa') {
-        standards.push({
-          code: "FCC Part 15B & PTCRB",
-          title: "Unintentional Radiator Class B & Cellular Carrier Conformance",
-          reason: "Triggered by: North America Target Deployment Market",
-          tag: "🇺🇸 FCC / PTCRB"
-        });
-      } else if (wizardState.targetCountry === 'australia') {
-        standards.push({
-          code: "RCM / ADR 80/04",
-          title: "ACMA Telematics Regulatory Compliance & Heavy Vehicle Telemetry",
-          reason: "Triggered by: Australia & NZ Target Deployment Market",
-          tag: "🇦🇺 RCM / ADR"
-        });
-      } else if (wizardState.targetCountry === 'uae') {
-        standards.push({
-          code: "GSO 2698 & SASO",
-          title: "Gulf Standardization Organization & SASO Commercial Telematics",
-          reason: "Triggered by: Middle East / UAE Target Market",
-          tag: "🇦🇪 GSO / SASO"
-        });
-      } else {
-        standards.push({
-          code: "Universal CE + FCC + E-Mark",
-          title: "Cross-Continental Universal Homologation & Type Approval Suite",
-          reason: "Triggered by: Global Export Multi-Region Market",
-          tag: "🌐 Global Export"
-        });
-      }
+      // 0. Target Country Regional Homologation Mandates (Multi-Market Supported)
+      const activeMarkets = wizardState.targetCountries || [wizardState.targetCountry || 'india'];
+      activeMarkets.forEach(c => {
+        const m = (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]);
+        if (m) {
+          standards.push({
+            code: m.stdCode,
+            title: m.stdTitle,
+            reason: `Triggered by: ${m.name} Target Market`,
+            tag: m.stdTag
+          });
+        }
+      });
 
       // 1. Electrical & Power
       if (wizardState.powerQuality === 'raw') {
@@ -6363,13 +6423,11 @@
 
     function exportSpecSheetCsv() {
       const v = wizardState.vehicle.toUpperCase();
-      let regName = "India (AIS-140 / ARAI Mandate)";
-      if (wizardState.targetCountry === 'bangladesh') regName = "Bangladesh (BRTA / BSTI Mandate)";
-      else if (wizardState.targetCountry === 'europe') regName = "Europe & UK (E-Mark / CE RED)";
-      else if (wizardState.targetCountry === 'usa') regName = "North America (FCC / PTCRB)";
-      else if (wizardState.targetCountry === 'australia') regName = "Australia (RCM / ADR 80)";
-      else if (wizardState.targetCountry === 'uae') regName = "Middle East / UAE (GSO / SASO)";
-      else if (wizardState.targetCountry === 'global') regName = "Global Multi-Region (CE + FCC + E-Mark)";
+      const activeMarkets = wizardState.targetCountries || [wizardState.targetCountry || 'india'];
+      let regName = activeMarkets.map(c => {
+        const m = (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]);
+        return m ? `${m.name} (${m.shortStd})` : c;
+      }).join(' + ');
 
       const rows = [
         ["CATEGORY", "PARAMETER KEY", "CONFIGURED VALUE", "UNIT / SPECIFICATION", "AUTHORITY STANDARD"],
@@ -6429,9 +6487,25 @@
         ["EMC / RF", "Radiated & Conducted Emissions", "CISPR 25 Class 3/4", "150 kHz - 2.5 GHz Anechoic Chamber", "Full Band Sweep", "2 Units", "Emission levels below Class 3 limit lines"],
         ["EMC / RF", "RF Immunity (Bulk Current Injection)", "ISO 11452-4 BCI", "1 MHz - 400 MHz, 100 mA test level", "Sweep 1% step size", "2 Units", "No unintended DO activation; CAN remains error-free"],
         ["Mechanical", "Random & Sinusoidal Vibration", "ISO 16750-3 Class VII", "10 Hz - 2000 Hz @ 3.2 g RMS (Chassis profile)", "8 Hours per Axis (X, Y, Z)", "3 Units", "Zero mechanical resonance damage; solder joints intact"],
-        ["Mechanical", "Mechanical Free Fall Shock", "IEC 60068-2-31", "1.0 Meter drop onto smooth concrete", "2 drops per 6 faces", "2 Units", "No crack in housing; internal connectors mated"],
-        ["Homologation", "Regional Regulatory Certification", wizardState.targetCountry === 'europe' ? "UNECE R10.06 / CE RED" : (wizardState.targetCountry === 'usa' ? "FCC Part 15 / PTCRB" : (wizardState.targetCountry === 'australia' ? "ADR 80 / RCM" : "AIS-140 Annexure A & B")), "Government Homologation Test Schedule", "Full Certification Cycle", "5 Units", "Official Test Certificate Issued"]
+        ["Mechanical", "Mechanical Free Fall Shock", "IEC 60068-2-31", "1.0 Meter drop onto smooth concrete", "2 drops per 6 faces", "2 Units", "No crack in housing; internal connectors mated"]
       ];
+      const activeMarkets = wizardState.targetCountries || [wizardState.targetCountry || 'india'];
+      activeMarkets.forEach(c => {
+        const m = (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]) || {
+          stdCode: "AIS-140 Annexure A & B",
+          dvpCondition: "Mandatory regional vehicle telematics & homologation testing",
+          name: c
+        };
+        rows.push([
+          "Homologation",
+          `${m.name} Regional Regulatory Certification`,
+          m.stdCode,
+          m.dvpCondition || "Government Homologation Test Schedule",
+          "Full Certification Cycle",
+          "5 Units",
+          "Official Test Certificate Issued"
+        ]);
+      });
       downloadCsv("SCMS_DVP_Matrix.csv", rows);
     }
 
@@ -6463,14 +6537,12 @@
 
     function getMasterParametersList() {
       const v = wizardState.vehicle.toUpperCase();
-      let regName = "India (AIS-140 / ARAI Mandate)";
-      let regStd = "AIS-140 Annexure A & B";
-      if (wizardState.targetCountry === 'bangladesh') { regName = "Bangladesh (BRTA / BSTI Mandate)"; regStd = "BRTA VTS / BSTI"; }
-      else if (wizardState.targetCountry === 'europe') { regName = "Europe & UK (E-Mark / CE RED)"; regStd = "UNECE R10.06 / CE RED"; }
-      else if (wizardState.targetCountry === 'usa') { regName = "North America (FCC / PTCRB)"; regStd = "FCC Part 15 / PTCRB"; }
-      else if (wizardState.targetCountry === 'australia') { regName = "Australia (RCM / ADR 80)"; regStd = "ADR 80 / RCM AS/NZS"; }
-      else if (wizardState.targetCountry === 'uae') { regName = "Middle East / UAE (GSO / SASO)"; regStd = "GSO 2698 / SASO"; }
-      else if (wizardState.targetCountry === 'global') { regName = "Global Multi-Region (Universal)"; regStd = "CE + FCC + UNECE R10"; }
+      const activeMarkets = wizardState.targetCountries || [wizardState.targetCountry || 'india'];
+      let regName = activeMarkets.map(c => {
+        const m = (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]);
+        return m ? `${m.name} (${m.shortStd})` : c;
+      }).join(' + ');
+      let regStd = activeMarkets.map(c => (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]?.shortStd) || c).join(' & ');
 
       const isCellActive = (document.getElementById('net_4g')?.checked ?? false) || (document.getElementById('net_2g_fallback')?.checked ?? false);
       const cellText = isCellActive 
@@ -6785,13 +6857,11 @@
       } else {
         // Render 7 Cards View
         const v = wizardState.vehicle.toUpperCase();
-        let regName = "🇮🇳 India (AIS-140 / ARAI Mandate)";
-        if (wizardState.targetCountry === 'bangladesh') regName = "🇧🇩 Bangladesh (BRTA / BSTI Mandate)";
-        else if (wizardState.targetCountry === 'europe') regName = "🇪🇺 Europe & UK (E-Mark / CE RED)";
-        else if (wizardState.targetCountry === 'usa') regName = "🇺🇸 North America (FCC / PTCRB)";
-        else if (wizardState.targetCountry === 'australia') regName = "🇦🇺 Australia (RCM / ADR 80)";
-        else if (wizardState.targetCountry === 'uae') regName = "🇦🇪 Middle East / UAE (GSO / SASO)";
-        else if (wizardState.targetCountry === 'global') regName = "🌐 Global Multi-Region (CE + FCC + E-Mark)";
+        const activeMarkets = wizardState.targetCountries || [wizardState.targetCountry || 'india'];
+        let regName = activeMarkets.map(c => {
+          const m = (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]);
+          return m ? `${m.flag} ${m.name} (${m.shortStd})` : c;
+        }).join(' + ');
 
         const pwr = wizardState.powerQuality === 'raw' ? "Raw Alternator (+12% Surge Clamp Diode)" : "Clean Regulated DC (-12% Cost Optimized)";
         const gnss = wizardState.gnssOption === 'navic_l5' 
@@ -6945,56 +7015,21 @@
 
       const tempStr = wizardState.tempRange === 'cabin' ? "-20°C to +70°C" : (wizardState.tempRange === 'engine' ? "-40°C to +105°C" : "-40°C to +85°C");
 
-      let regTest = {
-        domain: "AIS Homologation",
-        std: "AIS-140 Annexure A & B",
-        condition: wizardState.gnssOption === 'navic_l5' ? "ARAI/ICAT Mandated IRNSS/NavIC <2.5m accuracy + SOS Panic Loop" : "ARAI/ICAT AIS-140 Telematics Protocol Certification",
-        trigger: "India (Govt. Mandate)"
-      };
-
-      if (wizardState.targetCountry === 'bangladesh') {
-        regTest = {
-          domain: "BRTA / BSTI VTS",
-          std: "BRTA VTS / BSTI Standards",
-          condition: "Bangladesh Road Transport Authority AIS tracking compliance & BSTI electrical safety",
-          trigger: "Bangladesh Market"
+      const activeMarkets = wizardState.targetCountries || [wizardState.targetCountry || 'india'];
+      const regTests = activeMarkets.map(c => {
+        const m = (typeof MARKET_REGISTRY !== 'undefined' && MARKET_REGISTRY[c]) || {
+          dvpDomain: "Homologation",
+          stdCode: "Regional Homologation",
+          dvpCondition: "Mandatory regional vehicle telematics & homologation testing",
+          name: c
         };
-      } else if (wizardState.targetCountry === 'europe') {
-        regTest = {
-          domain: "ECE Homologation",
-          std: "UNECE R10.06 & CE RED",
-          condition: "Automotive EMC Immunity 30V/m, CE Radio Equipment Directive 2014/53/EU",
-          trigger: "Europe & UK Market"
+        return {
+          domain: m.dvpDomain,
+          std: m.stdCode,
+          condition: m.dvpCondition,
+          trigger: `${m.name} Mandate`
         };
-      } else if (wizardState.targetCountry === 'usa') {
-        regTest = {
-          domain: "FCC & Carrier Cert",
-          std: "FCC Part 15 / PTCRB / AT&T",
-          condition: "Unintentional radiator FCC Class B + PTCRB Over-The-Air cellular carrier cert",
-          trigger: "North America Market"
-        };
-      } else if (wizardState.targetCountry === 'australia') {
-        regTest = {
-          domain: "RCM Homologation",
-          std: "AS/NZS CISPR 32 / ADR 80",
-          condition: "Australian Communications and Media Authority (ACMA) RCM compliance mark",
-          trigger: "Australia / NZ Market"
-        };
-      } else if (wizardState.targetCountry === 'uae') {
-        regTest = {
-          domain: "GSO & SASO Homologation",
-          std: "GSO 2698 & SASO Telematics",
-          condition: "Gulf Cooperation Council automotive EMC, extreme heat operation & SASO vehicle tracking",
-          trigger: "Middle East / UAE Market"
-        };
-      } else if (wizardState.targetCountry === 'global') {
-        regTest = {
-          domain: "Universal Homologation",
-          std: "CE + FCC + E-Mark + BIS",
-          condition: "Multi-market regulatory compliance for cross-continental commercialization",
-          trigger: "Global Export Market"
-        };
-      }
+      });
 
       const dvpTests = [
         { domain: "Electrical Surge", std: "ISO 7637-2 / Pulse 5b", condition: wizardState.powerQuality === 'raw' ? "Us = 100V, td = 400ms, Ri = 0.5Ω (Active TVS Clamping)" : "Standard 36V continuous DC tolerance", trigger: wizardState.powerQuality === 'raw' ? "Raw Alternator" : "Clean DC" },
@@ -7005,7 +7040,7 @@
         { domain: "Water Ingress", std: "ISO 20653 / IEC 60529", condition: wizardState.ipRating === 'ip69k' ? "Fan jet 100 bar, 80°C, 15L/min at 100mm distance" : "Immersion 1 meter depth for 30 minutes (IP67)", trigger: wizardState.ipRating.toUpperCase() },
         { domain: "Salt Corrosion", std: "ISO 9227 NSS", condition: wizardState.saltSpray === 'severe240' ? "5% NaCl, 35°C chamber for 240 hours" : (wizardState.saltSpray === 'std96' ? "5% NaCl, 35°C chamber for 96 hours" : "Standard ambient (No salt test)"), trigger: wizardState.saltSpray },
         { domain: "EMC Radiated", std: "CISPR 25 Class 3 / 5", condition: "Radiated emissions 150kHz - 2.5GHz below automotive limits", trigger: "4G + BLE + GNSS" },
-        regTest
+        ...regTests
       ];
 
       dvpTests.forEach(t => {
@@ -7025,7 +7060,9 @@
     initDefaultPins();
     setVehicleType('tractor');
     setPowerQuality('raw');
-    setCountry('india');
+    wizardState.targetCountries = ['india'];
+    wizardState.targetCountry = 'india';
+    updateCountryUI();
     setEnclosurePreset('standard');
     updateStagedRolloutUI();
     recalculatePins();
