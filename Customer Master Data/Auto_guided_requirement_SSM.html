@@ -4,190 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Automotive Device Requirement & Graphical Mounting Wizard</title>
-  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js">
-    
-    // ================= UPGRADED STEP-AWARE SOFTWARE DRIVER LOGIC =================
-    let currentSoftwareFilterMode = 'auto'; // 'auto', 1, 2, 3, 'all'
-
-    function setSoftwareFilter(mode) {
-      currentSoftwareFilterMode = mode;
-      ['auto', 'step1', 'step2', 'step3', 'all'].forEach(k => {
-        const btn = document.getElementById(`sw-filter-${k}`);
-        if (!btn) return;
-        const isActive = (k === 'auto' && mode === 'auto') ||
-                         (k === 'step1' && mode === 1) ||
-                         (k === 'step2' && mode === 2) ||
-                         (k === 'step3' && mode === 3) ||
-                         (k === 'all' && mode === 'all');
-        if (isActive) {
-          btn.className = "px-1.5 py-0.5 rounded bg-blue-500 text-white font-bold";
-        } else {
-          btn.className = "px-1.5 py-0.5 rounded bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]";
-        }
-      });
-      filterSidebarFeatures();
-    }
-
-    function filterSidebarFeatures() {
-      const q = (document.getElementById('sw-sidebar-search')?.value || '').toLowerCase().trim();
-      const container = document.getElementById('sidebar-sw-features-list');
-      const hintEl = document.getElementById('sw-sidebar-step-hint');
-      if (!container) return;
-
-      let targetStep = null;
-      if (currentSoftwareFilterMode === 'auto') {
-        targetStep = currentStep;
-      } else if (typeof currentSoftwareFilterMode === 'number') {
-        targetStep = currentSoftwareFilterMode;
-      }
-
-      if (hintEl) {
-        if (q) {
-          hintEl.textContent = `Search results for "${q}"`;
-        } else if (targetStep === 1) {
-          hintEl.textContent = "Suggested for Step 1: Power & Battery";
-        } else if (targetStep === 2) {
-          hintEl.textContent = "Suggested for Step 2: Hardware I/O & Busses";
-        } else if (targetStep === 3) {
-          hintEl.textContent = "Suggested for Step 3: Wireless & On-Board Storage";
-        } else {
-          hintEl.textContent = "All 12 Telematics Capabilities";
-        }
-      }
-
-      const items = container.querySelectorAll('.sw-feat-item');
-      items.forEach(item => {
-        const itemStep = parseInt(item.getAttribute('data-step') || '2');
-        const keywords = (item.getAttribute('data-keywords') || '').toLowerCase();
-        const text = item.innerText.toLowerCase();
-
-        let matchesSearch = true;
-        if (q) {
-          matchesSearch = text.includes(q) || keywords.includes(q);
-        }
-
-        let matchesStep = true;
-        if (!q && targetStep !== null && targetStep <= 3) {
-          matchesStep = (itemStep === targetStep);
-        }
-
-        if (matchesSearch && matchesStep) {
-          item.style.display = 'flex';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    }
-
-    function syncSoftwareFeature(key, checked) {
-      // Sync between sidebar checkbox and modal checkbox
-      const sbEl = document.getElementById(`sb-rec-${key}`);
-      const mEl = document.getElementById(`m-rec-${key}`);
-      if (sbEl) sbEl.checked = checked;
-      if (mEl) mEl.checked = checked;
-
-      // Apply dynamic hardware & peripheral allocations
-      if (key === 'immob') {
-        if (checked && !wizardState.pins.some(p => p.type === 'DO' && p.label.includes('Starter Cut'))) {
-          adjustPinCount('DO', 1);
-          const lastDO = wizardState.pins.filter(p => p.type === 'DO').pop();
-          if (lastDO) { lastDO.label = "Starter Cut Relay"; lastDO.purpose = "Remote Anti-Theft Starter Cut"; }
-        }
-      } else if (key === 'fuel') {
-        if (checked && !wizardState.pins.some(p => p.type === 'AI' && p.label.includes('Fuel'))) {
-          adjustPinCount('AI', 1);
-          const lastAI = wizardState.pins.filter(p => p.type === 'AI').pop();
-          if (lastAI) { lastAI.label = "Fuel Level Sensor"; lastAI.purpose = "0-32V Analog Tank Float"; }
-        }
-      } else if (key === 'sos') {
-        if (checked && !wizardState.pins.some(p => p.type === 'DI' && p.label.includes('SOS'))) {
-          adjustPinCount('DI', 1);
-          const lastDI = wizardState.pins.filter(p => p.type === 'DI').pop();
-          if (lastDI) { lastDI.label = "Driver SOS Panic"; lastDI.purpose = "Emergency Push Button"; }
-        }
-      } else if (key === 'pto') {
-        if (checked && !wizardState.pins.some(p => p.type === 'DI' && p.label.includes('PTO'))) {
-          adjustPinCount('DI', 2);
-        }
-      } else if (key === 'can') {
-        const ioCan = document.getElementById('io_can_fd');
-        if (ioCan) ioCan.checked = checked;
-        toggleBusFromStep2('can', checked);
-      } else if (key === 'rs485') {
-        const ioRs485 = document.getElementById('io_rs485');
-        if (ioRs485) ioRs485.checked = checked;
-        toggleBusFromStep2('rs485', checked);
-      } else if (key === 'buzzer') {
-        if (checked && !wizardState.pins.some(p => p.type === 'DO' && p.label.includes('Buzzer'))) {
-          adjustPinCount('DO', 1);
-          const lastDO = wizardState.pins.filter(p => p.type === 'DO').pop();
-          if (lastDO) { lastDO.label = "Cabin Buzzer"; lastDO.purpose = "Audible Warning Strobe"; }
-        }
-      } else if (key === 'fota') {
-        const flash = document.getElementById('peri-spi-flash');
-        if (flash) flash.value = checked ? '64mb' : '32mb';
-      } else if (key === 'ble') {
-        const netBle = document.getElementById('net_ble');
-        if (netBle) netBle.checked = checked;
-      } else if (key === 'wifi') {
-        const netWifi = document.getElementById('net_wifi');
-        if (netWifi) netWifi.checked = checked;
-      } else if (key === 'ais140') {
-        const gnss = document.getElementById('gnss_type');
-        if (gnss) gnss.value = checked ? 'navic' : 'standard';
-        const net4g = document.getElementById('net_4g');
-        if (net4g && checked) net4g.checked = true;
-      }
-
-      updateSoftwareFeaturesBadge();
-      recalculatePins();
-      updateLiveImpact();
-    }
-
-    function updateSoftwareFeaturesBadge() {
-      const featureDefs = [
-        { key: 'cleanpwr', name: 'Clean Battery %' },
-        { key: 'immob', name: 'Starter Cut (DO)' },
-        { key: 'fuel', name: 'Fuel Level (AI)' },
-        { key: 'sos', name: 'SOS Panic (DI)' },
-        { key: 'pto', name: 'PTO Acreage (2DI)' },
-        { key: 'can', name: 'J1939 CAN' },
-        { key: 'rs485', name: 'RS485 Probes' },
-        { key: 'reefer', name: 'Reefer Temp (AI)' },
-        { key: 'buzzer', name: 'Cabin Buzzer (DO)' },
-        { key: 'fota', name: 'FOTA 64MB' },
-        { key: 'ble', name: 'BLE 5.2' },
-        { key: 'wifi', name: 'Depot Wi-Fi' },
-        { key: 'ais140', name: 'AIS-140' }
-      ];
-
-      const lockedContainer = document.getElementById('sw-locked-chips-container');
-      if (lockedContainer) lockedContainer.innerHTML = '';
-
-      let activeCount = 0;
-      featureDefs.forEach(f => {
-        const isChecked = document.getElementById(`sb-rec-${f.key}`)?.checked;
-        if (isChecked) {
-          activeCount++;
-          if (lockedContainer) {
-            const chip = document.createElement('span');
-            chip.className = "px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1 cursor-pointer hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 transition-all select-none";
-            chip.title = `Click to unlock/remove ${f.name}`;
-            chip.onclick = () => syncSoftwareFeature(f.key, false);
-            chip.innerHTML = `✓ ${f.name} <span class="text-[7.5px] opacity-70">✕</span>`;
-            lockedContainer.appendChild(chip);
-          }
-        }
-      });
-
-      const badge = document.getElementById('sw-sidebar-active-badge');
-      if (badge) badge.textContent = `${activeCount} Active`;
-      const lockCount = document.getElementById('sw-locked-count');
-      if (lockCount) lockCount.textContent = `${activeCount} Locked`;
-      const stripBadge = document.getElementById('step2-sw-active-summary');
-      if (stripBadge) stripBadge.textContent = `${activeCount} Capabilities Active`;
-    }
-</script>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
     :root, [data-theme="dark"] {
       --background: #090d16;
@@ -7612,7 +7429,211 @@
         `;
         container.appendChild(cell);
       });
-    }  </script>
+    }  
+    // ================= UPGRADED STEP-AWARE SOFTWARE DRIVER & MODAL LOGIC =================
+    let currentSoftwareFilterMode = 'auto'; // 'auto', 1, 2, 3, 'all'
+
+    function openSoftwareFeaturesModal() {
+      const modal = document.getElementById('software-features-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeSoftwareFeaturesModal() {
+      const modal = document.getElementById('software-features-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function filterSoftwareModalCards() {
+      const q = (document.getElementById('sw-modal-search')?.value || '').toLowerCase().trim();
+      const container = document.getElementById('sw-modal-cards-container');
+      if (!container) return;
+      const cards = container.querySelectorAll('label');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    function setSoftwareFilter(mode) {
+      currentSoftwareFilterMode = mode;
+      ['auto', 'step1', 'step2', 'step3', 'all'].forEach(k => {
+        const btn = document.getElementById(`sw-filter-${k}`);
+        if (!btn) return;
+        const isActive = (k === 'auto' && mode === 'auto') ||
+                         (k === 'step1' && mode === 1) ||
+                         (k === 'step2' && mode === 2) ||
+                         (k === 'step3' && mode === 3) ||
+                         (k === 'all' && mode === 'all');
+        if (isActive) {
+          btn.className = "px-1.5 py-0.5 rounded bg-blue-500 text-white font-bold";
+        } else {
+          btn.className = "px-1.5 py-0.5 rounded bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]";
+        }
+      });
+      filterSidebarFeatures();
+    }
+
+    function filterSidebarFeatures() {
+      const q = (document.getElementById('sw-sidebar-search')?.value || '').toLowerCase().trim();
+      const container = document.getElementById('sidebar-sw-features-list');
+      const hintEl = document.getElementById('sw-sidebar-step-hint');
+      if (!container) return;
+
+      let targetStep = null;
+      if (currentSoftwareFilterMode === 'auto') {
+        targetStep = currentStep;
+      } else if (typeof currentSoftwareFilterMode === 'number') {
+        targetStep = currentSoftwareFilterMode;
+      }
+
+      if (hintEl) {
+        if (q) {
+          hintEl.textContent = `Search results for "${q}"`;
+        } else if (targetStep === 1) {
+          hintEl.textContent = "Suggested for Step 1: Power & Battery";
+        } else if (targetStep === 2) {
+          hintEl.textContent = "Suggested for Step 2: Hardware I/O & Busses";
+        } else if (targetStep === 3) {
+          hintEl.textContent = "Suggested for Step 3: Wireless & On-Board Storage";
+        } else {
+          hintEl.textContent = "All 12 Telematics Capabilities";
+        }
+      }
+
+      const items = container.querySelectorAll('.sw-feat-item');
+      items.forEach(item => {
+        const itemStep = parseInt(item.getAttribute('data-step') || '2');
+        const keywords = (item.getAttribute('data-keywords') || '').toLowerCase();
+        const text = item.innerText.toLowerCase();
+
+        let matchesSearch = true;
+        if (q) {
+          matchesSearch = text.includes(q) || keywords.includes(q);
+        }
+
+        let matchesStep = true;
+        if (!q && targetStep !== null && targetStep <= 3) {
+          matchesStep = (itemStep === targetStep);
+        }
+
+        if (matchesSearch && matchesStep) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function syncSoftwareFeature(key, checked) {
+      // Sync between sidebar checkbox and modal checkbox
+      const sbEl = document.getElementById(`sb-rec-${key}`);
+      const mEl = document.getElementById(`m-rec-${key}`);
+      if (sbEl) sbEl.checked = checked;
+      if (mEl) mEl.checked = checked;
+
+      // Apply dynamic hardware & peripheral allocations
+      if (key === 'immob') {
+        if (checked && !wizardState.pins.some(p => p.type === 'DO' && p.label.includes('Starter Cut'))) {
+          adjustPinCount('DO', 1);
+          const lastDO = wizardState.pins.filter(p => p.type === 'DO').pop();
+          if (lastDO) { lastDO.label = "Starter Cut Relay"; lastDO.purpose = "Remote Anti-Theft Starter Cut"; }
+        }
+      } else if (key === 'fuel') {
+        if (checked && !wizardState.pins.some(p => p.type === 'AI' && p.label.includes('Fuel'))) {
+          adjustPinCount('AI', 1);
+          const lastAI = wizardState.pins.filter(p => p.type === 'AI').pop();
+          if (lastAI) { lastAI.label = "Fuel Level Sensor"; lastAI.purpose = "0-32V Analog Tank Float"; }
+        }
+      } else if (key === 'sos') {
+        if (checked && !wizardState.pins.some(p => p.type === 'DI' && p.label.includes('SOS'))) {
+          adjustPinCount('DI', 1);
+          const lastDI = wizardState.pins.filter(p => p.type === 'DI').pop();
+          if (lastDI) { lastDI.label = "Driver SOS Panic"; lastDI.purpose = "Emergency Push Button"; }
+        }
+      } else if (key === 'pto') {
+        if (checked && !wizardState.pins.some(p => p.type === 'DI' && p.label.includes('PTO'))) {
+          adjustPinCount('DI', 2);
+        }
+      } else if (key === 'can') {
+        const ioCan = document.getElementById('io_can_fd');
+        if (ioCan) ioCan.checked = checked;
+        toggleBusFromStep2('can', checked);
+      } else if (key === 'rs485') {
+        const ioRs485 = document.getElementById('io_rs485');
+        if (ioRs485) ioRs485.checked = checked;
+        toggleBusFromStep2('rs485', checked);
+      } else if (key === 'buzzer') {
+        if (checked && !wizardState.pins.some(p => p.type === 'DO' && p.label.includes('Buzzer'))) {
+          adjustPinCount('DO', 1);
+          const lastDO = wizardState.pins.filter(p => p.type === 'DO').pop();
+          if (lastDO) { lastDO.label = "Cabin Buzzer"; lastDO.purpose = "Audible Warning Strobe"; }
+        }
+      } else if (key === 'fota') {
+        const flash = document.getElementById('peri-spi-flash');
+        if (flash) flash.value = checked ? '64mb' : '32mb';
+      } else if (key === 'ble') {
+        const netBle = document.getElementById('net_ble');
+        if (netBle) netBle.checked = checked;
+      } else if (key === 'wifi') {
+        const netWifi = document.getElementById('net_wifi');
+        if (netWifi) netWifi.checked = checked;
+      } else if (key === 'ais140') {
+        const gnss = document.getElementById('gnss_type');
+        if (gnss) gnss.value = checked ? 'navic' : 'standard';
+        const net4g = document.getElementById('net_4g');
+        if (net4g && checked) net4g.checked = true;
+      }
+
+      updateSoftwareFeaturesBadge();
+      recalculatePins();
+      updateLiveImpact();
+    }
+
+    function updateSoftwareFeaturesBadge() {
+      const featureDefs = [
+        { key: 'cleanpwr', name: 'Clean Battery %' },
+        { key: 'immob', name: 'Starter Cut (DO)' },
+        { key: 'fuel', name: 'Fuel Level (AI)' },
+        { key: 'sos', name: 'SOS Panic (DI)' },
+        { key: 'pto', name: 'PTO Acreage (2DI)' },
+        { key: 'can', name: 'J1939 CAN' },
+        { key: 'rs485', name: 'RS485 Probes' },
+        { key: 'reefer', name: 'Reefer Temp (AI)' },
+        { key: 'buzzer', name: 'Cabin Buzzer (DO)' },
+        { key: 'fota', name: 'FOTA 64MB' },
+        { key: 'ble', name: 'BLE 5.2' },
+        { key: 'wifi', name: 'Depot Wi-Fi' },
+        { key: 'ais140', name: 'AIS-140' }
+      ];
+
+      const lockedContainer = document.getElementById('sw-locked-chips-container');
+      if (lockedContainer) lockedContainer.innerHTML = '';
+
+      let activeCount = 0;
+      featureDefs.forEach(f => {
+        const isChecked = document.getElementById(`sb-rec-${f.key}`)?.checked;
+        if (isChecked) {
+          activeCount++;
+          if (lockedContainer) {
+            const chip = document.createElement('span');
+            chip.className = "px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1 cursor-pointer hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 transition-all select-none";
+            chip.title = `Click to unlock/remove ${f.name}`;
+            chip.onclick = () => syncSoftwareFeature(f.key, false);
+            chip.innerHTML = `✓ ${f.name} <span class="text-[7.5px] opacity-70">✕</span>`;
+            lockedContainer.appendChild(chip);
+          }
+        }
+      });
+
+      const badge = document.getElementById('sw-sidebar-active-badge');
+      if (badge) badge.textContent = `${activeCount} Active`;
+      const lockCount = document.getElementById('sw-locked-count');
+      if (lockCount) lockCount.textContent = `${activeCount} Locked`;
+      const stripBadge = document.getElementById('step2-sw-active-summary');
+      if (stripBadge) stripBadge.textContent = `${activeCount} Capabilities Active`;
+    }
+
+  </script>
 
   <!-- ================= SIXSENSE PCB REUSE & FEATURE COMPARISON MODAL ================= -->
   <div id="pcb-comparison-modal" onclick="if(event.target === this) togglePcbComparisonModal()" class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/80 backdrop-blur-sm hidden">
