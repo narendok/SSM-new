@@ -117,25 +117,28 @@
         </div>
       </div>
 
-      <!-- ROW 2: Step Navigation Pills Bar on the Row Below (User Request: Step icons below row 1) -->
+      <!-- ROW 2: Step Navigation Pills Bar on the Row Below (User Request: 7 Dedicated Steps) -->
       <div class="flex items-center gap-1.5 bg-[var(--card)] p-1 rounded-lg border border-[var(--card-border)] overflow-x-auto custom-scrollbar">
-        <button onclick="jumpToStep(1)" id="pill-1" class="px-3 py-1 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+        <button onclick="jumpToStep(1)" id="pill-1" class="px-2.5 py-1 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[10px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
           <span>1.</span> <span>Vehicle & Power</span>
         </button>
-        <button onclick="jumpToStep(2)" id="pill-2" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>2.</span> <span>I/O & Network</span>
+        <button onclick="jumpToStep(2)" id="pill-2" class="px-2.5 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>2.</span> <span>Hardware I/O</span>
         </button>
-        <button onclick="jumpToStep(3)" id="pill-3" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>3.</span> <span>Harness Scheme</span>
+        <button onclick="jumpToStep(3)" id="pill-3" class="px-2.5 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>3.</span> <span>Network & Peripherals</span>
         </button>
-        <button onclick="jumpToStep(4)" id="pill-4" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>4.</span> <span>Mounting & Dimensions</span>
+        <button onclick="jumpToStep(4)" id="pill-4" class="px-2.5 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>4.</span> <span>Harness Scheme</span>
         </button>
-        <button onclick="jumpToStep(5)" id="pill-5" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>5.</span> <span>Production & Batches</span>
+        <button onclick="jumpToStep(5)" id="pill-5" class="px-2.5 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>5.</span> <span>Mounting</span>
         </button>
-        <button onclick="jumpToStep(6)" id="pill-6" class="px-3 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10.5px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
-          <span>6.</span> <span>Environmental & DVP</span>
+        <button onclick="jumpToStep(6)" id="pill-6" class="px-2.5 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>6.</span> <span>Production</span>
+        </button>
+        <button onclick="jumpToStep(7)" id="pill-7" class="px-2.5 py-1 rounded text-[var(--muted-foreground)] hover:text-[var(--foreground)] text-[10px] transition-all cursor-pointer flex items-center gap-1 shrink-0">
+          <span>7.</span> <span>Environmental & DVP</span>
         </button>
       </div>
     </div>
@@ -330,30 +333,16 @@
 
         </div>
 
-        <!-- ================= STEP 2: COLUMN-SPECIFIC I/O ALLOCATION & ISOLATED NAVIC GNSS ================= -->
+        <!-- ================= STEP 2: HARDWARE I/O CHANNELS (Pure DI, DO, AI) ================= -->
         <div id="step-pane-2" class="space-y-3 hidden">
-          <div class="space-y-1.5">
+          <div class="space-y-1">
             <div class="flex items-center justify-between">
-              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 2: I/O Channels & Hardware Features</h2>
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 2: Hardware I/O Channels (Sensor & Actuator Pins)</h2>
               <span id="step2-veh-badge" class="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
                 🚜 Tractor Signals Active
               </span>
             </div>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Configure DI, DO, AI, vehicle networks, and custom peripherals without long scrolling.</p>
-
-            <!-- Step 2 Section View Switcher (User Request: Prevent excessive scroll by separating I/O and Networks) -->
-            <div class="flex items-center gap-1.5 p-1 rounded-lg bg-[var(--background)] border border-[var(--card-border)] text-xs font-semibold">
-              <button type="button" onclick="switchStep2SubTab('io')" id="s2-tab-btn-io" class="flex-1 py-1 px-3 rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] font-bold transition-all flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
-                <span>⚡</span>
-                <span>Hardware I/O & Features</span>
-                <span id="s2-io-count-badge" class="px-1.5 py-0.1 rounded text-[9px] bg-black/20 text-white font-mono">Active</span>
-              </button>
-              <button type="button" onclick="switchStep2SubTab('net')" id="s2-tab-btn-net" class="flex-1 py-1 px-3 rounded-md text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                <span>🌐</span>
-                <span>Vehicle Networks & Wireless</span>
-                <span id="s2-net-count-badge" class="px-1.5 py-0.1 rounded text-[9px] bg-amber-500/20 text-amber-400 font-mono">CAN / 4G / GNSS</span>
-              </button>
-            </div>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Configure Digital Inputs (DI), Digital Outputs (DO), Analog Inputs (AI), and automated software-to-hardware pin allocations.</p>
           </div>
 
           <!-- Datalists for Embedded Searchable Comboboxes -->
@@ -361,7 +350,6 @@
           <datalist id="do-suggestions"></datalist>
           <datalist id="ai-suggestions"></datalist>
 
-          
           <div id="s2-section-io" class="space-y-3">
 <!-- Software Feature to Recommended Hardware I/O Auto-Recommender (User Request) -->
           <div class="p-3 rounded-xl border border-[var(--primary)]/40 bg-[var(--card)] space-y-2 shadow-xs">
@@ -619,8 +607,26 @@
           </div>
         </div>
 
-        <!-- Step 2 Section 2: Vehicle Networks & Wireless (User Request: Prevent vertical scroll) -->
-        <div id="s2-section-net" class="space-y-3 hidden">
+                <!-- STEP 2 PROCEED / READY BANNER -->
+          <div class="p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-between text-xs font-semibold text-emerald-400">
+            <span class="flex items-center gap-1.5">
+              <span>⚡</span> <span>Required Harness Size: <strong id="step2-pins-text">14 Harness Pins</strong></span>
+            </span>
+            <button type="button" onclick="jumpToStep(3)" class="text-[10px] text-emerald-300 hover:text-white font-bold underline cursor-pointer">Configure Networks & Peripherals in Step 3 &rarr;</button>
+          </div>
+        </div>
+
+        <!-- ================= STEP 3: NETWORKS, BUS PROTOCOLS & ON-BOARD PERIPHERALS (User Request: Dedicated Step) ================= -->
+        <div id="step-pane-3" class="space-y-3 hidden">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 3: Networks, Bus Protocols & On-Board Peripherals</h2>
+              <span id="step3-conn-badge" class="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-purple-500/15 text-purple-400">
+                CAN-FD • 4G LTE • NavIC • SPI & I2C
+              </span>
+            </div>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Configure vehicle telemetry networks, wireless carriers, GNSS satellite positioning, and on-board memory & protocol peripherals.</p>
+          </div>
 
           <!-- COMPACT RESPONSIVE CONNECTIVITY & NETWORK PROTOCOLS (4-COLUMN GRID) -->
           <div class="space-y-1.5">
@@ -645,136 +651,218 @@
                     </span>
                     <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-blue-500/15 text-blue-500 font-mono font-bold">WAN</span>
                   </div>
-                  <p class="text-[9.5px] text-[var(--muted-foreground)] mt-1">High-reliability cloud telematics & over-the-air firmware updates.</p>
-                </div>
-                
-                <div class="space-y-1.5 text-[10px] pt-1 border-t border-[var(--card-border)]">
-                  <div class="space-y-1">
-                    <label class="flex items-center gap-1.5 cursor-pointer">
-                      <input type="checkbox" id="net_4g" checked onchange="toggleNetworkInterface('4g')" class="accent-[var(--primary)]">
-                      <span class="font-semibold text-[var(--foreground)]">4G LTE Cat-1 (Primary)</span>
+                  <div class="space-y-1 pt-1.5">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_4g" checked onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-xs font-semibold text-[var(--foreground)]">4G LTE Cat-1 (2G FB)</span>
                     </label>
-                    <label class="flex items-center gap-1.5 cursor-pointer text-[var(--muted-foreground)]">
-                      <input type="checkbox" id="net_2g_fallback" checked onchange="toggleNetworkInterface('2g')" class="accent-[var(--primary)]">
-                      <span>2G Fallback Support</span>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_esim" onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-[11px] text-[var(--muted-foreground)]">eSIM / MFF2 Solderable</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_dualsim" onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-[11px] text-[var(--muted-foreground)]">Dual SIM Failover</span>
                     </label>
                   </div>
-                  
-                  <!-- SIM Form Factor Option (User Request: Only visible when 4G or 2G is active) -->
-                  <div id="sim-arch-container" class="pt-1 border-t border-[var(--card-border)] space-y-1">
-                    <span class="text-[9px] font-semibold text-[var(--muted-foreground)] block">SIM Architecture:</span>
-                    <div class="grid grid-cols-2 gap-1 text-[9px]">
-                      <label onclick="setSimType('esim')" id="lbl-sim-esim" class="p-1 rounded border border-[var(--card-border)] bg-[var(--card)] flex items-center gap-1 cursor-pointer card-selected hover:border-[var(--primary)]">
-                        <input type="radio" name="sim_choice" id="sim-esim" checked class="accent-[var(--primary)]">
-                        <span class="font-medium text-[var(--foreground)]">eSIM (MFF2)</span>
-                      </label>
-                      <label onclick="setSimType('plastic')" id="lbl-sim-plastic" class="p-1 rounded border border-[var(--card-border)] bg-[var(--card)] flex items-center gap-1 cursor-pointer hover:border-[var(--primary)]">
-                        <input type="radio" name="sim_choice" id="sim-plastic" class="accent-[var(--primary)]">
-                        <span class="font-medium text-[var(--foreground)]">Nano SIM Tray</span>
-                      </label>
-                    </div>
-                  </div>
+                </div>
+                <div class="text-[9px] text-[var(--muted-foreground)] border-t border-[var(--card-border)] pt-1 flex justify-between">
+                  <span>Antenna:</span>
+                  <span class="font-mono text-blue-500">SMA / Internal FPC</span>
                 </div>
               </div>
 
-              <!-- CARD 2: GNSS POSITIONING (COMPACT ISOLATED NAVIC) -->
+              <!-- CARD 2: GNSS & POSITIONING -->
               <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
                 <div>
                   <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
                     <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
-                      <span>🛰️</span> <span>GNSS Location</span>
+                      <span>🛰️</span> <span>GNSS & Satellite</span>
                     </span>
-                    <span id="gnss-card-badge" class="text-[8.5px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-400 font-mono font-bold">+2 Wks Lead</span>
+                    <span id="navic-chip-badge" class="text-[8.5px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-500 font-mono font-bold">+2 Wks Lead</span>
                   </div>
-                  <p class="text-[9.5px] text-[var(--muted-foreground)] mt-1">Satellite positioning engine with isolated Indian NavIC dual-band option.</p>
+                  <div class="space-y-1.5 pt-1.5">
+                    <label class="block text-[10px] text-[var(--foreground)] font-medium">Positioning Engine:</label>
+                    <select id="gnss_type" onchange="handleGnssChange()" class="w-full px-2 py-1 rounded bg-[var(--card)] border border-[var(--card-border)] text-xs font-semibold text-[var(--foreground)]">
+                      <option value="navic" selected>NavIC L5 + GPS/GLONASS (AIS-140)</option>
+                      <option value="standard">Standard GPS + GLONASS (L1)</option>
+                      <option value="rtk">High-Precision RTK (Centimeter)</option>
+                      <option value="dead_reckoning">Automotive Dead Reckoning (UDR)</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="space-y-1 text-[10px] pt-1 border-t border-[var(--card-border)]">
-                  <label class="flex items-center justify-between p-1 rounded border border-[var(--card-border)] bg-[var(--card)] cursor-pointer hover:border-[var(--primary)] transition-all" id="lbl-gnss-std">
-                    <div class="flex items-center gap-1.5">
-                      <input type="checkbox" id="gnss_gps_cb" checked onchange="toggleGnssBase(this.checked)" class="accent-[var(--primary)]">
-                      <span class="font-semibold text-[var(--foreground)]">Standard GPS (L1)</span>
-                    </div>
-                    <span class="text-[8.5px] text-emerald-500 font-mono font-bold">Standard</span>
-                  </label>
-                  <label class="flex items-center justify-between p-1 rounded border border-purple-500/40 bg-purple-500/10 cursor-pointer hover:border-[var(--primary)] transition-all card-selected" id="lbl-gnss-navic">
-                    <div class="flex items-center gap-1.5">
-                      <input type="checkbox" id="gnss-navic" checked onchange="toggleGnssNavic(this.checked)" class="accent-[var(--primary)]">
-                      <span class="font-semibold text-purple-400">Combined GPS + NavIC (L5)</span>
-                    </div>
-                    <span class="text-[8.5px] text-purple-400 font-mono font-bold">+2 Wks • +8%</span>
-                  </label>
-                  <div id="gnss-country-mandate-hint" class="text-[9px] text-amber-500 font-mono font-medium pt-0.5">
-                    ↳ 🇮🇳 India Mandate: AIS-140 requires ISRO NavIC dual-band.
-                  </div>
+                <div class="text-[9px] text-amber-500/90 border-t border-[var(--card-border)] pt-1 flex justify-between">
+                  <span>NavIC Lead Time:</span>
+                  <span class="font-mono font-bold">+2 Wks / +8% Cost</span>
                 </div>
               </div>
 
-              <!-- CARD 3: LOCAL WIRELESS RF (BLE, WI-FI, LORA GROUPED) -->
+              <!-- CARD 3: VEHICLE SERIAL BUSSES -->
               <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
                 <div>
                   <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
                     <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
-                      <span>📡</span> <span>Local Wireless RF</span>
+                      <span>🚌</span> <span>Vehicle Busses</span>
                     </span>
-                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-500 font-mono font-bold">Local</span>
+                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-purple-500/15 text-purple-400 font-mono font-bold">Telemetry</span>
                   </div>
-                  <p class="text-[9.5px] text-[var(--muted-foreground)] mt-1">Short-range telemetry, local driver pairing, depot Wi-Fi & farm LoRa mesh.</p>
+                  <div class="space-y-1 pt-1.5">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_can" checked onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-xs font-semibold text-[var(--foreground)]">CAN-FD (ISO 11898-2)</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_rs485" onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-[11px] text-[var(--muted-foreground)]">RS485 / Modbus RTU</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_kline" onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-[11px] text-[var(--muted-foreground)]">K-Line / LIN Bus (ISO 9141)</span>
+                    </label>
+                  </div>
                 </div>
-                <div class="space-y-1 text-[10px] pt-1 border-t border-[var(--card-border)]">
-                  <label class="flex items-center gap-1.5 cursor-pointer">
-                    <input type="checkbox" id="net_ble" checked onchange="toggleNetworkInterface('ble')" class="accent-[var(--primary)]">
-                    <span class="font-semibold text-[var(--foreground)]">Bluetooth BLE 5.2</span>
-                  </label>
-                  <label class="flex items-center gap-1.5 cursor-pointer text-[var(--muted-foreground)]">
-                    <input type="checkbox" id="net_wifi" onchange="toggleNetworkInterface('wifi')" class="accent-[var(--primary)]">
-                    <span>Wi-Fi 802.11 b/g/n (Depot)</span>
-                  </label>
-                  <label class="flex items-center gap-1.5 cursor-pointer text-[var(--muted-foreground)]">
-                    <input type="checkbox" id="net_lora" onchange="toggleNetworkInterface('lora')" class="accent-[var(--primary)]">
-                    <span class="text-blue-400 font-medium">LoRaWAN (868/915 MHz)</span>
-                  </label>
+                <div class="text-[9px] text-[var(--muted-foreground)] border-t border-[var(--card-border)] pt-1 flex justify-between">
+                  <span>Termination:</span>
+                  <span class="font-mono text-purple-400">120Ω Switchable</span>
                 </div>
               </div>
 
-              <!-- CARD 4: VEHICLE NETWORK BUS -->
+              <!-- CARD 4: SHORT-RANGE WIRELESS -->
               <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
                 <div>
                   <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
                     <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
-                      <span>🔌</span> <span>Vehicle Bus</span>
+                      <span>📶</span> <span>Short-Range RF</span>
                     </span>
-                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-500 font-mono font-bold">+2 Pins</span>
+                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-500 font-mono font-bold">BLE / Wi-Fi</span>
                   </div>
-                  <p class="text-[9.5px] text-[var(--muted-foreground)] mt-1">Direct ECU telemetry, J1939 tractor/truck diagnostics & BMS.</p>
+                  <div class="space-y-1 pt-1.5">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_ble" checked onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-xs font-semibold text-[var(--foreground)]">BLE 5.2 (Driver ID/TPMS)</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_wifi" onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-[11px] text-[var(--muted-foreground)]">Wi-Fi (802.11 b/g/n)</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" id="net_lora" onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <span class="text-[11px] text-[var(--muted-foreground)]">LoRa 868/915 MHz (Off-Grid)</span>
+                    </label>
+                  </div>
                 </div>
-                <div class="space-y-1 text-[10px] pt-1 border-t border-[var(--card-border)]">
-                  <label class="flex items-center gap-1.5 cursor-pointer">
-                    <input type="checkbox" id="net_can" checked onchange="toggleNetworkInterface('can')" class="accent-[var(--primary)]">
-                    <span class="font-semibold text-amber-500">CAN-FD (+2 Pins)</span>
-                  </label>
-                  <label class="flex items-center gap-1.5 cursor-pointer text-[var(--muted-foreground)]">
-                    <input type="checkbox" id="net_rs485" onchange="toggleNetworkInterface('rs485')" class="accent-[var(--primary)]">
-                    <span>RS485 Modbus (+2 P)</span>
-                  </label>
+                <div class="text-[9px] text-[var(--muted-foreground)] border-t border-[var(--card-border)] pt-1 flex justify-between">
+                  <span>RF Output:</span>
+                  <span class="font-mono text-emerald-500">+8 dBm Output</span>
                 </div>
               </div>
-
             </div>
           </div>
 
-        </div>
+          <!-- SECTION 3.2: ON-BOARD PROTOCOL PERIPHERALS & HIGH-SPEED MEMORY (User Request: SPI, I2C, MicroSD, RTC) -->
+          <div class="p-3 rounded-xl border border-indigo-500/30 bg-indigo-500/5 space-y-2.5 shadow-xs">
+            <div class="flex items-center justify-between pb-1.5 border-b border-indigo-500/20">
+              <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
+                <span>💾</span> <span>On-Board Protocol Peripherals, Storage & Real-Time Clock:</span>
+              </span>
+              <span class="text-[9px] px-2 py-0.5 rounded font-mono font-bold bg-indigo-500/20 text-indigo-400">
+                SPI • I2C • SDIO Protocols
+              </span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)]">Configure SPI NOR Flash blackbox logging, MicroSD removable storage, hardware real-time clock (RTC), and I2C board health sensors.</p>
 
-          <!-- Calculated Harness Preview Banner -->
-          <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between">
-            <span class="text-emerald-600 dark:text-emerald-400 font-semibold text-xs flex items-center gap-1.5">
-              <span>⚡</span> <span>Required Harness Size: <strong id="step2-pins-text">14 Harness Pins</strong></span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-1">
+              <!-- PERIPHERAL 1: SPI Flash Logging Memory -->
+              <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
+                <div>
+                  <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
+                    <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
+                      <span>⚡</span> <span>SPI Flash Storage</span>
+                    </span>
+                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-indigo-500/15 text-indigo-400 font-mono font-bold">SPI Bus</span>
+                  </div>
+                  <p class="text-[9.5px] text-[var(--muted-foreground)] pt-1">High-reliability NOR Flash for offline telemetry buffer and FOTA firmware recovery image.</p>
+                </div>
+                <div class="space-y-1">
+                  <label class="block text-[9.5px] font-semibold text-[var(--foreground)]">Flash Capacity:</label>
+                  <select id="peri-spi-flash" onchange="updatePeripheralsSpec()" class="w-full px-2 py-1 rounded bg-[var(--card)] border border-[var(--card-border)] text-xs font-mono font-bold">
+                    <option value="16mb">16 MB NOR Flash (50,000 Records)</option>
+                    <option value="32mb" selected>32 MB NOR Flash (100,000 Records - Standard)</option>
+                    <option value="64mb">64 MB NOR Flash (250,000 Records - Long Haul)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- PERIPHERAL 2: MicroSD Removable Storage -->
+              <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
+                <div>
+                  <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
+                    <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
+                      <span>💽</span> <span>MicroSD Card Slot</span>
+                    </span>
+                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-purple-500/15 text-purple-400 font-mono font-bold">SDIO / SPI</span>
+                  </div>
+                  <p class="text-[9.5px] text-[var(--muted-foreground)] pt-1">Push-push automotive socket for removable mass data logging (CAN dumps, raw GNSS logs).</p>
+                </div>
+                <label class="flex items-center gap-2 cursor-pointer p-1 rounded hover:bg-[var(--card)]">
+                  <input type="checkbox" id="peri-microsd" onchange="updatePeripheralsSpec()" class="accent-indigo-600 rounded">
+                  <span class="text-[10px] font-bold text-[var(--foreground)]">Enable MicroSD Socket</span>
+                </label>
+              </div>
+
+              <!-- PERIPHERAL 3: I2C Real-Time Clock (RTC) -->
+              <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
+                <div>
+                  <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
+                    <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
+                      <span>⏰</span> <span>Hardware I2C RTC</span>
+                    </span>
+                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-400 font-mono font-bold">I2C Bus</span>
+                  </div>
+                  <p class="text-[9.5px] text-[var(--muted-foreground)] pt-1">High-precision RTC (DS3231 / PCF8563, ±2ppm) with coin cell / supercap hold for true GPS timestamp sync.</p>
+                </div>
+                <label class="flex items-center gap-2 cursor-pointer p-1 rounded hover:bg-[var(--card)]">
+                  <input type="checkbox" id="peri-i2c-rtc" checked onchange="updatePeripheralsSpec()" class="accent-emerald-600 rounded">
+                  <span class="text-[10px] font-bold text-[var(--foreground)]">Dedicated RTC with Supercap</span>
+                </label>
+              </div>
+
+              <!-- PERIPHERAL 4: I2C Sensors & Cryptographic Element -->
+              <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
+                <div>
+                  <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
+                    <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
+                      <span>🔒</span> <span>I2C Sensors & Crypto</span>
+                    </span>
+                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-500 font-mono font-bold">I2C Bus</span>
+                  </div>
+                  <p class="text-[9.5px] text-[var(--muted-foreground)] pt-1">On-board environmental temperature/humidity sensor & hardware secure element (ATECC608).</p>
+                </div>
+                <div class="space-y-1">
+                  <label class="flex items-center gap-2 cursor-pointer text-[9.5px]">
+                    <input type="checkbox" id="peri-i2c-sensor" checked onchange="updatePeripheralsSpec()" class="accent-amber-500 rounded">
+                    <span>Internal PCB Temp Sensor (I2C)</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer text-[9.5px]">
+                    <input type="checkbox" id="peri-crypto-ic" onchange="updatePeripheralsSpec()" class="accent-indigo-600 rounded">
+                    <span>Hardware Crypto Vault (ATECC608)</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3 PROCEED / READY BANNER -->
+          <div class="p-2.5 rounded-lg border border-purple-500/30 bg-purple-500/10 flex items-center justify-between text-xs font-semibold text-purple-300">
+            <span class="flex items-center gap-1.5">
+              <span>🌐</span> <span>Telemetry Network & On-Board Storage Ready</span>
             </span>
-            <span class="text-[10px] text-[var(--muted-foreground)]">Ready to configure connector in Step 3 &rarr;</span>
+            <button type="button" onclick="jumpToStep(4)" class="text-[10px] text-purple-200 hover:text-white font-bold underline cursor-pointer">Proceed to Wiring Harness & Connector in Step 4 &rarr;</button>
           </div>
         </div>
 
-        <!-- ================= STEP 3: HARNESS & CONNECTOR SCHEME ================= -->
-        <div id="step-pane-3" class="space-y-3 hidden">
+        <!-- ================= STEP 4: HARNESS & CONNECTOR SCHEME ================= -->
+        <div id="step-pane-7" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 3: Wiring Harness & Mating Connector Scheme</h2>
             <p class="text-[11px] text-[var(--muted-foreground)]">Based on your Step 2 pin count, choose how the device connects to vehicle wiring.</p>
@@ -1423,7 +1511,7 @@
         <div id="step-pane-6" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <div class="flex items-center justify-between">
-              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 6: Environmental & Regulatory DVP Plan</h2>
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 7: Environmental & Regulatory DVP Plan</h2>
               <span class="px-1.5 py-0.5 rounded text-[9.5px] bg-purple-500/20 text-purple-400 font-bold">DVP Basis</span>
             </div>
             <p class="text-[11px] text-[var(--muted-foreground)]">Automotive compliance targets and automated Design Verification Plan (DVP) matrix.</p>
@@ -1643,6 +1731,154 @@
 
       <!-- RIGHT: PERSISTENT REAL-TIME IMPACT DASHBOARD (5 Cols) -->
       <div class="lg:col-span-5 space-y-2.5 sticky top-2">
+
+        <!-- DYNAMIC STEP-AWARE LIVE PREVIEW CARD (User Request: Stage-specific live preview on top of sidebar) -->
+        <div id="sidebar-step-preview-card" class="p-3 rounded-xl border border-indigo-500/40 bg-gradient-to-b from-indigo-500/10 via-[var(--card)] to-[var(--card)] space-y-2 shadow-sm transition-all">
+          <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+              <span id="sb-preview-stage-title" class="text-[10px] uppercase font-bold tracking-wider text-indigo-400">Step 1 Live Preview: Power & DVP</span>
+            </div>
+            <span id="sb-preview-stage-pill" class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-indigo-500/20 text-indigo-300">Stage 1 of 7</span>
+          </div>
+
+          <!-- STAGE 1 PREVIEW: Power & Homologation DVP Basis -->
+          <div id="sb-stage-preview-1" class="space-y-1.5 text-[10.5px]">
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)] flex items-center gap-1"><span>🌍</span> Homologation Mandate:</span>
+              <span id="sb-p1-country" class="font-bold text-amber-500 font-mono">India (AIS-140 / ARAI)</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5">
+              <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block">Operating Window:</span>
+                <span id="sb-p1-voltage" class="font-bold text-[var(--foreground)] font-mono text-[10.5px]">9V – 36V Continuous</span>
+              </div>
+              <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block">Pulse Clamping:</span>
+                <span id="sb-p1-clamp" class="font-bold text-emerald-400 font-mono text-[10.5px]">58V TVS (ISO 16750-2)</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)] flex items-center gap-1"><span>🔋</span> Battery Backup Spec:</span>
+              <span id="sb-p1-battery" class="font-semibold text-blue-400 font-mono">Li-ion 3.7V 1000mAh (&lt;2mA Sleep)</span>
+            </div>
+          </div>
+
+          <!-- STAGE 2 PREVIEW: Hardware I/O Signal Matrix -->
+          <div id="sb-stage-preview-2" class="space-y-1.5 text-[10.5px] hidden">
+            <div class="grid grid-cols-3 gap-1 text-center font-mono font-bold">
+              <div class="p-1.5 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Digital In</span>
+                <span id="sb-p2-di-count" class="text-xs">3 DI</span>
+              </div>
+              <div class="p-1.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Digital Out</span>
+                <span id="sb-p2-do-count" class="text-xs">1 DO</span>
+              </div>
+              <div class="p-1.5 rounded bg-amber-500/10 border border-amber-500/30 text-amber-500">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Analog In</span>
+                <span id="sb-p2-ai-count" class="text-xs">1 AI</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Calculated Harness Cavities:</span>
+              <span id="sb-p2-harness-pins" class="font-bold text-emerald-400 font-mono">14 Pins Required</span>
+            </div>
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Suggested Connector:</span>
+              <span id="sb-p2-conn-name" class="font-bold text-[var(--foreground)] font-mono text-[10px]">TE Superseal 1.0 (14-Pin)</span>
+            </div>
+          </div>
+
+          <!-- STAGE 3 PREVIEW: Networks, Protocols & Peripherals -->
+          <div id="sb-stage-preview-3" class="space-y-1.5 text-[10.5px] hidden">
+            <div class="grid grid-cols-2 gap-1.5">
+              <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Vehicle Busses:</span>
+                <span id="sb-p3-busses" class="font-bold text-indigo-400 font-mono text-[10px]">CAN-FD • RS485</span>
+              </div>
+              <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Cellular & GNSS:</span>
+                <span id="sb-p3-rf" class="font-bold text-purple-400 font-mono text-[10px]">4G LTE • NavIC L1/L5</span>
+              </div>
+            </div>
+            <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)] space-y-0.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[var(--muted-foreground)]">SPI Flash Logger:</span>
+                <span id="sb-p3-flash" class="font-bold text-emerald-400 font-mono">32 MB (100k Records)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-[var(--muted-foreground)]">Removable Storage:</span>
+                <span id="sb-p3-sd" class="font-semibold text-[var(--foreground)] font-mono">MicroSD Socket Ready</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-[var(--muted-foreground)]">I2C RTC Clock:</span>
+                <span id="sb-p3-rtc" class="font-semibold text-blue-400 font-mono">DS3231 (±2ppm Hold)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAGE 4 PREVIEW: Wiring Harness Scheme -->
+          <div id="sb-stage-preview-4" class="space-y-1.5 text-[10.5px] hidden">
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Harness Configuration:</span>
+              <span id="sb-p4-type" class="font-bold text-emerald-400 font-mono">Automotive Pigtail</span>
+            </div>
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Pigtail Wire Length:</span>
+              <span class="font-semibold text-[var(--foreground)] font-mono">1.5 Meters (FLRY-B Wire)</span>
+            </div>
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Conduit Protection:</span>
+              <span class="font-semibold text-amber-500 font-mono">PA6 Corrugated Split Tube</span>
+            </div>
+          </div>
+
+          <!-- STAGE 5 PREVIEW: Mounting & Enclosure Dimensions -->
+          <div id="sb-stage-preview-5" class="space-y-1.5 text-[10.5px] hidden">
+            <div class="grid grid-cols-2 gap-1.5">
+              <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Ingress Protection:</span>
+                <span id="sb-p5-ip" class="font-bold text-blue-400 font-mono text-[10.5px]">IP67 Waterproof</span>
+              </div>
+              <div class="p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Mounting Type:</span>
+                <span id="sb-p5-mount" class="font-bold text-[var(--foreground)] font-mono text-[10.5px]">Chassis 4x M4</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Envelope Form Factor:</span>
+              <span id="sb-p5-dim" class="font-bold text-emerald-400 font-mono">125 × 85 × 32 mm</span>
+            </div>
+          </div>
+
+          <!-- STAGE 6 PREVIEW: Production Volumes & Amortization -->
+          <div id="sb-stage-preview-6" class="space-y-1.5 text-[10.5px] hidden">
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Proto / Pilot Batch:</span>
+              <span class="font-bold text-blue-400 font-mono">50 Proto → 1,000 Pilot</span>
+            </div>
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Est. Hardware Lead Time:</span>
+              <span id="sb-p6-lead" class="font-bold text-emerald-400 font-mono">8 – 10 Weeks</span>
+            </div>
+          </div>
+
+          <!-- STAGE 7 PREVIEW: Environmental & Regulatory DVP Plan -->
+          <div id="sb-stage-preview-7" class="space-y-1.5 text-[10.5px] hidden">
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Operating Temperature:</span>
+              <span class="font-bold text-amber-500 font-mono">-40°C to +85°C</span>
+            </div>
+            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
+              <span class="text-[var(--muted-foreground)]">Active Compliance Standards:</span>
+              <span id="sb-p7-stds" class="font-bold text-purple-400 font-mono">7 Standards Active</span>
+            </div>
+            <button onclick="toggleSpecSheet()" class="w-full mt-1 py-1.5 px-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[10px] transition-all cursor-pointer shadow-xs flex items-center justify-center gap-1">
+              <span>📋 Open Full DVP Register</span>
+            </button>
+          </div>
+        </div>
 
         <!-- Live Impact Card -->
         <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-3 shadow-sm">
@@ -2007,7 +2243,7 @@
 
   <script>
     let currentStep = 1;
-    const totalSteps = 6;
+    const totalSteps = 7;
     let currentTheme = 'dark';
 
     // THEME ENGINE (User Request: Light & Dark Theme Toggle)
@@ -2474,13 +2710,15 @@
 
       const titles = [
         "Step 1: Vehicle & Power",
-        "Step 2: I/O & Network",
-        "Step 3: Harness Scheme",
-        "Step 4: Mounting & Dimensions",
-        "Step 5: Production & Batches",
-        "Step 6: Environmental & DVP"
+        "Step 2: Hardware I/O Channels",
+        "Step 3: Network & Peripherals",
+        "Step 4: Harness Scheme",
+        "Step 5: Mounting & Dimensions",
+        "Step 6: Production Batches",
+        "Step 7: Environmental & DVP"
       ];
       document.getElementById('step-badge').textContent = titles[step - 1];
+      updateStepSidebarPreview(step);
       document.getElementById('step-indicator-text').textContent = `Step ${step} of ${totalSteps}`;
 
       // Refresh real-time diagrams
@@ -5003,6 +5241,9 @@
     }
 
     function updateLiveImpact() {
+      if (typeof updateStepSidebarPreview === 'function') {
+        updateStepSidebarPreview(currentStep);
+      }
       let score = 25;
 
       // Power impact
@@ -6332,6 +6573,15 @@
       }
     });
 
+    // Automatic startup initialization for Step 1 Live Preview
+    window.addEventListener('DOMContentLoaded', function() {
+      if (typeof updateStepSidebarPreview === 'function') {
+        updateStepSidebarPreview(1);
+      }
+    });
+    if (typeof updateStepSidebarPreview === 'function') {
+      updateStepSidebarPreview(1);
+    }
   </script>
 
   <!-- ================= SIXSENSE PCB REUSE & FEATURE COMPARISON MODAL ================= -->
@@ -6506,3 +6756,106 @@
 
 </body>
 </html>
+
+
+    // DYNAMIC STEP-AWARE SIDEBAR PREVIEW CONTROLLER (User Request)
+    function updateStepSidebarPreview(step) {
+      const titles = [
+        "Step 1: Power & DVP Basis",
+        "Step 2: Hardware I/O Signals",
+        "Step 3: Networks & Peripherals",
+        "Step 4: Harness Scheme",
+        "Step 5: Mounting & Enclosure",
+        "Step 6: Production Batches",
+        "Step 7: Regulatory DVP Register"
+      ];
+      
+      const titleEl = document.getElementById('sb-preview-stage-title');
+      const pillEl = document.getElementById('sb-preview-stage-pill');
+      if (titleEl) titleEl.textContent = titles[step - 1] || `Step ${step} Preview`;
+      if (pillEl) pillEl.textContent = `Stage ${step} of 7`;
+
+      // Show active stage preview, hide others
+      for (let s = 1; s <= 7; s++) {
+        const previewEl = document.getElementById(`sb-stage-preview-${s}`);
+        if (previewEl) {
+          if (s === step) previewEl.classList.remove('hidden');
+          else previewEl.classList.add('hidden');
+        }
+      }
+
+      // Populate stage 1 live values
+      const cName = (wizardState.country === 'europe') ? 'Europe (E-Mark / UN ECE R10)' :
+                    ((wizardState.country === 'usa') ? 'USA (FCC Part 15 / PTCRB)' :
+                    ((wizardState.country === 'australia') ? 'Australia (ADR Mandate)' :
+                    ((wizardState.country === 'brazil') ? 'Brazil / LatAm (ANATEL)' : 'India (AIS-140 / ARAI)')));
+      const elP1C = document.getElementById('sb-p1-country');
+      if (elP1C) elP1C.textContent = cName;
+
+      const vType = wizardState.vehicle;
+      const vText = (vType === 'ev') ? '36V – 96V DC (Direct Traction Pack)' :
+                    ((vType === 'truck' || vType === 'tractor') ? '9V – 36V DC Continuous (24V System)' : '9V – 18V DC Continuous (12V System)');
+      const clampText = (vType === 'ev') ? '110V TVS Clamping' :
+                        ((vType === 'truck' || vType === 'tractor') ? '58V TVS (ISO 16750-2 Pulse 5b)' : '36V TVS (ISO 7637-2 Pulse 5b)');
+      const elP1V = document.getElementById('sb-p1-voltage');
+      if (elP1V) elP1V.textContent = vText;
+      const elP1Cl = document.getElementById('sb-p1-clamp');
+      if (elP1Cl) elP1Cl.textContent = clampText;
+
+      // Populate stage 2 live values
+      const diCount = wizardState.pins.filter(p => p.type === 'DI').length;
+      const doCount = wizardState.pins.filter(p => p.type === 'DO').length;
+      const aiCount = wizardState.pins.filter(p => p.type === 'AI').length;
+      const elDi = document.getElementById('sb-p2-di-count');
+      if (elDi) elDi.textContent = `${diCount} DI`;
+      const elDo = document.getElementById('sb-p2-do-count');
+      if (elDo) elDo.textContent = `${doCount} DO`;
+      const elAi = document.getElementById('sb-p2-ai-count');
+      if (elAi) elAi.textContent = `${aiCount} AI`;
+
+      const allocatedPins = getAllocatedPinsList();
+      const elPins = document.getElementById('sb-p2-harness-pins');
+      if (elPins) elPins.textContent = `${allocatedPins.length} Pins Required`;
+      const elConn = document.getElementById('sb-p2-conn-name');
+      if (elConn) {
+        let connName = 'TE Superseal 1.0 (8-Pin)';
+        if (allocatedPins.length > 26) connName = 'TE Superseal 1.0 (34-Pin Sealed)';
+        else if (allocatedPins.length > 14) connName = 'TE Superseal 1.0 (26-Pin Sealed)';
+        else if (allocatedPins.length > 8) connName = 'TE Superseal 1.0 (14-Pin Sealed)';
+        elConn.textContent = connName;
+      }
+
+      // Populate stage 3 live values
+      const busses = [];
+      if (document.getElementById('net_can')?.checked ?? true) busses.push('CAN-FD');
+      if (document.getElementById('net_rs485')?.checked) busses.push('RS485');
+      if (document.getElementById('net_kline')?.checked) busses.push('K-Line');
+      const elBusses = document.getElementById('sb-p3-busses');
+      if (elBusses) elBusses.textContent = busses.join(' • ') || 'None';
+
+      const rf = [];
+      if (document.getElementById('net_4g')?.checked ?? true) rf.push('4G LTE');
+      const gnss = document.getElementById('gnss_type')?.value || 'navic';
+      if (gnss === 'navic') rf.push('NavIC L5');
+      else if (gnss === 'rtk') rf.push('RTK GNSS');
+      else rf.push('GPS/GLONASS');
+      const elRf = document.getElementById('sb-p3-rf');
+      if (elRf) elRf.textContent = rf.join(' • ');
+
+      const flashSel = document.getElementById('peri-spi-flash')?.value || '32mb';
+      const elFlash = document.getElementById('sb-p3-flash');
+      if (elFlash) elFlash.textContent = (flashSel === '64mb') ? '64 MB (250k Records)' : ((flashSel === '16mb') ? '16 MB (50k Records)' : '32 MB (100k Records)');
+
+      const sdChecked = document.getElementById('peri-microsd')?.checked;
+      const elSd = document.getElementById('sb-p3-sd');
+      if (elSd) elSd.textContent = sdChecked ? 'MicroSD Slot Active' : 'Internal Flash Only';
+
+      const rtcChecked = document.getElementById('peri-i2c-rtc')?.checked ?? true;
+      const elRtc = document.getElementById('sb-p3-rtc');
+      if (elRtc) elRtc.textContent = rtcChecked ? 'DS3231 (±2ppm Hold)' : 'MCU Internal RTC';
+    }
+
+    function updatePeripheralsSpec() {
+      updateStepSidebarPreview(currentStep);
+      updateLiveImpact();
+    }
