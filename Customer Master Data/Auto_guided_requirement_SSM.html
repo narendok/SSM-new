@@ -85,6 +85,13 @@
       <!-- Right Header Actions: Theme Toggle + Step Pills -->
       <div class="flex items-center gap-2">
         <!-- Theme Toggle Button (User Request) -->
+        <!-- Sixsense PCB Reusability & Best Match Button -->
+        <button onclick="togglePcbComparisonModal()" id="btn-pcb-comparison" class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-bold transition-all cursor-pointer shadow-sm">
+          <span>🔄</span>
+          <span>PCB Reuse & Best-Match</span>
+          <span id="header-pcb-match-badge" class="px-1.5 py-0.2 rounded text-[9px] bg-black/25 text-indigo-100 font-mono">10 Made PCBs</span>
+        </button>
+
         <!-- Quick Jump to Master Parameter Table Sheet (User Request) -->
         <button onclick="openMasterSpecTable()" class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold transition-all cursor-pointer shadow-sm">
           <span>📋</span>
@@ -1705,6 +1712,28 @@
           </div>
         </div>
 
+        <!-- SIXSENSE PCB REUSABILITY & HARDWARE MATCH CARD -->
+        <div class="p-3 rounded-xl border border-indigo-500/40 bg-indigo-500/5 space-y-2 shadow-sm">
+          <div class="flex items-center justify-between pb-1.5 border-b border-indigo-500/20">
+            <span class="text-[11px] font-bold text-[var(--foreground)] flex items-center gap-1.5">
+              <span>🔄</span> <span>PCB Reusability Best-Match</span>
+            </span>
+            <span id="sb-pcb-match-badge" class="px-2 py-0.5 rounded text-[9.5px] font-bold font-mono bg-emerald-500/20 text-emerald-400">
+              100% Match
+            </span>
+          </div>
+          <div class="flex items-center justify-between text-xs font-bold text-[var(--foreground)]">
+            <span id="sb-pcb-top-name" class="truncate max-w-[170px] text-indigo-400">TCU-03 (ITL Telematics)</span>
+            <span id="sb-pcb-savings" class="text-[9.5px] font-mono text-emerald-400">Save ₹3.0L NRE</span>
+          </div>
+          <p id="sb-pcb-top-desc" class="text-[9.5px] text-[var(--muted-foreground)] leading-snug">
+            🌟 Direct Drop-In Reuse: Zero PCB spins required. Production tooling active.
+          </p>
+          <button type="button" onclick="togglePcbComparisonModal()" class="w-full py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[10px] flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer">
+            <span>📊 Compare All 10 Made PCBs & Gap Analysis &rarr;</span>
+          </button>
+        </div>
+
         <!-- Live Connector Preview with Interactive Zoom Controls (User Request: Right Side with Zoom) -->
         <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-2 shadow-sm">
           <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
@@ -3262,6 +3291,708 @@
       });
     }
 
+    
+    // ==========================================
+    // SIXSENSE IOT HARDWARE PORTFOLIO (10 MADE PCBS DATABASE)
+    // Source: G:\My Drive\Sixsense IoT Hardware Projects (Read-Only)
+    // ==========================================
+    const SIXSENSE_PCB_LIBRARY = [
+  {
+    "id": "PCB-AIS140",
+    "name": "TCU-AIS140 (Dhruv-A140)",
+    "projectFolder": "TCU-AIS140 (v3.0.3)",
+    "vehicleDomain": "Passenger Car, Taxi, Bus, Commercial Fleet",
+    "appType": "AIS-140 Public Transport Telematics",
+    "mcu": "Quectel EG915U OpenCPU (ARM Cortex-A7) + Secure Element",
+    "voltageMin": 9,
+    "voltageMax": 36,
+    "transientProtection": "ISO 7637-2 Pulse 1/2a/3a/3b & Load Dump Clamped (40V)",
+    "cellular": "4G LTE Cat-1 + 2G Fallback",
+    "sim": "Dual SIM (eSIM MFF2 + Micro-SIM Tray Auto-Switch)",
+    "gnss": "NavIC L5 + GPS/GLONASS Dual-Band",
+    "localRf": "None",
+    "di": 3,
+    "diSpec": "1x Ignition Sense (0-32V), 1x Opto-isolated SOS Panic, 1x Aux DI",
+    "do": 1,
+    "doSpec": "1x Low-Side Driver (1.5A) with Flyback Clamp for Starter Cut Relay",
+    "ai": 1,
+    "aiSpec": "1x 12-bit ADC (0\u201332V Range) for Diesel Fuel Level Float Sensor",
+    "can": true,
+    "canSpec": "1x CAN-FD / CAN 2.0B (ISO 11898-2)",
+    "rs485": false,
+    "rs485Spec": "None",
+    "battery": "Internal LiFePO4 800mAh with JEITA Thermal Protection",
+    "connector": "TE Superseal 1.0 (14-Pin Sealed Automotive Header)",
+    "enclosure": "Flame-Retardant ABS/PC UL 94 V-0 (105 \u00d7 75 \u00d7 28 mm)",
+    "ipRating": "IP65",
+    "certifications": "ICAT AIS-140, IS 16833, UN 38.3, CE, RoHS",
+    "productionStatus": "Mass Production (ICAT Certified TAC)",
+    "nreSavings": "\u20b92,50,000 NRE + 10 Weeks ICAT/Tooling Time Saved"
+  },
+  {
+    "id": "PCB-TCU03",
+    "name": "TCU-03 (ITL Telematics)",
+    "projectFolder": "TCU-03 (Telematics ITL)",
+    "vehicleDomain": "Tractor, Agriculture & Heavy Commercial Trucks",
+    "appType": "Dual-Board Modular Telematics Controller",
+    "mcu": "Quectel EC200U-CN LTE + Baseboard Power/I/O Controller",
+    "voltageMin": 9,
+    "voltageMax": 36,
+    "transientProtection": "Automotive 60V Transient Clamp & Reverse Polarity Diode",
+    "cellular": "4G LTE Cat-1 (FDD/TDD) + 2G Fallback",
+    "sim": "eSIM MFF2 / Nano SIM",
+    "gnss": "Multi-Constellation GPS + GLONASS + BeiDou + QZSS",
+    "localRf": "BLE 4.2 + Wi-Fi 2.4GHz (802.11b/g/n)",
+    "di": 4,
+    "diSpec": "4x 12V/24V Level-Shifted Inputs (Ignition, PTO Switch, Implement, Aux)",
+    "do": 2,
+    "doSpec": "2x Low-Side Open-Drain (1.5A) Drivers (Starter Cut, Alarm Buzzer)",
+    "ai": 2,
+    "aiSpec": "2x 12-bit ADC (0\u201332V Range) for Fuel Float (0-240\u03a9) & Battery Sense",
+    "can": true,
+    "canSpec": "2x CAN-FD Interfaces (J1939 Powertrain + Implement Bus)",
+    "rs485": true,
+    "rs485Spec": "1x RS485 Modbus RTU (TIA/EIA-485-A) for External Flow / Tank Sensors",
+    "battery": "Internal LiFePO4 / Li-ion Battery with JEITA Management",
+    "connector": "TE Superseal 1.0 (14-Pin / 26-Pin Automotive Header)",
+    "enclosure": "PBT Rugged Automotive Sealed Housing (125 \u00d7 85 \u00d7 32 mm)",
+    "ipRating": "IP67",
+    "certifications": "Automotive Commercial Grade, ISO 16750-2, J1939",
+    "productionStatus": "Mass Production (Sonalika ITL International & Domestic)",
+    "nreSavings": "\u20b93,00,000 NRE + 8 Weeks Tooling & Fabrication Saved"
+  },
+  {
+    "id": "PCB-BCU",
+    "name": "BCU (Body Control Unit)",
+    "projectFolder": "BCU_Body_Control_Unit",
+    "vehicleDomain": "Tractors, Harvesters & Commercial Heavy Vehicles",
+    "appType": "Centralized Body Electronics & High-Power Load Management",
+    "mcu": "NXP S32K312 (32-bit ARM Cortex-M7 ASIL-B Functional Safety)",
+    "voltageMin": 8,
+    "voltageMax": 32,
+    "transientProtection": "ISO 7637-2 Pulse 1/2a/3a/3b & Pulse 5b Clamped (40V TVS Array)",
+    "cellular": "Optional Cellular Telematics Daughtercard",
+    "sim": "eSIM Support via Add-On",
+    "gnss": "Optional GNSS via Telematics Bus",
+    "localRf": "None",
+    "di": 8,
+    "diSpec": "8x Opto-isolated Digital Inputs (Ignition, PTO, 3-Pt Hitch, Brake, Clutch, Neutral, E-Stop)",
+    "do": 12,
+    "doSpec": "12x High-Side Smart Switches with Diagnostics + Low-Side Drivers (Lighting, Starter, Horn)",
+    "ai": 2,
+    "aiSpec": "2x 12-bit ADC Inputs for Hydraulic Oil Pressure & Fuel Float",
+    "can": true,
+    "canSpec": "3x CAN Interfaces (CAN1 Vehicle J1939, CAN2 Diagnostics, CAN3 Implement)",
+    "rs485": false,
+    "rs485Spec": "None",
+    "battery": "Automotive Supercapacitor Backup + Vehicle Battery Backup",
+    "connector": "26-Pin / 34-Pin Sealed Automotive Header",
+    "enclosure": "Nylon 66 + 30% Glass Filled Rugged Case (145 \u00d7 100 \u00d7 38 mm)",
+    "ipRating": "IP67",
+    "certifications": "ISO 26262 ASIL-B, ISO 16750-2, ISO 16750-3 Vibration 5.8g",
+    "productionStatus": "Mass Production (Eicher & Sonalika ITL)",
+    "nreSavings": "\u20b94,50,000 NRE + 14 Weeks Tooling & Safety Validation Saved"
+  },
+  {
+    "id": "PCB-TCU04",
+    "name": "TCU-04 (SLCT - Smart Low Cost Tracker)",
+    "projectFolder": "TCU-04_SLCT",
+    "vehicleDomain": "Agri Tractors, Light Commercial & Light EV",
+    "appType": "Compact Integrated Vehicle Telematics",
+    "mcu": "STM32 Automotive 32-bit MCU + Quectel LTE Cat-1",
+    "voltageMin": 6,
+    "voltageMax": 60,
+    "transientProtection": "Wide 6V\u201360V Input with High-Voltage Surge Suppressor",
+    "cellular": "4G LTE Cat-1 + 2G Fallback",
+    "sim": "eSIM / Nano SIM",
+    "gnss": "Integrated High-Sensitivity GNSS",
+    "localRf": "BLE Optional",
+    "di": 2,
+    "diSpec": "2x Level-Shifted Inputs (Ignition Key, Driver Panic)",
+    "do": 1,
+    "doSpec": "1x Low-Side Driver (1.5A) for Remote Starter Cut Relay",
+    "ai": 1,
+    "aiSpec": "1x 12-bit ADC Input (0\u201332V Range) for Fuel or Battery Sense",
+    "can": true,
+    "canSpec": "1x CAN-FD Interface (J1939 & FD-CAN)",
+    "rs485": false,
+    "rs485Spec": "None",
+    "battery": "Internal Li-ion 450mAh Backup Battery",
+    "connector": "8-Pin Sealed Automotive Header",
+    "enclosure": "Compact Slimline PBT Housing (95 \u00d7 65 \u00d7 22 mm)",
+    "ipRating": "IP65",
+    "certifications": "Automotive CE, AIS Baseline",
+    "productionStatus": "Validated Production Design",
+    "nreSavings": "\u20b91,80,000 NRE + 6 Weeks Lead Time Saved"
+  },
+  {
+    "id": "PCB-MLC",
+    "name": "MLC (Mini Low Cost EV Tracker)",
+    "projectFolder": "MLC (Low Cost Tracker)",
+    "vehicleDomain": "Electric 2W / 3W Scooters, Delivery Bikes & Shared EV Fleets",
+    "appType": "High-Voltage Direct-Pack Light EV Telematics",
+    "mcu": "Ultra-Low Power ARM Cortex MCU + 4G LTE Modem",
+    "voltageMin": 9,
+    "voltageMax": 90,
+    "transientProtection": "Direct 9V\u201390V Input (Supports 48V, 60V, 72V Traction Packs Without DC-DC)",
+    "cellular": "4G LTE Cat-1",
+    "sim": "eSIM MFF2",
+    "gnss": "Integrated Compact GNSS",
+    "localRf": "BLE 5.0 for Mobile Proximity Unlock",
+    "di": 2,
+    "diSpec": "2x Inputs (Key Switch / ACC, Side-Stand Down Safety Interlock)",
+    "do": 1,
+    "doSpec": "1x Solid-State Cutoff Driver for Motor Controller Lockout",
+    "ai": 1,
+    "aiSpec": "1x High-Voltage Traction Battery Voltage Sense (0\u201390V ADC)",
+    "can": true,
+    "canSpec": "1x CAN Bus Interface for EV BMS Telemetry",
+    "rs485": false,
+    "rs485Spec": "None",
+    "battery": "Internal 300mAh Compact Rechargeable Li-Po",
+    "connector": "6-Pin / 8-Pin Waterproof Micro-Fit Pigtail Harness",
+    "enclosure": "Ultra-Compact Credit-Card Form Factor (75 \u00d7 45 \u00d7 18 mm)",
+    "ipRating": "IP67",
+    "certifications": "AIS-038, AIS-156 EV Electrical Safety, RoHS",
+    "productionStatus": "Production Ready",
+    "nreSavings": "\u20b91,50,000 NRE + 6 Weeks Lead Time Saved"
+  },
+  {
+    "id": "PCB-LORA",
+    "name": "LoRa-TCU (Mining & Deep Rural Gateway)",
+    "projectFolder": "LoRa_TCU",
+    "vehicleDomain": "Mining Trucks, Excavators, Forestry & Deep Rural Agri",
+    "appType": "Long-Range Hybrid LoRa + Cellular Off-Grid Telematics",
+    "mcu": "BOT v3.3.5 Industrial Baseboard + TOP LoRa / GNSS Module",
+    "voltageMin": 9,
+    "voltageMax": 36,
+    "transientProtection": "Heavy Industrial Surge & Spike Withstand (60V)",
+    "cellular": "Hybrid 4G LTE Cat-1 + Long-Range LoRa (865\u2013867 MHz)",
+    "sim": "eSIM / Nano SIM",
+    "gnss": "High-Precision GNSS Receiver",
+    "localRf": "LoRa Transceiver (SX1262 / SX1276) Long Range (>10 km)",
+    "di": 4,
+    "diSpec": "4x Rugged Digital Inputs (Ignition, E-Stop, Tamper, Axle Sensor)",
+    "do": 2,
+    "doSpec": "2x Low-Side Drivers (1.5A) (Siren, Engine Cut)",
+    "ai": 2,
+    "aiSpec": "2x 12-bit ADC Inputs for Fuel & Pressure Transducers",
+    "can": true,
+    "canSpec": "2x CAN Interfaces (Heavy Equipment J1939 Diagnostics)",
+    "rs485": true,
+    "rs485Spec": "1x RS485 Modbus RTU for Industrial Ultrasonic & Load Cells",
+    "battery": "Heavy-Duty LiFePO4 Battery with Thermal Cutoff",
+    "connector": "TE Superseal 1.0 (26-Pin Automotive Sealed Header)",
+    "enclosure": "Heavy-Duty IP67 Cast Aluminum / Rugged PBT (135 \u00d7 90 \u00d7 35 mm)",
+    "ipRating": "IP67",
+    "certifications": "Mining Safety Standards, ISO 16750-3 50G Shock Withstand",
+    "productionStatus": "Field Validated",
+    "nreSavings": "\u20b93,50,000 NRE + 12 Weeks Lead Time Saved"
+  },
+  {
+    "id": "PCB-OBD",
+    "name": "OBD-II Tracker (TCU-02 & OBD v2.4)",
+    "projectFolder": "OBD TCU Tracking Devices PCB Data",
+    "vehicleDomain": "Passenger Cars, Light Delivery Vans & Rental Fleets",
+    "appType": "Plug-and-Play Under-Dash OBD-II Telematics Dongle",
+    "mcu": "STM32G0B1 + Quectel EC200U 4G LTE Cat-1",
+    "voltageMin": 9,
+    "voltageMax": 36,
+    "transientProtection": "Automotive 60V Transient Clamp",
+    "cellular": "4G LTE Cat-1 + 2G Fallback",
+    "sim": "eSIM MFF2",
+    "gnss": "Integrated GNSS Antenna & Receiver",
+    "localRf": "BLE 4.2 / 5.0 for Smartphone Companion App",
+    "di": 1,
+    "diSpec": "Virtual Ignition Detection via CAN / Voltage Ripple + 1x Internal Sense",
+    "do": 0,
+    "doSpec": "Electronic Immobilization Command via CAN Bus OBD Protocol",
+    "ai": 1,
+    "aiSpec": "Internal OBD Pin 16 Voltage Monitor ADC",
+    "can": true,
+    "canSpec": "2x CAN Interfaces (Powertrain 500kbps + Body Low-Speed CAN) + K-Line",
+    "rs485": false,
+    "rs485Spec": "None",
+    "battery": "Internal Rechargeable Li-Po (180mAh)",
+    "connector": "Standard SAE J1962 16-Pin Male OBD-II Direct Plug",
+    "enclosure": "Direct OBD-II Port Enclosure (68 \u00d7 48 \u00d7 25 mm)",
+    "ipRating": "IP54",
+    "certifications": "SAE J1962, ISO 14230 (KWP2000), ISO 15765-4 (CAN), CE",
+    "productionStatus": "Mass Production (Piaggio & Grevol Commercial EV)",
+    "nreSavings": "\u20b92,00,000 NRE + 8 Weeks Tooling Saved"
+  },
+  {
+    "id": "PCB-ASDL",
+    "name": "ASDL / SDL (Differential Lock Controller)",
+    "projectFolder": "Xlink - ASDL & old Diff lock Immobilizer",
+    "vehicleDomain": "Heavy Commercial Trucks, Haulers & Off-Road Axles",
+    "appType": "Automated Inter-Axle & Inter-Wheel Differential Lock ECU",
+    "mcu": "STM32G0B1CETx (32-bit ARM Cortex-M0+ in LQFP48)",
+    "voltageMin": 9,
+    "voltageMax": 32,
+    "transientProtection": "SY8292 40V Clamping Step-Down + AP7265 + Automotive TVS",
+    "cellular": "None (ECU Node on CAN Network)",
+    "sim": "None",
+    "gnss": "None",
+    "localRf": "None",
+    "di": 4,
+    "diSpec": "2x High-Side Inputs (IAD Switch, IWD Switch), 1x Low-Side Input, 1x Ignition Sense",
+    "do": 4,
+    "doSpec": "High-Current Solenoid Drivers (Air Injector, IWD Lock) + Hybrid HSD/LSD (Up to 10 Loads)",
+    "ai": 2,
+    "aiSpec": "2x Analog Inputs (Main Battery Voltage Read + 1x Aux Sensor)",
+    "can": true,
+    "canSpec": "2x CAN Interfaces (ISO 11898 J1939 VECV Matrix Compatibility)",
+    "rs485": false,
+    "rs485Spec": "None",
+    "battery": "Vehicle Battery Powered with Low Power Standby",
+    "connector": "16-Pin Sealed Automotive Mating Connector",
+    "enclosure": "Rugged Automotive Flanged Case (115 \u00d7 80 \u00d7 30 mm)",
+    "ipRating": "IP67",
+    "certifications": "VECV (Volvo Eicher Commercial Vehicles) OEM Spec",
+    "productionStatus": "Production Ready",
+    "nreSavings": "\u20b92,20,000 NRE + 8 Weeks Validation Time Saved"
+  },
+  {
+    "id": "PCB-IMMOB",
+    "name": "Vehicle Immobilizer (Smart Wireless Anti-Theft)",
+    "projectFolder": "Vehicle_Immobilizer",
+    "vehicleDomain": "Passenger Cars, 2-Wheelers & Commercial Fleets",
+    "appType": "Wireless Smart Relay Anti-Theft Starter Interlock",
+    "mcu": "ESP32-C3 / ESP12 Wi-Fi + BLE SoC",
+    "voltageMin": 9,
+    "voltageMax": 36,
+    "transientProtection": "Automotive Transient Voltage Suppressor (TVS) Clamped",
+    "cellular": "None (BLE Smartphone / Proximity Disarm)",
+    "sim": "None",
+    "gnss": "None",
+    "localRf": "BLE 5.0 + Wi-Fi 2.4GHz",
+    "di": 1,
+    "diSpec": "1x Ignition Sense Line (Active High Level-Shifted)",
+    "do": 1,
+    "doSpec": "1x High-Current Automotive 30A/40A Relay (Starter Solenoid Interlock)",
+    "ai": 0,
+    "aiSpec": "None",
+    "can": false,
+    "canSpec": "None",
+    "rs485": false,
+    "rs485Spec": "None",
+    "battery": "None (Direct Vehicle Battery Tap)",
+    "connector": "Inline Standard Automotive Relay Socket (4-Pin / 5-Pin)",
+    "enclosure": "Automotive Cube Relay Enclosure (45 \u00d7 30 \u00d7 30 mm)",
+    "ipRating": "IP65",
+    "certifications": "Automotive Relay Standard, CE",
+    "productionStatus": "Mass Production",
+    "nreSavings": "\u20b91,00,000 NRE + 4 Weeks Lead Time Saved"
+  },
+  {
+    "id": "PCB-BCMFARM",
+    "name": "BCM Farm Smart Controller (Tadpole / Farm Automation)",
+    "projectFolder": "BCM_Farm_Smart_Controller",
+    "vehicleDomain": "Smart Tractors, Agri Implements, Precision Seeders & Booms",
+    "appType": "Multi-Channel Implement Automation & Power Actuator Controller",
+    "mcu": "ST SPC56EL70L3 Dual-Core Automotive MCU / STM32",
+    "voltageMin": 8,
+    "voltageMax": 16,
+    "transientProtection": "12V Agricultural Load Dump & Reverse Battery Protected",
+    "cellular": "4G LTE Cat-1 (Optional Modular Daughtercard)",
+    "sim": "eSIM / Nano SIM",
+    "gnss": "Integrated GNSS for Precision Acreage & Implement Tracking",
+    "localRf": "BLE / Wi-Fi Interface",
+    "di": 8,
+    "diSpec": "8x Ground-Switch Inputs (Implement Position, Boom Unfold, Flow Triggers)",
+    "do": 10,
+    "doSpec": "5x Motor PWM H-Bridge Drives + 5x High-Side Switches / Relays (5\u201315A Heavy Actuation)",
+    "ai": 5,
+    "aiSpec": "5x High-Accuracy ADC Inputs (Pressure, Flow Sensor, Liquid Level, Load Cells)",
+    "can": true,
+    "canSpec": "2x CAN-FD Interfaces (ISOBUS & J1939 Implement Automation)",
+    "rs485": true,
+    "rs485Spec": "1x RS485 Modbus for Auxiliary Ultrasonic Sensor Strings",
+    "battery": "Supercap / Low-Power Standby Mode (<8mA sleep)",
+    "connector": "Dual Automotive Sealed Multi-Pin Connectors",
+    "enclosure": "Heavy-Duty IP67 Agricultural Enclosure (160 \u00d7 110 \u00d7 45 mm)",
+    "ipRating": "IP67",
+    "certifications": "ISOBUS 11783, ISO 16750 Agricultural Compliance",
+    "productionStatus": "Production Pilot (Sonalika ITL Smart Farm Program)",
+    "nreSavings": "\u20b94,00,000 NRE + 12 Weeks Tooling & Validation Saved"
+  }
+];
+
+    let pcbCategoryFilter = 'all';
+
+    function togglePcbComparisonModal() {
+      const modal = document.getElementById('pcb-comparison-modal');
+      if (!modal) return;
+      if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        renderPcbComparisonTable();
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function setPcbCategoryFilter(cat) {
+      pcbCategoryFilter = cat;
+      const btns = document.querySelectorAll('.pcb-cat-btn');
+      btns.forEach(b => {
+        if (b.dataset.cat === cat) {
+          b.className = "pcb-cat-btn px-2.5 py-1 rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] font-bold transition-all";
+        } else {
+          b.className = "pcb-cat-btn px-2.5 py-1 rounded-md bg-[var(--background)] border border-[var(--card-border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all";
+        }
+      });
+      renderPcbComparisonTable();
+    }
+
+    // REAL-TIME PCB REUSABILITY MATCHING ALGORITHM
+    function evaluatePcbMatches() {
+      const intakeVolt = (wizardState.vehicle === 'ev') ? 48 : ((wizardState.vehicle === 'truck' || wizardState.vehicle === 'tractor') ? 24 : 12);
+      const intakeDi = wizardState.pins.filter(p => p.type === 'DI').length;
+      const intakeDo = wizardState.pins.filter(p => p.type === 'DO').length;
+      const intakeAi = wizardState.pins.filter(p => p.type === 'AI').length;
+      const intakeCan = wizardState.hasCAN ?? true;
+      const intakeRs485 = wizardState.hasRS485 ?? false;
+      const intakeCell = wizardState.has4G ?? true;
+      const intakeGnss = (wizardState.gnssOption && wizardState.gnssOption !== 'none');
+
+      return SIXSENSE_PCB_LIBRARY.map(pcb => {
+        let score = 0;
+        const reasons = [];
+        const gaps = [];
+        const stuffing = [];
+
+        // 1. Voltage compatibility (20 pts)
+        if (pcb.voltageMin <= intakeVolt && intakeVolt <= pcb.voltageMax) {
+          score += 20;
+          reasons.push(pcb.voltageMin + "V–" + pcb.voltageMax + "V covers intake " + intakeVolt + "V system");
+        } else {
+          gaps.push("Voltage mismatch: PCB is " + pcb.voltageMin + "V–" + pcb.voltageMax + "V (intake: " + intakeVolt + "V)");
+        }
+
+        // 2. DI pins (15 pts)
+        if (pcb.di >= intakeDi) {
+          score += 15;
+          reasons.push(pcb.di + " DIs available >= " + intakeDi + " required");
+          if (pcb.di > intakeDi) stuffing.push((pcb.di - intakeDi) + " unused DIs can be DNP or left open");
+        } else {
+          const r = pcb.di / Math.max(1, intakeDi);
+          score += Math.round(15 * r);
+          gaps.push("Short by " + (intakeDi - pcb.di) + " DI (has " + pcb.di + ", needs " + intakeDi + ")");
+        }
+
+        // 3. DO pins (15 pts)
+        if (pcb.do >= intakeDo) {
+          score += 15;
+          reasons.push(pcb.do + " DOs available >= " + intakeDo + " required");
+          if (pcb.do > intakeDo) stuffing.push((pcb.do - intakeDo) + " unused DO drivers can be DNP");
+        } else {
+          const r = pcb.do / Math.max(1, intakeDo);
+          score += Math.round(15 * r);
+          gaps.push("Short by " + (intakeDo - pcb.do) + " DO (has " + pcb.do + ", needs " + intakeDo + ")");
+        }
+
+        // 4. AI pins (10 pts)
+        if (pcb.ai >= intakeAi) {
+          score += 10;
+          reasons.push(pcb.ai + " AIs available >= " + intakeAi + " required");
+        } else {
+          const r = pcb.ai / Math.max(1, intakeAi);
+          score += Math.round(10 * r);
+          gaps.push("Short by " + (intakeAi - pcb.ai) + " AI (has " + pcb.ai + ", needs " + intakeAi + ")");
+        }
+
+        // 5. CAN / CAN-FD (15 pts)
+        if (intakeCan) {
+          if (pcb.can) {
+            score += 15;
+            reasons.push("CAN / CAN-FD integrated on board");
+          } else {
+            gaps.push("Missing CAN bus hardware");
+          }
+        } else {
+          score += 15;
+          if (pcb.can) stuffing.push("CAN transceiver IC can be DNP for cost savings");
+        }
+
+        // 6. RS485 Modbus (10 pts)
+        if (intakeRs485) {
+          if (pcb.rs485) {
+            score += 10;
+            reasons.push("RS485 Modbus physical transceiver ready");
+          } else {
+            gaps.push("Missing RS485 Modbus transceiver");
+          }
+        } else {
+          score += 10;
+          if (pcb.rs485) stuffing.push("RS485 transceiver can be unpopulated (DNP)");
+        }
+
+        // 7. Cellular 4G LTE (10 pts)
+        if (intakeCell) {
+          if (pcb.cellular.includes("4G")) {
+            score += 10;
+            reasons.push("4G LTE Cat-1 connectivity integrated");
+          } else if (pcb.cellular.includes("Modular") || pcb.cellular.includes("Optional")) {
+            score += 6;
+            reasons.push("Cellular supported via standard daughtercard");
+          } else {
+            gaps.push("Missing 4G Cellular Modem");
+          }
+        } else {
+          score += 10;
+        }
+
+        // 8. GNSS (5 pts)
+        if (intakeGnss) {
+          if (pcb.gnss.includes("NavIC") || pcb.gnss.includes("GPS") || pcb.gnss.includes("GNSS")) {
+            score += 5;
+            reasons.push("GNSS positioning supported");
+          } else {
+            gaps.push("Missing GNSS receiver");
+          }
+        } else {
+          score += 5;
+        }
+
+        score = Math.min(100, Math.max(10, score));
+
+        let tier = "Drop-In Ready";
+        let tierColor = "emerald";
+        let tierBadge = "🌟 100% Drop-In Reuse";
+        if (score >= 90) {
+          tier = "Drop-In Ready";
+          tierColor = "emerald";
+          tierBadge = "🌟 " + score + "% Drop-In Reuse";
+        } else if (score >= 75) {
+          tier = "Minor BOM Variant";
+          tierColor = "blue";
+          tierBadge = "⚡ " + score + "% Minor BOM Variant";
+        } else if (score >= 55) {
+          tier = "Modular Reuse";
+          tierColor = "amber";
+          tierBadge = "🔄 " + score + "% Modular Baseboard";
+        } else {
+          tier = "New Spin";
+          tierColor = "rose";
+          tierBadge = "🛠️ " + score + "% New Spin Required";
+        }
+
+        return {
+          pcb: pcb,
+          score: score,
+          tier: tier,
+          tierColor: tierColor,
+          tierBadge: tierBadge,
+          reasons: reasons,
+          gaps: gaps,
+          stuffing: stuffing
+        };
+      });
+    }
+
+    function updatePcbReusabilitySidebar() {
+      const matches = evaluatePcbMatches();
+      matches.sort((a, b) => b.score - a.score);
+      const top = matches[0];
+      if (!top) return;
+
+      const badge = document.getElementById('sb-pcb-match-badge');
+      const nameEl = document.getElementById('sb-pcb-top-name');
+      const descEl = document.getElementById('sb-pcb-top-desc');
+      const savEl = document.getElementById('sb-pcb-savings');
+      const hdrBadge = document.getElementById('header-pcb-match-badge');
+      const modalTop = document.getElementById('pcb-modal-top-match');
+
+      if (badge) {
+        badge.textContent = top.score + "% Match";
+        badge.className = "px-2 py-0.5 rounded text-[9.5px] font-bold font-mono bg-" + top.tierColor + "-500/20 text-" + top.tierColor + "-400";
+      }
+      if (nameEl) nameEl.textContent = top.pcb.name;
+      if (descEl) descEl.textContent = top.tierBadge + ": " + (top.reasons[0] || 'Hardware architecture aligns.');
+      if (savEl) savEl.textContent = top.pcb.nreSavings ? top.pcb.nreSavings.split(' ')[0] + ' ' + top.pcb.nreSavings.split(' ')[1] : 'Save NRE';
+      if (hdrBadge) hdrBadge.textContent = "🎯 " + top.score + "% Match: " + top.pcb.name.split(' ')[0];
+      if (modalTop) modalTop.textContent = top.pcb.name + " (" + top.score + "%)";
+    }
+
+    function renderPcbComparisonTable() {
+      const thead = document.getElementById('pcb-table-head');
+      const tbody = document.getElementById('pcb-table-body');
+      if (!thead || !tbody) return;
+
+      const q = (document.getElementById('pcb-search-input')?.value || '').toLowerCase().trim();
+      const matches = evaluatePcbMatches();
+      matches.sort((a, b) => b.score - a.score);
+
+      const filtered = matches.filter(m => {
+        if (pcbCategoryFilter === 'telematics' && !m.pcb.name.includes('TCU') && !m.pcb.name.includes('Tracker') && !m.pcb.name.includes('AIS140')) return false;
+        if (pcbCategoryFilter === 'bcu' && !m.pcb.name.includes('BCU') && !m.pcb.name.includes('BCM')) return false;
+        if (pcbCategoryFilter === 'ev' && !m.pcb.name.includes('MLC') && !m.pcb.name.includes('EV') && !m.pcb.name.includes('SLCT')) return false;
+        if (pcbCategoryFilter === 'control' && !m.pcb.name.includes('ASDL') && !m.pcb.name.includes('Immobilizer') && !m.pcb.name.includes('BCU')) return false;
+
+        if (q) {
+          const hay = (m.pcb.name + " " + m.pcb.mcu + " " + m.pcb.cellular + " " + m.pcb.vehicleDomain + " " + m.pcb.appType).toLowerCase();
+          return hay.includes(q);
+        }
+        return true;
+      });
+
+      // Intake live values
+      const intakeVolt = (wizardState.vehicle === 'ev') ? 48 : ((wizardState.vehicle === 'truck' || wizardState.vehicle === 'tractor') ? 24 : 12);
+      const intakeDi = wizardState.pins.filter(p => p.type === 'DI').length;
+      const intakeDo = wizardState.pins.filter(p => p.type === 'DO').length;
+      const intakeAi = wizardState.pins.filter(p => p.type === 'AI').length;
+      const intakeCan = wizardState.hasCAN ?? true;
+      const intakeRs485 = wizardState.hasRS485 ?? false;
+      const intakeCell = wizardState.has4G ?? true;
+      const intakeGnss = (wizardState.gnssOption && wizardState.gnssOption !== 'none');
+
+      // 1. Build Header
+      let headHtml = '<tr>' +
+        '<th class="p-2.5 font-bold text-[var(--muted-foreground)] uppercase tracking-wider bg-[var(--card)] sticky left-0 z-20 min-w-[170px] border-r border-[var(--card-border)]">Feature / Parameter</th>' +
+        '<th class="p-2.5 font-bold text-white bg-blue-600/30 min-w-[200px] border-r-2 border-blue-500 shadow-sm">' +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-xs">🎯 Current Intake</span>' +
+            '<span class="px-1.5 py-0.2 rounded text-[8.5px] bg-blue-500 text-white font-bold">New Req</span>' +
+          '</div>' +
+          '<span class="text-[9px] text-blue-200 block mt-0.5 font-normal">Customer Intake Session</span>' +
+        '</th>';
+
+      filtered.forEach(m => {
+        headHtml += '<th class="p-2.5 font-bold text-[var(--foreground)] min-w-[220px] border-r border-[var(--card-border)]/60 bg-[var(--background)]/80 hover:bg-[var(--card)] transition-colors">' +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-[11px] font-bold truncate max-w-[140px]">' + m.pcb.name + '</span>' +
+            '<span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-' + m.tierColor + '-500/20 text-' + m.tierColor + '-400">' + m.score + '%</span>' +
+          '</div>' +
+          '<div class="mt-1 flex items-center justify-between">' +
+            '<span class="text-[8.5px] text-[var(--muted-foreground)] truncate max-w-[120px]">' + m.pcb.appType + '</span>' +
+            '<button type="button" onclick="applyPcbAsTemplate(&apos;' + m.pcb.id + '&apos;)" title="Pre-populate wizard with this PCB baseline" class="px-1.5 py-0.5 rounded bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 text-[8px] font-bold border border-indigo-500/30 transition-all cursor-pointer">⚡ Load As Baseline</button>' +
+          '</div>' +
+        '</th>';
+      });
+      headHtml += '</tr>';
+      thead.innerHTML = headHtml;
+
+      // 2. Build Comparison Rows
+      const rows = [
+        { label: "Reusability Verdict", intake: "Targeting Max Reuse", fn: m => '<span class="px-2 py-0.5 rounded text-[9px] font-bold font-mono bg-' + m.tierColor + '-500/20 text-' + m.tierColor + '-400">' + m.tierBadge + '</span>' },
+        { label: "Estimated NRE & Time Saved", intake: "Standard Lead Time", fn: m => '<span class="font-bold text-emerald-400 font-mono">' + (m.pcb.nreSavings || 'Direct Production') + '</span>' },
+        { label: "Target Application", intake: (wizardState.vehicle ? wizardState.vehicle.toUpperCase() : 'AUTOMOTIVE') + ' System', fn: m => '<span class="text-[9.5px] text-[var(--foreground)]">' + m.pcb.vehicleDomain + '</span>' },
+        { label: "Operating Voltage Range", intake: intakeVolt + 'V Nominal', fn: m => '<span class="' + (m.pcb.voltageMin <= intakeVolt && intakeVolt <= m.pcb.voltageMax ? 'text-emerald-400 font-bold' : 'text-amber-400') + '">' + m.pcb.voltageMin + 'V–' + m.pcb.voltageMax + 'V (' + m.pcb.transientProtection.split('&')[0] + ')</span>' },
+        { label: "Core MCU / Compute", intake: "Automotive 32-bit", fn: m => '<span class="font-mono text-[9.5px] text-[var(--foreground)]">' + m.pcb.mcu + '</span>' },
+        { label: "Cellular & SIM", intake: intakeCell ? "4G LTE Cat-1" : "None", fn: m => '<span class="' + (intakeCell && m.pcb.cellular.includes('4G') ? 'text-emerald-400 font-semibold' : '') + '">' + m.pcb.cellular + ' • ' + m.pcb.sim + '</span>' },
+        { label: "GNSS / Positioning", intake: intakeGnss ? "NavIC / GPS" : "None", fn: m => '<span class="' + (intakeGnss && (m.pcb.gnss.includes('GPS') || m.pcb.gnss.includes('NavIC')) ? 'text-emerald-400 font-semibold' : '') + '">' + m.pcb.gnss + '</span>' },
+        { label: "Digital Inputs (DI)", intake: intakeDi + ' Channels', fn: m => '<span class="' + (m.pcb.di >= intakeDi ? 'text-emerald-400 font-bold' : 'text-amber-400') + '">' + m.pcb.di + ' DIs (' + m.pcb.diSpec.split('(')[0] + ')</span>' },
+        { label: "Digital Outputs (DO)", intake: intakeDo + ' Channels', fn: m => '<span class="' + (m.pcb.do >= intakeDo ? 'text-emerald-400 font-bold' : 'text-amber-400') + '">' + m.pcb.do + ' DOs (' + m.pcb.doSpec.split('(')[0] + ')</span>' },
+        { label: "Analog Inputs (AI)", intake: intakeAi + ' Channels', fn: m => '<span class="' + (m.pcb.ai >= intakeAi ? 'text-emerald-400 font-bold' : 'text-amber-400') + '">' + m.pcb.ai + ' AIs (' + m.pcb.aiSpec.split('(')[0] + ')</span>' },
+        { label: "CAN / CAN-FD", intake: intakeCan ? "CAN-FD Active" : "None", fn: m => '<span class="' + (intakeCan && m.pcb.can ? 'text-emerald-400 font-bold' : '') + '">' + (m.pcb.can ? m.pcb.canSpec : 'None') + '</span>' },
+        { label: "RS485 Modbus", intake: intakeRs485 ? "RS485 Active" : "None", fn: m => '<span class="' + (intakeRs485 && m.pcb.rs485 ? 'text-emerald-400 font-bold' : (intakeRs485 && !m.pcb.rs485 ? 'text-rose-400' : '')) + '">' + (m.pcb.rs485 ? m.pcb.rs485Spec : 'None') + '</span>' },
+        { label: "Backup Battery & JEITA", intake: "LiFePO4 Internal", fn: m => '<span class="text-[9.5px] text-[var(--muted-foreground)]">' + m.pcb.battery + '</span>' },
+        { label: "Mating Connector", intake: document.getElementById('rec-conn-name')?.textContent.replace('↳ Selected:', '').trim() || "TE Superseal 1.0", fn: m => '<span class="font-mono text-purple-400">' + m.pcb.connector + '</span>' },
+        { label: "Enclosure & Ingress", intake: (wizardState.ipRating ? wizardState.ipRating.toUpperCase() : 'IP67'), fn: m => '<span class="font-mono text-[9.5px]">' + m.pcb.enclosure + ' • <strong>' + m.pcb.ipRating + '</strong></span>' },
+        { label: "Certification & Status", intake: "DVP Sign-Off Gate", fn: m => '<span class="text-emerald-400 font-semibold">' + m.pcb.certifications + ' • <em class="text-white">' + m.pcb.productionStatus + '</em></span>' }
+      ];
+
+      let bodyHtml = '';
+      rows.forEach(r => {
+        bodyHtml += '<tr class="hover:bg-[var(--card)]/80 transition-colors">' +
+          '<td class="p-2 font-bold text-[var(--foreground)] bg-[var(--card)] sticky left-0 z-10 border-r border-[var(--card-border)] whitespace-nowrap">' + r.label + '</td>' +
+          '<td class="p-2 font-bold text-blue-300 bg-blue-500/10 border-r-2 border-blue-500 whitespace-nowrap">' + r.intake + '</td>';
+        filtered.forEach(m => {
+          bodyHtml += '<td class="p-2 border-r border-[var(--card-border)]/60 text-[9.5px]">' + r.fn(m) + '</td>';
+        });
+        bodyHtml += '</tr>';
+      });
+      tbody.innerHTML = bodyHtml;
+
+      // 3. Update Detailed Gap Analysis Drawer for Top Match
+      const topMatch = filtered[0];
+      if (topMatch) {
+        const badge = document.getElementById('gap-analysis-badge');
+        const matchedList = document.getElementById('gap-matched-list');
+        const stuffingList = document.getElementById('gap-stuffing-list');
+        const commList = document.getElementById('gap-commercial-list');
+
+        if (badge) {
+          badge.textContent = topMatch.pcb.name + " (" + topMatch.score + "% Match)";
+          badge.className = "px-2 py-0.5 rounded text-[9px] font-bold font-mono bg-" + topMatch.tierColor + "-500/20 text-" + topMatch.tierColor + "-400";
+        }
+
+        if (matchedList) {
+          matchedList.innerHTML = topMatch.reasons.map(r => '<li>' + r + '</li>').join('') || '<li>Standard architecture alignment.</li>';
+        }
+        if (stuffingList) {
+          const items = topMatch.stuffing.length ? topMatch.stuffing : (topMatch.gaps.length ? topMatch.gaps : ['No modifications needed. Gerber is 100% reusable as-is.']);
+          stuffingList.innerHTML = items.map(s => '<li>' + s + '</li>').join('');
+        }
+        if (commList) {
+          commList.innerHTML = 
+            '<li><strong>Tooling & NRE Saved:</strong> ' + (topMatch.pcb.nreSavings || 'Significant NRE savings') + '</li>' +
+            '<li><strong>Production Status:</strong> ' + topMatch.pcb.productionStatus + '</li>' +
+            '<li><strong>Mating Header:</strong> ' + topMatch.pcb.connector + '</li>' +
+            '<li><strong>Enclosure Envelope:</strong> ' + topMatch.pcb.enclosure + '</li>';
+        }
+      }
+    }
+
+    // Apply any PCB as template
+    function applyPcbAsTemplate(pcbId) {
+      const pcb = SIXSENSE_PCB_LIBRARY.find(p => p.id === pcbId);
+      if (!pcb) return;
+
+      // Map vehicle
+      if (pcb.id === 'PCB-MLC') {
+        setVehicleType('ev');
+      } else if (pcb.id === 'PCB-BCU' || pcb.id === 'PCB-TCU03' || pcb.id === 'PCB-BCMFARM') {
+        setVehicleType('tractor');
+      } else if (pcb.id === 'PCB-ASDL' || pcb.id === 'PCB-LORA') {
+        setVehicleType('truck');
+      } else {
+        setVehicleType('car');
+      }
+
+      // Sync Networks
+      const netCan = document.getElementById('net_can');
+      if (netCan) netCan.checked = pcb.can;
+      wizardState.hasCAN = pcb.can;
+
+      const netRs485 = document.getElementById('net_rs485');
+      if (netRs485) netRs485.checked = pcb.rs485;
+      wizardState.hasRS485 = pcb.rs485;
+
+      const net4g = document.getElementById('net_4g');
+      if (net4g) net4g.checked = pcb.cellular.includes('4G');
+      wizardState.has4G = pcb.cellular.includes('4G');
+
+      // Sync I/O Pins
+      wizardState.pins = [];
+      for (let i = 1; i <= pcb.di; i++) {
+        wizardState.pins.push({ id: 'di-' + i, type: 'DI', label: 'DI ' + i, spec: '12V/24V Level-Shifted', purpose: 'Digital Input Channel ' + i, isCustom: false });
+      }
+      for (let i = 1; i <= pcb.do; i++) {
+        wizardState.pins.push({ id: 'do-' + i, type: 'DO', label: 'DO ' + i, spec: 'Low-Side Driver (1.5A)', purpose: 'Digital Output Channel ' + i, isCustom: false });
+      }
+      for (let i = 1; i <= pcb.ai; i++) {
+        wizardState.pins.push({ id: 'ai-' + i, type: 'AI', label: 'AI ' + i, spec: '12-bit ADC (0–32V)', purpose: 'Analog Input Channel ' + i, isCustom: false });
+      }
+
+      renumberPins();
+      renderColumnPins();
+      recalculatePins();
+      togglePcbComparisonModal();
+
+      alert('✓ Successfully loaded "' + pcb.name + '" as baseline!\n\nAll I/O pins, voltage profiles, networks, and connector parameters have been populated from Sixsense project archive "' + pcb.projectFolder + '". You can now customize further.');
+    }
+
+    function applyTopPcbTemplate() {
+      const matches = evaluatePcbMatches();
+      matches.sort((a, b) => b.score - a.score);
+      if (matches.length > 0) {
+        applyPcbAsTemplate(matches[0].pcb.id);
+      }
+    }
+
+
     function recalculatePins() {
       const can = document.getElementById('net_can')?.checked ?? true;
       const rs485 = document.getElementById('net_rs485')?.checked ?? false;
@@ -3303,6 +4034,7 @@
       updateLiveImpact();
 
       // REAL-TIME INSTANT LIVE CONNECTOR PREVIEW RE-RENDERING
+      updatePcbReusabilitySidebar();
       renderSidebarConnectorPinout();
       renderStep3ConnectorPinout();
     }
@@ -4353,6 +5085,8 @@
     
     function openMasterSpecTable() {
       const modal = document.getElementById('spec-modal');
+        const pcbModal = document.getElementById('pcb-comparison-modal');
+        if (pcbModal && !pcbModal.classList.contains('hidden')) pcbModal.classList.add('hidden');
       if (modal && modal.classList.contains('hidden')) {
         modal.classList.remove('hidden');
       }
@@ -4362,6 +5096,8 @@
     
     function toggleSpecSheet() {
       const modal = document.getElementById('spec-modal');
+        const pcbModal = document.getElementById('pcb-comparison-modal');
+        if (pcbModal && !pcbModal.classList.contains('hidden')) pcbModal.classList.add('hidden');
       modal.classList.toggle('hidden');
       if (!modal.classList.contains('hidden')) renderDvpMatrix();
     }
@@ -5468,6 +6204,8 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         const modal = document.getElementById('spec-modal');
+        const pcbModal = document.getElementById('pcb-comparison-modal');
+        if (pcbModal && !pcbModal.classList.contains('hidden')) pcbModal.classList.add('hidden');
         if (modal && !modal.classList.contains('hidden')) {
           modal.classList.add('hidden');
         }
@@ -5475,5 +6213,111 @@
     });
 
   </script>
+
+  <!-- ================= SIXSENSE PCB REUSE & FEATURE COMPARISON MODAL ================= -->
+  <div id="pcb-comparison-modal" onclick="if(event.target === this) togglePcbComparisonModal()" class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/80 backdrop-blur-sm hidden">
+    <div class="w-full max-w-7xl max-h-[92vh] flex flex-col rounded-2xl border border-indigo-500/40 bg-[var(--card)] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between px-5 py-3 border-b border-[var(--card-border)] bg-[var(--background)]/60">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🔄</span>
+          <div>
+            <h2 class="text-sm font-bold text-[var(--foreground)] flex items-center gap-2">
+              <span>Sixsense IoT Hardware Portfolio — PCB Reusability & Best-Match Engine</span>
+              <span class="px-2 py-0.2 rounded text-[9.5px] bg-indigo-500/20 text-indigo-400 font-bold font-mono">10 Made PCBs Library</span>
+            </h2>
+            <p class="text-[10px] text-[var(--muted-foreground)]">Compare your new customer requirement against existing production-proven Sixsense PCBs to maximize reuse, eliminate NRE, and achieve immediate turnaround.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="togglePcbComparisonModal()" class="px-2.5 py-1 rounded-lg border border-[var(--card-border)] text-xs text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--card)] transition-colors cursor-pointer">
+            ✕ Close [Esc]
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls & Filter Toolbar -->
+      <div class="px-5 py-2.5 bg-[var(--card)] border-b border-[var(--card-border)] flex flex-wrap items-center justify-between gap-3 text-xs">
+        <!-- Search bar -->
+        <div class="flex items-center gap-2 flex-1 min-w-[240px] max-w-md bg-[var(--background)] px-2.5 py-1.5 rounded-lg border border-[var(--card-border)]">
+          <span class="text-[var(--muted-foreground)]">🔍</span>
+          <input type="text" id="pcb-search-input" oninput="renderPcbComparisonTable()" placeholder="Search PCBs by MCU, Modem, Features or Vehicle Domain..." class="w-full bg-transparent text-[11px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]">
+        </div>
+
+        <!-- Domain filter pills -->
+        <div class="flex flex-wrap items-center gap-1.5 text-[10px] font-medium" id="pcb-filter-pills">
+          <button type="button" onclick="setPcbCategoryFilter('all')" class="pcb-cat-btn px-2.5 py-1 rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] font-bold transition-all" data-cat="all">All 10 PCBs</button>
+          <button type="button" onclick="setPcbCategoryFilter('telematics')" class="pcb-cat-btn px-2.5 py-1 rounded-md bg-[var(--background)] border border-[var(--card-border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all" data-cat="telematics">Telematics (TCU)</button>
+          <button type="button" onclick="setPcbCategoryFilter('bcu')" class="pcb-cat-btn px-2.5 py-1 rounded-md bg-[var(--background)] border border-[var(--card-border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all" data-cat="bcu">Body Control (BCU)</button>
+          <button type="button" onclick="setPcbCategoryFilter('ev')" class="pcb-cat-btn px-2.5 py-1 rounded-md bg-[var(--background)] border border-[var(--card-border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all" data-cat="ev">EV / Direct Pack</button>
+          <button type="button" onclick="setPcbCategoryFilter('control')" class="pcb-cat-btn px-2.5 py-1 rounded-md bg-[var(--background)] border border-[var(--card-border)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-all" data-cat="control">ECU / Actuation</button>
+        </div>
+
+        <div class="text-[10px] text-emerald-400 font-mono font-semibold flex items-center gap-1">
+          <span>🎯 Top Match:</span>
+          <strong id="pcb-modal-top-match" class="text-white bg-emerald-600/30 px-1.5 py-0.5 rounded border border-emerald-500/40">Calculating...</strong>
+        </div>
+      </div>
+
+      <!-- Scrollable Comparison Matrix Table -->
+      <div class="flex-1 overflow-auto custom-scrollbar p-4 bg-[var(--background)]/40">
+        <div class="overflow-x-auto rounded-xl border border-[var(--card-border)] bg-[var(--card)] shadow-xs">
+          <table class="w-full text-left text-[10px] border-collapse min-w-[1100px]">
+            <thead class="sticky top-0 bg-[var(--card)] z-10 border-b-2 border-[var(--card-border)] shadow-xs" id="pcb-table-head">
+              <!-- Dynamically populated via renderPcbComparisonTable() -->
+            </thead>
+            <tbody class="divide-y divide-[var(--card-border)]/60 font-sans" id="pcb-table-body">
+              <!-- Dynamically populated via renderPcbComparisonTable() -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Selected Top Match Detailed Gap Analysis Card -->
+        <div class="mt-4 p-3.5 rounded-xl border border-indigo-500/30 bg-[var(--card)] space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--card-border)] pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-base">💡</span>
+              <div>
+                <h3 class="text-xs font-bold text-[var(--foreground)] flex items-center gap-2">
+                  <span>Hardware Reuse Engineering Verdict & Delta Analysis</span>
+                  <span id="gap-analysis-badge" class="px-2 py-0.5 rounded text-[9px] font-bold font-mono bg-emerald-500/20 text-emerald-400">100% Drop-In Compatible</span>
+                </h3>
+                <p class="text-[9.5px] text-[var(--muted-foreground)]">Commercial and engineering feasibility of adapting the top-matched Sixsense PCB for your requirement.</p>
+              </div>
+            </div>
+            <button id="btn-apply-top-template" onclick="applyTopPcbTemplate()" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] transition-all flex items-center gap-1 shadow-sm cursor-pointer">
+              <span>⚡ Apply Top Match as Requirement Template</span>
+            </button>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 text-[10px]">
+            <div class="p-2.5 rounded-lg bg-[var(--background)] border border-[var(--card-border)] space-y-1">
+              <span class="font-bold text-emerald-400 flex items-center gap-1">✓ Matched Capabilities</span>
+              <ul id="gap-matched-list" class="space-y-0.5 text-[9.5px] text-[var(--muted-foreground)] list-disc list-inside"></ul>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[var(--background)] border border-[var(--card-border)] space-y-1">
+              <span class="font-bold text-amber-400 flex items-center gap-1">⚡ Stuffing / Variant Adjustments</span>
+              <ul id="gap-stuffing-list" class="space-y-0.5 text-[9.5px] text-[var(--muted-foreground)] list-disc list-inside"></ul>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[var(--background)] border border-[var(--card-border)] space-y-1">
+              <span class="font-bold text-indigo-400 flex items-center gap-1">💰 Commercial & Schedule Upside</span>
+              <ul id="gap-commercial-list" class="space-y-0.5 text-[9.5px] text-[var(--muted-foreground)] list-disc list-inside"></ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-2.5 border-t border-[var(--card-border)] bg-[var(--background)] flex items-center justify-between text-xs">
+        <span class="text-[10px] text-[var(--muted-foreground)] font-mono">Source Repository: G:\My Drive\Sixsense IoT Hardware Projects (10 Verified Production Designs)</span>
+        <button onclick="togglePcbComparisonModal()" class="px-4 py-1.5 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[11px] hover:opacity-95 transition-all cursor-pointer">
+          Done
+        </button>
+      </div>
+
+    </div>
+  </div>
+
 </body>
 </html>
