@@ -71,49 +71,40 @@
 
     <!-- Top Header: Row 1 Compact Logo & Actions + Row 2 Step Navigation Pills (User Request) -->
     <div class="space-y-2 pb-2.5 border-b border-[var(--card-border)]">
-      <!-- ROW 1: Logo + Short Heading + 4 Compact Action Buttons (User Request: right next to logo) -->
-      <div class="flex flex-wrap items-center justify-between gap-2">
+      <!-- ROW 1: Logo & Title (Left) + Only All 4 Action Icons (Right) -->
+      <div class="flex items-center justify-between gap-2">
+        <!-- Left: Logo + Title + Step Badge -->
         <div class="flex items-center gap-2">
           <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-sm shadow-xs shrink-0">🚚</span>
           <div class="flex items-center gap-1.5 shrink-0">
             <h1 class="text-xs font-bold tracking-tight text-[var(--foreground)]">SSM Requirement Wizard</h1>
             <span id="step-badge" class="px-1.5 py-0.2 rounded text-[9px] bg-blue-500/15 text-blue-500 font-bold font-mono">Step 1</span>
           </div>
-
-          <!-- Vertical Divider -->
-          <span class="h-4 w-px bg-[var(--card-border)] shrink-0 hidden sm:inline-block"></span>
-
-          <!-- 4 Compact Action Buttons Right Next to Logo/Title (User Request) -->
-          <div class="flex items-center gap-1.5 shrink-0">
-            <!-- 1. PCB Reuse Button -->
-            <button onclick="togglePcbComparisonModal()" id="btn-pcb-comparison" class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-600 hover:bg-indigo-500 text-white text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Compare new requirements against 10 made Sixsense PCBs, view Delta/Gap analysis, or apply baseline">
-              <span>🔄</span>
-              <span>PCB Reuse</span>
-              <span id="header-pcb-match-badge" class="px-1.5 py-0.2 rounded text-[8.5px] bg-black/25 text-indigo-100 font-mono">10 Boards</span>
-            </button>
-
-            <!-- 2. 700 Parameter Master Configuration -->
-            <button onclick="openMasterSpecTable()" id="btn-700-params" class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Open master 700-parameter bank across 22 automotive engineering domains">
-              <span>📋</span>
-              <span>700 Params</span>
-            </button>
-
-            <!-- 3. Light / Dark Mode Toggle -->
-            <button onclick="toggleTheme()" id="theme-toggle-btn" class="flex items-center gap-1 px-2.5 py-1 rounded-md border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] text-[10.5px] font-semibold text-[var(--foreground)] transition-all cursor-pointer shadow-xs" title="Toggle Light / Dark mode">
-              <span id="theme-icon">☀️</span>
-              <span id="theme-text">Light</span>
-            </button>
-
-            <!-- 4. Help & Workflow Guide -->
-            <button onclick="toggleHelpModal()" id="btn-top-help" class="flex items-center gap-1 px-2.5 py-1 rounded-md border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 text-[10.5px] font-bold transition-all cursor-pointer shadow-xs" title="Open portal usage guide, hardware reuse workflow, and shortcuts">
-              <span>❓</span>
-              <span>Help</span>
-            </button>
-          </div>
         </div>
 
-        <div class="text-[10px] text-[var(--muted-foreground)] font-mono hidden md:block">
-          Sixsense Hardware Engine • 700-Param DVP
+        <!-- Right: Only All 4 Action Icons (User Request) -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          <!-- 1. PCB Reuse Icon -->
+          <button onclick="togglePcbComparisonModal()" id="btn-pcb-comparison" class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs transition-all cursor-pointer shadow-xs" title="Compare new requirements against 10 Sixsense PCBs (Delta / Gap Analysis & Reuse)">
+            <span>🔄</span>
+            <span id="header-pcb-match-badge" class="hidden">10 Boards</span>
+          </button>
+
+          <!-- 2. 700 Parameter Master Configuration Icon -->
+          <button onclick="openMasterSpecTable()" id="btn-700-params" class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs transition-all cursor-pointer shadow-xs" title="Open Master 700-Parameter Bank across 22 Automotive Engineering Domains">
+            <span>📋</span>
+          </button>
+
+          <!-- 3. Light / Dark Mode Toggle Icon -->
+          <button onclick="toggleTheme()" id="theme-toggle-btn" class="inline-flex items-center justify-center w-7 h-7 rounded-lg border border-[var(--card-border)] bg-[var(--card)] hover:border-[var(--primary)] text-xs text-[var(--foreground)] transition-all cursor-pointer shadow-xs" title="Toggle Light / Dark Mode">
+            <span id="theme-icon">☀️</span>
+            <span id="theme-text" class="hidden">Light</span>
+          </button>
+
+          <!-- 4. Help & Workflow Guide Icon -->
+          <button onclick="toggleHelpModal()" id="btn-top-help" class="inline-flex items-center justify-center w-7 h-7 rounded-lg border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 text-xs font-bold transition-all cursor-pointer shadow-xs" title="Open Portal Usage Guide, Hardware Reuse Flow & Shortcuts">
+            <span>❓</span>
+          </button>
         </div>
       </div>
 
