@@ -4,7 +4,190 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Automotive Device Requirement & Graphical Mounting Wizard</title>
-  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js">
+    
+    // ================= UPGRADED STEP-AWARE SOFTWARE DRIVER LOGIC =================
+    let currentSoftwareFilterMode = 'auto'; // 'auto', 1, 2, 3, 'all'
+
+    function setSoftwareFilter(mode) {
+      currentSoftwareFilterMode = mode;
+      ['auto', 'step1', 'step2', 'step3', 'all'].forEach(k => {
+        const btn = document.getElementById(`sw-filter-${k}`);
+        if (!btn) return;
+        const isActive = (k === 'auto' && mode === 'auto') ||
+                         (k === 'step1' && mode === 1) ||
+                         (k === 'step2' && mode === 2) ||
+                         (k === 'step3' && mode === 3) ||
+                         (k === 'all' && mode === 'all');
+        if (isActive) {
+          btn.className = "px-1.5 py-0.5 rounded bg-blue-500 text-white font-bold";
+        } else {
+          btn.className = "px-1.5 py-0.5 rounded bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]";
+        }
+      });
+      filterSidebarFeatures();
+    }
+
+    function filterSidebarFeatures() {
+      const q = (document.getElementById('sw-sidebar-search')?.value || '').toLowerCase().trim();
+      const container = document.getElementById('sidebar-sw-features-list');
+      const hintEl = document.getElementById('sw-sidebar-step-hint');
+      if (!container) return;
+
+      let targetStep = null;
+      if (currentSoftwareFilterMode === 'auto') {
+        targetStep = currentStep;
+      } else if (typeof currentSoftwareFilterMode === 'number') {
+        targetStep = currentSoftwareFilterMode;
+      }
+
+      if (hintEl) {
+        if (q) {
+          hintEl.textContent = `Search results for "${q}"`;
+        } else if (targetStep === 1) {
+          hintEl.textContent = "Suggested for Step 1: Power & Battery";
+        } else if (targetStep === 2) {
+          hintEl.textContent = "Suggested for Step 2: Hardware I/O & Busses";
+        } else if (targetStep === 3) {
+          hintEl.textContent = "Suggested for Step 3: Wireless & On-Board Storage";
+        } else {
+          hintEl.textContent = "All 12 Telematics Capabilities";
+        }
+      }
+
+      const items = container.querySelectorAll('.sw-feat-item');
+      items.forEach(item => {
+        const itemStep = parseInt(item.getAttribute('data-step') || '2');
+        const keywords = (item.getAttribute('data-keywords') || '').toLowerCase();
+        const text = item.innerText.toLowerCase();
+
+        let matchesSearch = true;
+        if (q) {
+          matchesSearch = text.includes(q) || keywords.includes(q);
+        }
+
+        let matchesStep = true;
+        if (!q && targetStep !== null && targetStep <= 3) {
+          matchesStep = (itemStep === targetStep);
+        }
+
+        if (matchesSearch && matchesStep) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    function syncSoftwareFeature(key, checked) {
+      // Sync between sidebar checkbox and modal checkbox
+      const sbEl = document.getElementById(`sb-rec-${key}`);
+      const mEl = document.getElementById(`m-rec-${key}`);
+      if (sbEl) sbEl.checked = checked;
+      if (mEl) mEl.checked = checked;
+
+      // Apply dynamic hardware & peripheral allocations
+      if (key === 'immob') {
+        if (checked && !wizardState.pins.some(p => p.type === 'DO' && p.label.includes('Starter Cut'))) {
+          adjustPinCount('DO', 1);
+          const lastDO = wizardState.pins.filter(p => p.type === 'DO').pop();
+          if (lastDO) { lastDO.label = "Starter Cut Relay"; lastDO.purpose = "Remote Anti-Theft Starter Cut"; }
+        }
+      } else if (key === 'fuel') {
+        if (checked && !wizardState.pins.some(p => p.type === 'AI' && p.label.includes('Fuel'))) {
+          adjustPinCount('AI', 1);
+          const lastAI = wizardState.pins.filter(p => p.type === 'AI').pop();
+          if (lastAI) { lastAI.label = "Fuel Level Sensor"; lastAI.purpose = "0-32V Analog Tank Float"; }
+        }
+      } else if (key === 'sos') {
+        if (checked && !wizardState.pins.some(p => p.type === 'DI' && p.label.includes('SOS'))) {
+          adjustPinCount('DI', 1);
+          const lastDI = wizardState.pins.filter(p => p.type === 'DI').pop();
+          if (lastDI) { lastDI.label = "Driver SOS Panic"; lastDI.purpose = "Emergency Push Button"; }
+        }
+      } else if (key === 'pto') {
+        if (checked && !wizardState.pins.some(p => p.type === 'DI' && p.label.includes('PTO'))) {
+          adjustPinCount('DI', 2);
+        }
+      } else if (key === 'can') {
+        const ioCan = document.getElementById('io_can_fd');
+        if (ioCan) ioCan.checked = checked;
+        toggleBusFromStep2('can', checked);
+      } else if (key === 'rs485') {
+        const ioRs485 = document.getElementById('io_rs485');
+        if (ioRs485) ioRs485.checked = checked;
+        toggleBusFromStep2('rs485', checked);
+      } else if (key === 'buzzer') {
+        if (checked && !wizardState.pins.some(p => p.type === 'DO' && p.label.includes('Buzzer'))) {
+          adjustPinCount('DO', 1);
+          const lastDO = wizardState.pins.filter(p => p.type === 'DO').pop();
+          if (lastDO) { lastDO.label = "Cabin Buzzer"; lastDO.purpose = "Audible Warning Strobe"; }
+        }
+      } else if (key === 'fota') {
+        const flash = document.getElementById('peri-spi-flash');
+        if (flash) flash.value = checked ? '64mb' : '32mb';
+      } else if (key === 'ble') {
+        const netBle = document.getElementById('net_ble');
+        if (netBle) netBle.checked = checked;
+      } else if (key === 'wifi') {
+        const netWifi = document.getElementById('net_wifi');
+        if (netWifi) netWifi.checked = checked;
+      } else if (key === 'ais140') {
+        const gnss = document.getElementById('gnss_type');
+        if (gnss) gnss.value = checked ? 'navic' : 'standard';
+        const net4g = document.getElementById('net_4g');
+        if (net4g && checked) net4g.checked = true;
+      }
+
+      updateSoftwareFeaturesBadge();
+      recalculatePins();
+      updateLiveImpact();
+    }
+
+    function updateSoftwareFeaturesBadge() {
+      const featureDefs = [
+        { key: 'cleanpwr', name: 'Clean Battery %' },
+        { key: 'immob', name: 'Starter Cut (DO)' },
+        { key: 'fuel', name: 'Fuel Level (AI)' },
+        { key: 'sos', name: 'SOS Panic (DI)' },
+        { key: 'pto', name: 'PTO Acreage (2DI)' },
+        { key: 'can', name: 'J1939 CAN' },
+        { key: 'rs485', name: 'RS485 Probes' },
+        { key: 'reefer', name: 'Reefer Temp (AI)' },
+        { key: 'buzzer', name: 'Cabin Buzzer (DO)' },
+        { key: 'fota', name: 'FOTA 64MB' },
+        { key: 'ble', name: 'BLE 5.2' },
+        { key: 'wifi', name: 'Depot Wi-Fi' },
+        { key: 'ais140', name: 'AIS-140' }
+      ];
+
+      const lockedContainer = document.getElementById('sw-locked-chips-container');
+      if (lockedContainer) lockedContainer.innerHTML = '';
+
+      let activeCount = 0;
+      featureDefs.forEach(f => {
+        const isChecked = document.getElementById(`sb-rec-${f.key}`)?.checked;
+        if (isChecked) {
+          activeCount++;
+          if (lockedContainer) {
+            const chip = document.createElement('span');
+            chip.className = "px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1 cursor-pointer hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 transition-all select-none";
+            chip.title = `Click to unlock/remove ${f.name}`;
+            chip.onclick = () => syncSoftwareFeature(f.key, false);
+            chip.innerHTML = `✓ ${f.name} <span class="text-[7.5px] opacity-70">✕</span>`;
+            lockedContainer.appendChild(chip);
+          }
+        }
+      });
+
+      const badge = document.getElementById('sw-sidebar-active-badge');
+      if (badge) badge.textContent = `${activeCount} Active`;
+      const lockCount = document.getElementById('sw-locked-count');
+      if (lockCount) lockCount.textContent = `${activeCount} Locked`;
+      const stripBadge = document.getElementById('step2-sw-active-summary');
+      if (stripBadge) stripBadge.textContent = `${activeCount} Capabilities Active`;
+    }
+</script>
   <style>
     :root, [data-theme="dark"] {
       --background: #090d16;
@@ -351,131 +534,19 @@
           <datalist id="ai-suggestions"></datalist>
 
           <div id="s2-section-io" class="space-y-3">
-<!-- Software Feature to Recommended Hardware I/O Auto-Recommender (User Request) -->
-          <div class="p-3 rounded-xl border border-[var(--primary)]/40 bg-[var(--card)] space-y-2 shadow-xs">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex items-center gap-1.5">
-                <span class="text-sm">🎯</span>
-                <div>
-                  <h3 class="text-xs font-bold text-[var(--foreground)] flex items-center gap-1.5">
-                    <span>Software Feature to Hardware I/O Auto-Recommender</span>
-                    <span class="px-1.5 py-0.2 rounded text-[8.5px] bg-emerald-500/20 text-emerald-400 font-bold uppercase">Reverse Allocator</span>
-                  </h3>
-                  <p class="text-[10px] text-[var(--muted-foreground)]">Select the telematics & software capabilities you need — the wizard automatically recommends and pre-allocates the exact hardware I/O pins.</p>
-                </div>
-              </div>
-              <span id="recommender-active-badge" class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-blue-500/15 text-blue-400 font-mono">
-                Select software capabilities below
-              </span>
+<!-- Compact Software Feature Link Strip -->
+          <div class="p-2 rounded-lg border border-blue-500/30 bg-blue-500/5 flex items-center justify-between text-[11px]">
+            <div class="flex items-center gap-1.5">
+              <span>🎯</span>
+              <span class="text-[var(--foreground)] font-semibold">Software Feature Driver:</span>
+              <span id="step2-sw-active-summary" class="font-mono text-blue-400 font-bold">4 Capabilities Active</span>
             </div>
-
-            <div class="flex items-center justify-between text-[9px] text-[var(--muted-foreground)] pt-0.5 px-0.5 border-t border-[var(--card-border)]/60">
-              <span class="flex items-center gap-1 font-mono text-amber-500 font-semibold">
-                <span>↕</span> Scrollable Feature Matrix (9 Capabilities)
-              </span>
-              <span class="text-[8.5px] font-mono text-emerald-400">Auto-allocates DI, DO, AI, CAN & RS485</span>
-            </div>
-
-            <!-- Instant Search for Software Features (User Request) -->
-            <div class="flex items-center gap-1.5 bg-[var(--background)] px-2 py-1 rounded-md border border-[var(--card-border)] shadow-xs">
-              <span class="text-[var(--muted-foreground)] text-xs">🔍</span>
-              <input type="text" id="sw-feature-search-input" oninput="filterSoftwareCards()" placeholder="Quick search 9 features (e.g. starter cut, fuel theft, SOS panic, PTO, reefer, CAN)..." class="w-full bg-transparent text-[10.5px] text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)] font-sans" />
-            </div>
-
-            <div id="sw-features-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 max-h-48 overflow-y-auto pr-1 text-[10px] custom-scrollbar">
-              <!-- Feature 1: Engine Starter Cut -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-immob" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">Remote Engine Starter Cut</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">Anti-theft remote immobilization with safe-speed gate</span>
-                  <div class="mt-1 text-[9px] font-mono text-emerald-400 font-bold">↳ Recommends: 1x DO (1.5A Low-Side)</div>
-                </div>
-              </label>
-
-              <!-- Feature 2: Fuel Theft & Level -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-fuel" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">Fuel Theft & Level Tracking</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">Tank volume monitoring & siphoning drop detection</span>
-                  <div class="mt-1 text-[9px] font-mono text-purple-400 font-bold">↳ Recommends: 1x AI (0–32V 12-bit ADC)</div>
-                </div>
-              </label>
-
-              <!-- Feature 3: SOS Emergency Panic -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-sos" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">Driver SOS / Panic Button</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">Emergency cloud dispatch & SMS alert (&lt;2s priority)</span>
-                  <div class="mt-1 text-[9px] font-mono text-blue-400 font-bold">↳ Recommends: 1x DI (Opto Panic Line)</div>
-                </div>
-              </label>
-
-              <!-- Feature 4: Tractor PTO & Acreage -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-pto" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">PTO & Field Acreage Logging</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">Implement engagement & automated GIS acreage calculation</span>
-                  <div class="mt-1 text-[9px] font-mono text-amber-400 font-bold">↳ Recommends: 2x DI (PTO & Switch)</div>
-                </div>
-              </label>
-
-              <!-- Feature 5: J1939 Engine Diagnostics & Odometer -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-can" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">J1939 Diagnostics & Odometer</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">ECU RPM, coolant temp, fuel rate & active DTC codes</span>
-                  <div class="mt-1 text-[9px] font-mono text-orange-400 font-bold">↳ Recommends: CAN-FD Bus (ISO 11898-2)</div>
-                </div>
-              </label>
-
-              <!-- Feature 6: Cold-Chain Reefer Temperature -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-reefer" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">Cold-Chain Cargo Temperature</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">Refrigerated cargo temp tracking (-40°C to +80°C)</span>
-                  <div class="mt-1 text-[9px] font-mono text-purple-400 font-bold">↳ Recommends: 1x AI (Thermal ADC)</div>
-                </div>
-              </label>
-
-              <!-- Feature 7: Multi-Tank Ultrasonic Probes -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-rs485" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">Multi-Tank Probes / RFID Badge</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">Up to 4 daisy-chained probes + Driver RFID reader</span>
-                  <div class="mt-1 text-[9px] font-mono text-purple-400 font-bold">↳ Recommends: RS485 Modbus RTU</div>
-                </div>
-              </label>
-
-              <!-- Feature 8: Over-Speed Audio Buzzer -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-buzzer" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">In-Cabin Over-Speed Buzzer</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">Driver audible warnings on road speed / geofence breach</span>
-                  <div class="mt-1 text-[9px] font-mono text-emerald-400 font-bold">↳ Recommends: 1x DO (Buzzer Driver)</div>
-                </div>
-              </label>
-
-              <!-- Feature 9: Agricultural EQL Hitch Auto-Lift -->
-              <label class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-[var(--primary)] flex items-start gap-2 cursor-pointer transition-all">
-                <input type="checkbox" id="rec-feat-eql" onchange="applySoftwareFeatureRecommendation()" class="mt-0.5 accent-[var(--primary)] rounded">
-                <div>
-                  <strong class="text-[var(--foreground)] block text-[11px]">EQL Hitch Auto-Lift System</strong>
-                  <span class="text-[9.5px] text-[var(--muted-foreground)]">3-point hitch raise/lower with steering angle feedback</span>
-                  <div class="mt-1 text-[9px] font-mono text-cyan-400 font-bold">↳ Recommends: 2x DO (PWM) + 1x AI (Draft)</div>
-                </div>
-              </label>
-            </div>
+            <button type="button" onclick="openSoftwareFeaturesModal()" class="px-2.5 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[9.5px] flex items-center gap-1 shadow-xs cursor-pointer">
+              <span>⛶ Open Feature Studio</span>
+            </button>
           </div>
 
-          <!-- 3 COLUMN-SPECIFIC I/O CARDS (Rows directly inside respective columns) -->
+          <!-- 4 COLUMN-SPECIFIC HARDWARE I/O & BUS CARDS (Rows directly inside respective columns) -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 items-start">
 
             <!-- COLUMN 1: DIGITAL INPUTS (DI) -->
@@ -689,7 +760,7 @@
             <div class="flex items-center justify-between">
               <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 3: Networks, Bus Protocols & On-Board Peripherals</h2>
               <span id="step3-conn-badge" class="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-purple-500/15 text-purple-400">
-                CAN-FD • 4G LTE • NavIC • SPI & I2C
+                4G LTE • NavIC • BLE & Wi-Fi • SPI & I2C Storage
               </span>
             </div>
             <p class="text-[11px] text-[var(--muted-foreground)]">Configure vehicle telemetry networks, wireless carriers, GNSS satellite positioning, and on-board memory & protocol peripherals.</p>
@@ -702,12 +773,12 @@
                 <span>📡</span> <span>Connectivity, Positioning & Network Protocols:</span>
               </span>
               <span id="conn-summary-badge" class="text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-purple-500/15 text-purple-400">
-                4G LTE • NavIC L5 (+2 Wks Lead, +8% Cost) • BLE 5.2 • CAN-FD
+                4G LTE Cat-1 • NavIC L5 • BLE 5.2 • Wi-Fi 802.11 b/g/n
               </span>
             </div>
 
             <!-- 4 Compact Symmetrical Responsive Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
 
               <!-- CARD 1: CELLULAR & SIM ENGINE -->
               <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
@@ -764,37 +835,7 @@
                 </div>
               </div>
 
-              <!-- CARD 3: VEHICLE SERIAL BUSSES -->
-              <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
-                <div>
-                  <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
-                    <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
-                      <span>🚌</span> <span>Vehicle Busses</span>
-                    </span>
-                    <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-purple-500/15 text-purple-400 font-mono font-bold">Telemetry</span>
-                  </div>
-                  <div class="space-y-1 pt-1.5">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" id="net_can" checked onchange="syncBusToStep2('can', this.checked)" class="accent-[var(--primary)] rounded">
-                      <span class="text-xs font-semibold text-[var(--foreground)]">CAN-FD (ISO 11898-2)</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" id="net_rs485" onchange="syncBusToStep2('rs485', this.checked)" class="accent-[var(--primary)] rounded">
-                      <span class="text-[11px] text-[var(--muted-foreground)]">RS485 / Modbus RTU</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" id="net_kline" onchange="syncBusToStep2('kline', this.checked)" class="accent-[var(--primary)] rounded">
-                      <span class="text-[11px] text-[var(--muted-foreground)]">K-Line / LIN Bus (ISO 9141)</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="text-[9px] text-[var(--muted-foreground)] border-t border-[var(--card-border)] pt-1 flex justify-between">
-                  <span>Termination:</span>
-                  <span class="font-mono text-purple-400">120Ω Switchable</span>
-                </div>
-              </div>
-
-              <!-- CARD 4: SHORT-RANGE WIRELESS -->
+              <!-- CARD 3: SHORT-RANGE WIRELESS (BLE, WI-FI, LORA) -->
               <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] flex flex-col justify-between space-y-2">
                 <div>
                   <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
@@ -1976,6 +2017,204 @@
           </div>
         </div>
 
+
+        <!-- COMPACT SOFTWARE FEATURE DRIVER CARD (User Request: Searchable, Step-Aware, Locked Tray, Expandable Pop-up) -->
+        <div id="sidebar-sw-features-card" class="p-2.5 rounded-xl border border-blue-500/30 bg-blue-500/5 space-y-2 shadow-sm">
+          <div class="flex items-center justify-between pb-1.5 border-b border-blue-500/20">
+            <div class="flex items-center gap-1.5">
+              <span class="text-sm">🎯</span>
+              <div>
+                <h3 class="text-xs font-bold text-[var(--foreground)] flex items-center gap-1">
+                  <span>Software Driver</span>
+                  <span id="sw-sidebar-active-badge" class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-blue-500/20 text-blue-400">3 Active</span>
+                </h3>
+                <span id="sw-sidebar-step-hint" class="text-[8.5px] text-[var(--muted-foreground)] block">Suggested for Step 1: Power & Battery</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1">
+              <button type="button" onclick="openSoftwareFeaturesModal()" class="px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[9px] flex items-center gap-1 shadow-xs cursor-pointer" title="Expand Full Feature Studio">
+                <span>⛶ Pop-up</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step Filter Pills & Quick Search -->
+          <div class="space-y-1.5">
+            <div class="relative">
+              <input type="text" id="sw-sidebar-search" oninput="filterSidebarFeatures()" placeholder="🔍 Search features (e.g. starter, fuel, CAN, FOTA)..." class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-[9.5px] text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] focus:border-blue-500 outline-none">
+            </div>
+            <div class="flex items-center gap-1 text-[8px] font-mono">
+              <button type="button" id="sw-filter-auto" onclick="setSoftwareFilter('auto')" class="px-1.5 py-0.5 rounded bg-blue-500 text-white font-bold">⚡ Step Auto</button>
+              <button type="button" id="sw-filter-step1" onclick="setSoftwareFilter(1)" class="px-1.5 py-0.5 rounded bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]">P1 Power</button>
+              <button type="button" id="sw-filter-step2" onclick="setSoftwareFilter(2)" class="px-1.5 py-0.5 rounded bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]">P2 I/O</button>
+              <button type="button" id="sw-filter-step3" onclick="setSoftwareFilter(3)" class="px-1.5 py-0.5 rounded bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]">P3 Net</button>
+              <button type="button" id="sw-filter-all" onclick="setSoftwareFilter('all')" class="px-1.5 py-0.5 rounded bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)]">All</button>
+            </div>
+          </div>
+
+          <!-- Scrollable Compact Feature Suggestions List -->
+          <div id="sidebar-sw-features-list" class="space-y-1 max-h-36 overflow-y-auto pr-0.5 text-[10px] custom-scrollbar">
+            <!-- STEP 1 POWER FEATURES -->
+            <label data-step="1" data-keywords="battery voltage clean power alternator raw low power sleep" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-cleanpwr" onchange="syncSoftwareFeature('cleanpwr', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">Clean Battery Telemetry</strong>
+                  <span class="text-[7.5px] font-mono text-purple-400 font-bold">Step 1</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Low-power sleep & alternator surge filter</span>
+              </div>
+            </label>
+
+            <!-- STEP 2 HARDWARE I/O & BUS FEATURES -->
+            <label data-step="2" data-keywords="starter cut immobilizer remote engine relay do" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-immob" onchange="syncSoftwareFeature('immob', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">Starter Cut Relay</strong>
+                  <span class="text-[8px] font-mono text-emerald-400 font-bold">+1 DO</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Anti-theft remote immobilizer</span>
+              </div>
+            </label>
+
+            <label data-step="2" data-keywords="fuel theft level volume tank analog ai adc" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-fuel" onchange="syncSoftwareFeature('fuel', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">Fuel Theft Tracking</strong>
+                  <span class="text-[8px] font-mono text-amber-400 font-bold">+1 AI</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Tank level & siphoning drop</span>
+              </div>
+            </label>
+
+            <label data-step="2" data-keywords="sos panic emergency button driver di" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-sos" onchange="syncSoftwareFeature('sos', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">Driver SOS Panic</strong>
+                  <span class="text-[8px] font-mono text-blue-400 font-bold">+1 DI</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Emergency cloud alert line</span>
+              </div>
+            </label>
+
+            <label data-step="2" data-keywords="pto acreage logging implement farm tractor di" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-pto" onchange="syncSoftwareFeature('pto', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">PTO Acreage Logging</strong>
+                  <span class="text-[8px] font-mono text-blue-400 font-bold">+2 DI</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Implement & acreage sensing</span>
+              </div>
+            </label>
+
+            <label data-step="2" data-keywords="can j1939 can-fd bus ecu engine dtc rpm" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-can" checked onchange="syncSoftwareFeature('can', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">J1939 CAN-FD Bus</strong>
+                  <span class="text-[8px] font-mono text-orange-400 font-bold">+2 CAN</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">ECU telemetry & DTC diagnostic</span>
+              </div>
+            </label>
+
+            <label data-step="2" data-keywords="rs485 modbus multi-tank rfid probes ultrasonic serial" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-rs485" onchange="syncSoftwareFeature('rs485', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">RS485 Probes / RFID</strong>
+                  <span class="text-[8px] font-mono text-indigo-400 font-bold">+2 RS485</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Daisy-chain fuel probes & RFID</span>
+              </div>
+            </label>
+
+            <label data-step="2" data-keywords="reefer cold chain cargo temp temperature ai ntc" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-reefer" onchange="syncSoftwareFeature('reefer', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">Reefer Cargo Temp</strong>
+                  <span class="text-[8px] font-mono text-amber-400 font-bold">+1 AI</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">-40°C to +80°C thermistor line</span>
+              </div>
+            </label>
+
+            <label data-step="2" data-keywords="buzzer overspeed alarm driver do" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-buzzer" onchange="syncSoftwareFeature('buzzer', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">In-Cabin Buzzer</strong>
+                  <span class="text-[8px] font-mono text-emerald-400 font-bold">+1 DO</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Over-speed audible alarm driver</span>
+              </div>
+            </label>
+
+            <!-- STEP 3 NETWORKS & ON-BOARD PERIPHERALS -->
+            <label data-step="3" data-keywords="fota flash memory blackbox offline records storage spi" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-fota" checked onchange="syncSoftwareFeature('fota', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">FOTA Dual-Bank</strong>
+                  <span class="text-[8px] font-mono text-purple-400 font-bold">64MB Flash</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Remote firmware + 250k offline records</span>
+              </div>
+            </label>
+
+            <label data-step="3" data-keywords="ble bluetooth tpms tire pressure sensors driver id wireless" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-ble" checked onchange="syncSoftwareFeature('ble', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">BLE 5.2 TPMS / Sensors</strong>
+                  <span class="text-[8px] font-mono text-emerald-400 font-bold">BLE 5.2</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Wireless tire pressure & driver fob</span>
+              </div>
+            </label>
+
+            <label data-step="3" data-keywords="wifi depot yard auto download offload" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-wifi" onchange="syncSoftwareFeature('wifi', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">Depot Wi-Fi Offload</strong>
+                  <span class="text-[8px] font-mono text-cyan-400 font-bold">Wi-Fi</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">High-speed yard logs auto-download</span>
+              </div>
+            </label>
+
+            <label data-step="3" data-keywords="ais140 navic 4g panic dispatch government compliance" class="sw-feat-item p-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-1.5 cursor-pointer transition-all">
+              <input type="checkbox" id="sb-rec-ais140" checked onchange="syncSoftwareFeature('ais140', this.checked)" class="mt-0.5 accent-[var(--primary)] rounded">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <strong class="text-[var(--foreground)] text-[10px] truncate">AIS-140 Cloud Dispatch</strong>
+                  <span class="text-[8px] font-mono text-blue-400 font-bold">4G+NavIC</span>
+                </div>
+                <span class="text-[8.5px] text-[var(--muted-foreground)] truncate block">Mandatory emergency telematics</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- LOCKED / ACTIVE ALLOCATIONS TRAY (User Request: Locked features visible compactly) -->
+          <div class="pt-1.5 border-t border-blue-500/20 space-y-1">
+            <div class="flex items-center justify-between text-[8.5px] font-mono">
+              <span class="text-[var(--muted-foreground)] flex items-center gap-1">
+                <span>🔒</span> <span>Locked Allocations:</span>
+              </span>
+              <span id="sw-locked-count" class="font-bold text-emerald-400">4 Locked</span>
+            </div>
+            <div id="sw-locked-chips-container" class="flex flex-wrap gap-1 text-[8px] font-mono max-h-14 overflow-y-auto custom-scrollbar">
+              <!-- Dynamically populated via updateSoftwareFeaturesBadge() -->
+            </div>
+          </div>
+        </div>
+
         <!-- Live Impact Card -->
         <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-3 shadow-sm">
           <div class="flex items-center justify-between pb-2 border-b border-[var(--card-border)]">
@@ -2090,51 +2329,7 @@
           </button>
         </div>
 
-        <!-- Live Connector Preview with Interactive Zoom Controls (User Request: Right Side with Zoom) -->
-        <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-2 shadow-sm">
-          <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
-            <div class="flex items-center gap-1.5">
-              <span class="text-sm">🔌</span>
-              <div>
-                <span class="text-[10.5px] uppercase font-bold tracking-wider text-[var(--foreground)]">Live Connector Pinout</span>
-                <span id="sb-conn-header-name" class="block text-[9px] text-[var(--muted-foreground)] font-mono truncate max-w-[170px]">TE Superseal 1.0 (14-Pin)</span>
-              </div>
-            </div>
-            
-            <!-- Zoom Controls Toolbar -->
-            <div class="flex items-center gap-1 bg-[var(--background)] p-0.5 rounded-lg border border-[var(--card-border)] shadow-xs">
-              <button type="button" onclick="adjustConnectorZoom(-0.15)" title="Zoom Out" class="w-5 h-5 flex items-center justify-center font-bold text-xs rounded hover:bg-[var(--card)] text-[var(--foreground)] transition-colors cursor-pointer select-none">−</button>
-              <span id="sb-conn-zoom-text" class="font-mono text-[9px] font-bold text-amber-500 min-w-[34px] text-center select-none">100%</span>
-              <button type="button" onclick="adjustConnectorZoom(0.15)" title="Zoom In" class="w-5 h-5 flex items-center justify-center font-bold text-xs rounded hover:bg-[var(--card)] text-[var(--foreground)] transition-colors cursor-pointer select-none">+</button>
-              <button type="button" onclick="resetConnectorZoom()" title="Reset to Fit (100%)" class="px-1.5 h-5 text-[8.5px] font-mono rounded hover:bg-[var(--card)] text-[var(--muted-foreground)] transition-colors cursor-pointer select-none">Fit</button>
-            </div>
-          </div>
-
-          <!-- Zoomable Viewport Container -->
-          <div id="sb-conn-viewport" onwheel="handleConnectorWheelZoom(event)" class="relative overflow-hidden rounded-lg bg-[var(--background)] border border-[var(--card-border)] min-h-[145px] max-h-[210px] flex items-center justify-center p-2 cursor-grab select-none" title="Use Zoom buttons or Mouse Wheel to zoom pinout preview">
-            <div id="sb-conn-zoom-stage" style="transform: scale(1); transform-origin: center center; transition: transform 0.15s ease-out;" class="w-full flex items-center justify-center">
-              <div id="sidebar-live-connector-canvas" class="w-full flex justify-center">
-                <!-- Dynamically rendered via renderSidebarConnectorPinout() -->
-              </div>
-            </div>
-            <!-- Floating Zoom Indicator Hint -->
-            <div class="absolute bottom-1 right-2 text-[8px] font-mono text-[var(--muted-foreground)]/60 pointer-events-none">
-              Wheel / ± to Zoom
-            </div>
-          </div>
-
-          <!-- Pin Cavity Mini-Legend -->
-          <div class="flex flex-wrap items-center justify-center gap-2 pt-1 border-t border-[var(--card-border)] text-[8.5px] text-[var(--muted-foreground)] font-mono">
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span>PWR</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-slate-600"></span>GND</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span>IGN</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span>DI</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>DO</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-500"></span>AI</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-orange-500"></span>CAN</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full border border-dashed border-gray-400"></span>Spare</span>
-          </div>
-        </div>
+        
 
       </div>
 
@@ -2341,6 +2536,22 @@
     let currentStep = 1;
     var AUTOMOTIVE_CONNECTOR_CATALOG = [
       {
+        id: 'conn-sixsense-20',
+        brand: 'TE Connectivity / Molex',
+        family: 'Automotive Sealed 20-Pin Header',
+        mpn: '1379659-1 / 34791-0200',
+        cavities: 20,
+        ipRating: 'IP67 / IP69K',
+        pitch: '2.54 mm / 0.50 mm Pitch',
+        wireRange: '0.35 – 1.0 mm² (FLRY-A/B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        activeDevice: 'TCU-AIS140 (Dhruv) & ITL-TCU03 Telematics',
+        source: 'Sixsense Active Production Tooling (In-Stock)',
+        img: '🔌',
+        features: 'Actual Sixsense TCU 20-Pin layout: Dual CAN, RS485, 4x DI, 2x DO, 2x AI + Main Power/GND/IGN.'
+      },
+      {
         id: 'conn-te-14',
         brand: 'TE Connectivity',
         family: 'Superseal 1.0',
@@ -2485,7 +2696,7 @@
         features: 'Triple-rib silicone cable perimeter seal, secondary TPA lock.'
       }
     ];
-    var selectedConnectorId = 'conn-te-14';
+    var selectedConnectorId = 'conn-sixsense-20';
 
     const totalSteps = 7;
     let currentTheme = 'dark';
@@ -2861,6 +3072,7 @@
       } else {
         if (totalPinsCount <= 8) { totalCavities = 8; headerName = "TE Superseal 1.0 (8-Pin Header)"; }
         else if (totalPinsCount <= 14) { totalCavities = 14; headerName = "TE Superseal 1.0 (14-Pin Header)"; }
+        else if (totalPinsCount <= 20) { totalCavities = 20; headerName = "Sixsense TCU Automotive Header (20-Pin)"; }
         else if (totalPinsCount <= 26) { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
         else if (totalPinsCount <= 34) { totalCavities = 34; headerName = "TE Superseal 1.0 (34-Pin Header)"; }
         else { totalCavities = Math.ceil(totalPinsCount / 2) * 2; headerName = `Automotive Header (${totalCavities}-Pin)`; }
@@ -2997,6 +3209,7 @@
 
     // DYNAMIC STEP PREVIEW CARD CONTROLLER (Stages 1 through 7)
     function updateStepSidebarPreview(step) {
+      if (typeof filterSidebarFeatures === "function") filterSidebarFeatures();
       const titles = [
         "Step 1: Power & DVP Basis",
         "Step 2: Hardware I/O & Connector",
@@ -3900,6 +4113,7 @@
       } else {
         if (totalPinsCount <= 8) { totalCavities = 8; headerName = "TE Superseal 1.0 (8-Pin Header)"; }
         else if (totalPinsCount <= 14) { totalCavities = 14; headerName = "TE Superseal 1.0 (14-Pin Header)"; }
+        else if (totalPinsCount <= 20) { totalCavities = 20; headerName = "Sixsense TCU Automotive Header (20-Pin)"; }
         else if (totalPinsCount <= 26) { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
         else if (totalPinsCount <= 34) { totalCavities = 34; headerName = "TE Superseal 1.0 (34-Pin Header)"; }
         else { totalCavities = Math.ceil(totalPinsCount / 2) * 2; headerName = `Automotive Header (${totalCavities}-Pin)`; }
@@ -6137,6 +6351,7 @@
       let headerName = "TE Superseal 1.0 (14-Pin Header)";
       if (totalPinsCount <= 8) { totalCavities = 8; headerName = "TE Superseal 1.0 (8-Pin Header)"; }
       else if (totalPinsCount <= 14) { totalCavities = 14; headerName = "TE Superseal 1.0 (14-Pin Header)"; }
+        else if (totalPinsCount <= 20) { totalCavities = 20; headerName = "Sixsense TCU Automotive Header (20-Pin)"; }
       else if (totalPinsCount <= 26) { totalCavities = 26; headerName = "TE Superseal 1.0 (26-Pin Header)"; }
       else if (totalPinsCount <= 34) { totalCavities = 34; headerName = "TE Superseal 1.0 (34-Pin Header)"; }
       else { totalCavities = Math.ceil(totalPinsCount / 2) * 2; headerName = `Automotive Header (${totalCavities}-Pin)`; }
@@ -7013,13 +7228,13 @@
 
     // Automatic startup initialization for Step 1 Live Preview
     window.addEventListener('DOMContentLoaded', function() {
-      if (typeof updateStepSidebarPreview === 'function') {
-        updateStepSidebarPreview(1);
-      }
+      if (typeof updateStepSidebarPreview === 'function') updateStepSidebarPreview(1);
+      if (typeof updateSoftwareFeaturesBadge === 'function') updateSoftwareFeaturesBadge();
+      if (typeof filterSidebarFeatures === 'function') filterSidebarFeatures();
     });
-    if (typeof updateStepSidebarPreview === 'function') {
-      updateStepSidebarPreview(1);
-    }
+    if (typeof updateStepSidebarPreview === 'function') updateStepSidebarPreview(1);
+    if (typeof updateSoftwareFeaturesBadge === 'function') updateSoftwareFeaturesBadge();
+    if (typeof filterSidebarFeatures === 'function') filterSidebarFeatures();
 
     // ================= CONNECTOR STUDIO & REAL-WORLD AUTOMOTIVE CATALOG (User Request: Drag & Drop + Nearest Match Sidebar) =================
     let draggedCavityIndex = null;
@@ -7692,6 +7907,161 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= EXPANDABLE SOFTWARE FEATURE RECOMMENDER STUDIO MODAL (User Request) ================= -->
+  <div id="software-features-modal" onclick="if(event.target === this) closeSoftwareFeaturesModal()" class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/80 backdrop-blur-sm hidden">
+    <div class="w-full max-w-5xl max-h-[90vh] flex flex-col rounded-2xl border border-blue-500/40 bg-[var(--card)] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Studio Header -->
+      <div class="flex items-center justify-between px-5 py-3 border-b border-[var(--card-border)] bg-[var(--background)]/80">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🎯</span>
+          <div>
+            <h2 class="text-sm font-bold text-[var(--foreground)] flex items-center gap-2">
+              <span>Telematics Software-to-Hardware Recommender Studio</span>
+              <span class="px-2 py-0.2 rounded text-[9.5px] bg-blue-500/20 text-blue-400 font-bold font-mono">Dual Allocator</span>
+            </h2>
+            <p class="text-[10px] text-[var(--muted-foreground)]">Select vehicle software applications — automatically provisions external harness pins (Step 2) & on-board memory/wireless chips (Step 3).</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeSoftwareFeaturesModal()" class="px-3 py-1 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-xs hover:opacity-95 cursor-pointer">
+            ✓ Done & Apply
+          </button>
+          <button type="button" onclick="closeSoftwareFeaturesModal()" class="w-7 h-7 rounded-lg hover:bg-[var(--background)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] flex items-center justify-center font-bold text-sm cursor-pointer">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="px-5 py-2 border-b border-[var(--card-border)] bg-[var(--card)] flex items-center gap-2">
+        <span class="text-xs text-[var(--muted-foreground)]">🔍</span>
+        <input type="text" id="sw-modal-search" oninput="filterSoftwareModalCards()" placeholder="Search capabilities (e.g. starter cut, fuel theft, SOS panic, PTO, reefer, CAN, FOTA)..." class="w-full bg-transparent text-xs text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]">
+      </div>
+
+      <!-- Scrollable Grid of 9+ Capabilities -->
+      <div id="sw-modal-cards-container" class="p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 overflow-y-auto max-h-[70vh] custom-scrollbar">
+        <!-- Feature 1: Engine Starter Cut -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-immob" onchange="syncSoftwareFeature('immob', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">Remote Engine Starter Cut</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-emerald-500/20 text-emerald-400">+1 DO</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">Anti-theft remote vehicle immobilization with safe-speed gate interrupt.</p>
+            <div class="pt-1 text-[9px] font-mono text-emerald-400 font-semibold border-t border-[var(--card-border)]">↳ Pin Impact: 1x DO (Low-Side 1.5A Relay Line)</div>
+          </div>
+        </label>
+
+        <!-- Feature 2: Fuel Theft & Level -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-fuel" onchange="syncSoftwareFeature('fuel', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">Fuel Theft & Volume Tracking</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-amber-500/20 text-amber-400">+1 AI</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">Continuous tank volume monitoring with sudden drop siphoning alerts.</p>
+            <div class="pt-1 text-[9px] font-mono text-amber-400 font-semibold border-t border-[var(--card-border)]">↳ Pin Impact: 1x AI (0–32V 12-bit ADC Line)</div>
+          </div>
+        </label>
+
+        <!-- Feature 3: SOS Emergency Panic -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-sos" onchange="syncSoftwareFeature('sos', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">Driver SOS / Emergency Panic</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-blue-500/20 text-blue-400">+1 DI</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">Emergency cloud dispatch & SMS alert (&lt;2s priority interrupt).</p>
+            <div class="pt-1 text-[9px] font-mono text-blue-400 font-semibold border-t border-[var(--card-border)]">↳ Pin Impact: 1x DI (Opto-isolated Panic Line)</div>
+          </div>
+        </label>
+
+        <!-- Feature 4: Tractor PTO & Acreage -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-pto" onchange="syncSoftwareFeature('pto', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">PTO & Field Acreage Logging</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-blue-500/20 text-blue-400">+2 DI</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">Implement engagement & automated GIS tractor field acreage calculation.</p>
+            <div class="pt-1 text-[9px] font-mono text-blue-400 font-semibold border-t border-[var(--card-border)]">↳ Pin Impact: 2x DI (PTO Sensor & Switch)</div>
+          </div>
+        </label>
+
+        <!-- Feature 5: J1939 Engine Diagnostics -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-can" checked onchange="syncSoftwareFeature('can', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">J1939 Diagnostics & Odometer</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-orange-500/20 text-orange-400">+CAN-FD</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">ECU RPM, coolant temp, fuel rate & active engine DTC codes.</p>
+            <div class="pt-1 text-[9px] font-mono text-orange-400 font-semibold border-t border-[var(--card-border)]">↳ Dual Impact: CAN-FD Pins (Step 2) + SPI Flash (Step 3)</div>
+          </div>
+        </label>
+
+        <!-- Feature 6: Cold-Chain Reefer Temperature -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-reefer" onchange="syncSoftwareFeature('reefer', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">Cold-Chain Reefer Temperature</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-amber-500/20 text-amber-400">+1 AI</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">Refrigerated cargo temp tracking (-40°C to +80°C) with NTC probe.</p>
+            <div class="pt-1 text-[9px] font-mono text-amber-400 font-semibold border-t border-[var(--card-border)]">↳ Dual Impact: 1x AI Pin (Step 2) + DS3231 RTC Hold (Step 3)</div>
+          </div>
+        </label>
+
+        <!-- Feature 7: Multi-Tank Ultrasonic Probes / RFID -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-rs485" onchange="syncSoftwareFeature('rs485', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">Multi-Tank Probes / RFID Badge</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-indigo-500/20 text-indigo-400">+RS485</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">Up to 4 daisy-chained probes + driver RFID authentication reader.</p>
+            <div class="pt-1 text-[9px] font-mono text-indigo-400 font-semibold border-t border-[var(--card-border)]">↳ Pin Impact: RS485 Differential Pins (Step 2)</div>
+          </div>
+        </label>
+
+        <!-- Feature 8: Over-Speed Audio Buzzer -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-buzzer" onchange="syncSoftwareFeature('buzzer', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">In-Cabin Over-Speed Buzzer</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-emerald-500/20 text-emerald-400">+1 DO</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">Driver audible alert on vehicle speed or geofence boundary breach.</p>
+            <div class="pt-1 text-[9px] font-mono text-emerald-400 font-semibold border-t border-[var(--card-border)]">↳ Pin Impact: 1x DO (Buzzer Driver Line)</div>
+          </div>
+        </label>
+
+        <!-- Feature 9: FOTA & Blackbox Logging -->
+        <label class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] hover:border-blue-500 flex items-start gap-2.5 cursor-pointer transition-all shadow-xs">
+          <input type="checkbox" id="m-rec-fota" checked onchange="syncSoftwareFeature('fota', this.checked)" class="mt-1 accent-[var(--primary)] rounded">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-xs font-bold text-[var(--foreground)]">FOTA & Offline Blackbox</strong>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-purple-500/20 text-purple-400">64MB Flash</span>
+            </div>
+            <p class="text-[10px] text-[var(--muted-foreground)] leading-snug">Firmware updates over cellular + 250k offline records buffer.</p>
+            <div class="pt-1 text-[9px] font-mono text-purple-400 font-semibold border-t border-[var(--card-border)]">↳ On-Board Impact: 64MB SPI Flash Memory (Step 3)</div>
+          </div>
+        </label>
       </div>
     </div>
   </div>
