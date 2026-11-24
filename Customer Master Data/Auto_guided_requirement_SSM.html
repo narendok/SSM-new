@@ -2274,21 +2274,6 @@
     let currentStep = 1;
     var AUTOMOTIVE_CONNECTOR_CATALOG = [
       {
-        id: 'conn-te-8',
-        brand: 'TE Connectivity',
-        family: 'Superseal 1.0',
-        mpn: '1473416-1',
-        cavities: 8,
-        ipRating: 'IP67 / IP69K',
-        pitch: '1.0 mm Pitch',
-        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
-        currentRating: '5.0A per contact',
-        category: 'sixsense',
-        source: 'Sixsense Production PCB (TCU-02 / OBD-II)',
-        img: '🔌',
-        features: 'Double-spring contact, integrated secondary lock, automotive vibration tested.'
-      },
-      {
         id: 'conn-te-14',
         brand: 'TE Connectivity',
         family: 'Superseal 1.0',
@@ -2299,9 +2284,10 @@
         wireRange: '0.5 – 1.25 mm² (FLRY-B)',
         currentRating: '5.0A per contact',
         category: 'sixsense',
-        source: 'Sixsense Production PCB (TCU-AIS140 / ITL-TCU03)',
+        activeDevice: 'TCU-AIS140 (Dhruv) & ITL-TCU03 Telematics',
+        source: 'Sixsense Production Tooling (In-Stock)',
         img: '🔌',
-        features: 'Standard AIS-140 telematics header, robust latching, pre-tooled in-house.'
+        features: 'Standard AIS-140 telematics header, robust secondary latching, volume-amortized in-house tooling.'
       },
       {
         id: 'conn-te-26',
@@ -2314,9 +2300,26 @@
         wireRange: '0.5 – 1.25 mm² (FLRY-B)',
         currentRating: '5.0A per contact',
         category: 'sixsense',
-        source: 'Sixsense Production PCB (BCU Tractor Controller)',
+        activeDevice: 'BCU Tractor Controller & ASDL ECU',
+        source: 'Sixsense Production Tooling (In-Stock)',
         img: '🔌',
-        features: 'High pin-density, 2-row layout, supports full I/O + dual CAN + RS485.'
+        features: 'High pin-density, 2-row layout, supports expanded I/O + dual CAN + RS485 + sensor channels.'
+      },
+      {
+        id: 'conn-te-8',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473416-1',
+        cavities: 8,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        activeDevice: 'OBD-II Tracker (TCU-02) & Vehicle Immobilizer',
+        source: 'Sixsense Production Tooling (In-Stock)',
+        img: '🔌',
+        features: 'Compact budget footprint, double-spring contact, integrated secondary lock.'
       },
       {
         id: 'conn-te-34',
@@ -2329,9 +2332,26 @@
         wireRange: '0.5 – 1.25 mm² (FLRY-B)',
         currentRating: '5.0A per contact',
         category: 'sixsense',
-        source: 'Sixsense Production PCB (BCM Farm Smart Controller)',
+        activeDevice: 'BCM Farm Smart Controller',
+        source: 'Sixsense Production Tooling (In-Stock)',
         img: '🔌',
-        features: 'Maximum expansion headroom, 4-row hybrid staggered cavity array.'
+        features: 'Maximum expansion headroom, 4-row hybrid staggered cavity array for heavy commercial applications.'
+      },
+      {
+        id: 'conn-ampseal-23',
+        brand: 'TE Connectivity',
+        family: 'AMPSEAL 23-Pin',
+        mpn: '776164-1',
+        cavities: 23,
+        ipRating: 'IP67 / IP69K Submersible',
+        pitch: '4.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm²',
+        currentRating: '8.0A per contact',
+        category: 'sixsense',
+        activeDevice: 'Mining LoRa-TCU Heavy Telematics',
+        source: 'Sixsense Heavy Equipment Archive',
+        img: '🚜',
+        features: 'Heavy machinery sealed receptacle, 3-row compact gold-plated contacts, high shock resistance.'
       },
       {
         id: 'conn-molex-12',
@@ -2344,9 +2364,10 @@
         wireRange: '0.5 – 1.5 mm² ISO',
         currentRating: '14.0A (High Current)',
         category: 'industry',
-        source: 'Global Commercial Vehicle Standard (USCAR-2 Class 3)',
+        activeDevice: 'Commercial Fleet USCAR-2 Class 3',
+        source: 'Global Commercial Vehicle Standard',
         img: '🛡️',
-        features: 'Single piece housing with matte seal, high vibration, extreme temperature.'
+        features: 'Single piece housing with matte seal, high vibration, extreme temperature operating envelope.'
       },
       {
         id: 'conn-molex-20',
@@ -2359,9 +2380,10 @@
         wireRange: '0.5 – 1.5 mm² ISO',
         currentRating: '14.0A',
         category: 'industry',
-        source: 'Heavy Commercial Truck Fleet Standard',
+        activeDevice: 'Heavy Commercial Truck Fleet',
+        source: 'Global Commercial Truck Standard',
         img: '🛡️',
-        features: 'Dual row 2x10 sealed receptacle with CPA (Connector Position Assurance).'
+        features: 'Dual row 2x10 sealed receptacle with CPA (Connector Position Assurance) lock.'
       },
       {
         id: 'conn-deutsch-12',
@@ -2374,7 +2396,8 @@
         wireRange: '0.5 – 2.0 mm²',
         currentRating: '13.0A Continuous',
         category: 'industry',
-        source: 'Off-Highway / Construction Machinery Standard',
+        activeDevice: 'Off-Highway / Construction Machinery',
+        source: 'Global Off-Highway Standard',
         img: '🚜',
         features: 'Thermoplastic housing with wedgelock, field-proven rugged off-road reliability.'
       },
@@ -2389,7 +2412,8 @@
         wireRange: '0.35 – 1.0 mm²',
         currentRating: '14.0A',
         category: 'industry',
-        source: 'Passenger Car & Under-Hood ECU Standard',
+        activeDevice: 'Passenger Car Under-Hood ECU',
+        source: 'Global Passenger Vehicle Standard',
         img: '🚘',
         features: 'Triple-rib silicone cable perimeter seal, secondary TPA lock.'
       }
@@ -6736,10 +6760,141 @@
       updateStepSidebarPreview(1);
     }
 
-    // ================= CONNECTOR STUDIO & REAL-WORLD AUTOMOTIVE CATALOG =================
-    
+    // ================= CONNECTOR STUDIO & REAL-WORLD AUTOMOTIVE CATALOG (User Request: Drag & Drop + Nearest Match Sidebar) =================
+    let draggedCavityIndex = null;
+    window.customCavityMapping = null;
 
-    var selectedConnectorId = 'conn-te-14';
+    function handleCavityDragStart(e, index) {
+      draggedCavityIndex = index;
+      e.dataTransfer.setData('text/plain', index);
+      e.dataTransfer.effectAllowed = 'move';
+      const statusEl = document.getElementById('studio-drag-status');
+      if (statusEl) statusEl.textContent = `Dragging Pin ${index + 1}...`;
+      const cell = document.getElementById(`studio-cavity-cell-${index}`);
+      if (cell) cell.classList.add('opacity-40', 'ring-2', 'ring-indigo-500');
+    }
+
+    function handleCavityDragEnd(e, index) {
+      const cell = document.getElementById(`studio-cavity-cell-${index}`);
+      if (cell) cell.classList.remove('opacity-40', 'ring-2', 'ring-indigo-500');
+      const statusEl = document.getElementById('studio-drag-status');
+      if (statusEl) statusEl.textContent = `Ready to Drag`;
+    }
+
+    function handleCavityDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleCavityDragEnter(e, targetIndex) {
+      e.preventDefault();
+      if (targetIndex !== draggedCavityIndex) {
+        const cell = document.getElementById(`studio-cavity-cell-${targetIndex}`);
+        if (cell) cell.classList.add('ring-2', 'ring-emerald-400', 'bg-emerald-500/20', 'scale-105');
+      }
+    }
+
+    function handleCavityDragLeave(e, targetIndex) {
+      const cell = document.getElementById(`studio-cavity-cell-${targetIndex}`);
+      if (cell) cell.classList.remove('ring-2', 'ring-emerald-400', 'bg-emerald-500/20', 'scale-105');
+    }
+
+    function handleCavityDrop(e, targetIndex) {
+      e.preventDefault();
+      const cell = document.getElementById(`studio-cavity-cell-${targetIndex}`);
+      if (cell) cell.classList.remove('ring-2', 'ring-emerald-400', 'bg-emerald-500/20', 'scale-105');
+
+      if (draggedCavityIndex === null || draggedCavityIndex === targetIndex) return;
+
+      const mapping = getCavitiesArray();
+      const fromPin = mapping[draggedCavityIndex];
+      const toPin = mapping[targetIndex];
+
+      // Swap in mapping
+      mapping[draggedCavityIndex] = toPin;
+      mapping[targetIndex] = fromPin;
+
+      // Update pin numbers to cavity slot
+      mapping[draggedCavityIndex].pin = draggedCavityIndex + 1;
+      mapping[targetIndex].pin = targetIndex + 1;
+
+      window.customCavityMapping = mapping;
+
+      const statusEl = document.getElementById('studio-drag-status');
+      if (statusEl) {
+        statusEl.textContent = `✓ Swapped Cavity ${draggedCavityIndex + 1} (${fromPin.label || fromPin.type}) with Cavity ${targetIndex + 1} (${toPin.label || toPin.type})`;
+      }
+
+      renderStudioCavityGrid();
+      renderStudioPinoutTable();
+      renderSidebarConnectorGrid();
+    }
+
+    function swapCavityWithNext(index) {
+      const mapping = getCavitiesArray();
+      if (index >= mapping.length - 1) return;
+      const nextIndex = index + 1;
+
+      const temp = mapping[index];
+      mapping[index] = mapping[nextIndex];
+      mapping[nextIndex] = temp;
+
+      mapping[index].pin = index + 1;
+      mapping[nextIndex].pin = nextIndex + 1;
+
+      window.customCavityMapping = mapping;
+      renderStudioCavityGrid();
+      renderStudioPinoutTable();
+      renderSidebarConnectorGrid();
+    }
+
+    function swapCavityWithPrev(index) {
+      const mapping = getCavitiesArray();
+      if (index <= 0) return;
+      const prevIndex = index - 1;
+
+      const temp = mapping[index];
+      mapping[index] = mapping[prevIndex];
+      mapping[prevIndex] = temp;
+
+      mapping[index].pin = index + 1;
+      mapping[prevIndex].pin = prevIndex + 1;
+
+      window.customCavityMapping = mapping;
+      renderStudioCavityGrid();
+      renderStudioPinoutTable();
+      renderSidebarConnectorGrid();
+    }
+
+    function getCavitiesArray() {
+      const allocatedPins = getAllocatedPinsList();
+      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[0];
+      const totalCavities = Math.max(allocatedPins.length, conn.cavities);
+
+      if (window.customCavityMapping && window.customCavityMapping.length === totalCavities) {
+        return window.customCavityMapping;
+      }
+
+      const allCavities = [];
+      for (let i = 0; i < totalCavities; i++) {
+        if (i < allocatedPins.length) {
+          allCavities.push({ ...allocatedPins[i], pin: i + 1 });
+        } else {
+          allCavities.push({
+            pin: i + 1,
+            label: "SPARE P" + (i + 1),
+            type: "SPARE",
+            spec: "Sealing Cavity Plug",
+            wireColor: "Sealing Cavity Plug",
+            purpose: "Unassigned Cavity Headroom",
+            bg: "bg-[var(--card)] border border-dashed border-gray-400 text-gray-400",
+            text: "text-gray-400"
+          });
+        }
+      }
+      window.customCavityMapping = allCavities;
+      return window.customCavityMapping;
+    }
 
     function openConnectorStudioModal() {
       const modal = document.getElementById('connector-studio-modal');
@@ -6759,12 +6914,13 @@
 
     function selectStudioConnector(connId) {
       selectedConnectorId = connId;
+      window.customCavityMapping = null; // Re-align to new cavity count
       const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === connId);
       if (conn) {
         const badge = document.getElementById('studio-selected-badge');
         if (badge) badge.textContent = `${conn.brand} ${conn.family} (${conn.cavities}-Pin)`;
         const sbConn = document.getElementById('sb-p2-conn-name');
-        if (sbConn) sbConn.textContent = `${conn.brand} ${conn.family} (${conn.cavities}-Pin)`;
+        if (sbConn) sbConn.textContent = `${conn.brand} ${conn.family} (${conn.cavities}-Pin Sealed)`;
       }
       renderStudioCavityGrid();
       renderStudioConnectorCards();
@@ -6776,23 +6932,9 @@
       const container = document.getElementById('studio-large-cavity-grid');
       if (!container) return;
 
+      const allCavities = getCavitiesArray();
       const allocatedPins = getAllocatedPinsList();
-      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1];
-      const totalCavities = Math.max(allocatedPins.length, conn.cavities);
-
-      const allCavities = [...allocatedPins];
-      for (let c = allocatedPins.length + 1; c <= totalCavities; c++) {
-        allCavities.push({
-          pin: c,
-          label: "SPARE P" + c,
-          type: "SPARE",
-          spec: "Sealing Cavity Plug",
-          wireColor: "Sealing Cavity Plug",
-          purpose: "Unassigned Cavity Headroom",
-          bg: "bg-[var(--card)] border border-dashed border-gray-400 text-gray-400",
-          text: "text-gray-400"
-        });
-      }
+      const totalCavities = allCavities.length;
 
       const activeEl = document.getElementById('studio-active-count');
       const spareEl = document.getElementById('studio-spare-count');
@@ -6813,16 +6955,25 @@
       grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
       grid.className = "gap-2 pt-1";
 
-      allCavities.forEach(p => {
+      allCavities.forEach((p, idx) => {
         const cell = document.createElement('div');
-        cell.className = "flex flex-col items-center gap-1 p-2 rounded-xl bg-[var(--card)] border border-[var(--card-border)] hover:border-indigo-500/80 transition-all shadow-xs cursor-pointer";
-        cell.title = `Pin ${p.pin}: ${p.label} [${p.type}] - ${p.purpose} (${p.wireColor})`;
+        cell.id = `studio-cavity-cell-${idx}`;
+        cell.draggable = true;
+        cell.ondragstart = (e) => handleCavityDragStart(e, idx);
+        cell.ondragend = (e) => handleCavityDragEnd(e, idx);
+        cell.ondragover = (e) => handleCavityDragOver(e);
+        cell.ondragenter = (e) => handleCavityDragEnter(e, idx);
+        cell.ondragleave = (e) => handleCavityDragLeave(e, idx);
+        cell.ondrop = (e) => handleCavityDrop(e, idx);
+
+        cell.className = "flex flex-col items-center gap-1 p-2 rounded-xl bg-[var(--card)] border border-[var(--card-border)] hover:border-indigo-400 transition-all shadow-xs cursor-grab active:cursor-grabbing select-none";
+        cell.title = `Cavity ${p.pin}: ${p.label} [${p.type}] - Drag to swap position!`;
         cell.innerHTML = `
-          <div class="w-8 h-8 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-xs font-mono shadow-sm">
+          <div class="w-8 h-8 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-xs font-mono shadow-sm pointer-events-none">
             ${p.pin}
           </div>
-          <span class="font-bold text-[9.5px] text-[var(--foreground)] truncate max-w-[65px] text-center" title="${p.label}: ${p.purpose}">${p.label || p.type}</span>
-          <span class="text-[8px] text-[var(--muted-foreground)] truncate max-w-[65px] text-center font-mono">${p.type}</span>
+          <span class="font-bold text-[9.5px] text-[var(--foreground)] truncate max-w-[65px] text-center pointer-events-none" title="${p.label}: ${p.purpose}">${p.label || p.type}</span>
+          <span class="text-[8px] text-[var(--muted-foreground)] truncate max-w-[65px] text-center font-mono pointer-events-none">${p.type}</span>
         `;
         grid.appendChild(cell);
       });
@@ -6830,6 +6981,7 @@
       container.appendChild(grid);
     }
 
+    // SORTED CONNECTOR CARDS IN RIGHT SIDEBAR (Nearest Match Priority & Sixsense In-House Prioritized)
     function renderStudioConnectorCards() {
       const container = document.getElementById('studio-connector-cards-grid');
       if (!container) return;
@@ -6837,44 +6989,86 @@
       const allocatedPins = getAllocatedPinsList();
       const totalCount = allocatedPins.length;
 
+      // Sort catalog: Closest match to totalCount at top, prioritizing Sixsense production boards
+      const sortedCatalog = [...AUTOMOTIVE_CONNECTOR_CATALOG].sort((a, b) => {
+        const aFits = a.cavities >= totalCount;
+        const bFits = b.cavities >= totalCount;
+
+        if (aFits && !bFits) return -1;
+        if (!aFits && bFits) return 1;
+
+        if (aFits && bFits) {
+          const diffA = a.cavities - totalCount;
+          const diffB = b.cavities - totalCount;
+          if (diffA !== diffB) return diffA - diffB; // Closest pin count first!
+          if (a.category === 'sixsense' && b.category !== 'sixsense') return -1;
+          if (a.category !== 'sixsense' && b.category === 'sixsense') return 1;
+          return 0;
+        }
+
+        // Both smaller than count, largest first
+        return b.cavities - a.cavities;
+      });
+
       container.innerHTML = '';
-      AUTOMOTIVE_CONNECTOR_CATALOG.forEach(c => {
+      sortedCatalog.forEach((c, idx) => {
         const isSelected = (c.id === selectedConnectorId);
         const isCompatible = (c.cavities >= totalCount);
+        const spares = c.cavities - totalCount;
         const card = document.createElement('div');
-        card.className = `p-3 rounded-xl border ${isSelected ? 'border-indigo-500 bg-indigo-500/10 ring-1 ring-indigo-500' : 'border-[var(--card-border)] bg-[var(--card)] hover:border-indigo-500/50'} flex flex-col justify-between space-y-2 transition-all shadow-xs`;
+        card.className = `p-2.5 rounded-xl border ${isSelected ? 'border-indigo-500 bg-indigo-500/10 ring-1 ring-indigo-500' : 'border-[var(--card-border)] bg-[var(--card)] hover:border-indigo-500/50'} flex flex-col justify-between space-y-2 transition-all shadow-xs`;
         
+        let matchBadge = `<span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-blue-500/20 text-blue-400">+${spares} Spares</span>`;
+        if (spares === 0) {
+          matchBadge = `<span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-emerald-500/25 text-emerald-400">⚡ Exact Fit (0 Spares)</span>`;
+        } else if (idx === 0 && isCompatible) {
+          matchBadge = `<span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-emerald-500/20 text-emerald-400">🎯 Top Match (+${spares})</span>`;
+        } else if (!isCompatible) {
+          matchBadge = `<span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-red-500/20 text-red-400">Needs +${Math.abs(spares)} Pins</span>`;
+        }
+
         card.innerHTML = `
           <div>
             <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
-              <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1 truncate">
+              <span class="font-bold text-[11px] text-[var(--foreground)] flex items-center gap-1 truncate">
                 <span>${c.img}</span> <span>${c.brand} ${c.family}</span>
               </span>
-              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold ${c.category === 'sixsense' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-blue-500/20 text-blue-400'}">
-                ${c.category === 'sixsense' ? '★ Sixsense Proven' : 'Standard'}
-              </span>
+              ${matchBadge}
             </div>
             
-            <div class="pt-1.5 space-y-1 text-[9.5px]">
-              <div class="flex justify-between font-mono">
-                <span class="text-[var(--muted-foreground)]">Cavities / Pitch:</span>
+            <!-- Sixsense In-House Device Usage Tag (User Request) -->
+            ${c.category === 'sixsense' ? `
+              <div class="mt-1 px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-[8.5px] text-emerald-400 font-semibold flex items-center gap-1">
+                <span>🏭</span>
+                <span class="truncate">Active in: <strong>${c.activeDevice}</strong></span>
+              </div>
+            ` : `
+              <div class="mt-1 px-1.5 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[8.5px] text-blue-400 font-semibold flex items-center gap-1">
+                <span>🌐</span>
+                <span class="truncate">${c.activeDevice}</span>
+              </div>
+            `}
+
+            <div class="pt-1.5 space-y-1 text-[9px] font-mono">
+              <div class="flex justify-between">
+                <span class="text-[var(--muted-foreground)]">Cavities & Pitch:</span>
                 <span class="font-bold text-[var(--foreground)]">${c.cavities} Pins • ${c.pitch}</span>
               </div>
-              <div class="flex justify-between font-mono">
+              <div class="flex justify-between">
                 <span class="text-[var(--muted-foreground)]">Part Number:</span>
                 <span class="text-indigo-400 font-semibold">${c.mpn}</span>
               </div>
-              <div class="flex justify-between font-mono">
-                <span class="text-[var(--muted-foreground)]">IP & Wire:</span>
+              <div class="flex justify-between">
+                <span class="text-[var(--muted-foreground)]">IP & Current:</span>
                 <span>${c.ipRating} • ${c.currentRating}</span>
               </div>
-              <div class="text-[8.5px] text-[var(--muted-foreground)] pt-0.5 leading-tight">${c.features}</div>
+              <div class="text-[8px] text-[var(--muted-foreground)] pt-0.5 leading-tight font-sans">${c.features}</div>
             </div>
           </div>
 
           <div class="pt-1">
-            <button type="button" onclick="selectStudioConnector('${c.id}')" class="w-full py-1.5 px-2 rounded-lg ${isSelected ? 'bg-emerald-600 text-white font-bold' : (isCompatible ? 'bg-indigo-600 hover:bg-indigo-500 text-white font-bold' : 'bg-[var(--background)] border border-[var(--card-border)] text-gray-400')} text-[10px] transition-all flex items-center justify-center gap-1 cursor-pointer">
-              <span>${isSelected ? '✓ Active Selected Header' : (isCompatible ? '⚡ Select This Connector' : 'Requires More Cavities')}</span>
+            <button type="button" onclick="selectStudioConnector('${c.id}')" class="w-full py-1.5 px-2 rounded-lg ${isSelected ? 'bg-emerald-600 text-white font-bold' : (isCompatible ? 'bg-indigo-600 hover:bg-indigo-500 text-white font-bold' : 'bg-[var(--background)] border border-[var(--card-border)] text-gray-400')} text-[9.5px] transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <span>${isSelected ? '✓ Active Selected' : (isCompatible ? '⚡ Select This Connector' : 'Insufficient Cavities')}</span>
             </button>
           </div>
         `;
@@ -6886,37 +7080,24 @@
       const tbody = document.getElementById('studio-pinout-tbody');
       if (!tbody) return;
 
-      const allocatedPins = getAllocatedPinsList();
-      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1];
-      const totalCavities = Math.max(allocatedPins.length, conn.cavities);
-
-      const allCavities = [...allocatedPins];
-      for (let c = allocatedPins.length + 1; c <= totalCavities; c++) {
-        allCavities.push({
-          pin: c,
-          label: "SPARE P" + c,
-          type: "SPARE",
-          spec: "Sealing Cavity Plug",
-          wireColor: "Sealing Cavity Plug",
-          purpose: "Expansion / I/O Headroom",
-          bg: "bg-[var(--card)] text-gray-400",
-          text: "text-gray-400"
-        });
-      }
+      const allCavities = getCavitiesArray();
 
       tbody.innerHTML = '';
-      allCavities.forEach(p => {
+      allCavities.forEach((p, idx) => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-[var(--card)] transition-colors";
         tr.innerHTML = `
           <td class="p-2 text-center font-bold text-[var(--foreground)]">${p.pin}</td>
           <td class="p-2 font-bold text-[var(--foreground)]">${p.label}</td>
           <td class="p-2"><span class="px-1.5 py-0.2 rounded text-[8.5px] ${p.bg} ${p.text} font-bold">${p.type}</span></td>
-          <td class="p-2 text-[var(--muted-foreground)]">${p.spec}</td>
-          <td class="p-2 text-[var(--foreground)]">${p.wireColor}</td>
-          <td class="p-2 text-[var(--muted-foreground)]">${p.purpose}</td>
+          <td class="p-2 text-[var(--muted-foreground)] text-[10px]">${p.spec}</td>
+          <td class="p-2 text-[var(--foreground)] text-[10px]">${p.wireColor}</td>
+          <td class="p-2 text-[var(--muted-foreground)] text-[10px]">${p.purpose}</td>
           <td class="p-2 text-center">
-            <button type="button" class="px-1.5 py-0.5 rounded bg-[var(--background)] border border-[var(--card-border)] hover:bg-[var(--card)] text-[9px] cursor-pointer">Swap</button>
+            <div class="flex items-center justify-center gap-1">
+              <button type="button" onclick="swapCavityWithPrev(${idx})" title="Move Up" class="px-1 py-0.5 rounded bg-[var(--background)] border border-[var(--card-border)] hover:bg-[var(--card)] text-[9px] cursor-pointer">▲</button>
+              <button type="button" onclick="swapCavityWithNext(${idx})" title="Move Down" class="px-1 py-0.5 rounded bg-[var(--background)] border border-[var(--card-border)] hover:bg-[var(--card)] text-[9px] cursor-pointer">▼</button>
+            </div>
           </td>
         `;
         tbody.appendChild(tr);
@@ -6928,20 +7109,8 @@
       const container = document.getElementById('sb-connector-mini-grid');
       if (!container) return;
 
-      const allocatedPins = getAllocatedPinsList();
-      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1];
-      const totalCavities = Math.max(allocatedPins.length, conn.cavities);
-
-      const allCavities = [...allocatedPins];
-      for (let c = allocatedPins.length + 1; c <= totalCavities; c++) {
-        allCavities.push({
-          pin: c,
-          label: "P" + c,
-          type: "SPARE",
-          bg: "bg-[var(--card)] border border-dashed border-gray-400 text-gray-400",
-          text: "text-gray-400"
-        });
-      }
+      const allCavities = getCavitiesArray();
+      const totalCavities = allCavities.length;
 
       let cols = 7;
       if (totalCavities <= 8) cols = 4;
@@ -6954,10 +7123,10 @@
       container.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
       container.innerHTML = '';
 
-      allCavities.forEach(p => {
+      allCavities.forEach((p, idx) => {
         const cell = document.createElement('div');
         cell.className = "flex flex-col items-center gap-0.5 p-0.5 rounded bg-[var(--card)] border border-[var(--card-border)] hover:border-indigo-500 transition-all cursor-pointer";
-        cell.title = `Pin ${p.pin}: ${p.label} [${p.type}]`;
+        cell.title = `Cavity ${p.pin}: ${p.label} [${p.type}] - Click to open studio!`;
         cell.onclick = openConnectorStudioModal;
         cell.innerHTML = `
           <div class="w-4 h-4 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-[8px] font-mono">
@@ -6967,109 +7136,7 @@
         `;
         container.appendChild(cell);
       });
-    }
-
-    // DYNAMIC STEP-AWARE SIDEBAR PREVIEW CONTROLLER
-    function updateStepSidebarPreview(step) {
-      const titles = [
-        "Step 1: Power & DVP Basis",
-        "Step 2: Hardware I/O & Connector",
-        "Step 3: Networks & Peripherals",
-        "Step 4: Harness Scheme",
-        "Step 5: Mounting & Enclosure",
-        "Step 6: Production Batches",
-        "Step 7: Regulatory DVP Register"
-      ];
-      
-      const titleEl = document.getElementById('sb-preview-stage-title');
-      const pillEl = document.getElementById('sb-preview-stage-pill');
-      if (titleEl) titleEl.textContent = titles[step - 1] || `Step ${step} Preview`;
-      if (pillEl) pillEl.textContent = `Stage ${step} of 7`;
-
-      // Show active stage preview, hide others
-      for (let s = 1; s <= 7; s++) {
-        const previewEl = document.getElementById(`sb-stage-preview-${s}`);
-        if (previewEl) {
-          if (s === step) previewEl.classList.remove('hidden');
-          else previewEl.classList.add('hidden');
-        }
-      }
-
-      // Populate stage 1 live values
-      const cName = (wizardState.country === 'europe') ? 'Europe (E-Mark / UN ECE R10)' :
-                    ((wizardState.country === 'usa') ? 'USA (FCC Part 15 / PTCRB)' :
-                    ((wizardState.country === 'australia') ? 'Australia (ADR Mandate)' :
-                    ((wizardState.country === 'brazil') ? 'Brazil / LatAm (ANATEL)' : 'India (AIS-140 / ARAI)')));
-      const elP1C = document.getElementById('sb-p1-country');
-      if (elP1C) elP1C.textContent = cName;
-
-      const vType = wizardState.vehicle;
-      const vText = (vType === 'ev') ? '36V – 96V DC (Direct Traction Pack)' :
-                    ((vType === 'truck' || vType === 'tractor') ? '9V – 36V DC Continuous (24V System)' : '9V – 18V DC Continuous (12V System)');
-      const clampText = (vType === 'ev') ? '110V TVS Clamping' :
-                        ((vType === 'truck' || vType === 'tractor') ? '58V TVS (ISO 16750-2 Pulse 5b)' : '36V TVS (ISO 7637-2 Pulse 5b)');
-      const elP1V = document.getElementById('sb-p1-voltage');
-      if (elP1V) elP1V.textContent = vText;
-      const elP1Cl = document.getElementById('sb-p1-clamp');
-      if (elP1Cl) elP1Cl.textContent = clampText;
-
-      // Populate stage 2 live values & connector grid
-      const diCount = wizardState.pins.filter(p => p.type === 'DI').length;
-      const doCount = wizardState.pins.filter(p => p.type === 'DO').length;
-      const aiCount = wizardState.pins.filter(p => p.type === 'AI').length;
-      const elDi = document.getElementById('sb-p2-di-count');
-      if (elDi) elDi.textContent = `${diCount} DI`;
-      const elDo = document.getElementById('sb-p2-do-count');
-      if (elDo) elDo.textContent = `${doCount} DO`;
-      const elAi = document.getElementById('sb-p2-ai-count');
-      if (elAi) elAi.textContent = `${aiCount} AI`;
-
-      const allocatedPins = getAllocatedPinsList();
-      const elPins = document.getElementById('sb-p2-harness-pins');
-      if (elPins) elPins.textContent = `${allocatedPins.length} Pins Required`;
-      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1];
-      const elConn = document.getElementById('sb-p2-conn-name');
-      if (elConn) elConn.textContent = `${conn.brand} ${conn.family} (${conn.cavities}-Pin)`;
-
-      // Render the mini connector cavity grid
-      renderSidebarConnectorGrid();
-
-      // Populate stage 3 live values
-      const busses = [];
-      if (document.getElementById('net_can')?.checked ?? true) busses.push('CAN-FD');
-      if (document.getElementById('net_rs485')?.checked) busses.push('RS485');
-      if (document.getElementById('net_kline')?.checked) busses.push('K-Line');
-      const elBusses = document.getElementById('sb-p3-busses');
-      if (elBusses) elBusses.textContent = busses.join(' • ') || 'None';
-
-      const rf = [];
-      if (document.getElementById('net_4g')?.checked ?? true) rf.push('4G LTE');
-      const gnss = document.getElementById('gnss_type')?.value || 'navic';
-      if (gnss === 'navic') rf.push('NavIC L5');
-      else if (gnss === 'rtk') rf.push('RTK GNSS');
-      else rf.push('GPS/GLONASS');
-      const elRf = document.getElementById('sb-p3-rf');
-      if (elRf) elRf.textContent = rf.join(' • ');
-
-      const flashSel = document.getElementById('peri-spi-flash')?.value || '32mb';
-      const elFlash = document.getElementById('sb-p3-flash');
-      if (elFlash) elFlash.textContent = (flashSel === '64mb') ? '64 MB (250k Records)' : ((flashSel === '16mb') ? '16 MB (50k Records)' : '32 MB (100k Records)');
-
-      const sdChecked = document.getElementById('peri-microsd')?.checked;
-      const elSd = document.getElementById('sb-p3-sd');
-      if (elSd) elSd.textContent = sdChecked ? 'MicroSD Slot Active' : 'Internal Flash Only';
-
-      const rtcChecked = document.getElementById('peri-i2c-rtc')?.checked ?? true;
-      const elRtc = document.getElementById('sb-p3-rtc');
-      if (elRtc) elRtc.textContent = rtcChecked ? 'DS3231 (±2ppm Hold)' : 'MCU Internal RTC';
-    }
-
-    function updatePeripheralsSpec() {
-      updateStepSidebarPreview(currentStep);
-      updateLiveImpact();
-    }
-
-  </script>
+    }  </script>
 
   <!-- ================= SIXSENSE PCB REUSE & FEATURE COMPARISON MODAL ================= -->
   <div id="pcb-comparison-modal" onclick="if(event.target === this) togglePcbComparisonModal()" class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/80 backdrop-blur-sm hidden">
@@ -7241,25 +7308,25 @@
     </div>
   </div>
 
-  <!-- ================= FULLSCREEN POP-UP CONNECTOR MODELER & BRAND STUDIO MODAL (User Request) ================= -->
+  <!-- ================= FULLSCREEN POP-UP CONNECTOR MODELER & BRAND STUDIO MODAL (User Request: 2-Column with Dedicated Right Selection Sidebar) ================= -->
   <div id="connector-studio-modal" onclick="if(event.target === this) closeConnectorStudioModal()" class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/85 backdrop-blur-md hidden">
-    <div class="w-full max-w-6xl max-h-[94vh] flex flex-col rounded-2xl border border-indigo-500/50 bg-[var(--card)] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+    <div class="w-full max-w-7xl max-h-[95vh] flex flex-col rounded-2xl border border-indigo-500/50 bg-[var(--card)] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
       
       <!-- Studio Header -->
-      <div class="flex items-center justify-between px-5 py-3 border-b border-[var(--card-border)] bg-[var(--background)]/80">
+      <div class="flex items-center justify-between px-5 py-3 border-b border-[var(--card-border)] bg-[var(--background)]/90">
         <div class="flex items-center gap-2.5">
           <span class="text-xl">🔌</span>
           <div>
             <div class="flex items-center gap-2">
-              <h2 class="text-sm font-bold text-[var(--foreground)]">Automotive Connector Modeler & Cavity Studio</h2>
+              <h2 class="text-sm font-bold text-[var(--foreground)]">Automotive Connector Studio & Pinout Modeler</h2>
               <span id="studio-selected-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-400">TE Superseal 1.0 (14-Pin)</span>
             </div>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Interactive cavity pinout modeling, manual pin arrangement, and real-world brand matching (Sixsense In-House & Molex/Deutsch/Aptiv).</p>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Drag & drop pin cavity mapping, live harness cavity modeling, and real-world brand matching (Sixsense in-house tooling prioritized).</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button type="button" onclick="closeConnectorStudioModal()" class="px-3 py-1.5 rounded-lg bg-[var(--background)] border border-[var(--card-border)] hover:bg-[var(--card)] text-[var(--foreground)] text-xs font-bold transition-all cursor-pointer">
-            Done & Save Pinout
+          <button type="button" onclick="closeConnectorStudioModal()" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all cursor-pointer shadow-xs">
+            ✓ Done & Apply Pinout
           </button>
           <button type="button" onclick="closeConnectorStudioModal()" class="w-7 h-7 rounded-lg hover:bg-[var(--background)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] font-bold text-sm flex items-center justify-center transition-all cursor-pointer">
             ✕
@@ -7267,83 +7334,100 @@
         </div>
       </div>
 
-      <!-- Studio Body (2 Columns: Left Cavity Modeler & Table, Right Real Connector Catalog) -->
-      <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+      <!-- Studio 2-Column Body (Left: Canvas 8-Cols, Right: Dedicated Scrollable Connector Selection Sidebar 4-Cols) -->
+      <div class="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-3.5 p-4">
         
-        <!-- TOP: Large Interactive Cavity Modeler -->
-        <div class="p-4 rounded-xl border border-indigo-500/30 bg-[var(--background)] space-y-3 shadow-inner">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--card-border)] pb-2">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider flex items-center gap-1.5">
-                <span>📐</span> <span id="studio-cavity-title">Receptacle Housing: Front Mating Pinout Layout</span>
+        <!-- LEFT COLUMN: Cavity Diagram & Drag-and-Drop Modeler + Pinout Table (8 Cols) -->
+        <div class="lg:col-span-8 flex flex-col space-y-3 overflow-y-auto custom-scrollbar pr-1 max-h-[82vh]">
+          
+          <!-- TOP: Large Interactive Cavity Modeler with Drag-and-Drop -->
+          <div class="p-3.5 rounded-xl border border-indigo-500/30 bg-[var(--background)] space-y-2.5 shadow-inner">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--card-border)] pb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider flex items-center gap-1.5">
+                  <span>📐</span> <span id="studio-cavity-title">Receptacle Housing: Front Mating Pinout Layout</span>
+                </span>
+                <span class="px-2 py-0.2 rounded bg-amber-500/20 text-amber-500 font-mono text-[9px] font-bold">▲ TOP KEYWAY LOCK</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-mono">
+                <span id="studio-active-count" class="text-emerald-400 font-bold">10 Active Pins</span>
+                <span class="text-[var(--muted-foreground)]">•</span>
+                <span id="studio-spare-count" class="text-gray-400">4 Spares</span>
+              </div>
+            </div>
+
+            <!-- Drag & Drop Instruction Pill -->
+            <div class="flex items-center justify-between p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/25 text-[10.5px] text-indigo-300">
+              <span class="flex items-center gap-1.5">
+                <span class="text-sm">✋</span>
+                <span><strong>Drag & Drop Cavity Mapping:</strong> Click & drag any pin cavity to swap its position with another pin or spare cavity!</span>
               </span>
-              <span class="px-2 py-0.2 rounded bg-amber-500/20 text-amber-500 font-mono text-[9px] font-bold">▲ TOP KEYWAY LOCK</span>
+              <span id="studio-drag-status" class="font-mono text-[9.5px] text-emerald-400 font-bold bg-black/25 px-2 py-0.5 rounded">Ready to Drag</span>
             </div>
-            <div class="flex items-center gap-2 text-xs font-mono">
-              <span id="studio-active-count" class="text-emerald-400 font-bold">14 Active Pins</span>
-              <span class="text-[var(--muted-foreground)]">•</span>
-              <span id="studio-spare-count" class="text-gray-400">0 Spares</span>
+
+            <!-- Large Cavity Grid with Native HTML5 Drag and Drop -->
+            <div id="studio-large-cavity-grid" class="pt-1 select-none">
+              <!-- Dynamically populated via renderStudioCavityGrid() -->
+            </div>
+
+            <!-- Pin Legend -->
+            <div class="flex flex-wrap items-center justify-center gap-2.5 text-[9.5px] pt-1.5 border-t border-[var(--card-border)]/60 text-[var(--muted-foreground)] font-mono">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block shadow-xs"></span> KL30 (Battery)</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-500 inline-block shadow-xs"></span> GND (Ground)</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block shadow-xs"></span> KL15 (Ignition)</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block shadow-xs"></span> Digital In (DI)</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-xs"></span> Digital Out (DO)</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block shadow-xs"></span> Analog In (AI)</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-orange-400 inline-block shadow-xs"></span> CAN-FD</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full border border-dashed border-gray-400 inline-block shadow-xs"></span> Sealing Plug</span>
             </div>
           </div>
 
-          <!-- Large Cavity Grid -->
-          <div id="studio-large-cavity-grid" class="pt-2">
-            <!-- Dynamically populated via renderStudioCavityGrid() -->
+          <!-- BOTTOM OF LEFT COLUMN: Pinout Assignment Table -->
+          <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2 shadow-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
+                <span>📋</span> <span>Pinout Assignment & Wire Specification Register:</span>
+              </span>
+              <span class="text-[9.5px] text-[var(--muted-foreground)] font-mono">Pins update automatically with drag & drop</span>
+            </div>
+            <div class="max-h-56 overflow-y-auto custom-scrollbar border border-[var(--card-border)] rounded-lg">
+              <table class="w-full text-left border-collapse text-[10.5px]">
+                <thead class="sticky top-0 bg-[var(--card)] border-b border-[var(--card-border)] text-[9px] font-bold text-[var(--muted-foreground)] uppercase font-mono">
+                  <tr>
+                    <th class="p-2 w-10 text-center">Pin #</th>
+                    <th class="p-2">Signal Name</th>
+                    <th class="p-2">Type</th>
+                    <th class="p-2">Hardware Spec</th>
+                    <th class="p-2">Wire Color</th>
+                    <th class="p-2">Purpose</th>
+                    <th class="p-2 w-24 text-center">Swap / Move</th>
+                  </tr>
+                </thead>
+                <tbody id="studio-pinout-tbody" class="divide-y divide-[var(--card-border)] font-mono">
+                  <!-- Dynamically populated via renderStudioPinoutTable() -->
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <!-- Pin Legend -->
-          <div class="flex flex-wrap items-center justify-center gap-3 text-[10px] pt-2 border-t border-[var(--card-border)]/60 text-[var(--muted-foreground)] font-mono">
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-red-500 inline-block shadow-xs"></span> KL30 (Battery Power)</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-slate-500 inline-block shadow-xs"></span> GND (Power Ground)</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-xs"></span> KL15 (Ignition)</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block shadow-xs"></span> Digital Input (DI)</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shadow-xs"></span> Digital Output (DO)</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-purple-500 inline-block shadow-xs"></span> Analog Input (AI)</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-orange-400 inline-block shadow-xs"></span> CAN-FD / RS485</span>
-            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full border border-dashed border-gray-400 inline-block shadow-xs"></span> Sealing Spare Plug</span>
-          </div>
         </div>
 
-        <!-- BOTTOM: Real-World Matching Connectors Catalog (Sixsense In-House + Molex/Deutsch/Aptiv) -->
-        <div class="space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
-              <span>🛒</span> <span>Available Automotive Connector Candidates (Matching Current Pin Count):</span>
-            </span>
-            <span class="text-[9.5px] text-[var(--muted-foreground)] font-mono">Priority: 1. In-House Sixsense PCBs • 2. Global Automotive Standards</span>
+        <!-- RIGHT COLUMN: Dedicated Scrollable Automotive Connector Selection Sidebar (4 Cols) -->
+        <div class="lg:col-span-4 flex flex-col space-y-2.5 bg-[var(--background)] p-3 rounded-xl border border-[var(--card-border)] max-h-[82vh] shadow-xs">
+          <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
+            <div>
+              <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1">
+                <span>🛒</span> <span>Automotive Connectors</span>
+              </span>
+              <p class="text-[9px] text-[var(--muted-foreground)]">Nearest Match First • Sixsense In-House Prioritized</p>
+            </div>
+            <span class="px-1.5 py-0.5 rounded text-[8.5px] bg-emerald-500/15 text-emerald-400 font-mono font-bold">Closest First</span>
           </div>
 
-          <!-- Connector Cards Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5" id="studio-connector-cards-grid">
-            <!-- Dynamically populated via renderStudioConnectorCards() -->
-          </div>
-        </div>
-
-        <!-- FULL PINOUT REGISTER TABLE IN STUDIO -->
-        <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
-              <span>📋</span> <span>Pinout Assignment & Wire Specification Register:</span>
-            </span>
-            <span class="text-[9.5px] text-[var(--muted-foreground)] font-mono">Drag or Swap Pin Positions to Customize Layout</span>
-          </div>
-          <div class="max-h-56 overflow-y-auto custom-scrollbar border border-[var(--card-border)] rounded-lg">
-            <table class="w-full text-left border-collapse text-[11px]">
-              <thead class="sticky top-0 bg-[var(--card)] border-b border-[var(--card-border)] text-[9.5px] font-bold text-[var(--muted-foreground)] uppercase font-mono">
-                <tr>
-                  <th class="p-2 w-12 text-center">Pin #</th>
-                  <th class="p-2">Signal Name</th>
-                  <th class="p-2">Signal Type</th>
-                  <th class="p-2">Hardware Spec</th>
-                  <th class="p-2">Wire Gauge / Color</th>
-                  <th class="p-2">Application Purpose</th>
-                  <th class="p-2 w-20 text-center">Swap / Move</th>
-                </tr>
-              </thead>
-              <tbody id="studio-pinout-tbody" class="divide-y divide-[var(--card-border)] font-mono">
-                <!-- Dynamically populated via renderStudioPinoutTable() -->
-              </tbody>
-            </table>
+          <!-- Vertically Scrollable Connector Cards Container -->
+          <div class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1" id="studio-connector-cards-grid">
+            <!-- Dynamically populated & sorted via renderStudioConnectorCards() -->
           </div>
         </div>
 
