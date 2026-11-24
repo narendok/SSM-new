@@ -334,15 +334,15 @@
         </div>
 
         <!-- ================= STEP 2: HARDWARE I/O CHANNELS (Pure DI, DO, AI) ================= -->
-        <div id="step-pane-2" class="space-y-3 hidden">
-          <div class="space-y-1">
+        <div id="step-pane-2" class="space-y-2.5 hidden">
+          <div class="space-y-0.5">
             <div class="flex items-center justify-between">
-              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 2: Hardware I/O Channels (Sensor & Actuator Pins)</h2>
-              <span id="step2-veh-badge" class="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 2: Hardware I/O Channels</h2>
+              <span id="step2-veh-badge" class="text-[9.5px] px-2 py-0.5 rounded font-mono font-bold bg-amber-500/15 text-amber-500">
                 🚜 Tractor Signals Active
               </span>
             </div>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Configure Digital Inputs (DI), Digital Outputs (DO), Analog Inputs (AI), and automated software-to-hardware pin allocations.</p>
+            <p class="text-[10px] text-[var(--muted-foreground)]">Discrete DI, DO, and AI sensor & actuator channels mapped to mating connector pins.</p>
           </div>
 
           <!-- Datalists for Embedded Searchable Comboboxes -->
@@ -350,35 +350,35 @@
           <datalist id="do-suggestions"></datalist>
           <datalist id="ai-suggestions"></datalist>
 
-          <div id="s2-section-io" class="space-y-3">
+          <div id="s2-section-io" class="space-y-2.5">
 <!-- Compact Software Feature Link Strip -->
-          <div class="p-2 rounded-lg border border-blue-500/30 bg-blue-500/5 flex items-center justify-between text-[11px]">
+          <div class="p-1.5 px-2 rounded-lg border border-blue-500/30 bg-blue-500/5 flex items-center justify-between text-[10.5px]">
             <div class="flex items-center gap-1.5">
               <span>🎯</span>
               <span class="text-[var(--foreground)] font-semibold">Software Feature Driver:</span>
               <span id="step2-sw-active-summary" class="font-mono text-blue-400 font-bold">4 Capabilities Active</span>
             </div>
-            <button type="button" onclick="openSoftwareFeaturesModal()" class="px-2.5 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[9.5px] flex items-center gap-1 shadow-xs cursor-pointer">
+            <button type="button" onclick="openSoftwareFeaturesModal()" class="px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[9px] flex items-center gap-1 shadow-xs cursor-pointer">
               <span>⛶ Open Feature Studio</span>
             </button>
           </div>
 
-          <!-- 4 COLUMN-SPECIFIC HARDWARE I/O & BUS CARDS (Rows directly inside respective columns) -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 items-start">
+          <!-- 3 COLUMN HARDWARE I/O GRID (DI, DO, AI) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 items-start">
 
             <!-- COLUMN 1: DIGITAL INPUTS (DI) -->
-            <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2 flex flex-col">
-              <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
+            <div class="p-2 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-1.5 flex flex-col">
+              <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
                 <div class="flex items-center gap-1.5">
-                  <span class="text-sm">📥</span>
+                  <span class="text-xs">📥</span>
                   <div>
                     <div class="font-bold text-xs text-[var(--foreground)]">Digital Inputs</div>
-                    <div class="text-[9px] text-[var(--muted-foreground)]">12V/24V Opto-isolated</div>
+                    <div class="text-[8.5px] text-[var(--muted-foreground)]">12V/24V Opto-isolated</div>
                   </div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span id="di_badge_count" class="font-mono font-bold text-[10px] px-1.5 py-0.2 rounded bg-[var(--card)] border border-[var(--card-border)] text-blue-500">3</span>
-                  <button onclick="adjustPinCount('DI', 1)" title="Add Digital Input Pin" class="px-1.5 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[10px] hover:opacity-90 transition-opacity">
+                  <span id="di_badge_count" class="font-mono font-bold text-[9.5px] px-1.5 py-0.2 rounded bg-[var(--card)] border border-[var(--card-border)] text-blue-500">3</span>
+                  <button onclick="adjustPinCount('DI', 1)" title="Add Digital Input Pin" class="px-1.5 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[9.5px] hover:opacity-90 transition-opacity">
                     + Add
                   </button>
                 </div>
@@ -391,18 +391,18 @@
             </div>
 
             <!-- COLUMN 2: DIGITAL OUTPUTS (DO) -->
-            <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2 flex flex-col">
-              <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
+            <div class="p-2 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-1.5 flex flex-col">
+              <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
                 <div class="flex items-center gap-1.5">
-                  <span class="text-sm">📤</span>
+                  <span class="text-xs">📤</span>
                   <div>
                     <div class="font-bold text-xs text-[var(--foreground)]">Digital Outputs</div>
-                    <div class="text-[9px] text-[var(--muted-foreground)]">Low-Side Relay 1.5A</div>
+                    <div class="text-[8.5px] text-[var(--muted-foreground)]">Low-Side Relay 1.5A</div>
                   </div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span id="do_badge_count" class="font-mono font-bold text-[10px] px-1.5 py-0.2 rounded bg-[var(--card)] border border-[var(--card-border)] text-emerald-500">1</span>
-                  <button onclick="adjustPinCount('DO', 1)" title="Add Digital Output Pin" class="px-1.5 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[10px] hover:opacity-90 transition-opacity">
+                  <span id="do_badge_count" class="font-mono font-bold text-[9.5px] px-1.5 py-0.2 rounded bg-[var(--card)] border border-[var(--card-border)] text-emerald-500">1</span>
+                  <button onclick="adjustPinCount('DO', 1)" title="Add Digital Output Pin" class="px-1.5 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[9.5px] hover:opacity-90 transition-opacity">
                     + Add
                   </button>
                 </div>
@@ -415,18 +415,18 @@
             </div>
 
             <!-- COLUMN 3: ANALOG INPUTS (AI) -->
-            <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2 flex flex-col">
-              <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
+            <div class="p-2 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-1.5 flex flex-col">
+              <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
                 <div class="flex items-center gap-1.5">
-                  <span class="text-sm">📊</span>
+                  <span class="text-xs">📊</span>
                   <div>
                     <div class="font-bold text-xs text-[var(--foreground)]">Analog Inputs</div>
-                    <div class="text-[9px] text-[var(--muted-foreground)]">12-bit ADC 0-32V</div>
+                    <div class="text-[8.5px] text-[var(--muted-foreground)]">12-bit ADC 0-32V</div>
                   </div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span id="ai_badge_count" class="font-mono font-bold text-[10px] px-1.5 py-0.2 rounded bg-[var(--card)] border border-[var(--card-border)] text-amber-500">1</span>
-                  <button onclick="adjustPinCount('AI', 1)" title="Add Analog Input Pin" class="px-1.5 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[10px] hover:opacity-90 transition-opacity">
+                  <span id="ai_badge_count" class="font-mono font-bold text-[9.5px] px-1.5 py-0.2 rounded bg-[var(--card)] border border-[var(--card-border)] text-amber-500">1</span>
+                  <button onclick="adjustPinCount('AI', 1)" title="Add Analog Input Pin" class="px-1.5 py-0.5 rounded bg-[var(--primary)] text-[var(--primary-foreground)] font-bold text-[9.5px] hover:opacity-90 transition-opacity">
                     + Add
                   </button>
                 </div>
@@ -438,74 +438,73 @@
               </div>
             </div>
 
-            <!-- COLUMN 4: VEHICLE SERIAL & DIFFERENTIAL BUS PINS (CAN-FD, RS485 & K-LINE) -->
-            <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2 flex flex-col">
-              <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
-                <div class="flex items-center gap-1.5">
-                  <span class="text-sm">🚌</span>
-                  <div>
-                    <div class="font-bold text-xs text-[var(--foreground)]">Vehicle Bus Pins</div>
-                    <div class="text-[9px] text-[var(--muted-foreground)]">Consumes Harness Pins</div>
-                  </div>
-                </div>
-                <div class="flex items-center gap-1">
-                  <span id="bus_pin_badge_count" class="font-mono font-bold text-[10px] px-1.5 py-0.2 rounded bg-[var(--card)] border border-[var(--card-border)] text-orange-400">2 Pins</span>
-                </div>
+          </div> <!-- Close 3-column DI, DO, AI grid -->
+
+          <!-- DEDICATED VEHICLE BUS COMMUNICATIONS SECTION (Positioned Below DI, DO, AI) -->
+          <div class="p-2.5 rounded-xl border border-orange-500/30 bg-orange-500/5 space-y-2">
+            <div class="flex items-center justify-between pb-1.5 border-b border-orange-500/20">
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs">🚌</span>
+                <span class="text-xs font-bold text-[var(--foreground)]">Vehicle Bus & Serial Communications</span>
+                <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-orange-500/20 text-orange-400 font-mono font-bold">Wired Harness Interface</span>
               </div>
-
-              <!-- Container for Bus Rows inside Column 4 -->
-              <div id="bus-column-pins" class="space-y-1.5 max-h-56 overflow-y-auto pr-0.5">
-                <!-- Bus Option 1: CAN-FD -->
-                <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 transition-all hover:border-orange-500/50">
-                  <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-1.5 cursor-pointer">
-                      <input type="checkbox" id="io_can_fd" checked onchange="toggleBusFromStep2('can', this.checked)" class="accent-orange-500 rounded">
-                      <span class="text-[11px] font-bold text-[var(--foreground)]">CAN-FD Bus</span>
-                    </label>
-                    <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-orange-500/20 text-orange-400">+2 Pins</span>
-                  </div>
-                  <div class="flex items-center justify-between text-[8.5px] font-mono text-[var(--muted-foreground)]">
-                    <span>CAN_H (P4) • CAN_L (P5)</span>
-                    <span class="text-orange-400 font-semibold">120Ω Term</span>
-                  </div>
-                  <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">ISO 11898-2 5Mbps differential ECU / J1939 telemetry</p>
-                </div>
-
-                <!-- Bus Option 2: RS485 Modbus -->
-                <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 transition-all hover:border-indigo-500/50">
-                  <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-1.5 cursor-pointer">
-                      <input type="checkbox" id="io_rs485" onchange="toggleBusFromStep2('rs485', this.checked)" class="accent-indigo-500 rounded">
-                      <span class="text-[11px] font-bold text-[var(--foreground)]">RS485 / Modbus</span>
-                    </label>
-                    <span id="io_rs485_badge" class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-indigo-500/20 text-indigo-400">+2 Pins</span>
-                  </div>
-                  <div class="flex items-center justify-between text-[8.5px] font-mono text-[var(--muted-foreground)]">
-                    <span>RS485_A • RS485_B</span>
-                    <span class="text-indigo-400 font-semibold">Isolated</span>
-                  </div>
-                  <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">Multi-tank fuel probes, RFID reader, weight load-cells</p>
-                </div>
-
-                <!-- Bus Option 3: K-Line / LIN -->
-                <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 transition-all hover:border-cyan-500/50">
-                  <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-1.5 cursor-pointer">
-                      <input type="checkbox" id="io_kline" onchange="toggleBusFromStep2('kline', this.checked)" class="accent-cyan-500 rounded">
-                      <span class="text-[11px] font-bold text-[var(--foreground)]">K-Line / LIN</span>
-                    </label>
-                    <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-cyan-500/20 text-cyan-400">+1 Pin</span>
-                  </div>
-                  <div class="flex items-center justify-between text-[8.5px] font-mono text-[var(--muted-foreground)]">
-                    <span>K-LINE Single-Wire</span>
-                    <span class="text-cyan-400 font-semibold">ISO 9141</span>
-                  </div>
-                  <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">Legacy automotive OBD-II diagnostics & LIN actuator</p>
-                </div>
-              </div>
+              <span id="bus_pin_badge_count" class="font-mono font-bold text-[9.5px] px-2 py-0.5 rounded bg-[var(--card)] border border-[var(--card-border)] text-orange-400">
+                2 Pins Allocated
+              </span>
             </div>
 
+            <!-- 3 Symmetrical Responsive Cards for CAN-FD, RS485 & RS232 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <!-- 1. CAN-FD Bus -->
+              <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 hover:border-orange-500/60 transition-all">
+                <div class="flex items-center justify-between">
+                  <label class="flex items-center gap-1.5 cursor-pointer">
+                    <input type="checkbox" id="io_can_fd" checked onchange="toggleBusFromStep2('can', this.checked)" class="accent-orange-500 rounded">
+                    <span class="text-xs font-bold text-[var(--foreground)]">CAN-FD Bus</span>
+                  </label>
+                  <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-orange-500/20 text-orange-400">+2 Pins</span>
+                </div>
+                <div class="text-[8.5px] font-mono text-[var(--muted-foreground)] flex items-center justify-between">
+                  <span>CAN_H • CAN_L</span>
+                  <span class="text-orange-400 font-semibold">120Ω Terminated</span>
+                </div>
+                <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">ISO 11898-2 5Mbps differential for ECU J1939 telemetry, engine RPM & DTCs.</p>
+              </div>
+
+              <!-- 2. RS485 Modbus -->
+              <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 hover:border-indigo-500/60 transition-all">
+                <div class="flex items-center justify-between">
+                  <label class="flex items-center gap-1.5 cursor-pointer">
+                    <input type="checkbox" id="io_rs485" onchange="toggleBusFromStep2('rs485', this.checked)" class="accent-indigo-500 rounded">
+                    <span class="text-xs font-bold text-[var(--foreground)]">RS485 / Modbus</span>
+                  </label>
+                  <span id="io_rs485_badge" class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-indigo-500/20 text-indigo-400">+2 Pins</span>
+                </div>
+                <div class="text-[8.5px] font-mono text-[var(--muted-foreground)] flex items-center justify-between">
+                  <span>RS485_A • RS485_B</span>
+                  <span class="text-indigo-400 font-semibold">Galvanic Isolation</span>
+                </div>
+                <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">TIA/EIA-485-A differential line for daisy-chained fuel probes, RFID badges & load cells.</p>
+              </div>
+
+              <!-- 3. RS232 Serial UART -->
+              <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 hover:border-teal-500/60 transition-all">
+                <div class="flex items-center justify-between">
+                  <label class="flex items-center gap-1.5 cursor-pointer">
+                    <input type="checkbox" id="io_rs232" onchange="toggleBusFromStep2('rs232', this.checked)" class="accent-teal-500 rounded">
+                    <span class="text-xs font-bold text-[var(--foreground)]">RS232 Serial</span>
+                  </label>
+                  <span id="io_rs232_badge" class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-teal-500/20 text-teal-400">+2 Pins</span>
+                </div>
+                <div class="text-[8.5px] font-mono text-[var(--muted-foreground)] flex items-center justify-between">
+                  <span>RS232_TX • RS232_RX</span>
+                  <span class="text-teal-400 font-semibold">±12V Full Duplex</span>
+                </div>
+                <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">TIA/EIA-232 serial telemetry for MDVR dashcam, ticketing printers & satellite modems.</p>
+              </div>
+            </div>
           </div>
+
 
           <!-- DEDICATED FULL-WIDTH SECTION: CUSTOM & UNCLASSIFIED REQUIREMENTS SMART ROUTER -->
           <div class="p-2.5 rounded-xl border border-purple-500/30 bg-purple-500/5 space-y-2">
@@ -2661,6 +2660,7 @@
       customRequirements: [], // Array of { id, text, category: 'unclassified', pins: 2 }
       hasCAN: true,
       hasRS485: false,
+      hasRS232: false,
       has4G: true,
       hasBLE: true,
       hasWifi: false,
@@ -2852,6 +2852,32 @@
         });
       }
 
+      // Industrial RS232 Serial Interface (User Request: 2 Pins)
+      const rs232Active = (document.getElementById('io_rs232')?.checked ?? wizardState.hasRS232 ?? false);
+      if (rs232Active) {
+        allocatedPins.push({
+          pin: pinNum++,
+          label: "RS232_TX",
+          type: "RS232",
+          spec: "TIA/EIA-232-F ±12V Standard",
+          wireColor: "Brown-White (24 AWG)",
+          purpose: "Serial Telemetry / MDVR",
+          bg: "bg-teal-600",
+          text: "text-white"
+        });
+        allocatedPins.push({
+          pin: pinNum++,
+          label: "RS232_RX",
+          type: "RS232",
+          spec: "TIA/EIA-232-F ±12V Standard",
+          wireColor: "White-Brown (24 AWG)",
+          purpose: "Serial Telemetry / MDVR",
+          bg: "bg-teal-600",
+          text: "text-white"
+        });
+      }
+
+
 
       // Optional K-Line / LIN Interface (1 pin)
       const klineActive = (document.getElementById('io_kline')?.checked ?? document.getElementById('net_kline')?.checked ?? wizardState.hasKLine ?? false);
@@ -2984,6 +3010,8 @@
         wizardState.hasRS485 = checked;
         const netEl = document.getElementById('net_rs485');
         if (netEl) netEl.checked = checked;
+      } else if (bus === 'rs232') {
+        wizardState.hasRS232 = checked;
       } else if (bus === 'kline') {
         wizardState.hasKLine = checked;
         const netEl = document.getElementById('net_kline');
@@ -3004,6 +3032,10 @@
         wizardState.hasRS485 = checked;
         const ioEl = document.getElementById('io_rs485');
         if (ioEl) ioEl.checked = checked;
+      } else if (bus === 'rs232') {
+        wizardState.hasRS232 = checked;
+        const ioEl = document.getElementById('io_rs232');
+        if (ioEl) ioEl.checked = checked;
       } else if (bus === 'kline') {
         wizardState.hasKLine = checked;
         const ioEl = document.getElementById('io_kline');
@@ -3020,9 +3052,10 @@
       if (!badge) return;
       const can = document.getElementById('io_can_fd')?.checked ?? document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true;
       const rs485 = document.getElementById('io_rs485')?.checked ?? document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false;
+      const rs232 = document.getElementById('io_rs232')?.checked ?? wizardState.hasRS232 ?? false;
       const kline = document.getElementById('io_kline')?.checked ?? document.getElementById('net_kline')?.checked ?? wizardState.hasKLine ?? false;
-      let pins = (can ? 2 : 0) + (rs485 ? 2 : 0) + (kline ? 1 : 0);
-      badge.textContent = `${pins} Pins`;
+      let pins = (can ? 2 : 0) + (rs485 ? 2 : 0) + (rs232 ? 2 : 0) + (kline ? 1 : 0);
+      badge.textContent = `${pins} Pins Allocated`;
     }
 
     // DYNAMIC STEP PREVIEW CARD CONTROLLER (Stages 1 through 7)
@@ -3097,9 +3130,11 @@
       const busses = [];
       const hasCan = (document.getElementById('io_can_fd')?.checked ?? document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true);
       const hasRs485 = (document.getElementById('io_rs485')?.checked ?? document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false);
+      const hasRs232 = (document.getElementById('io_rs232')?.checked ?? wizardState.hasRS232 ?? false);
       const hasKline = (document.getElementById('io_kline')?.checked ?? document.getElementById('net_kline')?.checked ?? wizardState.hasKLine ?? false);
       if (hasCan) busses.push('CAN-FD');
       if (hasRs485) busses.push('RS485');
+      if (hasRs232) busses.push('RS232');
       if (hasKline) busses.push('K-Line');
       const elBusses = document.getElementById('sb-p3-busses');
       if (elBusses) elBusses.textContent = busses.join(' • ') || 'None';
@@ -4783,11 +4818,15 @@
 
 
     function recalculatePins() {
-      const can = document.getElementById('net_can')?.checked ?? true;
-      const rs485 = document.getElementById('net_rs485')?.checked ?? false;
+      const can = document.getElementById('io_can_fd')?.checked ?? document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true;
+      const rs485 = document.getElementById('io_rs485')?.checked ?? document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false;
+      const rs232 = document.getElementById('io_rs232')?.checked ?? wizardState.hasRS232 ?? false;
 
       wizardState.hasCAN = can;
       wizardState.hasRS485 = rs485;
+      wizardState.hasRS232 = rs232;
+
+      updateBusPinsBadge();
 
       const allocatedPins = getAllocatedPinsList();
       const pins = allocatedPins.length;
@@ -5710,13 +5749,15 @@
       const hasRS485 = (document.getElementById('io_rs485')?.checked ?? document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false);
       const hasKLine = (document.getElementById('io_kline')?.checked ?? document.getElementById('net_kline')?.checked ?? wizardState.hasKLine ?? false);
 
+      const hasRS232 = (document.getElementById('io_rs232')?.checked ?? wizardState.hasRS232 ?? false);
       if (hasCAN && hasRS485) {
-        score += 11.0; // Both: high complexity and isolated transceivers
+        score += 11.0; // Both CAN & RS485
       } else if (hasCAN) {
         score += 5.5; // CAN-FD alone
       } else if (hasRS485) {
         score += 5.5; // RS485 alone
       }
+      if (hasRS232) score += 3.5; // RS232 level shifter & transceiver
       if (hasKLine) score += 2.5;
 
       // Step 3: Cellular RF Modem & SIM
@@ -5836,7 +5877,11 @@
 
       const rtIo = document.getElementById('rt-io-breakdown');
       if (rtIo) {
-        const busStr = (hasCAN ? 'CAN' : '') + (hasCAN && hasRS485 ? '+' : '') + (hasRS485 ? 'RS485' : '');
+        const busParts = [];
+        if (hasCAN) busParts.push('CAN');
+        if (hasRS485) busParts.push('RS485');
+        if (hasRS232) busParts.push('RS232');
+        const busStr = busParts.join('+');
         rtIo.textContent = `${diCount} DI • ${doCount} DO • ${aiCount} AI` + (busStr ? ` • ${busStr}` : '');
       }
 
@@ -6122,6 +6167,16 @@
           payload: "Firmware Version, OTA Status, Download %, Health Ping",
           active: (document.getElementById('net_4g')?.checked ?? true),
           statusText: "Active (Dual-Bank FOTA Supported)"
+        },
+        {
+          id: "SW-15",
+          ioSource: "Auxiliary Serial RS232 Port",
+          feature: "MDVR Video Telematics & Peripheral Telemetry",
+          capability: "Provides full-duplex ±12V serial telemetry for vehicle MDVR camera integration, thermal ticketing printers, or external satellite communicators.",
+          algo: "UART Packet Streaming (115200 bps TIA/EIA-232)",
+          payload: "MDVR Alarm Snapshot, Ticketing Event, Satcom Packets",
+          active: (document.getElementById('io_rs232')?.checked ?? wizardState.hasRS232 ?? false),
+          statusText: (document.getElementById('io_rs232')?.checked ?? wizardState.hasRS232 ?? false) ? "Active (RS232 Serial Port)" : "Inactive (Enable RS232 in Step 2)"
         }
       ];
     }
@@ -6283,6 +6338,10 @@
         rows.push(["Pin 9", "RS485-A", "COMM", "TIA/EIA-485-A Differential Data +", "Purple (24 AWG)", "Aux Telematics / Fuel Sensor"]);
         rows.push(["Pin 10", "RS485-B", "COMM", "TIA/EIA-485-A Differential Data -", "Grey (24 AWG)", "Aux Telematics / Fuel Sensor"]);
       }
+      if (wizardState.hasRS232) {
+        rows.push(["Pin 11", "RS232-TX", "COMM", "TIA/EIA-232-F ±12V Full Duplex TX", "Brown/White (24 AWG)", "MDVR / Peripheral Telemetry"]);
+        rows.push(["Pin 12", "RS232-RX", "COMM", "TIA/EIA-232-F ±12V Full Duplex RX", "White/Brown (24 AWG)", "MDVR / Peripheral Telemetry"]);
+      }
       downloadCsv("SCMS_Pinout_Matrix.csv", rows);
     }
 
@@ -6313,7 +6372,8 @@
         ["Local RF Protocols", "local_rf.wifi", wizardState.hasWifi ? "Wi-Fi 802.11 b/g/n (2.4 GHz)" : "Disabled", "Depot Data Offload & FOTA", "IEEE 802.11 b/g/n"],
         ["Local RF Protocols", "local_rf.lorawan", wizardState.hasLoRa ? "LoRaWAN 868/915 MHz" : "Disabled", "Agricultural Mesh Sensor Link", "LoRa Alliance Regional Spec"],
         ["Wired I/O & Bus", "wired_interfaces.vehicle_bus", wizardState.hasCAN ? "CAN-FD 5Mbps (ISO 11898-2)" : "Disabled", "Automotive Transceiver", "ISO 11898-2:2016"],
-        ["Wired I/O & Bus", "wired_interfaces.aux_serial", wizardState.hasRS485 ? "RS485 Modbus RTU (Isolated)" : "Disabled", "Half-Duplex Differential", "TIA/EIA-485-A"],
+        ["Wired I/O & Bus", "wired_interfaces.aux_serial_rs485", wizardState.hasRS485 ? "RS485 Modbus RTU (Isolated)" : "Disabled", "Half-Duplex Differential", "TIA/EIA-485-A"],
+        ["Wired I/O & Bus", "wired_interfaces.aux_serial_rs232", wizardState.hasRS232 ? "RS232 Serial Port (Full Duplex)" : "Disabled", "Full-Duplex Serial", "TIA/EIA-232-F"],
         ["Wired I/O & Bus", "wired_interfaces.digital_inputs", "4x Opto-isolated Digital Inputs", "0-36V (Active High >7.5V)", "SAE J1113-11"],
         ["Wired I/O & Bus", "wired_interfaces.digital_outputs", "2x Low-Side Solid State Drivers", "1.5A Peak / 0.5A Cont inductive", "Short-Circuit Protected"],
         ["Wired I/O & Bus", "wired_interfaces.analog_inputs", "2x Analog Inputs (0-32V ADC)", "12-bit SAR ADC Resolution", "Linear Calibration"],
@@ -6725,6 +6785,7 @@
         const lora = wizardState.hasLoRa ? "Enabled (LoRaWAN 868/915 MHz Long-Range Mesh)" : "Disabled";
         const can = wizardState.hasCAN ? "CAN-FD 5Mbps (ISO 11898-2) Bus Active" : "Disabled";
         const rs485 = wizardState.hasRS485 ? "RS485 Modbus RTU / Isolated (+2 Pins)" : "Disabled";
+        const rs232 = wizardState.hasRS232 ? "RS232 Serial Port / Full Duplex (+2 Pins)" : "Disabled";
         const temp = wizardState.tempRange === 'cabin' ? "-20°C to +70°C (Cabin Ambient)" : (wizardState.tempRange === 'engine' ? "-40°C to +105°C (Extreme Under-Hood)" : "-40°C to +85°C (Chassis Heavy Duty)");
         const ip = wizardState.ipRating.toUpperCase();
         const salt = wizardState.saltSpray === 'severe240' ? "Severe Marine 240 Hours NSS (ISO 9227)" : (wizardState.saltSpray === 'std96' ? "Standard 96 Hours NSS (ISO 9227)" : "None (Dry Interior)");
@@ -6773,7 +6834,8 @@
               </span>
               <div class="space-y-1 font-mono text-[10px]">
                 <div class="flex justify-between py-0.5 border-b border-[var(--card-border)]"><span class="text-[var(--muted-foreground)]">Vehicle Bus:</span> <strong class="text-amber-500">${can}</strong></div>
-                <div class="flex justify-between py-0.5 border-b border-[var(--card-border)]"><span class="text-[var(--muted-foreground)]">Aux Serial:</span> <span>${rs485}</span></div>
+                <div class="flex justify-between py-0.5 border-b border-[var(--card-border)]"><span class="text-[var(--muted-foreground)]">RS485 Bus:</span> <span>${rs485}</span></div>
+                <div class="flex justify-between py-0.5 border-b border-[var(--card-border)]"><span class="text-[var(--muted-foreground)]">RS232 Serial:</span> <span>${rs232}</span></div>
                 <div class="flex justify-between py-0.5 border-b border-[var(--card-border)]"><span class="text-[var(--muted-foreground)]">Digital Inputs (DI):</span> <span>${wizardState.pins.filter(p=>p.type==='DI').length} Pins (Opto-isolated 0-36V)</span></div>
                 <div class="flex justify-between py-0.5 border-b border-[var(--card-border)]"><span class="text-[var(--muted-foreground)]">Digital Outputs (DO):</span> <span>${wizardState.pins.filter(p=>p.type==='DO').length} Pins (1.5A Low-Side Driver)</span></div>
                 <div class="flex justify-between py-0.5"><span class="text-[var(--muted-foreground)]">Analog Inputs (AI):</span> <span>${wizardState.pins.filter(p=>p.type==='AI').length} Pins (0-32V 12-bit ADC)</span></div>
