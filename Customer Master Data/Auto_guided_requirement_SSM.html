@@ -862,7 +862,7 @@
         </div>
 
         <!-- ================= STEP 4: HARNESS & CONNECTOR SCHEME ================= -->
-        <div id="step-pane-7" class="space-y-3 hidden">
+        <div id="step-pane-4" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 3: Wiring Harness & Mating Connector Scheme</h2>
             <p class="text-[11px] text-[var(--muted-foreground)]">Based on your Step 2 pin count, choose how the device connects to vehicle wiring.</p>
@@ -975,7 +975,7 @@
         </div>
 
         <!-- ================= STEP 4: MOUNTING SCHEME & ENCLOSURE DIMENSIONS ================= -->
-        <div id="step-pane-4" class="space-y-3 hidden">
+        <div id="step-pane-5" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <div class="flex items-center justify-between">
               <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 4: Mechanical & Mounting Scheme</h2>
@@ -1353,7 +1353,7 @@
         </div>
 
         <!-- ================= STEP 5: COMMERCIAL STAGING & BATCH SCHEDULE ================= -->
-        <div id="step-pane-5" class="space-y-3 hidden">
+        <div id="step-pane-6" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <div class="flex items-center justify-between">
               <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 5: Production Volume & Target Timeline</h2>
@@ -1508,7 +1508,7 @@
         </div>
 
         <!-- ================= STEP 6: ENVIRONMENTAL & DVP STANDARDS ================= -->
-        <div id="step-pane-6" class="space-y-3 hidden">
+        <div id="step-pane-7" class="space-y-3 hidden">
           <div class="space-y-0.5">
             <div class="flex items-center justify-between">
               <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 7: Environmental & Regulatory DVP Plan</h2>
@@ -1764,29 +1764,58 @@
             </div>
           </div>
 
-          <!-- STAGE 2 PREVIEW: Hardware I/O Signal Matrix -->
-          <div id="sb-stage-preview-2" class="space-y-1.5 text-[10.5px] hidden">
+          <!-- STAGE 2 PREVIEW: Live Connector Cavity Diagram & I/O Matrix (User Request: Connector preview on top) -->
+          <div id="sb-stage-preview-2" class="space-y-2 text-[10.5px] hidden">
+            <!-- Header bar with Fullscreen / Pop-up Studio Trigger -->
+            <div class="flex items-center justify-between p-1.5 rounded-lg bg-[var(--background)] border border-indigo-500/30">
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs">🔌</span>
+                <span id="sb-p2-conn-name" class="font-bold text-[var(--foreground)] font-mono text-[10px]">TE Superseal 1.0 (14-Pin Sealed)</span>
+              </div>
+              <button type="button" onclick="openConnectorStudioModal()" class="px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[9px] flex items-center gap-1 shadow-xs transition-all cursor-pointer" title="Open Fullscreen Pop-up Connector Modeler & Brand Selector">
+                <span>⛶ Pop-up Studio</span>
+              </button>
+            </div>
+
+            <!-- Real-time Mini Connector Cavity Grid (Front Mating View) -->
+            <div class="p-2 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-1.5">
+              <div class="flex items-center justify-between text-[8px] font-mono text-[var(--muted-foreground)]">
+                <span>[ FRONT MATING CAVITY GRID ]</span>
+                <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400 font-bold">▲ KEYWAY LATCH</span>
+                <span id="sb-p2-harness-pins" class="font-bold text-emerald-400">14 Cavities</span>
+              </div>
+              
+              <!-- Mini Cavity Cells Grid -->
+              <div id="sb-connector-mini-grid" class="grid grid-cols-7 gap-1 pt-0.5">
+                <!-- Dynamically populated via renderSidebarConnectorGrid() -->
+              </div>
+
+              <!-- Color Legend -->
+              <div class="flex flex-wrap items-center justify-center gap-2 text-[8px] pt-1 border-t border-[var(--card-border)]/60 text-[var(--muted-foreground)] font-mono">
+                <span class="flex items-center gap-0.5"><span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span> Power</span>
+                <span class="flex items-center gap-0.5"><span class="w-2 h-2 rounded-full bg-slate-500 inline-block"></span> GND</span>
+                <span class="flex items-center gap-0.5"><span class="w-2 h-2 rounded-full bg-blue-500 inline-block"></span> DI</span>
+                <span class="flex items-center gap-0.5"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> DO</span>
+                <span class="flex items-center gap-0.5"><span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> AI</span>
+                <span class="flex items-center gap-0.5"><span class="w-2 h-2 rounded-full bg-purple-500 inline-block"></span> CAN</span>
+                <span class="flex items-center gap-0.5"><span class="w-2 h-2 rounded-full border border-dashed border-gray-400 inline-block"></span> Spare</span>
+              </div>
+            </div>
+
+            <!-- I/O Count Badges Row -->
             <div class="grid grid-cols-3 gap-1 text-center font-mono font-bold">
-              <div class="p-1.5 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400">
-                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Digital In</span>
-                <span id="sb-p2-di-count" class="text-xs">3 DI</span>
+              <div class="p-1 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400">
+                <span class="text-[8px] text-[var(--muted-foreground)] block uppercase">Digital In</span>
+                <span id="sb-p2-di-count" class="text-[11px]">3 DI</span>
               </div>
-              <div class="p-1.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
-                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Digital Out</span>
-                <span id="sb-p2-do-count" class="text-xs">1 DO</span>
+              <div class="p-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                <span class="text-[8px] text-[var(--muted-foreground)] block uppercase">Digital Out</span>
+                <span id="sb-p2-do-count" class="text-[11px]">1 DO</span>
               </div>
-              <div class="p-1.5 rounded bg-amber-500/10 border border-amber-500/30 text-amber-500">
-                <span class="text-[8.5px] text-[var(--muted-foreground)] block uppercase">Analog In</span>
-                <span id="sb-p2-ai-count" class="text-xs">1 AI</span>
+              <div class="p-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-500">
+                <span class="text-[8px] text-[var(--muted-foreground)] block uppercase">Analog In</span>
+                <span id="sb-p2-ai-count" class="text-[11px]">1 AI</span>
               </div>
-            </div>
-            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
-              <span class="text-[var(--muted-foreground)]">Calculated Harness Cavities:</span>
-              <span id="sb-p2-harness-pins" class="font-bold text-emerald-400 font-mono">14 Pins Required</span>
-            </div>
-            <div class="flex items-center justify-between p-1.5 rounded bg-[var(--background)] border border-[var(--card-border)]">
-              <span class="text-[var(--muted-foreground)]">Suggested Connector:</span>
-              <span id="sb-p2-conn-name" class="font-bold text-[var(--foreground)] font-mono text-[10px]">TE Superseal 1.0 (14-Pin)</span>
             </div>
           </div>
 
@@ -6582,6 +6611,461 @@
     if (typeof updateStepSidebarPreview === 'function') {
       updateStepSidebarPreview(1);
     }
+
+    // ================= CONNECTOR STUDIO & REAL-WORLD AUTOMOTIVE CATALOG =================
+    const AUTOMOTIVE_CONNECTOR_CATALOG = [
+      {
+        id: 'conn-te-8',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473416-1',
+        cavities: 8,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        source: 'Sixsense Production PCB (TCU-02 / OBD-II)',
+        img: '🔌',
+        features: 'Double-spring contact, integrated secondary lock, automotive vibration tested.'
+      },
+      {
+        id: 'conn-te-14',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473413-1',
+        cavities: 14,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        source: 'Sixsense Production PCB (TCU-AIS140 / ITL-TCU03)',
+        img: '🔌',
+        features: 'Standard AIS-140 telematics header, robust latching, pre-tooled in-house.'
+      },
+      {
+        id: 'conn-te-26',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473407-1',
+        cavities: 26,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        source: 'Sixsense Production PCB (BCU Tractor Controller)',
+        img: '🔌',
+        features: 'High pin-density, 2-row layout, supports full I/O + dual CAN + RS485.'
+      },
+      {
+        id: 'conn-te-34',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473404-1',
+        cavities: 34,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        source: 'Sixsense Production PCB (BCM Farm Smart Controller)',
+        img: '🔌',
+        features: 'Maximum expansion headroom, 4-row hybrid staggered cavity array.'
+      },
+      {
+        id: 'conn-molex-12',
+        brand: 'Molex',
+        family: 'MX150 Sealed',
+        mpn: '33472-1201',
+        cavities: 12,
+        ipRating: 'IP69K Waterproof',
+        pitch: '3.5 mm Pitch',
+        wireRange: '0.5 – 1.5 mm² ISO',
+        currentRating: '14.0A (High Current)',
+        category: 'industry',
+        source: 'Global Commercial Vehicle Standard (USCAR-2 Class 3)',
+        img: '🛡️',
+        features: 'Single piece housing with matte seal, high vibration, extreme temperature.'
+      },
+      {
+        id: 'conn-molex-20',
+        brand: 'Molex',
+        family: 'MX150 Sealed',
+        mpn: '33472-2001',
+        cavities: 20,
+        ipRating: 'IP69K Waterproof',
+        pitch: '3.5 mm Pitch',
+        wireRange: '0.5 – 1.5 mm² ISO',
+        currentRating: '14.0A',
+        category: 'industry',
+        source: 'Heavy Commercial Truck Fleet Standard',
+        img: '🛡️',
+        features: 'Dual row 2x10 sealed receptacle with CPA (Connector Position Assurance).'
+      },
+      {
+        id: 'conn-deutsch-12',
+        brand: 'TE Deutsch',
+        family: 'DT Series',
+        mpn: 'DT04-12PA',
+        cavities: 12,
+        ipRating: 'IP68 Immersion',
+        pitch: 'Size 16 Contacts',
+        wireRange: '0.5 – 2.0 mm²',
+        currentRating: '13.0A Continuous',
+        category: 'industry',
+        source: 'Off-Highway / Construction Machinery Standard',
+        img: '🚜',
+        features: 'Thermoplastic housing with wedgelock, field-proven rugged off-road reliability.'
+      },
+      {
+        id: 'conn-aptiv-16',
+        brand: 'Aptiv (Delphi)',
+        family: 'Metri-Pack 150.2',
+        mpn: '12162188',
+        cavities: 16,
+        ipRating: 'IP67 Environmental',
+        pitch: '3.5 mm Pitch',
+        wireRange: '0.35 – 1.0 mm²',
+        currentRating: '14.0A',
+        category: 'industry',
+        source: 'Passenger Car & Under-Hood ECU Standard',
+        img: '🚘',
+        features: 'Triple-rib silicone cable perimeter seal, secondary TPA lock.'
+      }
+    ];
+
+    let selectedConnectorId = 'conn-te-14';
+
+    function openConnectorStudioModal() {
+      const modal = document.getElementById('connector-studio-modal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      renderStudioCavityGrid();
+      renderStudioConnectorCards();
+      renderStudioPinoutTable();
+    }
+
+    function closeConnectorStudioModal() {
+      const modal = document.getElementById('connector-studio-modal');
+      if (modal) modal.classList.add('hidden');
+      updateLiveImpact();
+      if (typeof renderStep3ConnectorPinout === 'function') renderStep3ConnectorPinout();
+    }
+
+    function selectStudioConnector(connId) {
+      selectedConnectorId = connId;
+      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === connId);
+      if (conn) {
+        const badge = document.getElementById('studio-selected-badge');
+        if (badge) badge.textContent = `${conn.brand} ${conn.family} (${conn.cavities}-Pin)`;
+        const sbConn = document.getElementById('sb-p2-conn-name');
+        if (sbConn) sbConn.textContent = `${conn.brand} ${conn.family} (${conn.cavities}-Pin)`;
+      }
+      renderStudioCavityGrid();
+      renderStudioConnectorCards();
+      renderStudioPinoutTable();
+      renderSidebarConnectorGrid();
+    }
+
+    function renderStudioCavityGrid() {
+      const container = document.getElementById('studio-large-cavity-grid');
+      if (!container) return;
+
+      const allocatedPins = getAllocatedPinsList();
+      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1];
+      const totalCavities = Math.max(allocatedPins.length, conn.cavities);
+
+      const allCavities = [...allocatedPins];
+      for (let c = allocatedPins.length + 1; c <= totalCavities; c++) {
+        allCavities.push({
+          pin: c,
+          label: "SPARE P" + c,
+          type: "SPARE",
+          spec: "Sealing Cavity Plug",
+          wireColor: "Sealing Cavity Plug",
+          purpose: "Unassigned Cavity Headroom",
+          bg: "bg-[var(--card)] border border-dashed border-gray-400 text-gray-400",
+          text: "text-gray-400"
+        });
+      }
+
+      const activeEl = document.getElementById('studio-active-count');
+      const spareEl = document.getElementById('studio-spare-count');
+      if (activeEl) activeEl.textContent = `${allocatedPins.length} Active Pins`;
+      if (spareEl) spareEl.textContent = `${Math.max(0, totalCavities - allocatedPins.length)} Spares`;
+
+      let cols = 7;
+      if (totalCavities <= 8) cols = 4;
+      else if (totalCavities <= 14) cols = 7;
+      else if (totalCavities <= 20) cols = 10;
+      else if (totalCavities <= 26) cols = 13;
+      else if (totalCavities <= 34) cols = 17;
+      else cols = Math.ceil(totalCavities / 2);
+
+      container.innerHTML = '';
+      const grid = document.createElement('div');
+      grid.style.display = 'grid';
+      grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+      grid.className = "gap-2 pt-1";
+
+      allCavities.forEach(p => {
+        const cell = document.createElement('div');
+        cell.className = "flex flex-col items-center gap-1 p-2 rounded-xl bg-[var(--card)] border border-[var(--card-border)] hover:border-indigo-500/80 transition-all shadow-xs cursor-pointer";
+        cell.title = `Pin ${p.pin}: ${p.label} [${p.type}] - ${p.purpose} (${p.wireColor})`;
+        cell.innerHTML = `
+          <div class="w-8 h-8 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-xs font-mono shadow-sm">
+            ${p.pin}
+          </div>
+          <span class="font-bold text-[9.5px] text-[var(--foreground)] truncate max-w-[65px] text-center" title="${p.label}: ${p.purpose}">${p.label || p.type}</span>
+          <span class="text-[8px] text-[var(--muted-foreground)] truncate max-w-[65px] text-center font-mono">${p.type}</span>
+        `;
+        grid.appendChild(cell);
+      });
+
+      container.appendChild(grid);
+    }
+
+    function renderStudioConnectorCards() {
+      const container = document.getElementById('studio-connector-cards-grid');
+      if (!container) return;
+
+      const allocatedPins = getAllocatedPinsList();
+      const totalCount = allocatedPins.length;
+
+      container.innerHTML = '';
+      AUTOMOTIVE_CONNECTOR_CATALOG.forEach(c => {
+        const isSelected = (c.id === selectedConnectorId);
+        const isCompatible = (c.cavities >= totalCount);
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-xl border ${isSelected ? 'border-indigo-500 bg-indigo-500/10 ring-1 ring-indigo-500' : 'border-[var(--card-border)] bg-[var(--card)] hover:border-indigo-500/50'} flex flex-col justify-between space-y-2 transition-all shadow-xs`;
+        
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between pb-1 border-b border-[var(--card-border)]">
+              <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1 truncate">
+                <span>${c.img}</span> <span>${c.brand} ${c.family}</span>
+              </span>
+              <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold ${c.category === 'sixsense' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-blue-500/20 text-blue-400'}">
+                ${c.category === 'sixsense' ? '★ Sixsense Proven' : 'Standard'}
+              </span>
+            </div>
+            
+            <div class="pt-1.5 space-y-1 text-[9.5px]">
+              <div class="flex justify-between font-mono">
+                <span class="text-[var(--muted-foreground)]">Cavities / Pitch:</span>
+                <span class="font-bold text-[var(--foreground)]">${c.cavities} Pins • ${c.pitch}</span>
+              </div>
+              <div class="flex justify-between font-mono">
+                <span class="text-[var(--muted-foreground)]">Part Number:</span>
+                <span class="text-indigo-400 font-semibold">${c.mpn}</span>
+              </div>
+              <div class="flex justify-between font-mono">
+                <span class="text-[var(--muted-foreground)]">IP & Wire:</span>
+                <span>${c.ipRating} • ${c.currentRating}</span>
+              </div>
+              <div class="text-[8.5px] text-[var(--muted-foreground)] pt-0.5 leading-tight">${c.features}</div>
+            </div>
+          </div>
+
+          <div class="pt-1">
+            <button type="button" onclick="selectStudioConnector('${c.id}')" class="w-full py-1.5 px-2 rounded-lg ${isSelected ? 'bg-emerald-600 text-white font-bold' : (isCompatible ? 'bg-indigo-600 hover:bg-indigo-500 text-white font-bold' : 'bg-[var(--background)] border border-[var(--card-border)] text-gray-400')} text-[10px] transition-all flex items-center justify-center gap-1 cursor-pointer">
+              <span>${isSelected ? '✓ Active Selected Header' : (isCompatible ? '⚡ Select This Connector' : 'Requires More Cavities')}</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderStudioPinoutTable() {
+      const tbody = document.getElementById('studio-pinout-tbody');
+      if (!tbody) return;
+
+      const allocatedPins = getAllocatedPinsList();
+      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1];
+      const totalCavities = Math.max(allocatedPins.length, conn.cavities);
+
+      const allCavities = [...allocatedPins];
+      for (let c = allocatedPins.length + 1; c <= totalCavities; c++) {
+        allCavities.push({
+          pin: c,
+          label: "SPARE P" + c,
+          type: "SPARE",
+          spec: "Sealing Cavity Plug",
+          wireColor: "Sealing Cavity Plug",
+          purpose: "Expansion / I/O Headroom",
+          bg: "bg-[var(--card)] text-gray-400",
+          text: "text-gray-400"
+        });
+      }
+
+      tbody.innerHTML = '';
+      allCavities.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-[var(--card)] transition-colors";
+        tr.innerHTML = `
+          <td class="p-2 text-center font-bold text-[var(--foreground)]">${p.pin}</td>
+          <td class="p-2 font-bold text-[var(--foreground)]">${p.label}</td>
+          <td class="p-2"><span class="px-1.5 py-0.2 rounded text-[8.5px] ${p.bg} ${p.text} font-bold">${p.type}</span></td>
+          <td class="p-2 text-[var(--muted-foreground)]">${p.spec}</td>
+          <td class="p-2 text-[var(--foreground)]">${p.wireColor}</td>
+          <td class="p-2 text-[var(--muted-foreground)]">${p.purpose}</td>
+          <td class="p-2 text-center">
+            <button type="button" class="px-1.5 py-0.5 rounded bg-[var(--background)] border border-[var(--card-border)] hover:bg-[var(--card)] text-[9px] cursor-pointer">Swap</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // RENDER MINI CONNECTOR GRID IN RIGHT SIDEBAR STAGE 2 PREVIEW
+    function renderSidebarConnectorGrid() {
+      const container = document.getElementById('sb-connector-mini-grid');
+      if (!container) return;
+
+      const allocatedPins = getAllocatedPinsList();
+      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1];
+      const totalCavities = Math.max(allocatedPins.length, conn.cavities);
+
+      const allCavities = [...allocatedPins];
+      for (let c = allocatedPins.length + 1; c <= totalCavities; c++) {
+        allCavities.push({
+          pin: c,
+          label: "P" + c,
+          type: "SPARE",
+          bg: "bg-[var(--card)] border border-dashed border-gray-400 text-gray-400",
+          text: "text-gray-400"
+        });
+      }
+
+      let cols = 7;
+      if (totalCavities <= 8) cols = 4;
+      else if (totalCavities <= 14) cols = 7;
+      else if (totalCavities <= 20) cols = 10;
+      else if (totalCavities <= 26) cols = 13;
+      else if (totalCavities <= 34) cols = 17;
+      else cols = Math.ceil(totalCavities / 2);
+
+      container.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+      container.innerHTML = '';
+
+      allCavities.forEach(p => {
+        const cell = document.createElement('div');
+        cell.className = "flex flex-col items-center gap-0.5 p-0.5 rounded bg-[var(--card)] border border-[var(--card-border)] hover:border-indigo-500 transition-all cursor-pointer";
+        cell.title = `Pin ${p.pin}: ${p.label} [${p.type}]`;
+        cell.onclick = openConnectorStudioModal;
+        cell.innerHTML = `
+          <div class="w-4 h-4 rounded-full ${p.bg} ${p.text} flex items-center justify-center font-bold text-[8px] font-mono">
+            ${p.pin}
+          </div>
+          <span class="text-[7px] text-[var(--foreground)] truncate max-w-[32px] text-center font-mono">${p.label || p.type}</span>
+        `;
+        container.appendChild(cell);
+      });
+    }
+
+    // DYNAMIC STEP-AWARE SIDEBAR PREVIEW CONTROLLER
+    function updateStepSidebarPreview(step) {
+      const titles = [
+        "Step 1: Power & DVP Basis",
+        "Step 2: Hardware I/O & Connector",
+        "Step 3: Networks & Peripherals",
+        "Step 4: Harness Scheme",
+        "Step 5: Mounting & Enclosure",
+        "Step 6: Production Batches",
+        "Step 7: Regulatory DVP Register"
+      ];
+      
+      const titleEl = document.getElementById('sb-preview-stage-title');
+      const pillEl = document.getElementById('sb-preview-stage-pill');
+      if (titleEl) titleEl.textContent = titles[step - 1] || `Step ${step} Preview`;
+      if (pillEl) pillEl.textContent = `Stage ${step} of 7`;
+
+      // Show active stage preview, hide others
+      for (let s = 1; s <= 7; s++) {
+        const previewEl = document.getElementById(`sb-stage-preview-${s}`);
+        if (previewEl) {
+          if (s === step) previewEl.classList.remove('hidden');
+          else previewEl.classList.add('hidden');
+        }
+      }
+
+      // Populate stage 1 live values
+      const cName = (wizardState.country === 'europe') ? 'Europe (E-Mark / UN ECE R10)' :
+                    ((wizardState.country === 'usa') ? 'USA (FCC Part 15 / PTCRB)' :
+                    ((wizardState.country === 'australia') ? 'Australia (ADR Mandate)' :
+                    ((wizardState.country === 'brazil') ? 'Brazil / LatAm (ANATEL)' : 'India (AIS-140 / ARAI)')));
+      const elP1C = document.getElementById('sb-p1-country');
+      if (elP1C) elP1C.textContent = cName;
+
+      const vType = wizardState.vehicle;
+      const vText = (vType === 'ev') ? '36V – 96V DC (Direct Traction Pack)' :
+                    ((vType === 'truck' || vType === 'tractor') ? '9V – 36V DC Continuous (24V System)' : '9V – 18V DC Continuous (12V System)');
+      const clampText = (vType === 'ev') ? '110V TVS Clamping' :
+                        ((vType === 'truck' || vType === 'tractor') ? '58V TVS (ISO 16750-2 Pulse 5b)' : '36V TVS (ISO 7637-2 Pulse 5b)');
+      const elP1V = document.getElementById('sb-p1-voltage');
+      if (elP1V) elP1V.textContent = vText;
+      const elP1Cl = document.getElementById('sb-p1-clamp');
+      if (elP1Cl) elP1Cl.textContent = clampText;
+
+      // Populate stage 2 live values & connector grid
+      const diCount = wizardState.pins.filter(p => p.type === 'DI').length;
+      const doCount = wizardState.pins.filter(p => p.type === 'DO').length;
+      const aiCount = wizardState.pins.filter(p => p.type === 'AI').length;
+      const elDi = document.getElementById('sb-p2-di-count');
+      if (elDi) elDi.textContent = `${diCount} DI`;
+      const elDo = document.getElementById('sb-p2-do-count');
+      if (elDo) elDo.textContent = `${doCount} DO`;
+      const elAi = document.getElementById('sb-p2-ai-count');
+      if (elAi) elAi.textContent = `${aiCount} AI`;
+
+      const allocatedPins = getAllocatedPinsList();
+      const elPins = document.getElementById('sb-p2-harness-pins');
+      if (elPins) elPins.textContent = `${allocatedPins.length} Pins Required`;
+      const conn = AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1];
+      const elConn = document.getElementById('sb-p2-conn-name');
+      if (elConn) elConn.textContent = `${conn.brand} ${conn.family} (${conn.cavities}-Pin)`;
+
+      // Render the mini connector cavity grid
+      renderSidebarConnectorGrid();
+
+      // Populate stage 3 live values
+      const busses = [];
+      if (document.getElementById('net_can')?.checked ?? true) busses.push('CAN-FD');
+      if (document.getElementById('net_rs485')?.checked) busses.push('RS485');
+      if (document.getElementById('net_kline')?.checked) busses.push('K-Line');
+      const elBusses = document.getElementById('sb-p3-busses');
+      if (elBusses) elBusses.textContent = busses.join(' • ') || 'None';
+
+      const rf = [];
+      if (document.getElementById('net_4g')?.checked ?? true) rf.push('4G LTE');
+      const gnss = document.getElementById('gnss_type')?.value || 'navic';
+      if (gnss === 'navic') rf.push('NavIC L5');
+      else if (gnss === 'rtk') rf.push('RTK GNSS');
+      else rf.push('GPS/GLONASS');
+      const elRf = document.getElementById('sb-p3-rf');
+      if (elRf) elRf.textContent = rf.join(' • ');
+
+      const flashSel = document.getElementById('peri-spi-flash')?.value || '32mb';
+      const elFlash = document.getElementById('sb-p3-flash');
+      if (elFlash) elFlash.textContent = (flashSel === '64mb') ? '64 MB (250k Records)' : ((flashSel === '16mb') ? '16 MB (50k Records)' : '32 MB (100k Records)');
+
+      const sdChecked = document.getElementById('peri-microsd')?.checked;
+      const elSd = document.getElementById('sb-p3-sd');
+      if (elSd) elSd.textContent = sdChecked ? 'MicroSD Slot Active' : 'Internal Flash Only';
+
+      const rtcChecked = document.getElementById('peri-i2c-rtc')?.checked ?? true;
+      const elRtc = document.getElementById('sb-p3-rtc');
+      if (elRtc) elRtc.textContent = rtcChecked ? 'DS3231 (±2ppm Hold)' : 'MCU Internal RTC';
+    }
+
+    function updatePeripheralsSpec() {
+      updateStepSidebarPreview(currentStep);
+      updateLiveImpact();
+    }
+
   </script>
 
   <!-- ================= SIXSENSE PCB REUSE & FEATURE COMPARISON MODAL ================= -->
@@ -6754,108 +7238,115 @@
     </div>
   </div>
 
+  <!-- ================= FULLSCREEN POP-UP CONNECTOR MODELER & BRAND STUDIO MODAL (User Request) ================= -->
+  <div id="connector-studio-modal" onclick="if(event.target === this) closeConnectorStudioModal()" class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/85 backdrop-blur-md hidden">
+    <div class="w-full max-w-6xl max-h-[94vh] flex flex-col rounded-2xl border border-indigo-500/50 bg-[var(--card)] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Studio Header -->
+      <div class="flex items-center justify-between px-5 py-3 border-b border-[var(--card-border)] bg-[var(--background)]/80">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🔌</span>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-sm font-bold text-[var(--foreground)]">Automotive Connector Modeler & Cavity Studio</h2>
+              <span id="studio-selected-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-indigo-500/20 text-indigo-400">TE Superseal 1.0 (14-Pin)</span>
+            </div>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Interactive cavity pinout modeling, manual pin arrangement, and real-world brand matching (Sixsense In-House & Molex/Deutsch/Aptiv).</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeConnectorStudioModal()" class="px-3 py-1.5 rounded-lg bg-[var(--background)] border border-[var(--card-border)] hover:bg-[var(--card)] text-[var(--foreground)] text-xs font-bold transition-all cursor-pointer">
+            Done & Save Pinout
+          </button>
+          <button type="button" onclick="closeConnectorStudioModal()" class="w-7 h-7 rounded-lg hover:bg-[var(--background)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] font-bold text-sm flex items-center justify-center transition-all cursor-pointer">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Studio Body (2 Columns: Left Cavity Modeler & Table, Right Real Connector Catalog) -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+        
+        <!-- TOP: Large Interactive Cavity Modeler -->
+        <div class="p-4 rounded-xl border border-indigo-500/30 bg-[var(--background)] space-y-3 shadow-inner">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--card-border)] pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider flex items-center gap-1.5">
+                <span>📐</span> <span id="studio-cavity-title">Receptacle Housing: Front Mating Pinout Layout</span>
+              </span>
+              <span class="px-2 py-0.2 rounded bg-amber-500/20 text-amber-500 font-mono text-[9px] font-bold">▲ TOP KEYWAY LOCK</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono">
+              <span id="studio-active-count" class="text-emerald-400 font-bold">14 Active Pins</span>
+              <span class="text-[var(--muted-foreground)]">•</span>
+              <span id="studio-spare-count" class="text-gray-400">0 Spares</span>
+            </div>
+          </div>
+
+          <!-- Large Cavity Grid -->
+          <div id="studio-large-cavity-grid" class="pt-2">
+            <!-- Dynamically populated via renderStudioCavityGrid() -->
+          </div>
+
+          <!-- Pin Legend -->
+          <div class="flex flex-wrap items-center justify-center gap-3 text-[10px] pt-2 border-t border-[var(--card-border)]/60 text-[var(--muted-foreground)] font-mono">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-red-500 inline-block shadow-xs"></span> KL30 (Battery Power)</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-slate-500 inline-block shadow-xs"></span> GND (Power Ground)</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-xs"></span> KL15 (Ignition)</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block shadow-xs"></span> Digital Input (DI)</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shadow-xs"></span> Digital Output (DO)</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-purple-500 inline-block shadow-xs"></span> Analog Input (AI)</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-orange-400 inline-block shadow-xs"></span> CAN-FD / RS485</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full border border-dashed border-gray-400 inline-block shadow-xs"></span> Sealing Spare Plug</span>
+          </div>
+        </div>
+
+        <!-- BOTTOM: Real-World Matching Connectors Catalog (Sixsense In-House + Molex/Deutsch/Aptiv) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
+              <span>🛒</span> <span>Available Automotive Connector Candidates (Matching Current Pin Count):</span>
+            </span>
+            <span class="text-[9.5px] text-[var(--muted-foreground)] font-mono">Priority: 1. In-House Sixsense PCBs • 2. Global Automotive Standards</span>
+          </div>
+
+          <!-- Connector Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5" id="studio-connector-cards-grid">
+            <!-- Dynamically populated via renderStudioConnectorCards() -->
+          </div>
+        </div>
+
+        <!-- FULL PINOUT REGISTER TABLE IN STUDIO -->
+        <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs text-[var(--foreground)] flex items-center gap-1.5">
+              <span>📋</span> <span>Pinout Assignment & Wire Specification Register:</span>
+            </span>
+            <span class="text-[9.5px] text-[var(--muted-foreground)] font-mono">Drag or Swap Pin Positions to Customize Layout</span>
+          </div>
+          <div class="max-h-56 overflow-y-auto custom-scrollbar border border-[var(--card-border)] rounded-lg">
+            <table class="w-full text-left border-collapse text-[11px]">
+              <thead class="sticky top-0 bg-[var(--card)] border-b border-[var(--card-border)] text-[9.5px] font-bold text-[var(--muted-foreground)] uppercase font-mono">
+                <tr>
+                  <th class="p-2 w-12 text-center">Pin #</th>
+                  <th class="p-2">Signal Name</th>
+                  <th class="p-2">Signal Type</th>
+                  <th class="p-2">Hardware Spec</th>
+                  <th class="p-2">Wire Gauge / Color</th>
+                  <th class="p-2">Application Purpose</th>
+                  <th class="p-2 w-20 text-center">Swap / Move</th>
+                </tr>
+              </thead>
+              <tbody id="studio-pinout-tbody" class="divide-y divide-[var(--card-border)] font-mono">
+                <!-- Dynamically populated via renderStudioPinoutTable() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
-
-
-    // DYNAMIC STEP-AWARE SIDEBAR PREVIEW CONTROLLER (User Request)
-    function updateStepSidebarPreview(step) {
-      const titles = [
-        "Step 1: Power & DVP Basis",
-        "Step 2: Hardware I/O Signals",
-        "Step 3: Networks & Peripherals",
-        "Step 4: Harness Scheme",
-        "Step 5: Mounting & Enclosure",
-        "Step 6: Production Batches",
-        "Step 7: Regulatory DVP Register"
-      ];
-      
-      const titleEl = document.getElementById('sb-preview-stage-title');
-      const pillEl = document.getElementById('sb-preview-stage-pill');
-      if (titleEl) titleEl.textContent = titles[step - 1] || `Step ${step} Preview`;
-      if (pillEl) pillEl.textContent = `Stage ${step} of 7`;
-
-      // Show active stage preview, hide others
-      for (let s = 1; s <= 7; s++) {
-        const previewEl = document.getElementById(`sb-stage-preview-${s}`);
-        if (previewEl) {
-          if (s === step) previewEl.classList.remove('hidden');
-          else previewEl.classList.add('hidden');
-        }
-      }
-
-      // Populate stage 1 live values
-      const cName = (wizardState.country === 'europe') ? 'Europe (E-Mark / UN ECE R10)' :
-                    ((wizardState.country === 'usa') ? 'USA (FCC Part 15 / PTCRB)' :
-                    ((wizardState.country === 'australia') ? 'Australia (ADR Mandate)' :
-                    ((wizardState.country === 'brazil') ? 'Brazil / LatAm (ANATEL)' : 'India (AIS-140 / ARAI)')));
-      const elP1C = document.getElementById('sb-p1-country');
-      if (elP1C) elP1C.textContent = cName;
-
-      const vType = wizardState.vehicle;
-      const vText = (vType === 'ev') ? '36V – 96V DC (Direct Traction Pack)' :
-                    ((vType === 'truck' || vType === 'tractor') ? '9V – 36V DC Continuous (24V System)' : '9V – 18V DC Continuous (12V System)');
-      const clampText = (vType === 'ev') ? '110V TVS Clamping' :
-                        ((vType === 'truck' || vType === 'tractor') ? '58V TVS (ISO 16750-2 Pulse 5b)' : '36V TVS (ISO 7637-2 Pulse 5b)');
-      const elP1V = document.getElementById('sb-p1-voltage');
-      if (elP1V) elP1V.textContent = vText;
-      const elP1Cl = document.getElementById('sb-p1-clamp');
-      if (elP1Cl) elP1Cl.textContent = clampText;
-
-      // Populate stage 2 live values
-      const diCount = wizardState.pins.filter(p => p.type === 'DI').length;
-      const doCount = wizardState.pins.filter(p => p.type === 'DO').length;
-      const aiCount = wizardState.pins.filter(p => p.type === 'AI').length;
-      const elDi = document.getElementById('sb-p2-di-count');
-      if (elDi) elDi.textContent = `${diCount} DI`;
-      const elDo = document.getElementById('sb-p2-do-count');
-      if (elDo) elDo.textContent = `${doCount} DO`;
-      const elAi = document.getElementById('sb-p2-ai-count');
-      if (elAi) elAi.textContent = `${aiCount} AI`;
-
-      const allocatedPins = getAllocatedPinsList();
-      const elPins = document.getElementById('sb-p2-harness-pins');
-      if (elPins) elPins.textContent = `${allocatedPins.length} Pins Required`;
-      const elConn = document.getElementById('sb-p2-conn-name');
-      if (elConn) {
-        let connName = 'TE Superseal 1.0 (8-Pin)';
-        if (allocatedPins.length > 26) connName = 'TE Superseal 1.0 (34-Pin Sealed)';
-        else if (allocatedPins.length > 14) connName = 'TE Superseal 1.0 (26-Pin Sealed)';
-        else if (allocatedPins.length > 8) connName = 'TE Superseal 1.0 (14-Pin Sealed)';
-        elConn.textContent = connName;
-      }
-
-      // Populate stage 3 live values
-      const busses = [];
-      if (document.getElementById('net_can')?.checked ?? true) busses.push('CAN-FD');
-      if (document.getElementById('net_rs485')?.checked) busses.push('RS485');
-      if (document.getElementById('net_kline')?.checked) busses.push('K-Line');
-      const elBusses = document.getElementById('sb-p3-busses');
-      if (elBusses) elBusses.textContent = busses.join(' • ') || 'None';
-
-      const rf = [];
-      if (document.getElementById('net_4g')?.checked ?? true) rf.push('4G LTE');
-      const gnss = document.getElementById('gnss_type')?.value || 'navic';
-      if (gnss === 'navic') rf.push('NavIC L5');
-      else if (gnss === 'rtk') rf.push('RTK GNSS');
-      else rf.push('GPS/GLONASS');
-      const elRf = document.getElementById('sb-p3-rf');
-      if (elRf) elRf.textContent = rf.join(' • ');
-
-      const flashSel = document.getElementById('peri-spi-flash')?.value || '32mb';
-      const elFlash = document.getElementById('sb-p3-flash');
-      if (elFlash) elFlash.textContent = (flashSel === '64mb') ? '64 MB (250k Records)' : ((flashSel === '16mb') ? '16 MB (50k Records)' : '32 MB (100k Records)');
-
-      const sdChecked = document.getElementById('peri-microsd')?.checked;
-      const elSd = document.getElementById('sb-p3-sd');
-      if (elSd) elSd.textContent = sdChecked ? 'MicroSD Slot Active' : 'Internal Flash Only';
-
-      const rtcChecked = document.getElementById('peri-i2c-rtc')?.checked ?? true;
-      const elRtc = document.getElementById('sb-p3-rtc');
-      if (elRtc) elRtc.textContent = rtcChecked ? 'DS3231 (±2ppm Hold)' : 'MCU Internal RTC';
-    }
-
-    function updatePeripheralsSpec() {
-      updateStepSidebarPreview(currentStep);
-      updateLiveImpact();
-    }
