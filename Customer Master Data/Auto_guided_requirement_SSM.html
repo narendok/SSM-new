@@ -2272,6 +2272,130 @@
 
   <script>
     let currentStep = 1;
+    var AUTOMOTIVE_CONNECTOR_CATALOG = [
+      {
+        id: 'conn-te-8',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473416-1',
+        cavities: 8,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        source: 'Sixsense Production PCB (TCU-02 / OBD-II)',
+        img: '🔌',
+        features: 'Double-spring contact, integrated secondary lock, automotive vibration tested.'
+      },
+      {
+        id: 'conn-te-14',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473413-1',
+        cavities: 14,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        source: 'Sixsense Production PCB (TCU-AIS140 / ITL-TCU03)',
+        img: '🔌',
+        features: 'Standard AIS-140 telematics header, robust latching, pre-tooled in-house.'
+      },
+      {
+        id: 'conn-te-26',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473407-1',
+        cavities: 26,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        source: 'Sixsense Production PCB (BCU Tractor Controller)',
+        img: '🔌',
+        features: 'High pin-density, 2-row layout, supports full I/O + dual CAN + RS485.'
+      },
+      {
+        id: 'conn-te-34',
+        brand: 'TE Connectivity',
+        family: 'Superseal 1.0',
+        mpn: '1473404-1',
+        cavities: 34,
+        ipRating: 'IP67 / IP69K',
+        pitch: '1.0 mm Pitch',
+        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
+        currentRating: '5.0A per contact',
+        category: 'sixsense',
+        source: 'Sixsense Production PCB (BCM Farm Smart Controller)',
+        img: '🔌',
+        features: 'Maximum expansion headroom, 4-row hybrid staggered cavity array.'
+      },
+      {
+        id: 'conn-molex-12',
+        brand: 'Molex',
+        family: 'MX150 Sealed',
+        mpn: '33472-1201',
+        cavities: 12,
+        ipRating: 'IP69K Waterproof',
+        pitch: '3.5 mm Pitch',
+        wireRange: '0.5 – 1.5 mm² ISO',
+        currentRating: '14.0A (High Current)',
+        category: 'industry',
+        source: 'Global Commercial Vehicle Standard (USCAR-2 Class 3)',
+        img: '🛡️',
+        features: 'Single piece housing with matte seal, high vibration, extreme temperature.'
+      },
+      {
+        id: 'conn-molex-20',
+        brand: 'Molex',
+        family: 'MX150 Sealed',
+        mpn: '33472-2001',
+        cavities: 20,
+        ipRating: 'IP69K Waterproof',
+        pitch: '3.5 mm Pitch',
+        wireRange: '0.5 – 1.5 mm² ISO',
+        currentRating: '14.0A',
+        category: 'industry',
+        source: 'Heavy Commercial Truck Fleet Standard',
+        img: '🛡️',
+        features: 'Dual row 2x10 sealed receptacle with CPA (Connector Position Assurance).'
+      },
+      {
+        id: 'conn-deutsch-12',
+        brand: 'TE Deutsch',
+        family: 'DT Series',
+        mpn: 'DT04-12PA',
+        cavities: 12,
+        ipRating: 'IP68 Immersion',
+        pitch: 'Size 16 Contacts',
+        wireRange: '0.5 – 2.0 mm²',
+        currentRating: '13.0A Continuous',
+        category: 'industry',
+        source: 'Off-Highway / Construction Machinery Standard',
+        img: '🚜',
+        features: 'Thermoplastic housing with wedgelock, field-proven rugged off-road reliability.'
+      },
+      {
+        id: 'conn-aptiv-16',
+        brand: 'Aptiv (Delphi)',
+        family: 'Metri-Pack 150.2',
+        mpn: '12162188',
+        cavities: 16,
+        ipRating: 'IP67 Environmental',
+        pitch: '3.5 mm Pitch',
+        wireRange: '0.35 – 1.0 mm²',
+        currentRating: '14.0A',
+        category: 'industry',
+        source: 'Passenger Car & Under-Hood ECU Standard',
+        img: '🚘',
+        features: 'Triple-rib silicone cable perimeter seal, secondary TPA lock.'
+      }
+    ];
+    var selectedConnectorId = 'conn-te-14';
+
     const totalSteps = 7;
     let currentTheme = 'dark';
 
@@ -6613,130 +6737,9 @@
     }
 
     // ================= CONNECTOR STUDIO & REAL-WORLD AUTOMOTIVE CATALOG =================
-    const AUTOMOTIVE_CONNECTOR_CATALOG = [
-      {
-        id: 'conn-te-8',
-        brand: 'TE Connectivity',
-        family: 'Superseal 1.0',
-        mpn: '1473416-1',
-        cavities: 8,
-        ipRating: 'IP67 / IP69K',
-        pitch: '1.0 mm Pitch',
-        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
-        currentRating: '5.0A per contact',
-        category: 'sixsense',
-        source: 'Sixsense Production PCB (TCU-02 / OBD-II)',
-        img: '🔌',
-        features: 'Double-spring contact, integrated secondary lock, automotive vibration tested.'
-      },
-      {
-        id: 'conn-te-14',
-        brand: 'TE Connectivity',
-        family: 'Superseal 1.0',
-        mpn: '1473413-1',
-        cavities: 14,
-        ipRating: 'IP67 / IP69K',
-        pitch: '1.0 mm Pitch',
-        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
-        currentRating: '5.0A per contact',
-        category: 'sixsense',
-        source: 'Sixsense Production PCB (TCU-AIS140 / ITL-TCU03)',
-        img: '🔌',
-        features: 'Standard AIS-140 telematics header, robust latching, pre-tooled in-house.'
-      },
-      {
-        id: 'conn-te-26',
-        brand: 'TE Connectivity',
-        family: 'Superseal 1.0',
-        mpn: '1473407-1',
-        cavities: 26,
-        ipRating: 'IP67 / IP69K',
-        pitch: '1.0 mm Pitch',
-        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
-        currentRating: '5.0A per contact',
-        category: 'sixsense',
-        source: 'Sixsense Production PCB (BCU Tractor Controller)',
-        img: '🔌',
-        features: 'High pin-density, 2-row layout, supports full I/O + dual CAN + RS485.'
-      },
-      {
-        id: 'conn-te-34',
-        brand: 'TE Connectivity',
-        family: 'Superseal 1.0',
-        mpn: '1473404-1',
-        cavities: 34,
-        ipRating: 'IP67 / IP69K',
-        pitch: '1.0 mm Pitch',
-        wireRange: '0.5 – 1.25 mm² (FLRY-B)',
-        currentRating: '5.0A per contact',
-        category: 'sixsense',
-        source: 'Sixsense Production PCB (BCM Farm Smart Controller)',
-        img: '🔌',
-        features: 'Maximum expansion headroom, 4-row hybrid staggered cavity array.'
-      },
-      {
-        id: 'conn-molex-12',
-        brand: 'Molex',
-        family: 'MX150 Sealed',
-        mpn: '33472-1201',
-        cavities: 12,
-        ipRating: 'IP69K Waterproof',
-        pitch: '3.5 mm Pitch',
-        wireRange: '0.5 – 1.5 mm² ISO',
-        currentRating: '14.0A (High Current)',
-        category: 'industry',
-        source: 'Global Commercial Vehicle Standard (USCAR-2 Class 3)',
-        img: '🛡️',
-        features: 'Single piece housing with matte seal, high vibration, extreme temperature.'
-      },
-      {
-        id: 'conn-molex-20',
-        brand: 'Molex',
-        family: 'MX150 Sealed',
-        mpn: '33472-2001',
-        cavities: 20,
-        ipRating: 'IP69K Waterproof',
-        pitch: '3.5 mm Pitch',
-        wireRange: '0.5 – 1.5 mm² ISO',
-        currentRating: '14.0A',
-        category: 'industry',
-        source: 'Heavy Commercial Truck Fleet Standard',
-        img: '🛡️',
-        features: 'Dual row 2x10 sealed receptacle with CPA (Connector Position Assurance).'
-      },
-      {
-        id: 'conn-deutsch-12',
-        brand: 'TE Deutsch',
-        family: 'DT Series',
-        mpn: 'DT04-12PA',
-        cavities: 12,
-        ipRating: 'IP68 Immersion',
-        pitch: 'Size 16 Contacts',
-        wireRange: '0.5 – 2.0 mm²',
-        currentRating: '13.0A Continuous',
-        category: 'industry',
-        source: 'Off-Highway / Construction Machinery Standard',
-        img: '🚜',
-        features: 'Thermoplastic housing with wedgelock, field-proven rugged off-road reliability.'
-      },
-      {
-        id: 'conn-aptiv-16',
-        brand: 'Aptiv (Delphi)',
-        family: 'Metri-Pack 150.2',
-        mpn: '12162188',
-        cavities: 16,
-        ipRating: 'IP67 Environmental',
-        pitch: '3.5 mm Pitch',
-        wireRange: '0.35 – 1.0 mm²',
-        currentRating: '14.0A',
-        category: 'industry',
-        source: 'Passenger Car & Under-Hood ECU Standard',
-        img: '🚘',
-        features: 'Triple-rib silicone cable perimeter seal, secondary TPA lock.'
-      }
-    ];
+    
 
-    let selectedConnectorId = 'conn-te-14';
+    var selectedConnectorId = 'conn-te-14';
 
     function openConnectorStudioModal() {
       const modal = document.getElementById('connector-studio-modal');
