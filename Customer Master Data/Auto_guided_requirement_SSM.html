@@ -476,7 +476,7 @@
           </div>
 
           <!-- 3 COLUMN-SPECIFIC I/O CARDS (Rows directly inside respective columns) -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 items-start">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 items-start">
 
             <!-- COLUMN 1: DIGITAL INPUTS (DI) -->
             <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2 flex flex-col">
@@ -547,6 +547,73 @@
               <!-- Container for AI Rows inside Column 3 -->
               <div id="ai-column-pins" class="space-y-1.5 max-h-56 overflow-y-auto pr-0.5">
                 <!-- Dynamically populated via renderColumnPins() -->
+              </div>
+            </div>
+
+            <!-- COLUMN 4: VEHICLE SERIAL & DIFFERENTIAL BUS PINS (CAN-FD, RS485 & K-LINE) -->
+            <div class="p-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--background)] space-y-2 flex flex-col">
+              <div class="flex items-center justify-between pb-1.5 border-b border-[var(--card-border)]">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm">🚌</span>
+                  <div>
+                    <div class="font-bold text-xs text-[var(--foreground)]">Vehicle Bus Pins</div>
+                    <div class="text-[9px] text-[var(--muted-foreground)]">Consumes Harness Pins</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span id="bus_pin_badge_count" class="font-mono font-bold text-[10px] px-1.5 py-0.2 rounded bg-[var(--card)] border border-[var(--card-border)] text-orange-400">2 Pins</span>
+                </div>
+              </div>
+
+              <!-- Container for Bus Rows inside Column 4 -->
+              <div id="bus-column-pins" class="space-y-1.5 max-h-56 overflow-y-auto pr-0.5">
+                <!-- Bus Option 1: CAN-FD -->
+                <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 transition-all hover:border-orange-500/50">
+                  <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" id="io_can_fd" checked onchange="toggleBusFromStep2('can', this.checked)" class="accent-orange-500 rounded">
+                      <span class="text-[11px] font-bold text-[var(--foreground)]">CAN-FD Bus</span>
+                    </label>
+                    <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-orange-500/20 text-orange-400">+2 Pins</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[8.5px] font-mono text-[var(--muted-foreground)]">
+                    <span>CAN_H (P4) • CAN_L (P5)</span>
+                    <span class="text-orange-400 font-semibold">120Ω Term</span>
+                  </div>
+                  <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">ISO 11898-2 5Mbps differential ECU / J1939 telemetry</p>
+                </div>
+
+                <!-- Bus Option 2: RS485 Modbus -->
+                <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 transition-all hover:border-indigo-500/50">
+                  <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" id="io_rs485" onchange="toggleBusFromStep2('rs485', this.checked)" class="accent-indigo-500 rounded">
+                      <span class="text-[11px] font-bold text-[var(--foreground)]">RS485 / Modbus</span>
+                    </label>
+                    <span id="io_rs485_badge" class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-indigo-500/20 text-indigo-400">+2 Pins</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[8.5px] font-mono text-[var(--muted-foreground)]">
+                    <span>RS485_A • RS485_B</span>
+                    <span class="text-indigo-400 font-semibold">Isolated</span>
+                  </div>
+                  <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">Multi-tank fuel probes, RFID reader, weight load-cells</p>
+                </div>
+
+                <!-- Bus Option 3: K-Line / LIN -->
+                <div class="p-2 rounded-lg border border-[var(--card-border)] bg-[var(--card)] space-y-1 transition-all hover:border-cyan-500/50">
+                  <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input type="checkbox" id="io_kline" onchange="toggleBusFromStep2('kline', this.checked)" class="accent-cyan-500 rounded">
+                      <span class="text-[11px] font-bold text-[var(--foreground)]">K-Line / LIN</span>
+                    </label>
+                    <span class="px-1.5 py-0.2 rounded text-[8.5px] font-mono font-bold bg-cyan-500/20 text-cyan-400">+1 Pin</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[8.5px] font-mono text-[var(--muted-foreground)]">
+                    <span>K-LINE Single-Wire</span>
+                    <span class="text-cyan-400 font-semibold">ISO 9141</span>
+                  </div>
+                  <p class="text-[8.5px] text-[var(--muted-foreground)] leading-tight">Legacy automotive OBD-II diagnostics & LIN actuator</p>
+                </div>
               </div>
             </div>
 
@@ -708,15 +775,15 @@
                   </div>
                   <div class="space-y-1 pt-1.5">
                     <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" id="net_can" checked onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <input type="checkbox" id="net_can" checked onchange="syncBusToStep2('can', this.checked)" class="accent-[var(--primary)] rounded">
                       <span class="text-xs font-semibold text-[var(--foreground)]">CAN-FD (ISO 11898-2)</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" id="net_rs485" onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <input type="checkbox" id="net_rs485" onchange="syncBusToStep2('rs485', this.checked)" class="accent-[var(--primary)] rounded">
                       <span class="text-[11px] text-[var(--muted-foreground)]">RS485 / Modbus RTU</span>
                     </label>
                     <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" id="net_kline" onchange="updateLiveImpact()" class="accent-[var(--primary)] rounded">
+                      <input type="checkbox" id="net_kline" onchange="syncBusToStep2('kline', this.checked)" class="accent-[var(--primary)] rounded">
                       <span class="text-[11px] text-[var(--muted-foreground)]">K-Line / LIN Bus (ISO 9141)</span>
                     </label>
                   </div>
@@ -2707,7 +2774,7 @@
       }
 
       // Vehicle Network CAN-FD Interface
-      const canActive = (document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true);
+      const canActive = (document.getElementById('io_can_fd')?.checked ?? document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true);
       if (canActive) {
         allocatedPins.push({
           pin: pinNum++,
@@ -2732,7 +2799,7 @@
       }
 
       // Industrial RS485 Modbus Interface
-      const rs485Active = (document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false);
+      const rs485Active = (document.getElementById('io_rs485')?.checked ?? document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false);
       if (rs485Active) {
         allocatedPins.push({
           pin: pinNum++,
@@ -2752,6 +2819,22 @@
           wireColor: "Grey (24 AWG)",
           purpose: "Aux Telematics / Fuel Sensor",
           bg: "bg-indigo-500",
+          text: "text-white"
+        });
+      }
+
+
+      // Optional K-Line / LIN Interface (1 pin)
+      const klineActive = (document.getElementById('io_kline')?.checked ?? document.getElementById('net_kline')?.checked ?? wizardState.hasKLine ?? false);
+      if (klineActive) {
+        allocatedPins.push({
+          pin: pinNum++,
+          label: "K-LINE / LIN",
+          type: "K-LINE",
+          spec: "ISO 9141-2 / LIN Single-Wire",
+          wireColor: "Blue-Yellow (24 AWG)",
+          purpose: "Legacy Vehicle Diagnostics",
+          bg: "bg-cyan-600",
           text: "text-white"
         });
       }
@@ -2861,6 +2944,157 @@
       }
     }
   
+    // VEHICLE BUS SYNCHRONIZATION (Step 2 <-> Step 3 Bidirectional Sync)
+    function toggleBusFromStep2(bus, checked) {
+      if (bus === 'can') {
+        wizardState.hasCAN = checked;
+        const netEl = document.getElementById('net_can');
+        if (netEl) netEl.checked = checked;
+      } else if (bus === 'rs485') {
+        wizardState.hasRS485 = checked;
+        const netEl = document.getElementById('net_rs485');
+        if (netEl) netEl.checked = checked;
+      } else if (bus === 'kline') {
+        wizardState.hasKLine = checked;
+        const netEl = document.getElementById('net_kline');
+        if (netEl) netEl.checked = checked;
+      }
+      updateBusPinsBadge();
+      window.customCavityMapping = null;
+      recalculatePins();
+      updateLiveImpact();
+    }
+
+    function syncBusToStep2(bus, checked) {
+      if (bus === 'can') {
+        wizardState.hasCAN = checked;
+        const ioEl = document.getElementById('io_can_fd');
+        if (ioEl) ioEl.checked = checked;
+      } else if (bus === 'rs485') {
+        wizardState.hasRS485 = checked;
+        const ioEl = document.getElementById('io_rs485');
+        if (ioEl) ioEl.checked = checked;
+      } else if (bus === 'kline') {
+        wizardState.hasKLine = checked;
+        const ioEl = document.getElementById('io_kline');
+        if (ioEl) ioEl.checked = checked;
+      }
+      updateBusPinsBadge();
+      window.customCavityMapping = null;
+      recalculatePins();
+      updateLiveImpact();
+    }
+
+    function updateBusPinsBadge() {
+      const badge = document.getElementById('bus_pin_badge_count');
+      if (!badge) return;
+      const can = document.getElementById('io_can_fd')?.checked ?? document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true;
+      const rs485 = document.getElementById('io_rs485')?.checked ?? document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false;
+      const kline = document.getElementById('io_kline')?.checked ?? document.getElementById('net_kline')?.checked ?? wizardState.hasKLine ?? false;
+      let pins = (can ? 2 : 0) + (rs485 ? 2 : 0) + (kline ? 1 : 0);
+      badge.textContent = `${pins} Pins`;
+    }
+
+    // DYNAMIC STEP PREVIEW CARD CONTROLLER (Stages 1 through 7)
+    function updateStepSidebarPreview(step) {
+      const titles = [
+        "Step 1: Power & DVP Basis",
+        "Step 2: Hardware I/O & Connector",
+        "Step 3: Networks & Peripherals",
+        "Step 4: Harness Scheme",
+        "Step 5: Mounting & Enclosure",
+        "Step 6: Production Batches",
+        "Step 7: Regulatory DVP Register"
+      ];
+      
+      const titleEl = document.getElementById('sb-preview-stage-title');
+      const pillEl = document.getElementById('sb-preview-stage-pill');
+      if (titleEl) titleEl.textContent = titles[step - 1] || `Step ${step} Preview`;
+      if (pillEl) pillEl.textContent = `Stage ${step} of 7`;
+
+      // Show active stage preview, hide others
+      for (let s = 1; s <= 7; s++) {
+        const previewEl = document.getElementById(`sb-stage-preview-${s}`);
+        if (previewEl) {
+          if (s === step) previewEl.classList.remove('hidden');
+          else previewEl.classList.add('hidden');
+        }
+      }
+
+      // Populate stage 1 live values
+      const cName = (wizardState.country === 'europe') ? 'Europe (E-Mark / UN ECE R10)' :
+                    ((wizardState.country === 'usa') ? 'USA (FCC Part 15 / PTCRB)' :
+                    ((wizardState.country === 'australia') ? 'Australia (ADR Mandate)' :
+                    ((wizardState.country === 'brazil') ? 'Brazil / LatAm (ANATEL)' : 'India (AIS-140 / ARAI)')));
+      const elP1C = document.getElementById('sb-p1-country');
+      if (elP1C) elP1C.textContent = cName;
+
+      const vType = wizardState.vehicle;
+      const vText = (vType === 'ev') ? '36V – 96V DC (Direct Traction Pack)' :
+                    ((vType === 'truck' || vType === 'tractor') ? '9V – 36V DC Continuous (24V System)' : '9V – 18V DC Continuous (12V System)');
+      const clampText = (vType === 'ev') ? '110V TVS Clamping' :
+                        ((vType === 'truck' || vType === 'tractor') ? '58V TVS (ISO 16750-2 Pulse 5b)' : '36V TVS (ISO 7637-2 Pulse 5b)');
+      const elP1V = document.getElementById('sb-p1-voltage');
+      if (elP1V) elP1V.textContent = vText;
+      const elP1Cl = document.getElementById('sb-p1-clamp');
+      if (elP1Cl) elP1Cl.textContent = clampText;
+
+      // Populate stage 2 live values & connector grid
+      const diCount = wizardState.pins ? wizardState.pins.filter(p => p.type === 'DI').length : 3;
+      const doCount = wizardState.pins ? wizardState.pins.filter(p => p.type === 'DO').length : 1;
+      const aiCount = wizardState.pins ? wizardState.pins.filter(p => p.type === 'AI').length : 1;
+      const elDi = document.getElementById('sb-p2-di-count');
+      if (elDi) elDi.textContent = `${diCount} DI`;
+      const elDo = document.getElementById('sb-p2-do-count');
+      if (elDo) elDo.textContent = `${doCount} DO`;
+      const elAi = document.getElementById('sb-p2-ai-count');
+      if (elAi) elAi.textContent = `${aiCount} AI`;
+
+      const allocatedPins = (typeof getAllocatedPinsList === 'function') ? getAllocatedPinsList() : [];
+      const elPins = document.getElementById('sb-p2-harness-pins');
+      if (elPins) elPins.textContent = `${allocatedPins.length} Pins Required`;
+      const conn = (typeof AUTOMOTIVE_CONNECTOR_CATALOG !== 'undefined') ? (AUTOMOTIVE_CONNECTOR_CATALOG.find(c => c.id === selectedConnectorId) || AUTOMOTIVE_CONNECTOR_CATALOG[1]) : null;
+      const elConn = document.getElementById('sb-p2-conn-name');
+      if (elConn && conn) elConn.textContent = `${conn.brand} ${conn.family} (${conn.cavities}-Pin)`;
+
+      // Render the mini connector cavity grid
+      if (typeof renderSidebarConnectorGrid === 'function') {
+        renderSidebarConnectorGrid();
+      }
+
+      // Populate stage 3 live values
+      const busses = [];
+      const hasCan = (document.getElementById('io_can_fd')?.checked ?? document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true);
+      const hasRs485 = (document.getElementById('io_rs485')?.checked ?? document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false);
+      const hasKline = (document.getElementById('io_kline')?.checked ?? document.getElementById('net_kline')?.checked ?? wizardState.hasKLine ?? false);
+      if (hasCan) busses.push('CAN-FD');
+      if (hasRs485) busses.push('RS485');
+      if (hasKline) busses.push('K-Line');
+      const elBusses = document.getElementById('sb-p3-busses');
+      if (elBusses) elBusses.textContent = busses.join(' • ') || 'None';
+
+      const rf = [];
+      if (document.getElementById('net_4g')?.checked ?? true) rf.push('4G LTE');
+      const gnss = document.getElementById('gnss_type')?.value || 'navic';
+      if (gnss === 'navic') rf.push('NavIC L5');
+      else if (gnss === 'rtk') rf.push('RTK GNSS');
+      else rf.push('GPS/GLONASS');
+      const elRf = document.getElementById('sb-p3-rf');
+      if (elRf) elRf.textContent = rf.join(' • ');
+
+      const flashSel = document.getElementById('peri-spi-flash')?.value || '32mb';
+      const elFlash = document.getElementById('sb-p3-flash');
+      if (elFlash) elFlash.textContent = (flashSel === '64mb') ? '64 MB (250k Records)' : ((flashSel === '16mb') ? '16 MB (50k Records)' : '32 MB (100k Records)');
+
+      const sdChecked = document.getElementById('peri-microsd')?.checked;
+      const elSd = document.getElementById('sb-p3-sd');
+      if (elSd) elSd.textContent = sdChecked ? 'MicroSD Slot Active' : 'Internal Flash Only';
+
+      const rtcChecked = document.getElementById('peri-i2c-rtc')?.checked ?? true;
+      const elRtc = document.getElementById('sb-p3-rtc');
+      if (elRtc) elRtc.textContent = rtcChecked ? 'DS3231 (±2ppm Hold)' : 'MCU Internal RTC';
+    }
+
     function jumpToStep(step) {
       currentStep = step;
       for (let i = 1; i <= totalSteps; i++) {
@@ -5421,71 +5655,122 @@
       if (typeof updateStepSidebarPreview === 'function') {
         updateStepSidebarPreview(currentStep);
       }
-      let score = 25;
+      let score = 20; // baseline
 
-      // Power impact
-      if (wizardState.powerQuality === 'raw') score += 12;
-      else score += 0;
-
-      // Vehicle
-      if (wizardState.vehicle === 'tractor') score += 15;
-      else if (wizardState.vehicle === 'truck') score += 12;
-      else if (wizardState.vehicle === 'ev') score += 8;
+      // Step 1: Power & Vehicle Impact
+      if (wizardState.powerQuality === 'raw') score += 7;
+      if (wizardState.vehicle === 'tractor') score += 12;
+      else if (wizardState.vehicle === 'truck') score += 10;
+      else if (wizardState.vehicle === 'ev') score += 10;
       else score += 4;
 
-      // GNSS NavIC vs GPS Cost Impact (User Request)
-      if (wizardState.gnssOption === 'navic_l5') {
-        score += 8; // NavIC dual-band module & active antenna cost delta
-      } else if (wizardState.gnssOption === 'none') {
-        score -= 6; // Savings when GNSS is completely omitted
+      // Step 2: Dynamic I/O channel pin counts
+      const diCount = wizardState.pins ? wizardState.pins.filter(p => p.type === 'DI').length : 3;
+      const doCount = wizardState.pins ? wizardState.pins.filter(p => p.type === 'DO').length : 1;
+      const aiCount = wizardState.pins ? wizardState.pins.filter(p => p.type === 'AI').length : 1;
+      const customCount = wizardState.customRequirements ? wizardState.customRequirements.length : 0;
+
+      // Incremental I/O cost percentage
+      score += (diCount * 1.3) + (doCount * 1.8) + (aiCount * 2.5) + (customCount * 2.5);
+
+      // Step 2 & 3: Vehicle Busses (User rules: CAN + RS485 impact)
+      const hasCAN = (document.getElementById('io_can_fd')?.checked ?? document.getElementById('net_can')?.checked ?? wizardState.hasCAN ?? true);
+      const hasRS485 = (document.getElementById('io_rs485')?.checked ?? document.getElementById('net_rs485')?.checked ?? wizardState.hasRS485 ?? false);
+      const hasKLine = (document.getElementById('io_kline')?.checked ?? document.getElementById('net_kline')?.checked ?? wizardState.hasKLine ?? false);
+
+      if (hasCAN && hasRS485) {
+        score += 11.0; // Both: high complexity and isolated transceivers
+      } else if (hasCAN) {
+        score += 5.5; // CAN-FD alone
+      } else if (hasRS485) {
+        score += 5.5; // RS485 alone
+      }
+      if (hasKLine) score += 2.5;
+
+      // Step 3: Cellular RF Modem & SIM
+      const has4G = (document.getElementById('net_4g')?.checked ?? wizardState.has4G ?? true);
+      if (has4G) score += 12;
+      if (document.getElementById('net_esim')?.checked || wizardState.simType === 'esim') score += 2.5;
+      if (document.getElementById('net_dualsim')?.checked) score += 2.0;
+
+      // Step 3: GNSS Satellite Positioning Engine
+      const gnss = document.getElementById('gnss_type')?.value || wizardState.gnssOption || 'navic';
+      if (gnss === 'navic' || gnss === 'navic_l5') {
+        score += 7; // NavIC L5 dual-band
+      } else if (gnss === 'rtk') {
+        score += 14; // High Precision RTK
+      } else if (gnss === 'dead_reckoning') {
+        score += 8; // UDR Automotive Dead Reckoning
+      } else if (gnss === 'none') {
+        score -= 4; // Savings when omitted
+      } else {
+        score += 3; // Standard GPS
       }
 
-      // Environmental Temp & Ingress
-      if (wizardState.tempRange === 'engine') score += 8;
-      else if (wizardState.tempRange === 'chassis') score += 4;
+      // Step 3: Short-Range Wireless (User Request: BLE vs Wi-Fi cost and complexity rules)
+      const hasBLE = (document.getElementById('net_ble')?.checked ?? wizardState.hasBLE ?? true);
+      const hasWifi = (document.getElementById('net_wifi')?.checked ?? wizardState.hasWifi ?? false);
+      const hasLoRa = (document.getElementById('net_lora')?.checked ?? wizardState.hasLoRa ?? false);
 
-      if (wizardState.ipRating === 'ip69k') score += 8;
-      else if (wizardState.ipRating === 'ip67') score += 5;
+      let wirelessComplexity = 0;
+      if (hasBLE && hasWifi) {
+        score += 7.0; // Both: moderate cost increase
+        wirelessComplexity += 25;
+      } else if (hasWifi) {
+        score += 3.5; // Wi-Fi cost modest, complexity high
+        wirelessComplexity += 16;
+      } else if (hasBLE) {
+        score += 2.0; // BLE low cost & low complexity
+        wirelessComplexity += 5;
+      }
+      if (hasLoRa) {
+        score += 4.5;
+        wirelessComplexity += 10;
+      }
 
-      if (wizardState.saltSpray === 'severe240') score += 4;
+      // Step 3: Storage & RTC
+      const flashSel = document.getElementById('peri-spi-flash')?.value || '32mb';
+      if (flashSel === '64mb') score += 3.5;
+      else if (flashSel === '32mb') score += 2.0;
+      else if (flashSel === '16mb') score += 1.0;
 
-      // Dynamic I/O count from pins array
-      const diCount = wizardState.pins.filter(p => p.type === 'DI').length;
-      const doCount = wizardState.pins.filter(p => p.type === 'DO').length;
-      const aiCount = wizardState.pins.filter(p => p.type === 'AI').length;
-      const customCount = wizardState.customRequirements.length;
+      if (document.getElementById('peri-microsd')?.checked) score += 2.5;
+      if (document.getElementById('peri-i2c-rtc')?.checked ?? true) score += 2.5;
 
-      // Cellular RF Modem Impact (User Request: 4G LTE distinctly drives slider complexity)
-      if (wizardState.has4G) score += 14;
-      if (wizardState.has2G) score += 4;
+      // Step 4: Harness & Connector Cavity Count Impact
+      const allocatedPins = (typeof getAllocatedPinsList === 'function') ? getAllocatedPinsList() : [];
+      const pins = allocatedPins.length;
+      if (pins > 26) score += 6;
+      else if (pins > 14) score += 3.5;
+      else if (pins > 8) score += 2;
 
-      if (wizardState.hasCAN) score += 6;
-      if (wizardState.hasRS485) score += 3;
-      if (wizardState.hasWifi) score += 3;
-      if (wizardState.hasLoRa) score += 4;
-      if (wizardState.simType === 'esim') score += 2;
-      score += (diCount * 1.5) + (doCount * 2) + (aiCount * 3) + (customCount * 3);
+      // Step 5: Enclosure & Environmental Ingress
+      if (wizardState.ipRating === 'ip69k') score += 7;
+      else if (wizardState.ipRating === 'ip67') score += 4;
 
-      // Volume scale discount
-      if (wizardState.volumeTier === 'pilot') score += 10;
-      else if (wizardState.volumeTier === 'mass') score -= 12;
+      if (wizardState.tempRange === 'engine') score += 6;
+      else if (wizardState.tempRange === 'chassis') score += 3;
 
-      // Enclosure Dimension & Material Impact
-      if (wizardState.enclosurePreset === 'rugged') score += 6;
-      if (wizardState.dimClearance === 'ultra25') score += 6;
-      else if (wizardState.dimClearance === 'tight35') score += 3;
+      if (wizardState.enclosurePreset === 'rugged') score += 5;
+      if (wizardState.saltSpray === 'severe240') score += 3;
 
-      // Commercial Stage Fast-Track Impact
-      if (wizardState.protoLead === 'fast') score += 8;
+      // Step 6: Volume Scale Discount
+      if (wizardState.volumeTier === 'pilot') score += 8;
+      else if (wizardState.volumeTier === 'mass') score -= 10;
 
-      // Additional certifications
-      if (document.getElementById('std_iso26262')?.checked) score += 8;
-      if (document.getElementById('std_iso21434')?.checked) score += 6;
-      if (document.getElementById('std_fcc')?.checked) score += 4;
-      if (document.getElementById('std_rcm')?.checked) score += 4;
+      // Step 6: Fast-Track Proto
+      if (wizardState.protoLead === 'fast') score += 7;
+
+      // Step 7: Certifications Active
+      ['std_arai', 'std_emark', 'std_fcc', 'std_rcm', 'std_rohs', 'std_iso26262', 'std_iso21434'].forEach(id => {
+        if (document.getElementById(id)?.checked) {
+          score += 2.5;
+        }
+      });
 
       score = Math.max(15, Math.min(98, Math.round(score)));
 
+      // Update Cost Slider Meter Bar & Text
       const bar = document.getElementById('cost_meter_bar');
       const text = document.getElementById('cost_level_text');
       const tierBadge = document.getElementById('tier_badge');
@@ -5504,7 +5789,7 @@
           tierBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30';
         } else if (score <= 76) {
           bar.className = 'h-full rounded-full bg-orange-600 meter-fill shadow-[0_0_10px_rgba(234,88,12,0.4)]';
-          tierBadge.textContent = 'High Complexity';
+          tierBadge.textContent = 'High Complexity / Dual Bus';
           tierBadge.className = 'px-2 py-0.5 rounded text-[10px] font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30';
         } else {
           bar.className = 'h-full rounded-full bg-red-600 meter-fill shadow-[0_0_14px_rgba(220,38,38,0.5)]';
@@ -5513,73 +5798,49 @@
         }
       }
 
-      const allocatedPins = getAllocatedPinsList();
-      const pins = allocatedPins.length;
+      // Sidebar readouts
       const rtPins = document.getElementById('rt-pins-text');
       if (rtPins) rtPins.textContent = `${pins} Harness Pins`;
 
-      const rtCountry = document.getElementById('rt-country-text');
-      if (rtCountry) {
-        if (wizardState.targetCountry === 'india') rtCountry.textContent = "🇮🇳 India (AIS-140)";
-        else if (wizardState.targetCountry === 'europe') rtCountry.textContent = "🇪🇺 Europe (E-Mark)";
-        else if (wizardState.targetCountry === 'usa') rtCountry.textContent = "🇺🇸 USA (FCC/PTCRB)";
-        else if (wizardState.targetCountry === 'australia') rtCountry.textContent = "🇦🇺 Australia (RCM)";
-        else rtCountry.textContent = "🌐 Global Multi-Region";
+      const rtIo = document.getElementById('rt-io-breakdown');
+      if (rtIo) {
+        const busStr = (hasCAN ? 'CAN' : '') + (hasCAN && hasRS485 ? '+' : '') + (hasRS485 ? 'RS485' : '');
+        rtIo.textContent = `${diCount} DI • ${doCount} DO • ${aiCount} AI` + (busStr ? ` • ${busStr}` : '');
       }
 
-      let connDisplay = "TE Superseal 1.0 (14-Pin)";
-      if (wizardState.connectorOption === 'oem') {
-        connDisplay = (document.getElementById('cust_connector_pn')?.value || "Custom OEM") + " Header";
-      } else if (wizardState.connectorOption === 'flying') {
-        connDisplay = "Pigtail Flying Leads";
-      } else {
-        connDisplay = pins <= 8 ? "TE Superseal (8-Pin)" : (pins <= 14 ? "TE Superseal (14-Pin)" : (pins <= 26 ? "TE Superseal (26-Pin)" : (pins <= 34 ? "TE Superseal (34-Pin)" : `Automotive Header (${Math.ceil(pins/2)*2}-Pin)`)));
-      }
-      const rtConn = document.getElementById('rt-conn-text');
-      if (rtConn) rtConn.textContent = connDisplay;
-
-      const locName = wizardState.installLoc === 'chassis' ? "Chassis" : (wizardState.installLoc === 'cabin' ? "Cabin" : (wizardState.installLoc === 'engine' ? "Engine" : "Roof"));
-      const schemeIcon = wizardState.mountScheme === 'flange' ? "4x M4 Bolts" : (wizardState.mountScheme === 'magnet' ? "Magnetic" : "Zip-tie");
-      const rtMount = document.getElementById('rt-mount-text');
-      if (rtMount) rtMount.textContent = `${locName} (${schemeIcon})`;
-
-      const rtDim = document.getElementById('rt-dim-text');
-      if (rtDim) rtDim.textContent = `${wizardState.dimL} × ${wizardState.dimW} × ${wizardState.dimH} mm`;
-
-      const rtStaging = document.getElementById('rt-staging-text');
-      if (rtStaging) {
-        const protoText = `${wizardState.protoBatch} Pcs Proto`;
-        const pilotText = wizardState.pilotBatch >= 1000 ? `${wizardState.pilotBatch/1000}k Pilot` : `${wizardState.pilotBatch} Pcs Pilot`;
-        rtStaging.textContent = `${protoText} → ${pilotText}`;
-      }
-
-      const tempStr = wizardState.tempRange === 'cabin' ? "-20°C to +70°C" : (wizardState.tempRange === 'engine' ? "-40°C to +105°C" : "-40°C to +85°C");
-      const rtTemp = document.getElementById('rt-temp-text');
-      if (rtTemp) rtTemp.textContent = `${tempStr} (${wizardState.ipRating.toUpperCase()})`;
-
-      // Dynamic Lead Time Calculation (User Request: Fast-Track, Custom and Red/dark progression)
+      // Lead Time calculation
       const lt = document.getElementById('rt-lead-text');
       if (lt) {
-        const isNavic = wizardState.gnssOption === 'navic_l5';
+        const isNavic = (gnss === 'navic' || gnss === 'navic_l5');
+        const isRtk = (gnss === 'rtk');
+        let extraPinWeeks = Math.max(0, Math.floor((pins - 8) / 4)) * 0.3;
+
         let leadWeeks = "8 – 10 Weeks";
         let leadClass = "font-bold text-amber-400 font-mono";
 
         if (wizardState.protoLead === 'fast') {
-          leadWeeks = isNavic ? "4 – 5 Weeks (Fast-Track Expedition)" : "4 Weeks (Fast-Track Expedition)";
+          leadWeeks = isNavic ? "4 – 5 Weeks (Fast-Track Expedition)" : "3 – 4 Weeks (Fast-Track Expedition)";
           leadClass = "font-bold text-blue-400 font-mono";
         } else if (wizardState.protoLead === 'custom') {
           leadWeeks = `${wizardState.protoCustomLead || 6} Weeks (Customer Target)`;
           leadClass = "font-bold text-purple-400 font-mono";
         } else if (wizardState.volumeTier === 'pilot') {
-          leadWeeks = isNavic ? "6 – 8 Weeks" : "4 – 6 Weeks";
-          leadClass = isNavic ? "font-bold text-amber-400 font-mono" : "font-bold text-emerald-400 font-mono";
+          let minW = 4 + (isNavic ? 2 : (isRtk ? 3 : 0)) + Math.round(extraPinWeeks);
+          let maxW = minW + 2;
+          leadWeeks = `${minW} – ${maxW} Weeks`;
+          leadClass = (minW <= 6) ? "font-bold text-emerald-400 font-mono" : "font-bold text-amber-400 font-mono";
         } else if (wizardState.volumeTier === 'prod') {
-          leadWeeks = isNavic ? "10 – 12 Weeks" : "8 – 10 Weeks";
+          let minW = 8 + (isNavic ? 2 : (isRtk ? 3 : 0)) + Math.round(extraPinWeeks);
+          let maxW = minW + 2;
+          leadWeeks = `${minW} – ${maxW} Weeks`;
           leadClass = score > 70 ? "font-bold text-orange-400 font-mono" : "font-bold text-amber-400 font-mono";
         } else {
-          leadWeeks = isNavic ? "14 – 16 Weeks" : "12 – 14 Weeks";
+          let minW = 12 + (isNavic ? 2 : (isRtk ? 3 : 0)) + Math.round(extraPinWeeks);
+          let maxW = minW + 2;
+          leadWeeks = `${minW} – ${maxW} Weeks`;
           leadClass = "font-bold text-red-400 font-mono";
         }
+
         if (score > 76 && wizardState.protoLead !== 'fast') {
           leadClass = "font-bold text-red-400 font-mono";
         }
