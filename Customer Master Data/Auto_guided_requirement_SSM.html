@@ -142,9 +142,39 @@
 
         <!-- ================= STEP 1: VEHICLE & VOLTAGE ================= -->
         <div id="step-pane-1" class="space-y-3">
-          <div class="space-y-0.5">
-            <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 1: Vehicle & Power Architecture</h2>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Platform selection defines nominal voltage, ISO pulse clamping, and base parameters.</p>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="space-y-0.5">
+              <h2 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Step 1: Vehicle & Power Architecture</h2>
+              <p class="text-[11px] text-[var(--muted-foreground)]">Platform selection defines nominal voltage, ISO pulse clamping, and base parameters.</p>
+            </div>
+            <span id="intake-pipeline-badge" class="px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-blue-500/15 text-blue-400 border border-blue-500/30">
+              Mode: Guided SOR Intake
+            </span>
+          </div>
+
+          <!-- Sales Inquiry -> Field Visit Audit / Feasibility & Project Analysis Gate -->
+          <div id="intake-mode-banner" class="p-2.5 rounded-xl border border-indigo-500/35 bg-gradient-to-r from-indigo-500/10 via-[var(--background)] to-emerald-500/5 space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🧭</span>
+                <div>
+                  <div class="text-[11px] font-bold text-[var(--foreground)]">Sales Inquiry &amp; Requirement Intake Flow (TG-0)</div>
+                  <div class="text-[9.5px] text-[var(--muted-foreground)]">Client has formal SOR? Use Wizard below. No proper SOR? Dispatch Service / HW / FW Field Visit Audit.</div>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-1.5">
+                <button onclick="openFieldVisitAuditModal()" id="btn-open-field-visit" class="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-400 font-bold text-[10px] transition-all cursor-pointer flex items-center gap-1">
+                  <span>🛠️</span> <span>No SOR? Field Visit Audit</span>
+                </button>
+                <button onclick="openProjectAnalysisBoard()" id="btn-open-analysis-board" class="px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-400 font-bold text-[10px] transition-all cursor-pointer flex items-center gap-1">
+                  <span>📊</span> <span>Feasibility &amp; Analysis Board</span>
+                </button>
+              </div>
+            </div>
+            <div id="field-audit-summary-strip" class="hidden pt-1.5 border-t border-[var(--card-border)] flex flex-wrap items-center justify-between gap-2 text-[9.5px]">
+              <span id="field-audit-strip-text" class="font-mono text-emerald-400 font-semibold"></span>
+              <button onclick="openFieldVisitAuditModal()" class="text-indigo-400 hover:underline font-bold cursor-pointer">Edit / View Audit →</button>
+            </div>
           </div>
 
           <!-- Target Deployment Market / Homologation Country Selector (Multi-Select Supported) -->
@@ -6607,11 +6637,14 @@
 
       return AUTOMOTIVE_MASTER_700.map(p => {
         let liveVal = p.val;
-        if (p.id === 'INT-0001') liveVal = "SSM One Automotive IoT Platform";
-        else if (p.id === 'INT-0007') liveVal = wizardState.vehicle.toUpperCase() + " Commercial Architecture";
-        else if (p.id === 'INT-0010') liveVal = wizardState.voltageSystem === '24v' ? "24V Nominal (18-36V Operating)" : "12V Nominal (9-16V Operating)";
-        else if (p.id === 'INT-0030') liveVal = wizardState.batteryType === 'lifepo4' ? "LiFePO4 3.2V 1100mAh (High Thermal Safety)" : "High-Temp Li-Polymer 3.7V 450mAh";
-        else if (p.id === 'INT-0040') liveVal = (wizardState.calculatedPins || 14) + " Pins Sealed Automotive Header";
+        const auditPrefix = (typeof fieldAuditState !== 'undefined' && fieldAuditState.isApplied)
+          ? `[AUDITED-${fieldAuditState.team}] `
+          : '';
+        if (p.id === 'INT-0001') liveVal = auditPrefix + "SSM One Automotive IoT Platform" + (typeof fieldAuditState !== 'undefined' && fieldAuditState.isApplied ? ` (${fieldAuditState.visitId})` : '');
+        else if (p.id === 'INT-0007') liveVal = auditPrefix + wizardState.vehicle.toUpperCase() + " Commercial Architecture";
+        else if (p.id === 'INT-0010') liveVal = auditPrefix + (wizardState.voltageSystem === '24v' ? "24V Nominal (18-36V Operating)" : "12V Nominal (9-16V Operating)") + (typeof fieldAuditState !== 'undefined' && fieldAuditState.isApplied ? ` | Crank Dip: ${fieldAuditState.crankDipV}V` : '');
+        else if (p.id === 'INT-0030') liveVal = auditPrefix + (wizardState.batteryType === 'lifepo4' ? "LiFePO4 3.2V 1100mAh (High Thermal Safety)" : (wizardState.batteryType === 'none' ? "No Internal Battery" : "High-Temp Li-Polymer 3.7V 450mAh"));
+        else if (p.id === 'INT-0040') liveVal = auditPrefix + (wizardState.calculatedPins || 14) + " Pins Sealed Automotive Header";
         else if (p.id === 'INT-0080') liveVal = regName;
 
         return {
@@ -7826,6 +7859,430 @@
       if (stripBadge) stripBadge.textContent = `${activeCount} Capabilities Active`;
     }
 
+    // ================= FIELD VISIT AUDIT, SELECTIVE FEASIBILITY & PROJECT ANALYSIS BOARD =================
+    const fieldAuditState = {
+      isApplied: false,
+      visitId: 'FVR-' + new Date().toISOString().slice(2,10).replace(/-/g,'') + '-01',
+      team: 'SIT', // 'SIT', 'EHW', 'FW'
+      company: '',
+      contact: '',
+      auditor: '',
+      vehicleType: 'truck',
+      makeModel: '',
+      vin: '',
+      nomV: '24',
+      crankDipV: 8.5,
+      pwrQuality: 'raw',
+      battery: 'lifepo4',
+      dimL: 125,
+      dimW: 85,
+      dimH: 32,
+      ipZone: 'ip67',
+      rfGlass: 'internal',
+      canBus: 'j1939_250',
+      connector: 'recommended',
+      cableLen: 2.5,
+      hasRs485: false,
+      hasImmo: true,
+      hasSos: true,
+      has1Wire: false,
+      notes: '',
+      photos: [] // { name, dataUrl }
+    };
+
+    const feasibilityState = {
+      departments: [
+        { code: 'SAL', name: 'Sales & Account', core: true, selected: true, status: 'Agreed' },
+        { code: 'EHW', name: 'Hardware Engg', core: true, selected: true, status: 'Agreed' },
+        { code: 'FW',  name: 'Firmware Engg', core: true, selected: true, status: 'Agreed' },
+        { code: 'SW',  name: 'Software / Cloud', core: true, selected: true, status: 'Agreed' },
+        { code: 'MECH',name: 'Mechanical / CAD', core: true, selected: true, status: 'Agreed' },
+        { code: 'QA',  name: 'Quality & DVP', core: false, selected: true, status: 'Pending' },
+        { code: 'PUR', name: 'Procurement / BOM', core: false, selected: true, status: 'Pending' },
+        { code: 'EMF', name: 'Electronics Mfg', core: false, selected: true, status: 'Pending' },
+        { code: 'MMF', name: 'Mech Mfg / 3D', core: false, selected: true, status: 'Pending' },
+        { code: 'SIT', name: 'Service / Field', core: false, selected: true, status: 'Agreed' }
+      ],
+      clientSignedOff: false,
+      clientSigner: '',
+      pmSigner: ''
+    };
+
+    function openFieldVisitAuditModal() {
+      const m = document.getElementById('modal-field-visit-audit');
+      if (!m) return;
+      document.getElementById('fva-visit-id-badge').textContent = fieldAuditState.visitId;
+      syncAuditFormFromState();
+      m.classList.remove('hidden');
+    }
+
+    function closeFieldVisitAuditModal() {
+      document.getElementById('modal-field-visit-audit')?.classList.add('hidden');
+    }
+
+    function setAuditTeam(team) {
+      fieldAuditState.team = team;
+      const hints = {
+        SIT: '🔧 <strong>Service Team (SIT) Scope:</strong> Device features match; audit focuses on physical connector change and mounting space. (Production suggestions can be added during Feasibility).',
+        EHW: '⚡ <strong>Hardware Team (EHW) Scope:</strong> Complex electrical/cranking dip, mechanical enclosure, CAN hardware, or escalated site audit.',
+        FW:  '💻 <strong>Firmware Team (FW) Scope:</strong> Ready-made hardware used; audit focuses on CAN bus protocol, baud rate, PGNs, and firmware/coding exploration.'
+      };
+      ['SIT', 'EHW', 'FW'].forEach(t => {
+        const btn = document.getElementById(`fva-team-${t}`);
+        if (!btn) return;
+        if (t === team) {
+          btn.className = "px-2 py-1 rounded border border-amber-500/50 bg-amber-500/15 text-amber-400 font-bold text-[10px] cursor-pointer";
+        } else {
+          btn.className = "px-2 py-1 rounded border border-[var(--card-border)] bg-[var(--background)] text-[var(--muted-foreground)] font-bold text-[10px] cursor-pointer";
+        }
+      });
+      const hintEl = document.getElementById('fva-team-hint');
+      if (hintEl) hintEl.innerHTML = hints[team] || hints.SIT;
+    }
+
+    function syncAuditStateFromForm() {
+      fieldAuditState.company = document.getElementById('fva-company')?.value || '';
+      fieldAuditState.contact = document.getElementById('fva-contact')?.value || '';
+      fieldAuditState.auditor = document.getElementById('fva-auditor')?.value || '';
+      fieldAuditState.vehicleType = document.getElementById('fva-vehicle-type')?.value || 'truck';
+      fieldAuditState.makeModel = document.getElementById('fva-make-model')?.value || '';
+      fieldAuditState.vin = document.getElementById('fva-vin')?.value || '';
+      fieldAuditState.nomV = document.getElementById('fva-nom-v')?.value || '24';
+      fieldAuditState.crankDipV = parseFloat(document.getElementById('fva-crank-v')?.value) || 8.5;
+      fieldAuditState.pwrQuality = document.getElementById('fva-pwr-quality')?.value || 'raw';
+      fieldAuditState.battery = document.getElementById('fva-battery')?.value || 'lifepo4';
+      fieldAuditState.dimL = parseInt(document.getElementById('fva-dim-l')?.value, 10) || 125;
+      fieldAuditState.dimW = parseInt(document.getElementById('fva-dim-w')?.value, 10) || 85;
+      fieldAuditState.dimH = parseInt(document.getElementById('fva-dim-h')?.value, 10) || 32;
+      fieldAuditState.ipZone = document.getElementById('fva-ip-zone')?.value || 'ip67';
+      fieldAuditState.rfGlass = document.getElementById('fva-rf-glass')?.value || 'internal';
+      fieldAuditState.canBus = document.getElementById('fva-can-bus')?.value || 'j1939_250';
+      fieldAuditState.connector = document.getElementById('fva-connector')?.value || 'recommended';
+      fieldAuditState.cableLen = parseFloat(document.getElementById('fva-cable-len')?.value) || 2.5;
+      fieldAuditState.hasRs485 = document.getElementById('fva-chk-rs485')?.checked || false;
+      fieldAuditState.hasImmo = document.getElementById('fva-chk-immo')?.checked || false;
+      fieldAuditState.hasSos = document.getElementById('fva-chk-sos')?.checked || false;
+      fieldAuditState.has1Wire = document.getElementById('fva-chk-1wire')?.checked || false;
+      fieldAuditState.notes = document.getElementById('fva-notes')?.value || '';
+    }
+
+    function syncAuditFormFromState() {
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+      const setChk = (id, v) => { const el = document.getElementById(id); if (el) el.checked = !!v; };
+      setAuditTeam(fieldAuditState.team);
+      setVal('fva-company', fieldAuditState.company);
+      setVal('fva-contact', fieldAuditState.contact);
+      setVal('fva-auditor', fieldAuditState.auditor);
+      setVal('fva-vehicle-type', fieldAuditState.vehicleType);
+      setVal('fva-make-model', fieldAuditState.makeModel);
+      setVal('fva-vin', fieldAuditState.vin);
+      setVal('fva-nom-v', fieldAuditState.nomV);
+      setVal('fva-crank-v', fieldAuditState.crankDipV);
+      setVal('fva-pwr-quality', fieldAuditState.pwrQuality);
+      setVal('fva-battery', fieldAuditState.battery);
+      setVal('fva-dim-l', fieldAuditState.dimL);
+      setVal('fva-dim-w', fieldAuditState.dimW);
+      setVal('fva-dim-h', fieldAuditState.dimH);
+      setVal('fva-ip-zone', fieldAuditState.ipZone);
+      setVal('fva-rf-glass', fieldAuditState.rfGlass);
+      setVal('fva-can-bus', fieldAuditState.canBus);
+      setVal('fva-connector', fieldAuditState.connector);
+      setVal('fva-cable-len', fieldAuditState.cableLen);
+      setChk('fva-chk-rs485', fieldAuditState.hasRs485);
+      setChk('fva-chk-immo', fieldAuditState.hasImmo);
+      setChk('fva-chk-sos', fieldAuditState.hasSos);
+      setChk('fva-chk-1wire', fieldAuditState.has1Wire);
+      setVal('fva-notes', fieldAuditState.notes);
+      renderAuditPhotos();
+    }
+
+    function handleAuditPhotoUpload(event) {
+      const files = Array.from(event.target.files || []);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          fieldAuditState.photos.push({ name: file.name, dataUrl: e.target.result });
+          renderAuditPhotos();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderAuditPhotos() {
+      const countEl = document.getElementById('fva-photo-count');
+      const thumbsEl = document.getElementById('fva-photo-thumbs');
+      if (countEl) countEl.textContent = `${fieldAuditState.photos.length} Photos Attached`;
+      if (!thumbsEl) return;
+      thumbsEl.innerHTML = '';
+      fieldAuditState.photos.forEach((p, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = "relative w-12 h-12 rounded border border-[var(--card-border)] overflow-hidden";
+        wrap.innerHTML = `<img src="${p.dataUrl}" title="${p.name}" class="w-full h-full object-cover"><button onclick="fieldAuditState.photos.splice(${idx},1);renderAuditPhotos();" class="absolute top-0 right-0 bg-black/70 text-white text-[8px] px-1 cursor-pointer">✕</button>`;
+        thumbsEl.appendChild(wrap);
+      });
+    }
+
+    function saveFieldAuditLocal() {
+      syncAuditStateFromForm();
+      try {
+        localStorage.setItem('ssm_field_audit_draft', JSON.stringify(fieldAuditState));
+        alert(`Saved Field Audit draft (${fieldAuditState.visitId}) to browser storage.`);
+      } catch (e) {
+        alert('Draft saved in memory (localStorage quota exceeded by large photos).');
+      }
+    }
+
+    function exportFieldAuditJson() {
+      syncAuditStateFromForm();
+      const payload = JSON.stringify({ schema: 'SSM_FIELD_AUDIT_V1', exportedAt: new Date().toISOString(), audit: fieldAuditState }, null, 2);
+      const blob = new Blob([payload], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `SSM_Field_Audit_${fieldAuditState.visitId}.json`;
+      a.click();
+    }
+
+    function importFieldAuditJson(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          const incoming = data.audit || data;
+          Object.assign(fieldAuditState, incoming);
+          syncAuditFormFromState();
+          applyFieldAuditToWizard(true);
+        } catch (err) {
+          alert('Invalid Field Audit JSON file.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function exportFieldAuditCsv() {
+      syncAuditStateFromForm();
+      const rows = [
+        ['FIELD AUDIT FIELD', 'AUDITED VALUE'],
+        ['Visit ID', fieldAuditState.visitId],
+        ['Visiting Team', fieldAuditState.team],
+        ['Client Company', fieldAuditState.company],
+        ['Site & Contact', fieldAuditState.contact],
+        ['Auditor', fieldAuditState.auditor],
+        ['Vehicle Platform', fieldAuditState.vehicleType],
+        ['Make / Model', fieldAuditState.makeModel],
+        ['VIN / Chassis', fieldAuditState.vin],
+        ['Nominal Voltage', fieldAuditState.nomV + 'V'],
+        ['Cranking Voltage Dip', fieldAuditState.crankDipV + 'V'],
+        ['Power Quality', fieldAuditState.pwrQuality],
+        ['Backup Battery', fieldAuditState.battery],
+        ['Cavity LxWxH (mm)', `${fieldAuditState.dimL}x${fieldAuditState.dimW}x${fieldAuditState.dimH}`],
+        ['Ingress / Mounting', fieldAuditState.ipZone],
+        ['RF / Windshield', fieldAuditState.rfGlass],
+        ['Vehicle Bus / CAN', fieldAuditState.canBus],
+        ['Connector Scheme', fieldAuditState.connector],
+        ['Harness Length (m)', fieldAuditState.cableLen],
+        ['Photos Captured', fieldAuditState.photos.length],
+        ['SOW / Audit Notes', fieldAuditState.notes]
+      ];
+      downloadCsv(`SSM_Field_Technical_Audit_${fieldAuditState.visitId}.csv`, rows);
+    }
+
+    function applyFieldAuditToWizard(silent) {
+      syncAuditStateFromForm();
+      fieldAuditState.isApplied = true;
+
+      if (typeof setVehicleType === 'function') setVehicleType(fieldAuditState.vehicleType);
+      wizardState.powerQuality = fieldAuditState.pwrQuality;
+      wizardState.voltageSystem = fieldAuditState.nomV === '24' ? '24v' : '12v';
+      if (typeof setBatteryOption === 'function') setBatteryOption(fieldAuditState.battery);
+
+      wizardState.dimL = fieldAuditState.dimL;
+      wizardState.dimW = fieldAuditState.dimW;
+      wizardState.dimH = fieldAuditState.dimH;
+      wizardState.enclosurePreset = 'custom';
+      const rtDim = document.getElementById('rt-dim-text');
+      if (rtDim) {
+        rtDim.textContent = `${wizardState.dimL} × ${wizardState.dimW} × ${wizardState.dimH} mm`;
+        rtDim.className = "font-semibold text-amber-400 font-mono";
+      }
+
+      wizardState.ipRating = fieldAuditState.ipZone;
+      wizardState.hasCAN = fieldAuditState.canBus !== 'none';
+      wizardState.hasRS485 = fieldAuditState.hasRs485;
+      wizardState.connectorOption = fieldAuditState.connector === 'recommended' ? 'recommended' : 'custom';
+
+      if (fieldAuditState.notes && !wizardState.customRequirements.some(r => r.id === 'audit-sow')) {
+        wizardState.customRequirements.push({
+          id: 'audit-sow',
+          text: `[${fieldAuditState.team} Audit] ${fieldAuditState.notes}`,
+          category: 'unclassified',
+          pins: 2
+        });
+      }
+
+      const badge = document.getElementById('intake-pipeline-badge');
+      if (badge) {
+        badge.textContent = `Audited Baseline (${fieldAuditState.team} • ${fieldAuditState.visitId})`;
+        badge.className = "px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30";
+      }
+      const strip = document.getElementById('field-audit-summary-strip');
+      const stripTxt = document.getElementById('field-audit-strip-text');
+      if (strip && stripTxt) {
+        strip.classList.remove('hidden');
+        stripTxt.textContent = `✓ ${fieldAuditState.team} Visit (${fieldAuditState.visitId}) Applied • ${fieldAuditState.dimL}×${fieldAuditState.dimW}×${fieldAuditState.dimH}mm • Crank Dip: ${fieldAuditState.crankDipV}V • ${fieldAuditState.photos.length} Photos`;
+      }
+
+      if (typeof renderDeviceBlueprint === 'function') renderDeviceBlueprint();
+      if (typeof recalculatePins === 'function') recalculatePins();
+      if (typeof updateLiveImpact === 'function') updateLiveImpact();
+      closeFieldVisitAuditModal();
+      if (!silent) {
+        // Auto-open Project Analysis Board or show subtle confirmation
+      }
+    }
+
+    // --- Selective Feasibility Routing & Project Analysis Board ---
+    function openProjectAnalysisBoard() {
+      renderFeasibilityDepts();
+      renderUnifiedAnalysisBoard();
+      document.getElementById('modal-project-analysis-board')?.classList.remove('hidden');
+    }
+
+    function closeProjectAnalysisBoard() {
+      document.getElementById('modal-project-analysis-board')?.classList.add('hidden');
+    }
+
+    function renderFeasibilityDepts() {
+      const grid = document.getElementById('pab-dept-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      let activeCount = 0;
+      feasibilityState.departments.forEach(d => {
+        if (d.selected) activeCount++;
+        const card = document.createElement('label');
+        card.className = `p-2 rounded-lg border cursor-pointer flex items-start gap-2 transition-all ${d.selected ? 'border-emerald-500/40 bg-emerald-500/10' : 'border-[var(--card-border)] bg-[var(--background)] opacity-55'}`;
+        card.innerHTML = `
+          <input type="checkbox" ${d.selected ? 'checked' : ''} onchange="toggleFeasibilityDept('${d.code}')" class="mt-0.5 accent-emerald-500">
+          <div class="min-w-0">
+            <div class="font-bold text-[10.5px] text-[var(--foreground)]">${d.code}</div>
+            <div class="text-[9px] text-[var(--muted-foreground)] truncate">${d.name}</div>
+            <div class="text-[8.5px] font-mono ${d.selected ? 'text-emerald-400' : 'text-amber-400'}">${d.selected ? d.status : 'Skipped by PM'}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      const countEl = document.getElementById('pab-active-depts-count');
+      if (countEl) countEl.textContent = `${activeCount} / ${feasibilityState.departments.length} Departments Active`;
+    }
+
+    function toggleFeasibilityDept(code) {
+      const dept = feasibilityState.departments.find(d => d.code === code);
+      if (dept) dept.selected = !dept.selected;
+      renderFeasibilityDepts();
+      renderUnifiedAnalysisBoard();
+    }
+
+    function selectAllFeasibilityDepts(flag) {
+      feasibilityState.departments.forEach(d => d.selected = flag);
+      renderFeasibilityDepts();
+      renderUnifiedAnalysisBoard();
+    }
+
+    function selectCoreFeasibilityDepts() {
+      feasibilityState.departments.forEach(d => d.selected = d.core);
+      renderFeasibilityDepts();
+      renderUnifiedAnalysisBoard();
+    }
+
+    function renderUnifiedAnalysisBoard() {
+      const container = document.getElementById('pab-unified-grid');
+      if (!container) return;
+      const activeDepts = feasibilityState.departments.filter(d => d.selected).map(d => d.code).join(', ') || 'None';
+      const markets = (wizardState.targetCountries || ['india']).join(', ').toUpperCase();
+      const cards = [
+        {
+          title: 'Intake & Audit Source',
+          color: 'text-amber-400',
+          items: [
+            `Source: ${fieldAuditState.isApplied ? `Field Audit (${fieldAuditState.team})` : 'Direct Guided SOR'}`,
+            `Visit / Ref ID: ${fieldAuditState.isApplied ? fieldAuditState.visitId : 'WIZARD-DIRECT'}`,
+            `Target Markets: ${markets}`,
+            `Photo Evidence: ${fieldAuditState.photos.length} Attached`
+          ]
+        },
+        {
+          title: 'Hardware & Power',
+          color: 'text-indigo-400',
+          items: [
+            `Platform: ${wizardState.vehicle.toUpperCase()} (${fieldAuditState.nomV}V)`,
+            `Cranking Dip: ${fieldAuditState.isApplied ? fieldAuditState.crankDipV + 'V Measured' : 'Standard Automotive'}`,
+            `Backup Battery: ${wizardState.batteryType.toUpperCase()}`,
+            `Bus: ${wizardState.hasCAN ? 'CAN Bus Active' : 'No CAN'} | RS485: ${wizardState.hasRS485 ? 'Yes' : 'No'}`
+          ]
+        },
+        {
+          title: 'Mechanical, Harness & FW',
+          color: 'text-emerald-400',
+          items: [
+            `Envelope: ${wizardState.dimL} × ${wizardState.dimW} × ${wizardState.dimH} mm (${wizardState.ipRating.toUpperCase()})`,
+            `Harness: ${wizardState.calculatedPins || 14} Pins • ${fieldAuditState.cableLen}m`,
+            `GNSS: ${wizardState.gnssOption === 'navic_l5' ? 'GPS + NavIC L5' : 'GPS/GLONASS'}`,
+            `Feasibility Teams: ${activeDepts}`
+          ]
+        }
+      ];
+
+      container.innerHTML = cards.map(c => `
+        <div class="p-2.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] space-y-1.5">
+          <div class="font-bold text-[10.5px] uppercase tracking-wider ${c.color}">${c.title}</div>
+          <ul class="space-y-1 text-[10px] text-[var(--foreground)] font-mono">
+            ${c.items.map(i => `<li>• ${i}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('');
+    }
+
+    function lockBaselineAndClientSignOff() {
+      const cName = document.getElementById('pab-client-signer')?.value?.trim();
+      const pmName = document.getElementById('pab-pm-signer')?.value?.trim();
+      if (!cName) {
+        alert('Please enter Client Sign-Off Representative name before locking.');
+        return;
+      }
+      feasibilityState.clientSignedOff = true;
+      feasibilityState.clientSigner = cName;
+      feasibilityState.pmSigner = pmName || 'Sales/PM Lead';
+
+      const pill = document.getElementById('pab-status-pill');
+      if (pill) {
+        pill.textContent = `LOCKED • SIGNED BY ${cName.toUpperCase()}`;
+        pill.className = "px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
+      }
+      const topBadge = document.getElementById('intake-pipeline-badge');
+      if (topBadge) {
+        topBadge.textContent = `Locked & Client Signed-Off (${cName})`;
+        topBadge.className = "px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
+      }
+    }
+
+    function exportProjectAnalysisSummary() {
+      const summary = {
+        exportedAt: new Date().toISOString(),
+        pipelineStatus: feasibilityState.clientSignedOff ? 'LOCKED_CLIENT_SIGNED_OFF' : 'IN_FEASIBILITY_REVIEW',
+        clientSigner: feasibilityState.clientSigner,
+        pmSigner: feasibilityState.pmSigner,
+        selectedFeasibilityDepts: feasibilityState.departments.filter(d => d.selected).map(d => d.code),
+        fieldAudit: fieldAuditState.isApplied ? fieldAuditState : null,
+        wizardConfiguration: wizardState
+      };
+      const blob = new Blob([JSON.stringify(summary, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `SSM_Project_Analysis_Board_${fieldAuditState.visitId}.json`;
+      a.click();
+    }
+
   </script>
 
   <!-- ================= SIXSENSE PCB REUSE & FEATURE COMPARISON MODAL ================= -->
@@ -8334,6 +8791,294 @@
             <div class="pt-1 text-[9px] font-mono text-purple-400 font-semibold border-t border-[var(--card-border)]">↳ On-Board Impact: 64MB SPI Flash Memory (Step 3)</div>
           </div>
         </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: CUSTOMER FIELD VISIT & 7-PILLAR VEHICLE AUDIT ================= -->
+  <div id="modal-field-visit-audit" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-xs">
+      <!-- Modal Header -->
+      <div class="px-4 py-3 border-b border-[var(--card-border)] bg-[var(--background)] flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm font-bold">🛠️</span>
+          <div>
+            <h3 class="text-xs sm:text-sm font-bold text-[var(--foreground)]">Customer Site Visit &amp; Vehicle Technical Audit</h3>
+            <p class="text-[10px] text-[var(--muted-foreground)]">On-site requirement capture when client lacks formal SOR • Mobile-Web &amp; JSON Handoff</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span id="fva-visit-id-badge" class="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 font-mono text-[10px] font-bold">FVR-NEW</span>
+          <button onclick="closeFieldVisitAuditModal()" class="w-7 h-7 rounded-lg border border-[var(--card-border)] hover:bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] flex items-center justify-center font-bold cursor-pointer">✕</button>
+        </div>
+      </div>
+
+      <!-- Mobile / JSON Handoff & Team Dispatch Bar -->
+      <div class="px-4 py-2 border-b border-[var(--card-border)] bg-[var(--card)] flex flex-wrap items-center justify-between gap-2">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span class="text-[10px] font-bold text-[var(--muted-foreground)] uppercase">Visiting Team:</span>
+          <button onclick="setAuditTeam('SIT')" id="fva-team-SIT" class="px-2 py-1 rounded border border-amber-500/50 bg-amber-500/15 text-amber-400 font-bold text-[10px] cursor-pointer">🔧 Service (SIT: Connector &amp; Mounting)</button>
+          <button onclick="setAuditTeam('EHW')" id="fva-team-EHW" class="px-2 py-1 rounded border border-[var(--card-border)] bg-[var(--background)] text-[var(--muted-foreground)] font-bold text-[10px] cursor-pointer">⚡ Hardware (EHW: Full HW / Electrical)</button>
+          <button onclick="setAuditTeam('FW')" id="fva-team-FW" class="px-2 py-1 rounded border border-[var(--card-border)] bg-[var(--background)] text-[var(--muted-foreground)] font-bold text-[10px] cursor-pointer">💻 Firmware (FW: Ready-Made / CAN &amp; Coding)</button>
+        </div>
+        <div class="flex flex-wrap items-center gap-1.5">
+          <button onclick="saveFieldAuditLocal()" class="px-2 py-1 rounded border border-[var(--card-border)] bg-[var(--background)] hover:border-indigo-500 text-[10px] font-semibold cursor-pointer">💾 Save Draft</button>
+          <button onclick="exportFieldAuditJson()" class="px-2 py-1 rounded border border-indigo-500/40 bg-indigo-500/15 text-indigo-400 hover:bg-indigo-500/25 text-[10px] font-bold cursor-pointer">📤 Export JSON</button>
+          <label class="px-2 py-1 rounded border border-emerald-500/40 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 text-[10px] font-bold cursor-pointer">
+            📥 Import JSON
+            <input type="file" accept=".json" onchange="importFieldAuditJson(event)" class="hidden">
+          </label>
+        </div>
+      </div>
+
+      <!-- 7-Pillar Audit Body -->
+      <div class="p-4 overflow-y-auto custom-scrollbar space-y-3 flex-1 bg-[var(--background)]">
+        <div id="fva-team-hint" class="p-2 rounded-lg border border-amber-500/30 bg-amber-500/10 text-[10px] text-amber-300 font-medium">
+          🔧 <strong>Service Team (SIT) Scope:</strong> Device features match; audit focuses on physical connector change and mounting space. (Production team suggestions can be added during Feasibility).
+        </div>
+
+        <!-- Pillar 1: Client, Auditor & Vehicle ID -->
+        <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-2">
+          <div class="font-bold text-[11px] text-indigo-400 uppercase tracking-wider">1. Client Inquiry, Auditor &amp; Asset Identification</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Client / Fleet Company</label>
+              <input id="fva-company" type="text" placeholder="e.g. Apex Logistics / AgroFleet" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+            </div>
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Site Location &amp; Contact</label>
+              <input id="fva-contact" type="text" placeholder="e.g. Pune Depot • Ramesh (98xxx)" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+            </div>
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Visiting Engineer Name</label>
+              <input id="fva-auditor" type="text" placeholder="Engineer Name" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+            </div>
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Vehicle Platform</label>
+              <select id="fva-vehicle-type" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+                <option value="truck">Heavy Truck / Commercial (24V)</option>
+                <option value="tractor">Agricultural Tractor / Off-Highway</option>
+                <option value="ev">Electric Vehicle (EV / 48V–96V)</option>
+                <option value="bus">Passenger Bus / Transit</option>
+                <option value="car">Passenger Car / LCV (12V)</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Make / Model / Year</label>
+              <input id="fva-make-model" type="text" placeholder="e.g. Tata Prima 5530 / 2025" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+            </div>
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">VIN / Chassis Number</label>
+              <input id="fva-vin" type="text" placeholder="MAT448..." class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs font-mono">
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 2 & 3: Electrical Power & Mechanical Cavity -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-2">
+            <div class="font-bold text-[11px] text-amber-400 uppercase tracking-wider">2. Electrical Power Rail Audit</div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Nominal System (V)</label>
+                <select id="fva-nom-v" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+                  <option value="12">12V DC System</option>
+                  <option value="24" selected>24V DC System</option>
+                  <option value="48">48V–96V EV Pack</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Cranking Dip (Min V)</label>
+                <input id="fva-crank-v" type="number" step="0.1" value="8.5" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs font-mono">
+              </div>
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Power Quality</label>
+                <select id="fva-pwr-quality" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+                  <option value="raw">Raw Alternator (Load Dump Risk)</option>
+                  <option value="clean">Clean Regulated DC</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Backup Battery Needed?</label>
+                <select id="fva-battery" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+                  <option value="lifepo4">Yes — LiFePO4 (High-Temp)</option>
+                  <option value="lipoly">Yes — Li-Polymer Compact</option>
+                  <option value="none">No Internal Battery</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-2">
+            <div class="font-bold text-[11px] text-emerald-400 uppercase tracking-wider">3. Mechanical Mounting &amp; Cavity</div>
+            <div class="grid grid-cols-3 gap-1.5">
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Max L (mm)</label>
+                <input id="fva-dim-l" type="number" value="125" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs font-mono">
+              </div>
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Max W (mm)</label>
+                <input id="fva-dim-w" type="number" value="85" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs font-mono">
+              </div>
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Max H (mm)</label>
+                <input id="fva-dim-h" type="number" value="32" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs font-mono">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Mounting Zone / IP</label>
+                <select id="fva-ip-zone" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+                  <option value="ip67">Exposed Chassis (IP67)</option>
+                  <option value="ip40">Protected Cabin Dash (IP40)</option>
+                  <option value="ip69k">Engine Bay Washdown (IP69K)</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">RF / Windshield</label>
+                <select id="fva-rf-glass" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+                  <option value="internal">Clear Glass (Internal Antenna)</option>
+                  <option value="external">Metalized/Shielded (External Puck)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 4 & 5: Bus, Firmware, Sensors & Harness -->
+        <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-2">
+          <div class="font-bold text-[11px] text-cyan-400 uppercase tracking-wider">4. Vehicle Signals, CAN / Firmware &amp; Harness Connectors</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Vehicle Bus / CAN</label>
+              <select id="fva-can-bus" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+                <option value="j1939_250">SAE J1939 (250 kbps CAN)</option>
+                <option value="obd_500">OBD-II / ISO 15765 (500 kbps)</option>
+                <option value="none">No CAN (Analog / Digital Only)</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Connector Requirement</label>
+              <select id="fva-connector" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+                <option value="recommended">TE Superseal (Sealed Auto)</option>
+                <option value="custom_molex">Molex Micro-Fit / Custom</option>
+                <option value="custom_deutsch">Deutsch DT Series</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Harness Length (m)</label>
+              <input id="fva-cable-len" type="number" step="0.5" value="2.5" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs font-mono">
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-3 pt-1 text-[10.5px]">
+            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="fva-chk-rs485" class="accent-[var(--primary)]"> <span>RS485 Fuel / RFID</span></label>
+            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="fva-chk-immo" checked class="accent-[var(--primary)]"> <span>Immobilizer Relay Cut</span></label>
+            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="fva-chk-sos" checked class="accent-[var(--primary)]"> <span>Panic SOS Button</span></label>
+            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="fva-chk-1wire" class="accent-[var(--primary)]"> <span>1-Wire Temp / iButton</span></label>
+          </div>
+          <div>
+            <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">SOW / Firmware / CAN Exploration &amp; Mounting Notes</label>
+            <textarea id="fva-notes" rows="2" placeholder="Record custom connector pinouts, CAN PGNs needed, mounting bracket notes, or production suggestions..." class="w-full px-2 py-1.5 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs"></textarea>
+          </div>
+        </div>
+
+        <!-- Pillar 6 & 7: Mobile Photo Capture & Sign-off -->
+        <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-[11px] text-purple-400 uppercase tracking-wider">5. On-Site Photo Evidence (Mobile Camera Ready)</span>
+            <span id="fva-photo-count" class="text-[10px] font-mono text-[var(--muted-foreground)]">0 Photos Attached</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <label class="px-2.5 py-1.5 rounded-lg border border-purple-500/40 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 font-bold text-[10px] cursor-pointer flex items-center gap-1">
+              <span>📷</span> <span>Capture / Attach Vehicle Photos</span>
+              <input type="file" accept="image/*" capture="environment" multiple onchange="handleAuditPhotoUpload(event)" class="hidden">
+            </label>
+            <div id="fva-photo-thumbs" class="flex flex-wrap gap-1.5"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-4 py-3 border-t border-[var(--card-border)] bg-[var(--card)] flex flex-wrap items-center justify-between gap-2">
+        <button onclick="exportFieldAuditCsv()" class="px-3 py-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] hover:border-indigo-500 text-xs font-bold cursor-pointer">📄 Export Audit Report (CSV)</button>
+        <div class="flex items-center gap-2">
+          <button onclick="closeFieldVisitAuditModal()" class="px-3 py-1.5 rounded-lg border border-[var(--card-border)] text-xs font-medium cursor-pointer">Cancel</button>
+          <button onclick="applyFieldAuditToWizard()" class="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-sm cursor-pointer">⚡ Apply Audit to Wizard &amp; Sync 700 Params</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: SELECTIVE FEASIBILITY ROUTING & PROJECT ANALYSIS BOARD ================= -->
+  <div id="modal-project-analysis-board" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl w-full max-w-5xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-xs">
+      <!-- Header -->
+      <div class="px-4 py-3 border-b border-[var(--card-border)] bg-[var(--background)] flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold">📊</span>
+          <div>
+            <h3 class="text-xs sm:text-sm font-bold text-[var(--foreground)]">Selective Feasibility Routing &amp; Centralized Project Analysis Board</h3>
+            <p class="text-[10px] text-[var(--muted-foreground)]">Sales / PM Department Filter → Common Agreed Points → Unified Client Sign-Off</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="pab-status-pill" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">IN FEASIBILITY REVIEW</span>
+          <button onclick="closeProjectAnalysisBoard()" class="w-7 h-7 rounded-lg border border-[var(--card-border)] hover:bg-[var(--card)] text-[var(--muted-foreground)] hover:text-[var(--foreground)] flex items-center justify-center font-bold cursor-pointer">✕</button>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="p-4 overflow-y-auto custom-scrollbar space-y-4 flex-1 bg-[var(--background)]">
+        <!-- Section 1: Sales / PM Selective Department Routing -->
+        <div class="p-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <div class="font-bold text-xs text-[var(--foreground)]">1. Sales / PM Feasibility Department Routing (Default: All Selected)</div>
+              <div class="text-[10px] text-[var(--muted-foreground)]">Uncheck any department not required for this project so active teams are not unnecessarily disturbed.</div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="selectAllFeasibilityDepts(true)" class="px-2 py-1 rounded border border-[var(--card-border)] bg-[var(--background)] text-[10px] font-semibold cursor-pointer">Select All</button>
+              <button onclick="selectCoreFeasibilityDepts()" class="px-2 py-1 rounded border border-indigo-500/40 bg-indigo-500/10 text-indigo-400 text-[10px] font-semibold cursor-pointer">Core Tech Only</button>
+            </div>
+          </div>
+          <div id="pab-dept-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2"></div>
+        </div>
+
+        <!-- Section 2: Unified Project Analysis Board (All Common Points in One Place) -->
+        <div class="p-3 rounded-xl border border-indigo-500/35 bg-[var(--card)] space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--card-border)] pb-2">
+            <div class="font-bold text-xs text-indigo-400 uppercase tracking-wider">2. Centralized Project Analysis Board (Unified Client &amp; Team Baseline)</div>
+            <span id="pab-active-depts-count" class="text-[10px] font-mono font-bold text-emerald-400">10 / 10 Departments Active</span>
+          </div>
+          <div id="pab-unified-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5"></div>
+        </div>
+
+        <!-- Section 3: Client Review & Requirement Lock -->
+        <div class="p-3 rounded-xl border border-emerald-500/35 bg-emerald-500/5 space-y-2">
+          <div class="font-bold text-xs text-emerald-400">3. Requirement Baseline Lock &amp; Client Sign-Off</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Client Sign-Off Representative</label>
+              <input id="pab-client-signer" type="text" placeholder="Client Authorized Name" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+            </div>
+            <div>
+              <label class="text-[10px] text-[var(--muted-foreground)] block mb-0.5">Sales / PM Approver</label>
+              <input id="pab-pm-signer" type="text" placeholder="Sales / PM Lead Name" class="w-full px-2 py-1 rounded bg-[var(--background)] border border-[var(--card-border)] text-xs">
+            </div>
+            <button onclick="lockBaselineAndClientSignOff()" id="btn-lock-client-signoff" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-sm cursor-pointer">
+              🔒 Lock Baseline &amp; Record Client Sign-Off
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-4 py-3 border-t border-[var(--card-border)] bg-[var(--card)] flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <button onclick="exportMaster700Csv()" class="px-3 py-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/15 text-emerald-400 font-bold text-xs cursor-pointer">📥 Export 700 Master CSV</button>
+          <button onclick="exportProjectAnalysisSummary()" class="px-3 py-1.5 rounded-lg border border-indigo-500/40 bg-indigo-500/15 text-indigo-400 font-bold text-xs cursor-pointer">📄 Export Analysis Board (JSON)</button>
+        </div>
+        <button onclick="closeProjectAnalysisBoard()" class="px-4 py-1.5 rounded-lg border border-[var(--card-border)] bg-[var(--background)] text-xs font-bold cursor-pointer">Close</button>
       </div>
     </div>
   </div>
