@@ -163,6 +163,10 @@
                 </div>
               </div>
               <div class="flex flex-wrap items-center gap-1.5">
+                <label id="btn-upload-sor-ref" class="px-2.5 py-1 rounded-lg bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/40 text-indigo-400 font-bold text-[10px] transition-all cursor-pointer flex items-center gap-1" title="Upload existing client SOR document as reference (OCR auto-fill ready in SSM Web)">
+                  <span>📄</span> <span>Upload SOR (Ref)</span>
+                  <input type="file" id="sor-file-input" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt" onchange="handleSorUpload(event)" class="hidden">
+                </label>
                 <button onclick="openFieldVisitAuditModal()" id="btn-open-field-visit" class="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-400 font-bold text-[10px] transition-all cursor-pointer flex items-center gap-1">
                   <span>🛠️</span> <span>No SOR? Field Visit Audit</span>
                 </button>
@@ -170,6 +174,10 @@
                   <span>📊</span> <span>Feasibility &amp; Analysis Board</span>
                 </button>
               </div>
+            </div>
+            <div id="sor-ref-strip" class="hidden pt-1.5 border-t border-[var(--card-border)] flex flex-wrap items-center justify-between gap-2 text-[9.5px]">
+              <span id="sor-ref-strip-text" class="font-mono text-indigo-400 font-semibold"></span>
+              <button onclick="clearSorRef()" class="text-red-400 hover:underline font-bold cursor-pointer">Remove Ref ✕</button>
             </div>
             <div id="field-audit-summary-strip" class="hidden pt-1.5 border-t border-[var(--card-border)] flex flex-wrap items-center justify-between gap-2 text-[9.5px]">
               <span id="field-audit-strip-text" class="font-mono text-emerald-400 font-semibold"></span>
@@ -7859,7 +7867,49 @@
       if (stripBadge) stripBadge.textContent = `${activeCount} Capabilities Active`;
     }
 
-    // ================= FIELD VISIT AUDIT, SELECTIVE FEASIBILITY & PROJECT ANALYSIS BOARD =================
+    // ================= SOR REFERENCE UPLOAD & FIELD VISIT AUDIT =================
+    const sorDocState = {
+      attached: false,
+      fileName: '',
+      fileSizeKB: 0,
+      uploadedAt: ''
+    };
+
+    function handleSorUpload(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      sorDocState.attached = true;
+      sorDocState.fileName = file.name;
+      sorDocState.fileSizeKB = Math.max(1, Math.round(file.size / 1024));
+      sorDocState.uploadedAt = new Date().toLocaleTimeString();
+
+      const strip = document.getElementById('sor-ref-strip');
+      const txt = document.getElementById('sor-ref-strip-text');
+      if (strip && txt) {
+        strip.classList.remove('hidden');
+        txt.textContent = `📄 SOR Reference Attached: ${sorDocState.fileName} (${sorDocState.fileSizeKB} KB) • OCR Auto-Fill Ready in SSM Web`;
+      }
+      const badge = document.getElementById('intake-pipeline-badge');
+      if (badge && !fieldAuditState.isApplied && !feasibilityState.clientSignedOff) {
+        badge.textContent = `SOR Ref Attached: ${sorDocState.fileName}`;
+        badge.className = "px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-indigo-500/15 text-indigo-400 border border-indigo-500/30";
+      }
+    }
+
+    function clearSorRef() {
+      sorDocState.attached = false;
+      sorDocState.fileName = '';
+      sorDocState.fileSizeKB = 0;
+      const inp = document.getElementById('sor-file-input');
+      if (inp) inp.value = '';
+      document.getElementById('sor-ref-strip')?.classList.add('hidden');
+      const badge = document.getElementById('intake-pipeline-badge');
+      if (badge && !fieldAuditState.isApplied && !feasibilityState.clientSignedOff) {
+        badge.textContent = 'Mode: Guided SOR Intake';
+        badge.className = "px-2 py-0.5 rounded-full text-[9.5px] font-mono font-bold bg-blue-500/15 text-blue-400 border border-blue-500/30";
+      }
+    }
+
     const fieldAuditState = {
       isApplied: false,
       visitId: 'FVR-' + new Date().toISOString().slice(2,10).replace(/-/g,'') + '-01',
@@ -8205,7 +8255,8 @@
           title: 'Intake & Audit Source',
           color: 'text-amber-400',
           items: [
-            `Source: ${fieldAuditState.isApplied ? `Field Audit (${fieldAuditState.team})` : 'Direct Guided SOR'}`,
+            `Source: ${fieldAuditState.isApplied ? `Field Audit (${fieldAuditState.team})` : (sorDocState.attached ? 'Client SOR Reference' : 'Direct Guided SOR')}`,
+            `SOR File: ${sorDocState.attached ? `${sorDocState.fileName} (${sorDocState.fileSizeKB} KB)` : 'None Attached'}`,
             `Visit / Ref ID: ${fieldAuditState.isApplied ? fieldAuditState.visitId : 'WIZARD-DIRECT'}`,
             `Target Markets: ${markets}`,
             `Photo Evidence: ${fieldAuditState.photos.length} Attached`
@@ -8273,6 +8324,7 @@
         clientSigner: feasibilityState.clientSigner,
         pmSigner: feasibilityState.pmSigner,
         selectedFeasibilityDepts: feasibilityState.departments.filter(d => d.selected).map(d => d.code),
+        sorReferenceDoc: sorDocState.attached ? sorDocState : null,
         fieldAudit: fieldAuditState.isApplied ? fieldAuditState : null,
         wizardConfiguration: wizardState
       };
